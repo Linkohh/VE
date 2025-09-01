@@ -26,17 +26,25 @@
       }
     }
 
-    // 2) Inline fallback (optional; only populated if you paste JSON into index.html)
+    // 2) Inline fallback (manual JSON paste into #quotes-inline element)
     const inline = document.getElementById('quotes-inline');
     if (inline && inline.textContent.trim()) {
       try {
+        console.log('[quotes] Using inline JSON fallback data');
         return JSON.parse(inline.textContent);
       } catch (e) {
         console.error('[quotes] Inline JSON is invalid:', e);
       }
     }
 
-    console.error('[quotes] No quotes loaded. For file:// usage, either run a local server or paste data/quotes.json into #quotes-inline.');
+    // 3) JavaScript fallback (use window.quotesData from quotes.js if available)
+    if (window.quotesData && window.quotesData.categories) {
+      console.log('[quotes] Using quotes.js fallback data');
+      return window.quotesData;
+    }
+
+    // 4) Final fallback (minimal embedded quotes as last resort)
+    console.error('[quotes] No quotes loaded. For file:// usage, either run a local server, paste data/quotes.json into #quotes-inline, or ensure quotes.js loads properly.');
     return { categories: {} };
   }
 
@@ -2255,6 +2263,16 @@ const VibeMe = {
         localStorage.setItem('vibeme-custom-quotes', JSON.stringify(this.state.customQuotes));
     },
 
+    // ===== MATRIX COLUMN MANAGEMENT =====
+    removeSingleMatrixColumn: function(index) {
+        const col = this.matrixState.activeColumns[index];
+        if (!col) return;
+        try {
+            if (col.el && col.el.parentNode) col.el.parentNode.removeChild(col.el);
+        } catch(_) {}
+        this.matrixState.activeColumns.splice(index, 1);
+    },
+
     // ===== MATRIX RESIZE =====
     handleMatrixResize: function() {
         this.createMatrixColumns();
@@ -4375,4 +4393,37 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (_) {}
   });
+})();
+
+// ===== BOOTSTRAP: Initial Quote Rendering System =====
+(function(){
+  if (window.__VIBE_QUOTES_BOOTSTRAPPED) return;
+  window.__VIBE_QUOTES_BOOTSTRAPPED = true;
+
+  const flatten = (o)=>!o?[]:Object.values(o).flat();
+
+  function paintFirst(quotes){
+    const t = document.getElementById('quote-text');
+    const a = document.getElementById('quote-author');
+    if (!t || !a || !quotes.length) return;
+    t.textContent = quotes[0].text || '';
+    a.textContent = quotes[0].author || 'Unknown';
+  }
+
+  async function boot(){
+    if (document.readyState === 'loading'){
+      await new Promise(r => document.addEventListener('DOMContentLoaded', r, {once:true}));
+    }
+    const data = await (window.VIBE_QUOTES_PROMISE || Promise.resolve({categories:{}}));
+    if (window.VibeMe) {
+      VibeMe.quotesByCategory = data.categories || {};
+      VibeMe.quotesFlat = flatten(VibeMe.quotesByCategory);
+      const total = VibeMe.quotesFlat.length;
+      const cats = Object.keys(VibeMe.quotesByCategory).length;
+      console.info(`[quotes] Loaded ${total} quotes across ${cats} categories`);
+      document.dispatchEvent(new CustomEvent('quotes:ready', { detail: { total, categories: cats }}));
+      paintFirst(VibeMe.quotesFlat);
+    }
+  }
+  boot();
 })();
