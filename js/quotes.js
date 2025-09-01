@@ -1189,6 +1189,134 @@ window.quotesData =
       {
         "text": "The best time to plant a tree was 20 years ago. The second best time is now.",
         "author": "Chinese Proverb"
+      },
+      {
+        "text": "Skepticism should inspect the map, not burn it.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Trust early, verify always, pay less.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A warning is a free rehearsal for reality.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "You don't have to touch every stove to believe in heat.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Trust is not surrender; it is calibrated respect for evidence.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Doubt asks questions; defiance ignores answers.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Listen when the quiet warnings are still cheap.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "You don't need the whole fall to trust gravity.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Advice is a parachute; testing it mid-fall is bold and unwise.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Skepticism should test, not trash, the signal.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Borrow lenses before you buy regrets.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Good skepticism asks, 'What am I missing?' not, 'Who do I dismiss?'",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Advice doesn't remove struggle; it removes avoidable struggle.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A warning ignored becomes a story retold in bruises.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Skepticism plus curiosity equals clarity; minus curiosity equals delay.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "You can proofread your future by reading someone else's past.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Skepticism should sharpen, not shatter.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "If the bridge is sturdy, walk; don't reinvent the river.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Skepticism without learning is just expensive bravery.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Advice doesn't remove storms; it tells you where to anchor.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The price of 'I'll figure it out later' is paid by your future self.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Skepticism should ask better questions, not louder ones.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Advice is a lantern; it doesn't walk for you, it just saves your ankles.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Skepticism that never learns becomes superstition about people.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Trust the pattern, not the personality.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Advice is a prepayment plan for mistakes.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Skepticism should keep you safe, not stuck.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The wise accept help before hurt.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Advice doesn't make you small; it keeps the fall small.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Humility keeps doors unlocked that ego would deadbolt.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Skepticism should be a scientist, not a saboteur.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "If the pattern is proven, borrow it—then improve it.",
+        "author": "Lincoln Ogden"
       }
     ],
     "diversity": [
@@ -1529,6 +1657,74 @@ window.quotesData =
       {
         "text": "The difference between a stumbling block and a stepping stone is how you use it.",
         "author": "Unknown"
+      },
+      {
+        "text": "Skepticism is a filter; cynicism is a wall.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The map isn't the journey, but it saves your shoes.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A proven path isn't control; it's mercy.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A forecast feels like fear until the storm arrives.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Skepticism with open hands becomes wisdom; with clenched fists, it becomes regret.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Trust should be measured, not withheld like oxygen.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Trust proceeds at the speed of evidence and the size of ego.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We think we're exceptions until the rule arrives.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Trust is not binary; it's a slider you adjust with evidence.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Trust doesn't mean blind; it means less blind than yesterday.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Advice is a guardrail, not a cage.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Trust is earned by patterns, not pitches.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Trust is calibrated by risk, refined by results.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The oldest wisdom still fits—pride just won't try it on.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Advice is not an order; it's a map with exits.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Skepticism should keep you safe, not stuck.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Trust flows where evidence shows.",
+        "author": "Lincoln Ogden"
       }
     ],
     "action": [
@@ -1741,6 +1937,70 @@ window.quotesData =
       {
         "text": "Don't shrink yourself to fit into spaces you've outgrown.",
         "author": "Gemini/LO"
+      },
+      {
+        "text": "Experience is loud; we just wait until it shouts at us.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Advice is a seatbelt; you only miss it after the crash.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We don't break cycles by talking—we break them by listening early.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Take the shortcut that doesn't skip the work: listening.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We call it wisdom when pain stops being necessary.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Choose to inherit wisdom or inherit the wound.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We graduate when we stop arguing with gravity.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Borrowed wisdom still earns interest in your life.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We call it maturity when we stop demanding custom pain.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Consequence teaches fast; reflection keeps it.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We break family cycles by upgrading how we listen.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The lesson keeps circling back until you stop moving in squares.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The cycle ends when listening begins sooner than pain.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "You don't owe pain proof of concept.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The lesson is cheaper when it's someone else's.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We call it maturity when we stop demanding custom pain.",
+        "author": "Lincoln Ogden"
       }
     ],
     "discipline": [
@@ -2865,13 +3125,471 @@ window.quotesData =
       {
         "text": "You miss 100% of the shots you don't take.",
         "author": "Wayne Gretzky"
+      },
+      {
+        "text": "I've missed more than 9,000 shots in my career. I've lost almost 300 games. 26 times, I've been trusted to take the game-winning shot and missed. I've failed over and over and over again in my life. And that is why I succeed.",
+        "author": "Michael Jordan"
+      }
+    ],
+    "mentorship": [
+      {
+        "text": "Advice is a shortcut carved by someone else's scars.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Elders aren't flexing; they're forecasting.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Borrow a lighthouse and your ship leaves the harbor sooner.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Borrow courage from someone who has already paid the price.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A veteran's 'be careful' is a road closed sign you can walk around—or respect.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "If you won't borrow a compass, expect more circles.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Elder voices are bridges; pride prefers swimming.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Every mentor offers you a discount on pain.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A veteran's story is a detour sign for your map.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Elders aim to prevent bruises, not prove brilliance.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Every warning holds a story, and every story holds a scar.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The cheapest courage is borrowed from someone who already survived.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "You're not the first to meet this cliff; ask about the wind.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A mentor's 'don't' is often a 'do later, differently.'",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A veteran's caution is a bridge rated for your weight.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "If the map is free, check it before you climb.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The wise keep what they paid for by sharing it.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Elders carry maps folded in scars.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A veteran's pause can save you a year.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Let experience be your teacher—just not only yours.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Borrowing a map doesn't make the mountain smaller, just kinder.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Elders don't want to be right; they want you to be ready.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Mentors are time travelers handing you a message from your future.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A borrowed guardrail is still protection.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A veteran's 'now' is your 'not yet' with data.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Humility lets you travel on other people's bridges.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Mentorship is a shortcut that still respects the miles.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Borrowed perspective widens your lane.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Listen to finished races when you're tying your shoes.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A veteran's caution is a ladder where you saw a wall.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Elders aren't gatekeepers; they're guides with keys.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Borrowed wisdom is not second-hand; it's forward-hand.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A veteran's 'not yet' saves you from 'too late.'",
+        "author": "Lincoln Ogden"
+      }
+    ],
+    "humility": [
+      {
+        "text": "You can rent wisdom or buy it; the rent is listening.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "If pride is your teacher, the curriculum is expensive.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A small 'you were right' is cheaper than a big 'I should've listened.'",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We don't outgrow guidance; we outgrow arrogance.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Humble people graduate sooner.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The cycle ends where curiosity meets humility.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Humility is speed in disguise.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Early humility is compound interest for the soul.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Learning later isn't a sin; insisting on it is.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Humility is the speed limit that gets you there faster.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The wise trade certainty for guidance.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The fastest path is usually paved with humility.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Humility hears what pride can't even detect.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "You can be the exception—or accept instruction.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Humility lets wisdom arrive before disaster does.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The student who listens early lives lighter.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Humility is protective gear for the mind.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Humility turns 'I know' into 'teach me how.'",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Choose to be teachable before life chooses to teach you.",
+        "author": "Lincoln Ogden"
+      }
+    ],
+    "reflection": [
+      {
+        "text": "Consequence teaches with invoices, not lectures.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Hindsight is foresight we refused.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "When truth finally lands, we rename it 'obvious.'",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We recycle mistakes when we refuse to inherit wisdom.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The lesson keeps circling back until you stop moving in squares.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The truth ages well; our certainty doesn't.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We inherit patterns by default and wisdom by decision.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "You can ignore elders, but you can't ignore outcomes.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The world repeats itself for students who skip class.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The lesson isn't late; we are.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We think we're exceptions until the rule arrives.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Hindsight has perfect posture; foresight needs your help.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The bill for arrogance arrives with interest.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The cycle of 'I know' breaks at 'teach me.'",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Pain is a strict teacher; mercy is often a mentor.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We honor ancestors by not repeating their storms.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Overconfidence is just untested hope.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A pattern unchallenged becomes a destiny accepted.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We repeat lessons we only admired.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The cycle of regret is single-use—if you let it be.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Hindsight is free clarity with a hidden time tax.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "If you won't inherit wisdom, you'll inherit the bill.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The oldest wisdom still fits—pride just won't try it on.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We save time by spending ego.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We repeat what we refuse to respect.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Pride is a poor tutor with perfect attendance.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We close loops by opening our ears.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We mistake guidance for control when pride is driving.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Pain persuades what advice only proposed.",
+        "author": "Lincoln Ogden"
+      }
+    ],
+    "timing": [
+      {
+        "text": "The first price is attention; the late fee is pain.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We call it luck when we took advice on time.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The gray zone between doubt and trust is where tuition accrues interest.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Early listening compounds like savings; late learning compounds like debt.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Timing separates a lesson from a loss.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The bill arrives when curiosity ignores caution.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The future discounts advice until reality raises the price.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The receipt for ignoring advice is itemized in time.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Learning late isn't failure; it's just pricier.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The cost of 'I'll see for myself' is often hidden in the fine print of time.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Early heed is a hedge against later hurt.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "There's no refund on time, only returns on listening.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The gray zone is comfortable and costly.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Learn from echoes so you don't learn from alarms.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Catch the lesson while it's still whispering.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The price of late wisdom is usually paid in time you wanted for living.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "We spend years proving what one hour of listening could fix.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The longer you wait to listen, the louder reality must speak.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Listen like the bill is due—because it is.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The lesson knocks softly before it kicks the door.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Experience will teach you either way; only you choose the price.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Late wisdom still works; it just works with a limp.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "If you listen late, carry light.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A habit of listening is a policy against preventable loss.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Late listening turns warnings into witnesses.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Delay turns easy lessons into hard landings.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "The lesson arrives as a nudge, then a shove, then a wall.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "Listening early is a form of rescue you perform on yourself.",
+        "author": "Lincoln Ogden"
+      }
+    ],
+    "leadership": [
+      {
+        "text": "What sounds like control is usually discipline disguised as care.",
+        "author": "Lincoln Ogden"
+      },
+      {
+        "text": "A small course correction beats a heroic rescue.",
+        "author": "Lincoln Ogden"
       }
     ]
   },
   "metadata": {
-    "totalQuotes": 685,
-    "categories": 63,
-    "lastUpdated": "2025-08-30",
+    "totalQuotes": 862,
+    "categories": 68,
+    "lastUpdated": "2025-09-01",
     "version": "1.0.0"
   }
 }
