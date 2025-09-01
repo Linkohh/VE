@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VibeMe - A beautiful motivational quote generator with dynamic themes and inspiring messages">
+    <meta name="keywords" content="quotes, motivation, inspiration, wellness, mindfulness, personal growth">
+    <meta name="author" content="VibeMe">
+    <meta name="theme-color" content="#aaaaaa">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="VibeMe - Motivational Quote Generator">
+    <meta property="og:description" content="Discover inspiring quotes with beautiful animations and dynamic themes">
+    <meta property="og:image" content="/assets/og-image.jpg">
+    <meta property="og:url" content="https://vibeme.app">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VibeMe - Motivational Quote Generator">
+    <meta name="twitter:description" content="Discover inspiring quotes with beautiful animations and dynamic themes">
+    <meta name="twitter:image" content="/assets/twitter-image.jpg">
+    
+    <title>VibeMe - Motivational Quote Generator</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" as="style">
+    <link rel="preload" href="js/quotes.js" as="script">
+    
+    <!-- Frameworks & libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <!-- Google Fonts with display=swap for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Dancing+Script:wght@400..700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Slab:wght@400;700&family=Oswald:wght@400;700&family=Montserrat:ital,wght@0,400;0,600;1,400&family=Lato:ital,wght@0,400;0,700;1,400&family=Nunito:ital,wght@0,400;0,600;1,400&family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400&family=Raleway:ital,wght@0,400;0,600;1,400&family=Roboto+Mono:ital,wght@0,400;0,600;1,400&family=Comfortaa&display=swap" rel="stylesheet">
+    
+    <!-- Project-specific stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Favicon and icons -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    
+    <!-- Performance and security -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    
+    <!-- Structured data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "VibeMe",
+        "description": "A beautiful motivational quote generator with dynamic themes and inspiring messages",
+        "url": "https://vibeme.app",
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-0 gradient-bg">
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50">
+        Skip to main content
+    </a>
+    
+    <!-- Screen reader live region for meridiem announcements -->
+    <span id="sr-meridiem" class="sr-only" aria-live="polite"></span>
+    
+    <!-- Decorative background effects -->
+    <div id="mouse-glow" class="mouse-glow" aria-hidden="true"></div>
+    <div id="matrix-bg" class="matrix-bg" aria-hidden="true"></div>
+    <canvas id="matrix-canvas" class="matrix-canvas" aria-hidden="true"></canvas>
+
+    <!-- Top controls -->
+    <div class="fixed top-4 right-4 z-[10001] flex space-x-2">
+        <!-- Dark mode toggle -->
+        <button id="dark-mode-toggle" type="button"
+                class="cursor-pointer p-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-300"
+                aria-label="Toggle dark mode"
+                title="Toggle dark/light mode">
+            <i class="fas fa-moon text-white text-lg" aria-hidden="true"></i>
+        </button>
+        
+        <!-- Settings toggle -->
+        <button id="settings-toggle" type="button"
+                class="cursor-pointer p-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-300"
+                aria-label="Open settings menu"
+                aria-expanded="false"
+                aria-controls="settings-panel">
+            <i class="fas fa-cog text-white text-lg" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- Date mount (top-left) -->
+    <div id="date-mount" class="fc-date" aria-live="off" aria-label="Today's date">
+      <time id="date-time" datetime=""></time>
+    </div>
+
+    <!-- Settings panel -->
+    <div id="settings-panel" 
+         class="hidden fixed top-16 right-4 z-[10000] bg-black/70 backdrop-blur-md p-4 rounded-lg shadow-xl text-white space-y-3 w-60 max-h-[80vh] overflow-y-auto pr-1"
+         role="dialog"
+         aria-labelledby="settings-title"
+         aria-hidden="true">
+        
+        <h2 id="settings-title" class="text-lg font-semibold mb-3">Settings</h2>
+        
+        <div class="space-y-3">
+            <label for="effects-toggle-checkbox" class="flex items-center cursor-pointer text-sm">
+                <input type="checkbox" 
+                       id="effects-toggle-checkbox"
+                       class="mr-2 accent-pink-500 h-4 w-4"
+                       aria-describedby="effects-description"
+                       checked>
+                <span>Visual Effects</span>
+            </label>
+            <p id="effects-description" class="text-xs text-gray-300">
+                Toggle mouse glow and matrix background effects
+            </p>
+
+            <!-- Mouse Glow Customization -->
+            <div id="glow-controls" class="space-y-2 border-t border-gray-600 pt-3">
+                <h3 class="text-sm font-semibold text-gray-200">Mouse Glow</h3>
+                
+                <div class="space-y-2">
+                    <label for="glow-intensity" class="flex items-center justify-between text-xs">
+                        <span>Intensity</span>
+                        <span id="glow-intensity-value">90%</span>
+                    </label>
+                    <input type="range" 
+                           id="glow-intensity" 
+                           min="0" 
+                           max="100" 
+                           value="90"
+                           class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                    
+                    <label for="glow-size" class="flex items-center justify-between text-xs">
+                        <span>Size</span>
+                        <span id="glow-size-value">100px</span>
+                    </label>
+                    <input type="range" 
+                           id="glow-size" 
+                           min="50" 
+                           max="200" 
+                           value="100"
+                           class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                    
+                    <label for="glow-tracking" class="flex items-center cursor-pointer text-xs">
+                        <input type="checkbox" 
+                               id="glow-tracking"
+                               class="mr-2 accent-pink-500 h-3 w-3"
+                               checked>
+                        <span>Precision Tracking</span>
+                    </label>
+                    <p class="text-xs text-gray-400">Ultra-smooth cursor following</p>
+                </div>
+            </div>
+
+            <!-- Audio Announcements (TTS) -->
+            <div class="space-y-2 border-t border-gray-600 pt-3">
+              <h3 class="text-sm font-semibold text-gray-200">🗣️ Audio Announcements</h3>
+
+              <label for="tts-enable-checkbox" class="flex items-center cursor-pointer text-xs">
+                <input type="checkbox" id="tts-enable-checkbox" class="mr-2 accent-green-500 h-3 w-3">
+                <span>Read quotes aloud</span>
+              </label>
+
+              <label for="tts-rate" class="flex items-center justify-between text-xs">
+                <span>Speech Speed</span>
+                <span id="tts-rate-value">1.0x</span>
+              </label>
+              <input type="range" id="tts-rate" min="0.7" max="1.5" step="0.1"
+                     class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-green-500">
+
+              <!-- Beep toggle (inserted after tts-rate range) -->
+              <label for="beep-enable-checkbox" class="flex items-center cursor-pointer text-xs mt-2">
+                <input type="checkbox" id="beep-enable-checkbox" class="mr-2 accent-blue-500 h-3 w-3" checked>
+                <span>Beep before quote changes</span>
+              </label>
+              <p class="text-[10px] text-gray-400">
+                Helpful for blind/low‑vision users. Turn off if you prefer silent transitions.
+              </p>
+
+              <p class="text-[11px] text-gray-400 mt-1">
+                Enabling "Audio Announcements" will read quotes aloud. If you use a screen reader,
+                you may prefer to keep this off to avoid duplicate speech.
+              </p>
+
+              <!-- Voice & controls -->
+              <div class="space-y-2">
+                <label for="tts-voice" class="text-xs text-gray-300">Voice</label>
+                <select id="tts-voice" class="w-full text-black p-1 rounded text-xs">
+                  <!-- Populated by JS -->
+                </select>
+
+                <button id="tts-preview-btn" type="button"
+                        class="w-full text-xs bg-gray-500/80 hover:bg-gray-600/80 px-2 py-1.5 rounded transition-colors">
+                  Preview selected voice
+                </button>
+
+                <p class="text-[10px] text-gray-400">
+                  Tip: If you use a screen reader, keep "Read quotes aloud" off to avoid duplicate audio.
+                </p>
+              </div>
+            </div>
+
+            <button id="clear-favorites-btn" type="button"
+                    class="w-full text-sm bg-red-500/80 hover:bg-red-600/80 px-2 py-1.5 rounded transition-colors"
+                    aria-describedby="clear-favorites-description">
+                Clear Favorites
+            </button>
+            <p id="clear-favorites-description" class="text-xs text-gray-300">
+                Remove all saved favorite quotes
+            </p>
+
+            <button id="toggle-add-quote-form" type="button"
+                    class="w-full text-sm bg-green-500/80 hover:bg-green-600/80 px-2 py-1.5 rounded transition-colors"
+                    aria-expanded="false"
+                    aria-controls="add-quote-form">
+                Add Custom Quote
+            </button>
+
+            <div id="add-quote-form" class="hidden mt-2 space-y-2" role="region" aria-labelledby="add-quote-title">
+                <h3 id="add-quote-title" class="sr-only">Add Custom Quote Form</h3>
+                
+                <!-- Security notice -->
+                <div class="text-xs text-yellow-300 bg-yellow-900/20 p-2 rounded border border-yellow-500/30">
+                    <i class="fas fa-shield-alt mr-1"></i>
+                    Quotes are filtered for inappropriate content
+                </div>
+                
+                <label for="new-quote-text" class="sr-only">Quote text</label>
+                <textarea id="new-quote-text" 
+                          rows="3"
+                          class="w-full text-black p-2 rounded resize-none"
+                          placeholder="Enter your inspirational quote..."
+                          maxlength="300"
+                          aria-describedby="quote-text-help"></textarea>
+                <div class="flex justify-between text-xs text-gray-300">
+                    <span id="quote-text-help">Must be positive and appropriate</span>
+                    <span id="char-counter">0/300</span>
+                </div>
+                
+                <label for="new-quote-author" class="sr-only">Author name (optional)</label>
+                <input id="new-quote-author" 
+                       type="text"
+                       class="w-full text-black p-1 rounded"
+                       placeholder="Author (optional)"
+                       maxlength="50">
+                
+                <!-- Validation feedback -->
+                <div id="quote-validation" class="text-xs hidden"></div>
+                
+                <button id="submit-quote-btn" type="button"
+                        class="w-full text-sm bg-blue-500/80 hover:bg-blue-600/80 px-2 py-1.5 rounded transition-colors disabled:opacity-50"
+                        disabled>
+                    Add Quote
+                </button>
+            </div>
+
+            <!-- Color Customization Controls -->
+            <div id="color-controls" class="space-y-3 border-t border-gray-600 pt-3">
+                <h3 class="text-sm font-semibold text-gray-200">🎨 Color Customization</h3>
+                
+                <!-- Color Harmony Selector -->
+                <div class="space-y-2">
+                    <label for="harmony-type" class="text-xs text-gray-300">Color Harmony</label>
+                    <select id="harmony-type" 
+                            class="w-full text-black p-1 rounded text-xs">
+                        <option value="auto">🎲 Auto (Intelligent)</option>
+                        <option value="analogous">🌊 Analogous (Peaceful)</option>
+                        <option value="triadic">⚡ Triadic (Energetic)</option>
+                        <option value="complementary">🔥 Complementary (Bold)</option>
+                        <option value="split-complementary">🌟 Split-Complementary</option>
+                        <option value="monochromatic">🎯 Monochromatic (Subtle)</option>
+                        <option value="vibrant">💎 Vibrant (Dynamic)</option>
+                    </select>
+                </div>
+
+                <!-- Theme Preset Selector (keeps existing controls untouched) -->
+                <div class="space-y-2 mt-2">
+                    <label for="theme-preset" class="text-xs text-gray-300">Theme Preset</label>
+                    <select id="theme-preset" class="w-full text-black p-1 rounded text-xs">
+                        <option value="auto">🎯 Auto (by quote category)</option>
+                        <option value="retro_neon">🕹️ Retro Neon</option>
+                        <option value="desert_dusk">🌵 Desert Dusk</option>
+                        <option value="lavender_glow">💜 Lavender Glow</option>
+                        <option value="midnight_arcade">🌌 Midnight Arcade</option>
+                        <option value="punchy_reds">🔥 Punchy Reds</option>
+                    </select>
+                    <p class="text-[10px] text-gray-400">Applies to gradient, glass, text contrast, glow & matrix.</p>
+                </div>
+
+                <!-- Vibrancy Control -->
+                <div class="space-y-2">
+                    <label for="vibrancy-slider" class="flex items-center justify-between text-xs">
+                        <span>Vibrancy</span>
+                        <span id="vibrancy-value">70%</span>
+                    </label>
+                    <input type="range" 
+                           id="vibrancy-slider" 
+                           min="0" 
+                           max="100" 
+                           value="70"
+                           class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                    <p class="text-xs text-gray-400">Controls color saturation intensity</p>
+                </div>
+
+                <!-- Warmth Control -->
+                <div class="space-y-2">
+                    <label for="warmth-slider" class="flex items-center justify-between text-xs">
+                        <span>Warmth</span>
+                        <span id="warmth-value">50%</span>
+                    </label>
+                    <input type="range" 
+                           id="warmth-slider" 
+                           min="0" 
+                           max="100" 
+                           value="50"
+                           class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-orange-500">
+                    <p class="text-xs text-gray-400">Cool colors ← → Warm colors</p>
+                </div>
+
+                <!-- Base Color Picker -->
+                <div class="space-y-2">
+                    <label for="base-color-picker" class="text-xs text-gray-300">Base Color (Optional)</label>
+                    <div class="flex items-center space-x-2">
+                        <input type="color" 
+                               id="base-color-picker" 
+                               class="w-8 h-8 rounded cursor-pointer">
+                        <button id="random-color-btn" type="button"
+                                class="flex-1 text-xs bg-purple-500/80 hover:bg-purple-600/80 px-2 py-1 rounded transition-colors">
+                            🎲 Random
+                        </button>
+                        <button id="clear-base-color-btn" type="button"
+                                class="flex-1 text-xs bg-gray-500/80 hover:bg-gray-600/80 px-2 py-1 rounded transition-colors">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Accessibility Toggle -->
+                <div class="space-y-2">
+                    <label for="accessibility-mode" class="flex items-center cursor-pointer text-xs">
+                        <input type="checkbox" 
+                               id="accessibility-mode"
+                               class="mr-2 accent-green-500 h-3 w-3"
+                               checked>
+                        <span>♿ Accessibility Mode</span>
+                    </label>
+                    <p class="text-xs text-gray-400">Ensures WCAG contrast compliance</p>
+                </div>
+
+                <!-- Matrix Visibility -->
+                <div class="space-y-2">
+                    <label for="matrix-opacity" class="flex items-center justify-between text-xs">
+                        <span>Matrix Visibility</span>
+                        <span id="matrix-opacity-value">80%</span>
+                    </label>
+                    <input type="range" 
+                           id="matrix-opacity" 
+                           min="0" 
+                           max="100" 
+                           value="80"
+                           class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                </div>
+
+                <!-- Advanced Matrix Controls -->
+                <div class="space-y-3 border-t border-gray-600 pt-3">
+                    <h4 class="text-xs font-semibold text-gray-200">🔮 Advanced Matrix</h4>
+                    
+                    <!-- Matrix Intensity -->
+                    <div class="space-y-2">
+                        <label for="matrix-intensity" class="flex items-center justify-between text-xs">
+                            <span>Matrix Intensity</span>
+                            <span id="matrix-intensity-value">100%</span>
+                        </label>
+                        <input type="range" 
+                               id="matrix-intensity" 
+                               min="50" 
+                               max="200" 
+                               value="100"
+                               class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                        <p class="text-xs text-gray-400">Controls glow strength and pop effect</p>
+                    </div>
+
+                    <!-- Animation Speed -->
+                    <div class="space-y-2">
+                        <label for="matrix-speed" class="flex items-center justify-between text-xs">
+                            <span>Animation Speed</span>
+                            <span id="matrix-speed-value">1.0x</span>
+                        </label>
+                        <input type="range" 
+                               id="matrix-speed" 
+                               min="0.5" 
+                               max="2.0" 
+                               step="0.1"
+                               value="1.0"
+                               class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-green-500">
+                        <p class="text-xs text-gray-400">Slower = more readable, Faster = more dynamic</p>
+                    </div>
+
+                    <!-- Contrast Boost -->
+                    <div class="space-y-2">
+                        <label for="matrix-high-contrast" class="flex items-center cursor-pointer text-xs">
+                            <input type="checkbox" 
+                                   id="matrix-high-contrast"
+                                   class="mr-2 accent-red-500 h-3 w-3">
+                            <span>🔥 High Contrast Mode</span>
+                        </label>
+                        <p class="text-xs text-gray-400">Forces maximum visibility on any background</p>
+                    </div>
+
+                    <!-- Blend Mode Override -->
+                    <div class="space-y-2">
+                        <label for="matrix-blend-mode" class="text-xs text-gray-300">Blend Mode</label>
+                        <select id="matrix-blend-mode" 
+                                class="w-full text-black p-1 rounded text-xs">
+                            <option value="auto">🎯 Auto (Intelligent)</option>
+                            <option value="dark-bg">🌟 Screen (Classic Glow)</option>
+                            <option value="light-bg">⚫ Multiply (Sharp Dark)</option>
+                            <option value="high-contrast">🔥 Difference (Maximum Pop)</option>
+                        </select>
+                        <p class="text-xs text-gray-400">Manual override for blend effects</p>
+                    </div>
+
+                    <!-- Stream Density -->
+                    <div class="space-y-2">
+                        <label for="matrix-density" class="flex items-center justify-between text-xs">
+                            <span>Stream Density</span>
+                            <span id="matrix-density-value">1.5x</span>
+                        </label>
+                        <input type="range" 
+                               id="matrix-density" 
+                               min="0.5" 
+                               max="3.0" 
+                               step="0.1"
+                               value="1.5"
+                               class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                        <p class="text-xs text-gray-400">Balance visual impact vs. performance</p>
+                    </div>
+
+                    <!-- Rendering Mode -->
+                    <div class="space-y-2 border-t border-gray-700 pt-3">
+                        <label for="matrix-render-mode" class="text-xs text-gray-300">🎮 Rendering Engine</label>
+                        <select id="matrix-render-mode" 
+                                class="w-full text-black p-1 rounded text-xs">
+                            <option value="dom">🏠 DOM (Classic)</option>
+                            <option value="canvas">🎨 Canvas (Performance)</option>
+                            <option value="hybrid">⚡ Hybrid (Best of Both)</option>
+                        </select>
+                        <p class="text-xs text-gray-400">Canvas = smoother, DOM = compatible</p>
+                    </div>
+
+                    <!-- Canvas Performance -->
+                    <div id="canvas-performance-settings" class="space-y-2 hidden">
+                        <h5 class="text-xs font-medium text-cyan-300">Canvas Performance</h5>
+                        
+                        <div class="space-y-2">
+                            <label for="canvas-max-fps" class="flex items-center justify-between text-xs">
+                                <span>Max FPS</span>
+                                <span id="canvas-max-fps-value">60</span>
+                            </label>
+                            <input type="range" 
+                                   id="canvas-max-fps" 
+                                   min="30" 
+                                   max="120" 
+                                   step="15"
+                                   value="60"
+                                   class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="canvas-adaptive-performance" class="flex items-center cursor-pointer text-xs">
+                                <input type="checkbox" 
+                                       id="canvas-adaptive-performance"
+                                       class="mr-2 accent-cyan-500 h-3 w-3"
+                                       checked>
+                                <span>🧠 Adaptive Performance</span>
+                            </label>
+                            <p class="text-xs text-gray-400">Auto-adjusts quality based on device performance</p>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="canvas-memory-management" class="flex items-center cursor-pointer text-xs">
+                                <input type="checkbox" 
+                                       id="canvas-memory-management"
+                                       class="mr-2 accent-cyan-500 h-3 w-3"
+                                       checked>
+                                <span>🧹 Memory Management</span>
+                            </label>
+                            <p class="text-xs text-gray-400">Prevents memory leaks with cleanup cycles</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color Preview -->
+                <div class="space-y-2">
+                    <label class="text-xs text-gray-300">Color Preview</label>
+                    <div class="flex space-x-1 h-8 rounded overflow-hidden">
+                        <div id="color-preview-1" class="flex-1 bg-purple-500"></div>
+                        <div id="color-preview-2" class="flex-1 bg-blue-500"></div>
+                        <div id="color-preview-3" class="flex-1 bg-teal-500"></div>
+                    </div>
+                    <button id="apply-colors-btn" type="button"
+                            class="w-full text-xs bg-indigo-500/80 hover:bg-indigo-600/80 px-2 py-1.5 rounded transition-colors">
+                        ✨ Apply New Colors
+                    </button>
+                </div>
+
+                <!-- Matrix Preset Selector (injected non-destructively) -->
+                <div id="matrix-preset-wrapper" class="space-y-2 mt-3">
+                    <label for="matrix-preset" class="text-xs text-gray-300">Matrix Preset</label>
+                    <select id="matrix-preset" class="w-full text-black p-1 rounded text-xs">
+                        <option value="auto">🎯 Auto (by quote category)</option>
+                        <option value="neon_rain">🌧️ Rain Matrix (Neon)</option>
+                        <option value="dual_drift">⇵ Dual Drift</option>
+                        <option value="aurora_waves">🌊 Aurora Waves</option>
+                        <option value="glyph_storm">⚡ Glyph Storm</option>
+                        <option value="lowkey_minimal">🌫️ Low-Key Minimal</option>
+                    </select>
+                    <p class="text-[10px] text-gray-400">Changes density, speed, trails, direction & symbols; colors follow the active theme.</p>
+                </div>
+<div id="category-filter-wrap" class="space-y-2 mt-4">
+  <label for="category-filter" class="text-xs text-gray-300">Quote Category</label>
+  <select id="category-filter" class="w-full text-black p-1 rounded text-xs">
+    <option value="all">All</option>
+    <option value="love">Love</option>
+    <option value="perseverance">Perseverance</option>
+    <option value="wisdom">Wisdom</option>
+    <option value="originality">Originality</option>
+    <option value="change">Change</option>
+    <option value="inner_strength">Inner Strength</option>
+    <option value="famous_quotes">Famous</option>
+  </select>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main id="main-content" class="container mx-auto max-w-4xl relative z-10 pt-8">
+        <!-- App Title Bar (centered, outside the quote box) -->
+        <div id="app-title-bar" class="app-title-bar" role="banner" aria-label="Application Title">
+          <h1 class="vb-logo heading-font" data-title="VibeMe">VibeMe</h1>
+          <span class="logo-underline" aria-hidden="true"></span>
+          <!-- Flip clock mount (directly under the VibeMe title) -->
+          <div id="flip-clock-mount" class="flip-clock-mount" data-skin="v2" aria-label="Current time" role="timer"></div>
+        </div>
+        <!-- Anchor bar lives directly under the title -->
+        <!-- If this block already exists, skip (JS will also ensure it at runtime) -->
+        <div class="quote-container-outer">
+            <div class="quote-container-inner">
+                <div class="quote-pattern" id="quote-pattern" aria-hidden="true"></div>
+                <div class="relative z-10">
+                    <!-- App title -->
+                    <header>
+                        
+                    </header>
+
+                    <!-- Quote display area -->
+                    <section class="quote-animation-container text-center mb-8 min-h-[120px] md:min-h-[150px]"
+                             aria-live="polite" aria-atomic="true">
+                        <blockquote>
+                            <p id="quote-text"
+                               class="quote-text-font text-2xl md:text-3xl mb-4 leading-relaxed dynamic-text-main quote-text-animate">
+                               The only way to do great work is to love what you do.
+                            </p>
+                            <footer>
+                                <cite id="quote-author"
+                                      class="text-lg italic dynamic-text-secondary author-font author-animate">
+                                      — Steve Jobs
+                                </cite>
+                            </footer>
+                        </blockquote>
+
+                        <!-- Inline TTS controls (shown only when TTS is supported/enabled) -->
+                        <div id="tts-inline-controls" class="flex items-center justify-center space-x-2 mt-4" hidden>
+                            <!-- Primary: Speak / Stop toggle -->
+                            <button id="tts-toggle-btn" type="button"
+                                    class="action-button p-2 bg-white/10 hover:bg-white/20 rounded-full"
+                                    aria-label="Read quote aloud" aria-pressed="false" title="Read aloud">
+                              <i class="fas fa-volume-up" aria-hidden="true"></i>
+                            </button>
+
+                            <!-- Secondary: Replay (optional; keep if you want a visible replay) -->
+                            <button id="tts-replay-btn" type="button"
+                                    class="action-button p-2 bg-white/10 hover:bg-white/20 rounded-full"
+                                    aria-label="Replay audio" title="Replay">
+                              <i class="fas fa-rotate-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- Action buttons -->
+                    <section class="flex justify-center items-center space-x-3 mb-6 text-xl" 
+                             aria-label="Quote actions">
+                        <button id="copy-quote-btn" type="button"
+                                title="Copy quote to clipboard"
+                                class="dynamic-text-secondary hover:text-white/80 transition-colors p-2 rounded-full hover:bg-white/10 action-button"
+                                aria-label="Copy quote to clipboard">
+                            <i class="fas fa-copy" aria-hidden="true"></i>
+                        </button>
+                        
+                        <button id="favorite-quote-btn" type="button"
+                                title="Add to favorites"
+                                class="dynamic-text-secondary hover:text-white/80 transition-colors p-2 rounded-full hover:bg-white/10 action-button"
+                                aria-label="Add quote to favorites">
+                            <i class="far fa-heart" aria-hidden="true"></i>
+                        </button>
+                        
+                        <!-- Rating buttons -->
+                        <button id="rate-up-btn" type="button"
+                                title="Rate this quote positively"
+                                class="dynamic-text-secondary hover:text-green-400 transition-colors p-2 rounded-full hover:bg-white/10 action-button"
+                                aria-label="Rate quote positively">
+                            <i class="far fa-thumbs-up" aria-hidden="true"></i>
+                        </button>
+                        
+                        <button id="rate-down-btn" type="button"
+                                title="Rate this quote negatively"
+                                class="dynamic-text-secondary hover:text-red-400 transition-colors p-2 rounded-full hover:bg-white/10 action-button"
+                                aria-label="Rate quote negatively">
+                            <i class="far fa-thumbs-down" aria-hidden="true"></i>
+                        </button>
+                    </section>
+
+                    <!-- Generation controls -->
+                    <section class="flex flex-col items-center space-y-6" aria-label="Quote generation">
+                        <button id="generate-btn" type="button"
+                                class="generate-btn font-semibold"
+                                aria-label="Generate new inspirational quote">
+                            <i class="fas fa-sync-alt" aria-hidden="true"></i>
+                            <span class="text-sm">New Vibe</span>
+                        </button>
+
+                        <div class="flex items-center dynamic-text-secondary text-sm space-x-3" 
+                             aria-label="Auto-generation timer">
+                            <button id="timer-toggle-btn" type="button"
+                                    title="Pause automatic quote generation"
+                                    class="hover:text-white/80 transition-colors"
+                                    aria-label="Pause automatic quote generation">
+                                <i class="fas fa-pause" aria-hidden="true"></i>
+                            </button>
+                            <span>
+                                New quote in <span id="countdown">10</span> seconds
+                            </span>
+                        </div>
+
+                        <!-- Social sharing -->
+                        <nav class="flex space-x-3 md:space-x-4 mt-6" 
+                             aria-label="Share quote on social media">
+                            <a href="#" id="twitter-share" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="social-bubble"
+                               aria-label="Share on Twitter"
+                               title="Share on Twitter">
+                                <i class="fab fa-twitter" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" id="facebook-share" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="social-bubble"
+                               aria-label="Share on Facebook"
+                               title="Share on Facebook">
+                                <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" id="linkedin-share" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="social-bubble"
+                               aria-label="Share on LinkedIn"
+                               title="Share on LinkedIn">
+                                <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" id="whatsapp-share" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="social-bubble"
+                               aria-label="Share on WhatsApp"
+                               title="Share on WhatsApp">
+                                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" id="pinterest-share" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="social-bubble"
+                               aria-label="Share on Pinterest"
+                               title="Share on Pinterest">
+                                <i class="fab fa-pinterest-p" aria-hidden="true"></i>
+                            </a>
+                        </nav>
+                    </section>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Feedback messages -->
+        <p id="copy-feedback"
+           class="text-center text-sm dynamic-text-secondary mt-3 h-4"></p>
+    </main>
+
+    <!-- Keyboard shortcuts help (hidden, can be shown with ? key) -->
+    <div id="keyboard-help" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50" role="dialog" aria-labelledby="keyboard-help-title" aria-modal="true" tabindex="-1">
+        <div class="bg-white rounded-lg p-6 max-w-md mx-4">
+            <h2 id="keyboard-help-title" class="text-xl font-bold mb-4 text-gray-800">Keyboard Shortcuts</h2>
+            <dl class="space-y-2 text-sm">
+                <div class="flex justify-between">
+                    <dt class="font-medium">Space / Enter:</dt>
+                    <dd>Generate new quote</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="font-medium">F:</dt>
+                    <dd>Toggle favorite</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="font-medium">C:</dt>
+                    <dd>Copy quote</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="font-medium">T:</dt>
+                    <dd>Toggle timer</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="font-medium">Escape:</dt>
+                    <dd>Close panels</dd>
+                </div>
+            </dl>
+            <button type="button" onclick="document.getElementById('keyboard-help').classList.add('hidden')" 
+                    class="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Enhanced JavaScript - Non-Module System for CORS Compatibility -->
+    <script src="js/main.js"></script>
+
+    <!-- Fallback for browsers without script support -->
+    <noscript>
+        <div style="padding: 2rem; text-align: center; font-family: system-ui; background: white; color: black;">
+            <h1 style="color: #dc2626;">JavaScript Required</h1>
+            <p>VibeMe requires JavaScript to function properly.</p>
+            <p>Please enable JavaScript in your browser settings.</p>
+        </div>
+    </noscript>
+
+    <!-- Footer -->
+    <footer class="fixed bottom-0 left-0 right-0 bg-black/20 backdrop-blur-sm border-t border-white/10 text-center py-2 z-[9999]">
+        <div class="container mx-auto px-4">
+            <p class="text-sm text-white/70">
+                Copyright © 2025 VibeMe By LHO. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+
+
+
+<!-- ===== FAVORITES (BEGIN) ===== -->
+<button id="favorites-toggle" type="button"
+  class="fixed right-4 bottom-24 z-[10002] rounded-full w-11 h-11 flex items-center justify-center bg-white/15 hover:bg-white/25 backdrop-blur-md shadow dynamic-text-secondary"
+  title="Open favorites" aria-label="Open favorites" aria-expanded="false" aria-controls="favorites-panel">
+  <i class="fas fa-bookmark" aria-hidden="true"></i>
+</button>
+
+<div id="favorites-panel"
+     class="favorites-panel fixed right-4 bottom-40 md:w-[420px] w-80 max-w-[92vw] z-[10001] rounded-2xl overflow-hidden"
+     data-state="closed" role="dialog" aria-modal="false" aria-labelledby="favorites-title" aria-hidden="true">
+  <div class="favorites-header flex items-center justify-between px-3 py-2">
+    <div class="flex items-center gap-2">
+      <i class="fas fa-bookmark text-xs opacity-80" aria-hidden="true"></i>
+      <h2 id="favorites-title" class="text-sm font-medium">Favorites</h2>
+      <span id="favorites-count" class="favorites-count-chip text-[10px] px-1.5 py-0.5 rounded-full">0</span>
+    </div>
+    <div class="flex gap-1">
+      <button id="favorites-close" type="button" class="favorites-icon-btn" title="Close" aria-label="Close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="favorites-body px-3 pb-3 pt-2">
+    <div id="favorites-empty" class="favorites-empty text-xs">
+      <i class="fas fa-inbox mr-1"></i> Your saved items show up here.
+    </div>
+    <div id="favorites-list" class="favorites-list mt-2 space-y-2 max-h-[60vh] overflow-y-auto overscroll-contain"></div>
+  </div>
+</div>
+<!-- ===== FAVORITES (END) ===== -->
+
+<!-- Toast root -->
+<div id="toast-root" class="fixed left-1/2 -translate-x-1/2 bottom-6 z-[99999] space-y-2 pointer-events-none"></div>
+
+<!-- Single source of truth: All quotes now loaded from data/quotes.js -->
+</body>
+</html>
