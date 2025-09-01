@@ -2858,6 +2858,10 @@ VibeMe.kit = VibeMe.kit || {
   }
 };
 
+// Add no-op stubs for matrix animation functions to prevent TypeError
+VibeMe.stopMatrixAnimation ||= () => {};
+VibeMe.startMatrixAnimation ||= () => {};
+
 VibeMe.bus = VibeMe.bus || (() => {
   const bus = new EventTarget();
   return {
