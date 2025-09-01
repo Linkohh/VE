@@ -773,11 +773,20 @@
         s.async = false;                   // ensure window.quotesData exists before main.js runs
         console.log('[injector] Loading script:', s.src);
         
-        s.onload = function() { console.log('[injector] quotes.js loaded successfully'); };
-        s.onerror = function() { console.error('[injector] Failed to load quotes.js'); };
+        // 👉 Expose a promise so main.js can wait for quotes.js
+        window.__QUOTES_JS_PROMISE = new Promise(function(resolve) {
+          s.onload = function() { 
+            console.log('[injector] quotes.js loaded successfully'); 
+            resolve(true); 
+          };
+          s.onerror = function() { 
+            console.error('[injector] Failed to load quotes.js'); 
+            resolve(false); 
+          };
+        });
         
         document.head.appendChild(s);
-        console.log('[injector] Script appended to head');
+        console.log('[injector] Script appended to head, promise exposed');
 
         // Note: main.js will set the actual source flag accurately
       })();
