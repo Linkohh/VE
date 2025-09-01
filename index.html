@@ -746,7 +746,30 @@
     </div>
 
     <!-- Enhanced JavaScript - Non-Module System for CORS Compatibility -->
-    <script src="js/quotes.js"></script>
+    <!-- Load quotes.js only when opened as file:// (offline) -->
+    <script>
+      (function () {
+        if (location.protocol !== 'file:') return;
+
+        // Find the main.js tag so we can reuse its path prefix (handles backups at any depth)
+        var main = document.querySelector('script[defer]');
+        var prefix = 'js/'; // default if we can't detect
+        if (main && main.getAttribute('src')) {
+          // "js/main.js" -> "js/"
+          // "../js/main.js?x" -> "../js/"
+          // "../../js/main.js" -> "../../js/"
+          prefix = main.getAttribute('src').replace(/main\.js(\?.*)?$/, '');
+        }
+
+        var s = document.createElement('script');
+        s.src = prefix + 'quotes.js';
+        s.async = false;                   // ensure window.quotesData exists before main.js runs
+        document.head.appendChild(s);
+
+        // Optional: tag the chosen source for quick console checks
+        window.__QUOTES_SOURCE = 'js';
+      })();
+    </script>
     <script defer src="js/main.js"></script>
 
     <!-- Fallback for browsers without script support -->
