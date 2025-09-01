@@ -749,10 +749,15 @@
     <!-- Load quotes.js only when opened as file:// (offline) -->
     <script>
       (function () {
+        console.log('[injector] Protocol check:', location.protocol);
         if (location.protocol !== 'file:') return;
+        
+        console.log('[injector] File protocol detected, loading quotes.js...');
 
         // 🔒 More robust: target the main script explicitly
         var main = document.querySelector('script[data-main]');
+        console.log('[injector] Main script found:', !!main, main ? main.getAttribute('src') : 'none');
+        
         var prefix = 'js/'; // default if we can't detect
         if (main && main.getAttribute('src')) {
           // "js/main.js" -> "js/"
@@ -760,15 +765,65 @@
           // "../../js/main.js" -> "../../js/"
           prefix = main.getAttribute('src').replace(/main\.js(\?.*)?$/, '');
         }
+        
+        console.log('[injector] Using prefix:', prefix);
 
         var s = document.createElement('script');
         s.src = prefix + 'quotes.js';
         s.async = false;                   // ensure window.quotesData exists before main.js runs
+        console.log('[injector] Loading script:', s.src);
+        
+        s.onload = function() { console.log('[injector] quotes.js loaded successfully'); };
+        s.onerror = function() { console.error('[injector] Failed to load quotes.js'); };
+        
         document.head.appendChild(s);
+        console.log('[injector] Script appended to head');
 
         // Note: main.js will set the actual source flag accurately
       })();
     </script>
+    
+    <!-- Enhanced diagnostic script for file protocol debugging -->
+    <script>
+      if (location.protocol === 'file:') {
+        // Wait for main.js to load and create comprehensive diagnostic
+        setTimeout(function() {
+          console.log('\n=== ENHANCED FILE PROTOCOL DIAGNOSTICS ===');
+          console.log('Protocol:', location.protocol);
+          console.log('Window quotesData available:', typeof window.quotesData);
+          console.log('Window QUOTES_SOURCE:', window.__QUOTES_SOURCE || '(not set)');
+          
+          if (window.quotesData) {
+            console.log('QuotesData categories:', Object.keys(window.quotesData.categories || {}).length);
+            console.log('Total quotes:', Object.values(window.quotesData.categories || {}).flat().length);
+          }
+          
+          if (window.VIBE_QUOTES_PROMISE) {
+            window.VIBE_QUOTES_PROMISE.then(function(data) {
+              console.log('\nPromise resolved with:');
+              console.log('- Categories:', Object.keys(data.categories || {}).length);
+              console.log('- Flat count:', Object.values(data.categories || {}).flat().length);
+              console.log('- Source tracking:', window.__QUOTES_SOURCE);
+              
+              console.table({
+                protocol: location.protocol.replace(':',''),
+                source: window.__QUOTES_SOURCE || '(unknown)',
+                categories: Object.keys(data.categories || {}).length,
+                flatCount: Object.values(data.categories || {}).flat().length,
+                hasQuotesJS: typeof window.quotesData
+              });
+            }).catch(function(err) {
+              console.error('Promise failed:', err);
+            });
+          } else {
+            console.warn('VIBE_QUOTES_PROMISE not available');
+          }
+          
+          console.log('=== END DIAGNOSTICS ===\n');
+        }, 2000); // Wait 2 seconds for everything to load
+      }
+    </script>
+    
     <script data-main defer src="js/main.js"></script>
 
     <!-- Fallback for browsers without script support -->
