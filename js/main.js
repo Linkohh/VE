@@ -336,6 +336,34 @@ const VibeMe = {
                 { color1: "#F0213A", color2: "#FF6B77", color3: "#FFA3A9" }
             ],
 
+            // Synthwave Sunset
+            synthwave_sunset: [
+                { color1: "#ff00ff", color2: "#00ffff", color3: "#ffff00" },
+                { color1: "#ff0080", color2: "#0080ff", color3: "#ffff80" },
+                { color1: "#cc00ff", color2: "#00ccff", color3: "#ccff00" }
+            ],
+
+            // Cosmic Ocean
+            cosmic_ocean: [
+                { color1: "#1d2f6f", color2: "#374895", color3: "#83b6e8" },
+                { color1: "#0f1a3d", color2: "#2a4b8d", color3: "#6da4e8" },
+                { color1: "#152856", color2: "#4a6bb8", color3: "#a1c8f0" }
+            ],
+
+            // Forbidden Forest
+            forbidden_forest: [
+                { color1: "#2e4a3b", color2: "#6d8c54", color3: "#e3d18a" },
+                { color1: "#1a3d28", color2: "#5a7a45", color3: "#d4c76b" },
+                { color1: "#3f5d4c", color2: "#7e9f63", color3: "#f2e599" }
+            ],
+
+            // Galactic Grape
+            galactic_grape: [
+                { color1: "#4a148c", color2: "#9b27af", color3: "#e1bee7" },
+                { color1: "#380a6b", color2: "#7b1fa2", color3: "#ce93d8" },
+                { color1: "#5c1e9e", color2: "#ad42c0", color3: "#f3e5f5" }
+            ],
+
             // --- New QuoteFusion Ultra/LO Theme Palettes ---
             
             // Belief (trust, faith, confidence)
