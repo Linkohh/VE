@@ -751,8 +751,8 @@
       (function () {
         if (location.protocol !== 'file:') return;
 
-        // Find the main.js tag so we can reuse its path prefix (handles backups at any depth)
-        var main = document.querySelector('script[defer]');
+        // 🔒 More robust: target the main script explicitly
+        var main = document.querySelector('script[data-main]');
         var prefix = 'js/'; // default if we can't detect
         if (main && main.getAttribute('src')) {
           // "js/main.js" -> "js/"
@@ -766,11 +766,10 @@
         s.async = false;                   // ensure window.quotesData exists before main.js runs
         document.head.appendChild(s);
 
-        // Optional: tag the chosen source for quick console checks
-        window.__QUOTES_SOURCE = 'js';
+        // Note: main.js will set the actual source flag accurately
       })();
     </script>
-    <script defer src="js/main.js"></script>
+    <script data-main defer src="js/main.js"></script>
 
     <!-- Fallback for browsers without script support -->
     <noscript>

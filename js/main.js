@@ -9,7 +9,10 @@
       try {
         const res = await fetch('data/quotes.json', { cache: 'no-cache' });
         if (res.ok) {
-          return await res.json();
+          const data = await res.json();
+          window.__QUOTES_SOURCE = 'json';
+          console.info('[quotes] Using data/quotes.json (json)');
+          return data;
         }
       } catch (err) {
         console.warn('[quotes] Fetch failed, will try inline fallback:', err);
@@ -19,7 +22,10 @@
       try {
         const res = await fetch('data/quotes.json');
         if (res.ok) {
-          return await res.json();
+          const data = await res.json();
+          window.__QUOTES_SOURCE = 'json';
+          console.info('[quotes] Using data/quotes.json (json)');
+          return data;
         }
       } catch (err) {
         // Expected on Chrome/Safari under file://
@@ -30,8 +36,10 @@
     const inline = document.getElementById('quotes-inline');
     if (inline && inline.textContent.trim()) {
       try {
-        console.log('[quotes] Using inline JSON fallback data');
-        return JSON.parse(inline.textContent);
+        const data = JSON.parse(inline.textContent);
+        window.__QUOTES_SOURCE = 'inline';
+        console.info('[quotes] Using inline JSON (inline)');
+        return data;
       } catch (e) {
         console.error('[quotes] Inline JSON is invalid:', e);
       }
@@ -39,12 +47,14 @@
 
     // 3) JavaScript fallback (use window.quotesData from quotes.js if available)
     if (window.quotesData && window.quotesData.categories) {
-      console.log('[quotes] Using quotes.js fallback data');
+      window.__QUOTES_SOURCE = 'js';
+      console.info('[quotes] Using quotes.js (js)');
       return window.quotesData;
     }
 
-    // 4) Final fallback (minimal embedded quotes as last resort)
-    console.error('[quotes] No quotes loaded. For file:// usage, either run a local server, paste data/quotes.json into #quotes-inline, or ensure quotes.js loads properly.');
+    // 4) Minimal last-resort
+    window.__QUOTES_SOURCE = 'minimal';
+    console.error('[quotes] No quotes available; using minimal fallback');
     return { categories: {} };
   }
 
