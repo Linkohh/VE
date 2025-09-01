@@ -46,6 +46,15 @@
     }
 
     // 3) JavaScript fallback (use window.quotesData from quotes.js if available)
+    try {
+      if (!window.quotesData && window.__QUOTES_JS_PROMISE) {
+        console.info('[quotes] Waiting for quotes.js to load...');
+        // wait up to ~1500ms for quotes.js to finish loading in file:// mode
+        const timeout = new Promise(r => setTimeout(() => r(false), 1500));
+        await Promise.race([window.__QUOTES_JS_PROMISE, timeout]);
+      }
+    } catch (_) { /* no-op */ }
+
     if (window.quotesData && window.quotesData.categories) {
       window.__QUOTES_SOURCE = 'js';
       console.info('[quotes] Using quotes.js (js)');
