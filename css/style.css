@@ -31,7 +31,7 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
 
 /* Small screens */
 @media (max-width: 480px){
-  .fc-date { top: 0.75rem; left: 0.75rem; font-size: 0.85rem; padding: 0.35rem 0.55rem; }
+  .fc-date { top: 0.75rem; left: 0.75rem; font-size: 1rem; padding: 0.35rem 0.55rem; }
 }
 /* css/style.css - VibeMe Enhanced Styles */
 
@@ -2538,6 +2538,7 @@ button:disabled {
   border: 1px solid color-mix(in oklab, var(--color2) 28%, transparent);
   padding-left: 0.75rem; /* space for accent bar */
   isolation: isolate;    /* keep glow effects contained */
+  font-size: 1.125rem;   /* Increased from default for better readability */
 }
 
 /* Gradient ring using a mask (no layout shift) */
