@@ -4253,7 +4253,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggle = $('#settings-toggle');
     const panel = $('#settings-panel');
     if (toggle && panel) {
-      toggle.addEventListener('click', () => {
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
         const isHidden = panel.classList.toggle('hidden');
         setAria(toggle, { 'aria-expanded': String(!isHidden) });
         setAria(panel, { 'aria-hidden': String(isHidden) });
@@ -4261,6 +4262,9 @@ document.addEventListener('DOMContentLoaded', () => {
           panel.focus?.();
         }
       });
+
+      // Prevent clicks inside the settings panel from bubbling up
+      panel.addEventListener('click', (e) => e.stopPropagation());
 
       // Add click-outside-to-close functionality
       document.addEventListener('click', (e) => {
