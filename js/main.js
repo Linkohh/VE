@@ -4261,6 +4261,17 @@ document.addEventListener('DOMContentLoaded', () => {
           panel.focus?.();
         }
       });
+
+      // Add click-outside-to-close functionality
+      document.addEventListener('click', (e) => {
+        const isHidden = panel.classList.contains('hidden');
+        const isToggle = e.target === toggle || toggle.contains(e.target);
+        const isPanel = panel.contains(e.target);
+
+        if (!isHidden && !isToggle && !isPanel) {
+          toggle.click();
+        }
+      });
     }
 
     // Effects master switch
