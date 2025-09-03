@@ -4,66 +4,57 @@
 (function(){
   async function loadQuotes() {
     const isFile = location.protocol === 'file:';
-    // 1) Prefer external JSON when not on file:// (http/https or localhost server)
-    if (!isFile) {
+
+    // --- Primary Loading Strategy ---
+    if (isFile) {
+      // OFFLINE: Use quotes.js, loaded by the injector script in index.html
+      console.info('[quotes] Offline mode: waiting for quotes.js...');
+      if (window.__QUOTES_JS_PROMISE) {
+        const loaded = await window.__QUOTES_JS_PROMISE;
+        if (loaded && window.quotesData && window.quotesData.categories) {
+          window.__QUOTES_SOURCE = 'js';
+          console.info('[quotes] Success: Loaded from quotes.js');
+          return window.quotesData;
+        }
+      }
+      console.warn('[quotes] Failed to load from quotes.js promise.');
+    } else {
+      // ONLINE: Fetch from data/quotes.json
+      console.info('[quotes] Online mode: fetching data/quotes.json...');
       try {
         const res = await fetch('data/quotes.json', { cache: 'no-cache' });
         if (res.ok) {
           const data = await res.json();
           window.__QUOTES_SOURCE = 'json';
-          console.info('[quotes] Using data/quotes.json (json)');
+          console.info('[quotes] Success: Loaded from data/quotes.json');
           return data;
         }
+        console.warn(`[quotes] Fetch failed with status: ${res.status}`);
       } catch (err) {
-        console.warn('[quotes] Fetch failed, will try inline fallback:', err);
-      }
-    } else {
-      // Some browsers block fetch() for file://; still try once for Firefox users
-      try {
-        const res = await fetch('data/quotes.json');
-        if (res.ok) {
-          const data = await res.json();
-          window.__QUOTES_SOURCE = 'json';
-          console.info('[quotes] Using data/quotes.json (json)');
-          return data;
-        }
-      } catch (err) {
-        // Expected on Chrome/Safari under file://
+        console.warn('[quotes] Fetch failed with error:', err);
       }
     }
 
-    // 2) Inline fallback (manual JSON paste into #quotes-inline element)
+    // --- Fallback Loading Strategies ---
+
+    // 1) Inline fallback (manual JSON paste into #quotes-inline element)
     const inline = document.getElementById('quotes-inline');
     if (inline && inline.textContent.trim()) {
       try {
         const data = JSON.parse(inline.textContent);
-        window.__QUOTES_SOURCE = 'inline';
-        console.info('[quotes] Using inline JSON (inline)');
-        return data;
+        if (data && data.categories) {
+            window.__QUOTES_SOURCE = 'inline';
+            console.info('[quotes] Fallback: Using inline JSON.');
+            return data;
+        }
       } catch (e) {
-        console.error('[quotes] Inline JSON is invalid:', e);
+        console.error('[quotes] Fallback: Inline JSON is invalid.', e);
       }
     }
 
-    // 3) JavaScript fallback (use window.quotesData from quotes.js if available)
-    try {
-      if (!window.quotesData && window.__QUOTES_JS_PROMISE) {
-        console.info('[quotes] Waiting for quotes.js to load...');
-        // wait up to ~1500ms for quotes.js to finish loading in file:// mode
-        const timeout = new Promise(r => setTimeout(() => r(false), 1500));
-        await Promise.race([window.__QUOTES_JS_PROMISE, timeout]);
-      }
-    } catch (_) { /* no-op */ }
-
-    if (window.quotesData && window.quotesData.categories) {
-      window.__QUOTES_SOURCE = 'js';
-      console.info('[quotes] Using quotes.js (js)');
-      return window.quotesData;
-    }
-
-    // 4) Minimal last-resort
+    // 2) Final fallback if all else fails (should be rare)
     window.__QUOTES_SOURCE = 'minimal';
-    console.error('[quotes] No quotes available; using minimal fallback');
+    console.error('[quotes] CRITICAL: All quote sources failed. Using minimal fallback.');
     return { categories: {} };
   }
 
