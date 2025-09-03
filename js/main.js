@@ -519,7 +519,7 @@ const VibeMe = {
                 .map(q => ({
                     text: String(q.text ?? q.quote ?? '').trim(),
                     author: String(q.author ?? 'Unknown').trim(),
-                    category: String(q.category ?? defaultCategory ?? 'default').trim()
+                    category: String(defaultCategory ?? q.category ?? 'default').trim()
                 }))
                 .filter(q => q.text.length > 0);
         }
