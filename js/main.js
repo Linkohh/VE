@@ -52,6 +52,56 @@
   }
 })();
 
+// ===== Polyfills for Legacy Browsers =====
+(function(){
+  // Element.closest polyfill
+  if (!Element.prototype.closest) {
+    Element.prototype.closest = function(selector) {
+      var el = this;
+      if (!document.documentElement.contains(el)) return null;
+      do {
+        if (el.matches && el.matches(selector)) return el;
+        el = el.parentElement || el.parentNode;
+      } while (el && el.nodeType === 1);
+      return null;
+    };
+  }
+
+  // Element.dataset polyfill
+  if (!('dataset' in document.documentElement)) {
+    Object.defineProperty(Element.prototype, 'dataset', {
+      get: function() {
+        const attrs = this.attributes;
+        const map = {};
+        for (let i = 0; i < attrs.length; i++) {
+          const name = attrs[i].name;
+          if (name && name.indexOf('data-') === 0) {
+            const prop = name.substring(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+            Object.defineProperty(map, prop, {
+              enumerable: true,
+              get: () => this.getAttribute(name),
+              set: val => this.setAttribute(name, val)
+            });
+          }
+        }
+        return map;
+      }
+    });
+  }
+
+  // CustomEvent polyfill
+  if (typeof window.CustomEvent !== 'function') {
+    function CustomEvent(event, params) {
+      params = params || { bubbles: false, cancelable: false, detail: null };
+      const evt = document.createEvent('CustomEvent');
+      evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+      return evt;
+    }
+    CustomEvent.prototype = window.Event.prototype;
+    window.CustomEvent = CustomEvent;
+  }
+})();
+
 // ===== Unified Quotes Loader (single source: data/quotes.json; optional inline fallback for file://) =====
 (function(){
   async function loadQuotes() {
