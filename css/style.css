@@ -100,8 +100,8 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --card-radius: var(--radius-lg);
 
     /* Left rail tokens */
-    --rail-width: 260px;
-    --rail-width-collapsed: 72px;
+    --rail-width: 160px;
+    --rail-width-collapsed: 56px;
     --rail-edge-hotzone: 28px;
     --rail-bg: rgba(255, 255, 255, 0.25);
     --rail-stroke: rgba(255, 255, 255, 0.35);
@@ -2600,10 +2600,11 @@ button:disabled {
 
 #left-rail {
   position: fixed;
-  top: 50%;
+  top: 0;
   left: 0;
   width: var(--rail-width);
-  transform: translate(-140%, -50%);
+  height: 100vh;
+  transform: translateX(-140%);
   opacity: 0;
   transition: transform var(--transition-medium), opacity var(--transition-medium);
   backdrop-filter: blur(var(--rail-blur)) saturate(160%);
@@ -2613,10 +2614,12 @@ button:disabled {
   border-radius: var(--radius-lg);
   z-index: var(--z-popover);
   color: #fff;
+  display: flex;
+  flex-direction: column;
 }
 
 #left-rail.show {
-  transform: translate(0, -50%);
+  transform: translateX(0);
   opacity: 1;
 }
 
@@ -2662,6 +2665,7 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  flex: 1;
 }
 
 #left-rail .rail-btn {

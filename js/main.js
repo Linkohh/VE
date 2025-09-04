@@ -4460,7 +4460,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const PIN_KEY = 'vibeme.railPinned';
   const SIZE_KEY = 'vibeme.railSize';
-  const HIDE_MS = 800;
+  const HIDE_MS = 18000;
 
   let hideTimer;
   let pinned = localStorage.getItem(PIN_KEY) === 'true';
