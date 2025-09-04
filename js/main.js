@@ -4474,6 +4474,156 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 
+// ===== Left Rail Module =====
+(function(){
+  const rail = document.getElementById('left-rail');
+  const hotzone = document.getElementById('edge-hotzone');
+  if (!rail || !hotzone) return;
+
+  const root = document.documentElement;
+  if (!('closest' in Element.prototype) || !('dataset' in root) || typeof window.CustomEvent !== 'function') {
+    console.warn('Left rail requires modern browser features.');
+    return;
+  }
+
+  const PIN_KEY = 'vibeme.railPinned';
+  const SIZE_KEY = 'vibeme.railSize';
+  const rootStyles = getComputedStyle(root);
+  const HIDE_DELAY = parseInt(rootStyles.getPropertyValue('--rail-hide-delay')) || 18000;
+
+  const announcer = document.createElement('div');
+  announcer.setAttribute('aria-live', 'polite');
+  announcer.setAttribute('aria-atomic', 'true');
+  announcer.className = 'sr-only';
+  document.body.appendChild(announcer);
+  const announce = (msg) => { announcer.textContent = ''; announcer.textContent = msg; };
+
+  let hideTimer;
+  let pinned = false;
+  let size = 'expanded';
+  try { pinned = localStorage.getItem(PIN_KEY) === 'true'; } catch (e) { console.warn('Failed to read rail state:', e); }
+  try { size = localStorage.getItem(SIZE_KEY) || 'expanded'; } catch (e) { console.warn('Failed to read rail state:', e); }
+
+  rail.dataset.size = size;
+  const pinBtn = rail.querySelector('.rail-pin');
+  const collapseBtn = rail.querySelector('.rail-collapse');
+  if (pinned) {
+    rail.classList.add('show');
+    rail.dataset.state = 'visible';
+    pinBtn?.setAttribute('aria-pressed', 'true');
+  }
+  collapseBtn?.setAttribute('aria-expanded', String(size === 'expanded'));
+
+  const cleanupFns = [];
+  function addEvent(target, type, listener){
+    target.addEventListener(type, listener);
+    cleanupFns.push(() => target.removeEventListener(type, listener));
+  }
+  function show(){
+    rail.classList.add('show');
+    rail.dataset.state = 'visible';
+  }
+  function hide(){
+    rail.classList.remove('show');
+    rail.dataset.state = 'hidden';
+  }
+  function scheduleHide(){
+    if (pinned) return;
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(hide, HIDE_DELAY);
+  }
+  function destroy(){
+    clearTimeout(hideTimer);
+    cleanupFns.forEach(fn => fn());
+  }
+  window.addEventListener('beforeunload', destroy);
+  window.vbRail = { destroy };
+
+  addEvent(hotzone, 'pointerenter', show);
+  addEvent(hotzone, 'pointerleave', scheduleHide);
+  addEvent(rail, 'pointerenter', show);
+  addEvent(rail, 'pointerleave', scheduleHide);
+  addEvent(rail, 'focusin', show);
+  addEvent(rail, 'focusout', scheduleHide);
+
+  if (pinBtn) addEvent(pinBtn, 'click', () => {
+    pinned = !pinned;
+    pinBtn.setAttribute('aria-pressed', String(pinned));
+    if (pinned) {
+      show();
+      try { localStorage.setItem(PIN_KEY, 'true'); } catch (e) { console.warn('Failed to save rail state:', e); }
+      announce('Rail pinned');
+    } else {
+      try { localStorage.removeItem(PIN_KEY); } catch (e) { console.warn('Failed to save rail state:', e); }
+      scheduleHide();
+      announce('Rail unpinned');
+    }
+  });
+
+  if (collapseBtn) addEvent(collapseBtn, 'click', () => {
+    size = size === 'expanded' ? 'collapsed' : 'expanded';
+    rail.dataset.size = size;
+    collapseBtn.setAttribute('aria-expanded', String(size === 'expanded'));
+    collapseBtn.focus();
+    try { localStorage.setItem(SIZE_KEY, size); } catch (e) { console.warn('Failed to save rail state:', e); }
+    announce(size === 'collapsed' ? 'Rail collapsed' : 'Rail expanded');
+  });
+
+  addEvent(rail, 'click', (e) => {
+    const btn = e.target.closest('.rail-btn');
+    if (!btn) return;
+    const action = btn.dataset.action;
+    if (navigator.vibrate) navigator.vibrate(10);
+    document.dispatchEvent(new CustomEvent('rail:action', {detail:{action}}));
+  });
+
+  addEvent(document, 'keydown', (e) => {
+    if (e.key === 'Escape' && !pinned) hide();
+  });
+
+  addEvent(document, 'touchstart', (e) => {
+    const x = e.touches[0]?.clientX || 0;
+    if (x < parseInt(getComputedStyle(hotzone).width)) {
+      show();
+    } else if (!rail.contains(e.target) && !pinned) {
+      scheduleHide();
+    }
+  });
+
+  addEvent(document, 'rail:action', ({detail:{action}}) => {
+    switch(action){
+      case 'new':
+        VibeMe.updateQuote && VibeMe.updateQuote();
+        break;
+      case 'fav':
+        document.getElementById('favorites-toggle')?.click();
+        break;
+      case 'bookmarks':
+        console.log('Bookmarks action');
+        break;
+      case 'share':
+        console.log('Share action');
+        break;
+      case 'tts':
+        if (VibeMe.settings?.tts) {
+          VibeMe.settings.tts.enabled = !VibeMe.settings.tts.enabled;
+          if (!VibeMe.settings.tts.enabled) VibeMe.tts?.stop();
+          VibeMe.bus?.emit('settings:changed', { key: 'tts.enabled', value: VibeMe.settings.tts.enabled });
+        }
+        break;
+      case 'theme':
+        document.getElementById('settings-toggle')?.click();
+        break;
+      case 'settings':
+        document.getElementById('settings-toggle')?.click();
+        break;
+      case 'about':
+        window.location.href = 'about.html';
+        break;
+    }
+  });
+})();
+
 // ===== BOOTSTRAP: Initial Quote Rendering System =====
 (function(){
   if (window.__VIBE_QUOTES_BOOTSTRAPPED) return;
