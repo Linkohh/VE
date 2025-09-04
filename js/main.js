@@ -4251,9 +4251,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const STATES = { CLOSED:'closed', OPEN:'open' };
     let state = (localStorage.getItem('favorites:state') === 'open') ? 'open' : 'closed';
+    let hideTimer;
 
     function apply(next){
       state = next;
+      clearTimeout(hideTimer);
       panel.dataset.state = state;
       localStorage.setItem('favorites:state', state);
       if (state === STATES.OPEN){
@@ -4262,6 +4264,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleBtn.setAttribute('aria-expanded','true');
         panel.setAttribute('aria-modal','true');
         renderList();
+        hideTimer = setTimeout(() => apply(STATES.CLOSED), 8000);
       } else {
         toggleBtn.setAttribute('aria-label','Open favorites');
         toggleBtn.setAttribute('title','Open favorites');
