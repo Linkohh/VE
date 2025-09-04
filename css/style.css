@@ -2262,6 +2262,16 @@ button:disabled {
 #favorites-panel[data-state="open"]   { max-height: 80vh; opacity: 1; pointer-events: auto; transform: translateY(0); }
 #favorites-panel[data-state="closed"] { max-height: 0;    opacity: 0; pointer-events: none; transform: translateY(8px); }
 
+@media (prefers-reduced-motion: reduce) {
+  .favorites-panel,
+  #favorites-panel[data-state="open"],
+  #favorites-panel[data-state="closed"],
+  #favorites-panel.open {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
 .favorites-header { background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); border-bottom: 1px solid rgba(255,255,255,0.10); }
 .favorites-icon-btn { padding: 5px 8px; font-size: 12px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); color: var(--text-color-secondary); }
 .favorites-icon-btn:hover { background: rgba(255,255,255,0.12); }
