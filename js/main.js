@@ -1,4 +1,56 @@
 // js/main.js - VibeMe Enhanced JavaScript (No Modules)
+// Guideline: Avoid assigning untrusted content to `innerHTML`.
+// Prefer using `textContent`/`appendChild` or sanitize inputs before insertion.
+
+// ===== Polyfills for Legacy Browsers =====
+(function(){
+  // Element.closest polyfill
+  if (!Element.prototype.closest) {
+    Element.prototype.closest = function(selector) {
+      var el = this;
+      if (!document.documentElement.contains(el)) return null;
+      do {
+        if (el.matches && el.matches(selector)) return el;
+        el = el.parentElement || el.parentNode;
+      } while (el && el.nodeType === 1);
+      return null;
+    };
+  }
+
+  // Element.dataset polyfill
+  if (!('dataset' in document.documentElement)) {
+    Object.defineProperty(Element.prototype, 'dataset', {
+      get: function() {
+        const attrs = this.attributes;
+        const map = {};
+        for (let i = 0; i < attrs.length; i++) {
+          const name = attrs[i].name;
+          if (name && name.indexOf('data-') === 0) {
+            const prop = name.substring(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+            Object.defineProperty(map, prop, {
+              enumerable: true,
+              get: () => this.getAttribute(name),
+              set: val => this.setAttribute(name, val)
+            });
+          }
+        }
+        return map;
+      }
+    });
+  }
+
+  // CustomEvent polyfill
+  if (typeof window.CustomEvent !== 'function') {
+    function CustomEvent(event, params) {
+      params = params || { bubbles: false, cancelable: false, detail: null };
+      const evt = document.createEvent('CustomEvent');
+      evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+      return evt;
+    }
+    CustomEvent.prototype = window.Event.prototype;
+    window.CustomEvent = CustomEvent;
+  }
+})();
 
 // ===== Polyfills for Legacy Browsers =====
 (function(){
@@ -3606,6 +3658,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const wrap = document.createElement('div');
         wrap.id = 'matrix-preset-wrapper';
         wrap.className = 'space-y-2 mt-3';
+        // Static options; safe to use innerHTML here.
         wrap.innerHTML = `
             <label for="matrix-preset" class="text-xs text-gray-300">Matrix Preset</label>
             <select id="matrix-preset" class="w-full text-black p-1 rounded text-xs">
@@ -3762,21 +3815,38 @@ document.addEventListener('DOMContentLoaded', () => {
   function showToast(message, type='info', ms=1600){
     const root = document.getElementById('toast-root');
     if (!root) return;
-    
+
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
-    toast.innerHTML = `
-      <div class="flex items-center justify-between space-x-3">
-        <div class="flex items-center space-x-2">
-          <i class="text-sm ${type === 'success' ? 'fas fa-check-circle' : 
-                               type === 'error' ? 'fas fa-exclamation-circle' : 
-                               'fas fa-info-circle'}"></i>
-          <span class="text-sm">${message}</span>
-        </div>
-        <button class="text-white/60 hover:text-white/80 text-xs" onclick="this.parentNode.parentNode.remove()">✕</button>
-      </div>
-    `;
-    
+
+    // Build DOM nodes manually to avoid injecting unsanitized HTML.
+    const container = document.createElement('div');
+    container.className = 'flex items-center justify-between space-x-3';
+
+    const left = document.createElement('div');
+    left.className = 'flex items-center space-x-2';
+
+    const icon = document.createElement('i');
+    icon.className = `text-sm ${type === 'success' ? 'fas fa-check-circle' :
+                                 type === 'error' ? 'fas fa-exclamation-circle' :
+                                 'fas fa-info-circle'}`;
+
+    const span = document.createElement('span');
+    span.className = 'text-sm';
+    span.textContent = message;
+
+    left.appendChild(icon);
+    left.appendChild(span);
+
+    const btn = document.createElement('button');
+    btn.className = 'text-white/60 hover:text-white/80 text-xs';
+    btn.textContent = '✕';
+    btn.onclick = function(){ this.parentNode.parentNode.remove(); };
+
+    container.appendChild(left);
+    container.appendChild(btn);
+    toast.appendChild(container);
+
     root.appendChild(toast);
     
     // Auto-dismiss
@@ -3918,6 +3988,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function FcPiece(label, value){
     var el = document.createElement('span');
     el.className = 'fc-piece';
+    // `label` is internal (Hours, Minutes); sanitize if ever using external data.
     el.innerHTML =
       '<b class="fc-card">' +
         '<b class="fc-top"></b>' +
@@ -4139,6 +4210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     items.forEach((q, idx) => {
       const row = document.createElement('div');
       row.className = 'fav-item';
+      // escapeHTML protects against injection from saved quotes.
       row.innerHTML = `
         <div class="fav-text-wrap">
           <div class="fav-quote">"${escapeHTML(q.text)}"</div>
@@ -4229,9 +4301,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const STATES = { CLOSED:'closed', OPEN:'open' };
     let state = (localStorage.getItem('favorites:state') === 'open') ? 'open' : 'closed';
+    let hideTimer;
 
     function apply(next){
       state = next;
+      clearTimeout(hideTimer);
       panel.dataset.state = state;
       localStorage.setItem('favorites:state', state);
       if (state === STATES.OPEN){
@@ -4240,6 +4314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleBtn.setAttribute('aria-expanded','true');
         panel.setAttribute('aria-modal','true');
         renderList();
+        hideTimer = setTimeout(() => apply(STATES.CLOSED), 8000);
       } else {
         toggleBtn.setAttribute('aria-label','Open favorites');
         toggleBtn.setAttribute('title','Open favorites');
@@ -4503,6 +4578,156 @@ document.addEventListener('DOMContentLoaded', () => {
         VibeMe.beep = guard(VibeMe.beep);
       }
     } catch (_) {}
+  });
+})();
+
+// ===== Left Rail Module =====
+(function(){
+  const rail = document.getElementById('left-rail');
+  const hotzone = document.getElementById('edge-hotzone');
+  if (!rail || !hotzone) return;
+
+  const root = document.documentElement;
+  if (!('closest' in Element.prototype) || !('dataset' in root) || typeof window.CustomEvent !== 'function') {
+    console.warn('Left rail requires modern browser features.');
+    return;
+  }
+
+  const PIN_KEY = 'vibeme.railPinned';
+  const SIZE_KEY = 'vibeme.railSize';
+  const rootStyles = getComputedStyle(root);
+  const HIDE_DELAY = parseInt(rootStyles.getPropertyValue('--rail-hide-delay')) || 18000;
+
+  const announcer = document.createElement('div');
+  announcer.setAttribute('aria-live', 'polite');
+  announcer.setAttribute('aria-atomic', 'true');
+  announcer.className = 'sr-only';
+  document.body.appendChild(announcer);
+  const announce = (msg) => { announcer.textContent = ''; announcer.textContent = msg; };
+
+  let hideTimer;
+  let pinned = false;
+  let size = 'expanded';
+  try { pinned = localStorage.getItem(PIN_KEY) === 'true'; } catch (e) { console.warn('Failed to read rail state:', e); }
+  try { size = localStorage.getItem(SIZE_KEY) || 'expanded'; } catch (e) { console.warn('Failed to read rail state:', e); }
+
+  rail.dataset.size = size;
+  const pinBtn = rail.querySelector('.rail-pin');
+  const collapseBtn = rail.querySelector('.rail-collapse');
+  if (pinned) {
+    rail.classList.add('show');
+    rail.dataset.state = 'visible';
+    pinBtn?.setAttribute('aria-pressed', 'true');
+  }
+  collapseBtn?.setAttribute('aria-expanded', String(size === 'expanded'));
+
+  const cleanupFns = [];
+  function addEvent(target, type, listener){
+    target.addEventListener(type, listener);
+    cleanupFns.push(() => target.removeEventListener(type, listener));
+  }
+  function show(){
+    rail.classList.add('show');
+    rail.dataset.state = 'visible';
+  }
+  function hide(){
+    rail.classList.remove('show');
+    rail.dataset.state = 'hidden';
+  }
+  function scheduleHide(){
+    if (pinned) return;
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(hide, HIDE_DELAY);
+  }
+  function destroy(){
+    clearTimeout(hideTimer);
+    cleanupFns.forEach(fn => fn());
+  }
+  window.addEventListener('beforeunload', destroy);
+  window.vbRail = { destroy };
+
+  addEvent(hotzone, 'pointerenter', show);
+  addEvent(hotzone, 'pointerleave', scheduleHide);
+  addEvent(rail, 'pointerenter', show);
+  addEvent(rail, 'pointerleave', scheduleHide);
+  addEvent(rail, 'focusin', show);
+  addEvent(rail, 'focusout', scheduleHide);
+
+  if (pinBtn) addEvent(pinBtn, 'click', () => {
+    pinned = !pinned;
+    pinBtn.setAttribute('aria-pressed', String(pinned));
+    if (pinned) {
+      show();
+      try { localStorage.setItem(PIN_KEY, 'true'); } catch (e) { console.warn('Failed to save rail state:', e); }
+      announce('Rail pinned');
+    } else {
+      try { localStorage.removeItem(PIN_KEY); } catch (e) { console.warn('Failed to save rail state:', e); }
+      scheduleHide();
+      announce('Rail unpinned');
+    }
+  });
+
+  if (collapseBtn) addEvent(collapseBtn, 'click', () => {
+    size = size === 'expanded' ? 'collapsed' : 'expanded';
+    rail.dataset.size = size;
+    collapseBtn.setAttribute('aria-expanded', String(size === 'expanded'));
+    collapseBtn.focus();
+    try { localStorage.setItem(SIZE_KEY, size); } catch (e) { console.warn('Failed to save rail state:', e); }
+    announce(size === 'collapsed' ? 'Rail collapsed' : 'Rail expanded');
+  });
+
+  addEvent(rail, 'click', (e) => {
+    const btn = e.target.closest('.rail-btn');
+    if (!btn) return;
+    const action = btn.dataset.action;
+    if (navigator.vibrate) navigator.vibrate(10);
+    document.dispatchEvent(new CustomEvent('rail:action', {detail:{action}}));
+  });
+
+  addEvent(document, 'keydown', (e) => {
+    if (e.key === 'Escape' && !pinned) hide();
+  });
+
+  addEvent(document, 'touchstart', (e) => {
+    const x = e.touches[0]?.clientX || 0;
+    if (x < parseInt(getComputedStyle(hotzone).width)) {
+      show();
+    } else if (!rail.contains(e.target) && !pinned) {
+      scheduleHide();
+    }
+  });
+
+  addEvent(document, 'rail:action', ({detail:{action}}) => {
+    switch(action){
+      case 'new':
+        VibeMe.updateQuote && VibeMe.updateQuote();
+        break;
+      case 'fav':
+        document.getElementById('favorites-toggle')?.click();
+        break;
+      case 'bookmarks':
+        console.log('Bookmarks action');
+        break;
+      case 'share':
+        console.log('Share action');
+        break;
+      case 'tts':
+        if (VibeMe.settings?.tts) {
+          VibeMe.settings.tts.enabled = !VibeMe.settings.tts.enabled;
+          if (!VibeMe.settings.tts.enabled) VibeMe.tts?.stop();
+          VibeMe.bus?.emit('settings:changed', { key: 'tts.enabled', value: VibeMe.settings.tts.enabled });
+        }
+        break;
+      case 'theme':
+        document.getElementById('settings-toggle')?.click();
+        break;
+      case 'settings':
+        document.getElementById('settings-toggle')?.click();
+        break;
+      case 'about':
+        window.location.href = 'about.html';
+        break;
+    }
   });
 })();
 
