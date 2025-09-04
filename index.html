@@ -69,6 +69,23 @@
 </head>
 
 <body class="min-h-screen flex items-center justify-center p-0 gradient-bg">
+    <div id="edge-hotzone" aria-hidden="true"></div>
+    <nav id="left-rail" role="navigation" aria-label="VibeMe quick actions" data-state="hidden" data-size="expanded">
+      <header class="rail-header">
+        <button class="rail-pin" aria-pressed="false" title="Pin panel">📌</button>
+        <button class="rail-collapse" aria-expanded="true" title="Collapse">«</button>
+      </header>
+      <ul class="rail-items">
+        <li><button class="rail-btn" data-action="new"       title="New Vibe"      aria-label="New Vibe">✨ <span class="label">New Vibe</span></button></li>
+        <li><button class="rail-btn" data-action="fav"       title="Favorites"     aria-label="Favorites">⭐ <span class="label">Favorites</span></button></li>
+        <li><button class="rail-btn" data-action="bookmarks" title="Bookmarks"     aria-label="Bookmarks">🔖 <span class="label">Bookmarks</span></button></li>
+        <li><button class="rail-btn" data-action="share"     title="Share"         aria-label="Share">📤 <span class="label">Share</span></button></li>
+        <li><button class="rail-btn" data-action="tts"       title="Read Aloud"    aria-label="Read Aloud">🔊 <span class="label">Read Aloud</span></button></li>
+        <li><button class="rail-btn" data-action="theme"     title="Theme & Color" aria-label="Theme and Color">🎨 <span class="label">Theme</span></button></li>
+        <li><button class="rail-btn" data-action="settings"  title="Settings"      aria-label="Settings">⚙️ <span class="label">Settings</span></button></li>
+        <li><button class="rail-btn" data-action="about"     title="About VibeMe"  aria-label="About VibeMe">ℹ️ <span class="label">About</span></button></li>
+      </ul>
+    </nav>
     <!-- Skip link for accessibility -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50">
         Skip to main content
