@@ -4,7 +4,7 @@
 .fc-date {
   position: fixed;
   top: 1rem;
-  left: 1rem;
+  left: 8rem;  /* Safe zone for future left sidebar (128px from left) */
   z-index: 10001;
   padding: 0.4rem 0.6rem;
   border-radius: 10px;
@@ -31,7 +31,7 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
 
 /* Small screens */
 @media (max-width: 480px){
-  .fc-date { top: 0.75rem; left: 0.75rem; font-size: 0.85rem; padding: 0.35rem 0.55rem; }
+  .fc-date { top: 0.75rem; left: 3rem; font-size: 1rem; padding: 0.35rem 0.55rem; }
 }
 /* css/style.css - VibeMe Enhanced Styles */
 
@@ -2262,6 +2262,16 @@ button:disabled {
 #favorites-panel[data-state="open"]   { max-height: 80vh; opacity: 1; pointer-events: auto; transform: translateY(0); }
 #favorites-panel[data-state="closed"] { max-height: 0;    opacity: 0; pointer-events: none; transform: translateY(8px); }
 
+@media (prefers-reduced-motion: reduce) {
+  .favorites-panel,
+  #favorites-panel[data-state="open"],
+  #favorites-panel[data-state="closed"],
+  #favorites-panel.open {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
 .favorites-header { background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); border-bottom: 1px solid rgba(255,255,255,0.10); }
 .favorites-icon-btn { padding: 5px 8px; font-size: 12px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); color: var(--text-color-secondary); }
 .favorites-icon-btn:hover { background: rgba(255,255,255,0.12); }
@@ -2360,9 +2370,18 @@ button:disabled {
   line-height: 1.05;
   text-wrap: balance;
   color: var(--text-color-main);
-  -webkit-text-stroke: 1.2px rgba(0, 0, 0, 0.28);
-  text-shadow: none; /* prefer drop-shadows below for cleaner halo */
-  filter: drop-shadow(0 0 10px var(--color2)) drop-shadow(0 0 18px var(--color3));
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.28);
+  
+  /* New, enhanced darker aura that wraps the letters */
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.95),      /* Brighter crisp white core */
+    0 0 16px var(--color1),                  /* Stronger medium layer */
+    0 0 32px var(--color2),                  /* More intense wide layer */
+    0 0 48px var(--color3),                  /* Larger diffused halo */
+    0 0 64px var(--color1);                  /* Extra outer glow for depth */
+  
+  /* Remove the old drop-shadow filter entirely to avoid conflicts */
+  filter: none;
 }
 
 :root[data-theme="dark"] .vb-logo {
@@ -2529,6 +2548,7 @@ button:disabled {
   border: 1px solid color-mix(in oklab, var(--color2) 28%, transparent);
   padding-left: 0.75rem; /* space for accent bar */
   isolation: isolate;    /* keep glow effects contained */
+  font-size: 1.125rem;   /* Increased from default for better readability */
 }
 
 /* Gradient ring using a mask (no layout shift) */

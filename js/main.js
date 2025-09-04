@@ -1,42 +1,110 @@
 // js/main.js - VibeMe Enhanced JavaScript (No Modules)
 
+// ===== Polyfills for Legacy Browsers =====
+(function(){
+  // Element.closest polyfill
+  if (!Element.prototype.closest) {
+    Element.prototype.closest = function(selector) {
+      var el = this;
+      if (!document.documentElement.contains(el)) return null;
+      do {
+        if (el.matches && el.matches(selector)) return el;
+        el = el.parentElement || el.parentNode;
+      } while (el && el.nodeType === 1);
+      return null;
+    };
+  }
+
+  // Element.dataset polyfill
+  if (!('dataset' in document.documentElement)) {
+    Object.defineProperty(Element.prototype, 'dataset', {
+      get: function() {
+        const attrs = this.attributes;
+        const map = {};
+        for (let i = 0; i < attrs.length; i++) {
+          const name = attrs[i].name;
+          if (name && name.indexOf('data-') === 0) {
+            const prop = name.substring(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+            Object.defineProperty(map, prop, {
+              enumerable: true,
+              get: () => this.getAttribute(name),
+              set: val => this.setAttribute(name, val)
+            });
+          }
+        }
+        return map;
+      }
+    });
+  }
+
+  // CustomEvent polyfill
+  if (typeof window.CustomEvent !== 'function') {
+    function CustomEvent(event, params) {
+      params = params || { bubbles: false, cancelable: false, detail: null };
+      const evt = document.createEvent('CustomEvent');
+      evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+      return evt;
+    }
+    CustomEvent.prototype = window.Event.prototype;
+    window.CustomEvent = CustomEvent;
+  }
+})();
+
 // ===== Unified Quotes Loader (single source: data/quotes.json; optional inline fallback for file://) =====
 (function(){
   async function loadQuotes() {
     const isFile = location.protocol === 'file:';
-    // 1) Prefer external JSON when not on file:// (http/https or localhost server)
-    if (!isFile) {
+
+    // --- Primary Loading Strategy ---
+    if (isFile) {
+      // OFFLINE: Use quotes.js, loaded by the injector script in index.html
+      console.info('[quotes] Offline mode: waiting for quotes.js...');
+      if (window.__QUOTES_JS_PROMISE) {
+        const loaded = await window.__QUOTES_JS_PROMISE;
+        if (loaded && window.quotesData && window.quotesData.categories) {
+          window.__QUOTES_SOURCE = 'js';
+          console.info('[quotes] Success: Loaded from quotes.js');
+          return window.quotesData;
+        }
+      }
+      console.warn('[quotes] Failed to load from quotes.js promise.');
+    } else {
+      // ONLINE: Fetch from data/quotes.json
+      console.info('[quotes] Online mode: fetching data/quotes.json...');
       try {
         const res = await fetch('data/quotes.json', { cache: 'no-cache' });
         if (res.ok) {
-          return await res.json();
+          const data = await res.json();
+          window.__QUOTES_SOURCE = 'json';
+          console.info('[quotes] Success: Loaded from data/quotes.json');
+          return data;
         }
+        console.warn(`[quotes] Fetch failed with status: ${res.status}`);
       } catch (err) {
-        console.warn('[quotes] Fetch failed, will try inline fallback:', err);
-      }
-    } else {
-      // Some browsers block fetch() for file://; still try once for Firefox users
-      try {
-        const res = await fetch('data/quotes.json');
-        if (res.ok) {
-          return await res.json();
-        }
-      } catch (err) {
-        // Expected on Chrome/Safari under file://
+        console.warn('[quotes] Fetch failed with error:', err);
       }
     }
 
-    // 2) Inline fallback (optional; only populated if you paste JSON into index.html)
+    // --- Fallback Loading Strategies ---
+
+    // 1) Inline fallback (manual JSON paste into #quotes-inline element)
     const inline = document.getElementById('quotes-inline');
     if (inline && inline.textContent.trim()) {
       try {
-        return JSON.parse(inline.textContent);
+        const data = JSON.parse(inline.textContent);
+        if (data && data.categories) {
+            window.__QUOTES_SOURCE = 'inline';
+            console.info('[quotes] Fallback: Using inline JSON.');
+            return data;
+        }
       } catch (e) {
-        console.error('[quotes] Inline JSON is invalid:', e);
+        console.error('[quotes] Fallback: Inline JSON is invalid.', e);
       }
     }
 
-    console.error('[quotes] No quotes loaded. For file:// usage, either run a local server or paste data/quotes.json into #quotes-inline.');
+    // 2) Final fallback if all else fails (should be rare)
+    window.__QUOTES_SOURCE = 'minimal';
+    console.error('[quotes] CRITICAL: All quote sources failed. Using minimal fallback.');
     return { categories: {} };
   }
 
@@ -309,6 +377,34 @@ const VibeMe = {
                 { color1: "#F0213A", color2: "#FF6B77", color3: "#FFA3A9" }
             ],
 
+            // Synthwave Sunset
+            synthwave_sunset: [
+                { color1: "#ff00ff", color2: "#00ffff", color3: "#ffff00" },
+                { color1: "#ff0080", color2: "#0080ff", color3: "#ffff80" },
+                { color1: "#cc00ff", color2: "#00ccff", color3: "#ccff00" }
+            ],
+
+            // Cosmic Ocean
+            cosmic_ocean: [
+                { color1: "#1d2f6f", color2: "#374895", color3: "#83b6e8" },
+                { color1: "#0f1a3d", color2: "#2a4b8d", color3: "#6da4e8" },
+                { color1: "#152856", color2: "#4a6bb8", color3: "#a1c8f0" }
+            ],
+
+            // Forbidden Forest
+            forbidden_forest: [
+                { color1: "#2e4a3b", color2: "#6d8c54", color3: "#e3d18a" },
+                { color1: "#1a3d28", color2: "#5a7a45", color3: "#d4c76b" },
+                { color1: "#3f5d4c", color2: "#7e9f63", color3: "#f2e599" }
+            ],
+
+            // Galactic Grape
+            galactic_grape: [
+                { color1: "#4a148c", color2: "#9b27af", color3: "#e1bee7" },
+                { color1: "#380a6b", color2: "#7b1fa2", color3: "#ce93d8" },
+                { color1: "#5c1e9e", color2: "#ad42c0", color3: "#f3e5f5" }
+            ],
+
             // --- New QuoteFusion Ultra/LO Theme Palettes ---
             
             // Belief (trust, faith, confidence)
@@ -464,7 +560,7 @@ const VibeMe = {
                 .map(q => ({
                     text: String(q.text ?? q.quote ?? '').trim(),
                     author: String(q.author ?? 'Unknown').trim(),
-                    category: String(q.category ?? defaultCategory ?? 'default').trim()
+                    category: String(defaultCategory ?? q.category ?? 'default').trim()
                 }))
                 .filter(q => q.text.length > 0);
         }
@@ -2255,6 +2351,16 @@ const VibeMe = {
         localStorage.setItem('vibeme-custom-quotes', JSON.stringify(this.state.customQuotes));
     },
 
+    // ===== MATRIX COLUMN MANAGEMENT =====
+    removeSingleMatrixColumn: function(index) {
+        const col = this.matrixState.activeColumns[index];
+        if (!col) return;
+        try {
+            if (col.el && col.el.parentNode) col.el.parentNode.removeChild(col.el);
+        } catch(_) {}
+        this.matrixState.activeColumns.splice(index, 1);
+    },
+
     // ===== MATRIX RESIZE =====
     handleMatrixResize: function() {
         this.createMatrixColumns();
@@ -2821,6 +2927,10 @@ VibeMe.kit = VibeMe.kit || {
   }
 };
 
+// Add no-op stubs for matrix animation functions to prevent TypeError
+VibeMe.stopMatrixAnimation ||= () => {};
+VibeMe.startMatrixAnimation ||= () => {};
+
 VibeMe.bus = VibeMe.bus || (() => {
   const bus = new EventTarget();
   return {
@@ -3164,8 +3274,12 @@ const CATEGORY_TO_PRESET = {
 
 // Wait for the DOM to be fully loaded before initializing the application
 document.addEventListener('DOMContentLoaded', () => {
+    const hasFeatures = Element.prototype.closest && ('dataset' in document.documentElement) && typeof window.CustomEvent === 'function';
+    if (!hasFeatures) {
+        console.warn('[compat] Missing DOM APIs; polyfills applied.');
+    }
     VibeMe.init();
-    
+
     // ===== Theme preset init (initialize after VibeMe.init) =====
     const presetSelect = document.getElementById('theme-preset');
     if (presetSelect) {
@@ -4184,12 +4298,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggle = $('#settings-toggle');
     const panel = $('#settings-panel');
     if (toggle && panel) {
-      toggle.addEventListener('click', () => {
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
         const isHidden = panel.classList.toggle('hidden');
         setAria(toggle, { 'aria-expanded': String(!isHidden) });
         setAria(panel, { 'aria-hidden': String(isHidden) });
         if (!isHidden) {
           panel.focus?.();
+        }
+      });
+
+      // Prevent clicks inside the settings panel from bubbling up
+      panel.addEventListener('click', (e) => e.stopPropagation());
+
+      // Add click-outside-to-close functionality
+      document.addEventListener('click', (e) => {
+        const isHidden = panel.classList.contains('hidden');
+        const isToggle = e.target === toggle || toggle.contains(e.target);
+        const isPanel = panel.contains(e.target);
+
+        if (!isHidden && !isToggle && !isPanel) {
+          toggle.click();
         }
       });
     }
@@ -4375,4 +4504,37 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (_) {}
   });
+})();
+
+// ===== BOOTSTRAP: Initial Quote Rendering System =====
+(function(){
+  if (window.__VIBE_QUOTES_BOOTSTRAPPED) return;
+  window.__VIBE_QUOTES_BOOTSTRAPPED = true;
+
+  const flatten = (o)=>!o?[]:Object.values(o).flat();
+
+  function paintFirst(quotes){
+    const t = document.getElementById('quote-text');
+    const a = document.getElementById('quote-author');
+    if (!t || !a || !quotes.length) return;
+    t.textContent = quotes[0].text || '';
+    a.textContent = quotes[0].author || 'Unknown';
+  }
+
+  async function boot(){
+    if (document.readyState === 'loading'){
+      await new Promise(r => document.addEventListener('DOMContentLoaded', r, {once:true}));
+    }
+    const data = await (window.VIBE_QUOTES_PROMISE || Promise.resolve({categories:{}}));
+    if (window.VibeMe) {
+      VibeMe.quotesByCategory = data.categories || {};
+      VibeMe.quotesFlat = flatten(VibeMe.quotesByCategory);
+      const total = VibeMe.quotesFlat.length;
+      const cats = Object.keys(VibeMe.quotesByCategory).length;
+      console.info(`[quotes] Loaded ${total} quotes across ${cats} categories`);
+      document.dispatchEvent(new CustomEvent('quotes:ready', { detail: { total, categories: cats }}));
+      paintFirst(VibeMe.quotesFlat);
+    }
+  }
+  boot();
 })();
