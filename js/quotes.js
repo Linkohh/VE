@@ -4809,12 +4809,3 @@ window.quotesData =
     "version": "1.0.0"
   }
 }
-
-
-
-
-
-
-
-this is a test to seee if it worked 
-;
