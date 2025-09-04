@@ -4452,6 +4452,125 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 
+// ===== Left Rail Module =====
+(function(){
+  const rail = document.getElementById('left-rail');
+  const hotzone = document.getElementById('edge-hotzone');
+  if (!rail || !hotzone) return;
+
+  const PIN_KEY = 'vibeme.railPinned';
+  const SIZE_KEY = 'vibeme.railSize';
+  const HIDE_MS = 800;
+
+  let hideTimer;
+  let pinned = localStorage.getItem(PIN_KEY) === 'true';
+  let size = localStorage.getItem(SIZE_KEY) || 'expanded';
+
+  rail.dataset.size = size;
+  const pinBtn = rail.querySelector('.rail-pin');
+  const collapseBtn = rail.querySelector('.rail-collapse');
+  if (pinned) {
+    rail.classList.add('show');
+    rail.dataset.state = 'visible';
+    if (pinBtn) pinBtn.setAttribute('aria-pressed','true');
+  }
+  if (collapseBtn) collapseBtn.setAttribute('aria-expanded', String(size === 'expanded'));
+
+  function show(){
+    rail.classList.add('show');
+    rail.dataset.state = 'visible';
+  }
+  function hide(){
+    rail.classList.remove('show');
+    rail.dataset.state = 'hidden';
+  }
+  function scheduleHide(){
+    if (pinned) return;
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(hide, HIDE_MS);
+  }
+
+  hotzone.addEventListener('pointerenter', show);
+  hotzone.addEventListener('pointerleave', scheduleHide);
+  rail.addEventListener('pointerenter', show);
+  rail.addEventListener('pointerleave', scheduleHide);
+
+  rail.addEventListener('focusin', show);
+  rail.addEventListener('focusout', scheduleHide);
+
+  pinBtn?.addEventListener('click', () => {
+    pinned = !pinned;
+    pinBtn.setAttribute('aria-pressed', String(pinned));
+    if (pinned) {
+      show();
+      localStorage.setItem(PIN_KEY, 'true');
+    } else {
+      localStorage.removeItem(PIN_KEY);
+      scheduleHide();
+    }
+  });
+
+  collapseBtn?.addEventListener('click', () => {
+    size = size === 'expanded' ? 'collapsed' : 'expanded';
+    rail.dataset.size = size;
+    collapseBtn.setAttribute('aria-expanded', String(size === 'expanded'));
+    localStorage.setItem(SIZE_KEY, size);
+  });
+
+  rail.querySelectorAll('.rail-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.action;
+      document.dispatchEvent(new CustomEvent('rail:action', {detail:{action}}));
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !pinned) hide();
+  });
+
+  document.addEventListener('touchstart', (e) => {
+    const x = e.touches[0]?.clientX || 0;
+    if (x < parseInt(getComputedStyle(hotzone).width)) {
+      show();
+    } else if (!rail.contains(e.target) && !pinned) {
+      scheduleHide();
+    }
+  });
+
+  document.addEventListener('rail:action', ({detail:{action}}) => {
+    switch(action){
+      case 'new':
+        VibeMe.updateQuote && VibeMe.updateQuote();
+        break;
+      case 'fav':
+        document.getElementById('favorites-toggle')?.click();
+        break;
+      case 'bookmarks':
+        console.log('Bookmarks action');
+        break;
+      case 'share':
+        console.log('Share action');
+        break;
+      case 'tts':
+        if (VibeMe.settings?.tts) {
+          VibeMe.settings.tts.enabled = !VibeMe.settings.tts.enabled;
+          if (!VibeMe.settings.tts.enabled) VibeMe.tts?.stop();
+          VibeMe.bus?.emit('settings:changed', { key: 'tts.enabled', value: VibeMe.settings.tts.enabled });
+        }
+        break;
+      case 'theme':
+        document.getElementById('settings-toggle')?.click();
+        break;
+      case 'settings':
+        document.getElementById('settings-toggle')?.click();
+        break;
+      case 'about':
+        window.location.href = 'about.html';
+        break;
+    }
+  });
+})();
+
 // ===== BOOTSTRAP: Initial Quote Rendering System =====
 (function(){
   if (window.__VIBE_QUOTES_BOOTSTRAPPED) return;

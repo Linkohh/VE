@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — VibeMe</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="gradient-bg">
+  <canvas id="matrix-canvas" class="matrix-canvas"></canvas>
+
+  <main id="about" style="position:relative; z-index:2; display:grid; place-items:center; min-height:100vh; padding:24px;">
+    <section class="glass aura" style="max-width:920px; width:clamp(320px, 92vw, 920px); border-radius:18px; padding:28px;">
+      <h1 class="vb-logo" style="margin:4px 0 12px 0;">VibeMe</h1>
+      <p class="dynamic-text-secondary" style="margin:0 0 18px 0;">Motivational quote generator with dynamic themes, liquid-glass UI, and an ambient Matrix backdrop.</p>
+
+      <div class="logo-underline" aria-hidden="true"></div>
+
+      <section style="margin-top:16px;">
+        <h2 class="heading-font">What is VibeMe?</h2>
+        <p>VibeMe helps you surface the right words at the right time—clean UI, soft auras, and a calm flow. It’s built to stay out of your way and keep the quote center stage.</p>
+      </section>
+
+      <section style="margin-top:16px;">
+        <h2 class="heading-font">Version & Build</h2>
+        <ul>
+          <li>Version: <strong id="app-version">1.0.0</strong></li>
+          <li>Last updated: <strong id="app-updated">2025-09-02</strong></li>
+        </ul>
+      </section>
+
+      <section style="margin-top:16px;">
+        <h2 class="heading-font">Credits</h2>
+        <p>Design & Development: LHO. Icons & fonts per licenses. Quotes via local library.</p>
+      </section>
+
+      <section style="margin-top:16px;">
+        <h2 class="heading-font">Shortcuts</h2>
+        <ul>
+          <li><kbd>N</kbd> — New Vibe</li>
+          <li><kbd>F</kbd> — Favorite</li>
+          <li><kbd>S</kbd> — Settings</li>
+          <li><kbd>Esc</kbd> — Close panels</li>
+        </ul>
+      </section>
+
+      <div style="display:flex; gap:10px; margin-top:22px;">
+        <a href="index.html" class="action-button" title="Back to app" style="padding:10px 14px; border:1px solid var(--glass-stroke); border-radius:12px; background:linear-gradient(180deg, var(--glass-bg), transparent);">← Back</a>
+        <a href="#contact" class="action-button" title="Contact" style="padding:10px 14px; border:1px solid var(--glass-stroke); border-radius:12px; background:linear-gradient(180deg, var(--glass-bg), transparent);">Contact</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('app-version').textContent = (localStorage.getItem('vibeme.version') || '1.0.0');
+    document.getElementById('app-updated').textContent = (localStorage.getItem('vibeme.updated') || '2025-09-02');
+  </script>
+</body>
+</html>
