@@ -4458,13 +4458,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const hotzone = document.getElementById('edge-hotzone');
   if (!rail || !hotzone) return;
 
+  const root = document.documentElement;
+  if (!('closest' in Element.prototype) || !('dataset' in root) || typeof window.CustomEvent !== 'function') {
+    console.warn('Left rail requires modern browser features.');
+    return;
+  }
+
   const PIN_KEY = 'vibeme.railPinned';
   const SIZE_KEY = 'vibeme.railSize';
-  const HIDE_MS = 18000;
+  const rootStyles = getComputedStyle(root);
+  const HIDE_DELAY = parseInt(rootStyles.getPropertyValue('--rail-hide-delay')) || 18000;
+
+  const announcer = document.createElement('div');
+  announcer.setAttribute('aria-live', 'polite');
+  announcer.setAttribute('aria-atomic', 'true');
+  announcer.className = 'sr-only';
+  document.body.appendChild(announcer);
+  const announce = (msg) => { announcer.textContent = ''; announcer.textContent = msg; };
 
   let hideTimer;
-  let pinned = localStorage.getItem(PIN_KEY) === 'true';
-  let size = localStorage.getItem(SIZE_KEY) || 'expanded';
+  let pinned = false;
+  let size = 'expanded';
+  try { pinned = localStorage.getItem(PIN_KEY) === 'true'; } catch (e) { console.warn('Failed to read rail state:', e); }
+  try { size = localStorage.getItem(SIZE_KEY) || 'expanded'; } catch (e) { console.warn('Failed to read rail state:', e); }
 
   rail.dataset.size = size;
   const pinBtn = rail.querySelector('.rail-pin');
@@ -4472,10 +4488,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (pinned) {
     rail.classList.add('show');
     rail.dataset.state = 'visible';
-    if (pinBtn) pinBtn.setAttribute('aria-pressed','true');
+    pinBtn?.setAttribute('aria-pressed', 'true');
   }
-  if (collapseBtn) collapseBtn.setAttribute('aria-expanded', String(size === 'expanded'));
+  collapseBtn?.setAttribute('aria-expanded', String(size === 'expanded'));
 
+  const cleanupFns = [];
+  function addEvent(target, type, listener){
+    target.addEventListener(type, listener);
+    cleanupFns.push(() => target.removeEventListener(type, listener));
+  }
   function show(){
     rail.classList.add('show');
     rail.dataset.state = 'visible';
@@ -4487,48 +4508,58 @@ document.addEventListener('DOMContentLoaded', () => {
   function scheduleHide(){
     if (pinned) return;
     clearTimeout(hideTimer);
-    hideTimer = setTimeout(hide, HIDE_MS);
+    hideTimer = setTimeout(hide, HIDE_DELAY);
   }
+  function destroy(){
+    clearTimeout(hideTimer);
+    cleanupFns.forEach(fn => fn());
+  }
+  window.addEventListener('beforeunload', destroy);
+  window.vbRail = { destroy };
 
-  hotzone.addEventListener('pointerenter', show);
-  hotzone.addEventListener('pointerleave', scheduleHide);
-  rail.addEventListener('pointerenter', show);
-  rail.addEventListener('pointerleave', scheduleHide);
+  addEvent(hotzone, 'pointerenter', show);
+  addEvent(hotzone, 'pointerleave', scheduleHide);
+  addEvent(rail, 'pointerenter', show);
+  addEvent(rail, 'pointerleave', scheduleHide);
+  addEvent(rail, 'focusin', show);
+  addEvent(rail, 'focusout', scheduleHide);
 
-  rail.addEventListener('focusin', show);
-  rail.addEventListener('focusout', scheduleHide);
-
-  pinBtn?.addEventListener('click', () => {
+  if (pinBtn) addEvent(pinBtn, 'click', () => {
     pinned = !pinned;
     pinBtn.setAttribute('aria-pressed', String(pinned));
     if (pinned) {
       show();
-      localStorage.setItem(PIN_KEY, 'true');
+      try { localStorage.setItem(PIN_KEY, 'true'); } catch (e) { console.warn('Failed to save rail state:', e); }
+      announce('Rail pinned');
     } else {
-      localStorage.removeItem(PIN_KEY);
+      try { localStorage.removeItem(PIN_KEY); } catch (e) { console.warn('Failed to save rail state:', e); }
       scheduleHide();
+      announce('Rail unpinned');
     }
   });
 
-  collapseBtn?.addEventListener('click', () => {
+  if (collapseBtn) addEvent(collapseBtn, 'click', () => {
     size = size === 'expanded' ? 'collapsed' : 'expanded';
     rail.dataset.size = size;
     collapseBtn.setAttribute('aria-expanded', String(size === 'expanded'));
-    localStorage.setItem(SIZE_KEY, size);
+    collapseBtn.focus();
+    try { localStorage.setItem(SIZE_KEY, size); } catch (e) { console.warn('Failed to save rail state:', e); }
+    announce(size === 'collapsed' ? 'Rail collapsed' : 'Rail expanded');
   });
 
-  rail.querySelectorAll('.rail-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const action = btn.dataset.action;
-      document.dispatchEvent(new CustomEvent('rail:action', {detail:{action}}));
-    });
+  addEvent(rail, 'click', (e) => {
+    const btn = e.target.closest('.rail-btn');
+    if (!btn) return;
+    const action = btn.dataset.action;
+    if (navigator.vibrate) navigator.vibrate(10);
+    document.dispatchEvent(new CustomEvent('rail:action', {detail:{action}}));
   });
 
-  document.addEventListener('keydown', (e) => {
+  addEvent(document, 'keydown', (e) => {
     if (e.key === 'Escape' && !pinned) hide();
   });
 
-  document.addEventListener('touchstart', (e) => {
+  addEvent(document, 'touchstart', (e) => {
     const x = e.touches[0]?.clientX || 0;
     if (x < parseInt(getComputedStyle(hotzone).width)) {
       show();
@@ -4537,7 +4568,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  document.addEventListener('rail:action', ({detail:{action}}) => {
+  addEvent(document, 'rail:action', ({detail:{action}}) => {
     switch(action){
       case 'new':
         VibeMe.updateQuote && VibeMe.updateQuote();

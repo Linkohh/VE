@@ -108,6 +108,8 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --rail-blur: 16px;
     --rail-aura-inner: rgba(255,255,255,0.35);
     --rail-aura-outer: rgba(255,255,255,0.15);
+    --rail-hide-delay: 18000ms;
+    --rail-animation-duration: var(--transition-medium);
 }
 
 /* ===== RESET & BASE STYLES ===== */
@@ -2606,7 +2608,7 @@ button:disabled {
   height: 100vh;
   transform: translateX(-140%);
   opacity: 0;
-  transition: transform var(--transition-medium), opacity var(--transition-medium);
+  transition: transform var(--rail-animation-duration), opacity var(--rail-animation-duration);
   backdrop-filter: blur(var(--rail-blur)) saturate(160%);
   -webkit-backdrop-filter: blur(var(--rail-blur)) saturate(160%);
   background: var(--rail-bg);
