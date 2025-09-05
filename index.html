@@ -92,6 +92,14 @@
             <i class="fas fa-moon text-white text-lg" aria-hidden="true"></i>
         </button>
         
+        <!-- Search toggle -->
+        <button id="search-toggle" type="button"
+                class="cursor-pointer p-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-300"
+                aria-label="Open search"
+                title="Search quotes">
+            <i class="fas fa-search text-white text-lg" aria-hidden="true"></i>
+        </button>
+
         <!-- Settings toggle -->
         <button id="settings-toggle" type="button"
                 class="cursor-pointer p-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-300"
@@ -100,6 +108,18 @@
                 aria-controls="settings-panel">
             <i class="fas fa-cog text-white text-lg" aria-hidden="true"></i>
         </button>
+    </div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="hidden fixed inset-0 bg-black/80 backdrop-blur-lg z-[10002] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="search-title">
+        <div class="w-full max-w-2xl">
+            <h2 id="search-title" class="text-2xl font-bold text-white text-center mb-4">Search Quotes</h2>
+            <input type="search" id="search-input" class="w-full p-3 bg-white/10 text-white border border-white/20 rounded-lg text-lg focus:ring-2 focus:ring-purple-500 focus:outline-none" placeholder="Type to search by quote or author...">
+            <div id="search-results" class="mt-4 max-h-[60vh] overflow-y-auto"></div>
+            <button id="search-close-btn" class="absolute top-4 right-4 text-white/70 hover:text-white text-2xl" aria-label="Close search">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
     </div>
 
 

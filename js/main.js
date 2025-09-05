@@ -525,6 +525,7 @@ const VibeMe = {
         if (raw && raw.categories && typeof raw.categories === 'object') {
             const combined = [];
             for (const [cat, list] of Object.entries(raw.categories)) {
+                if (cat === 'famous_quotes') continue; // Exclude the famous_quotes category
                 if (Array.isArray(list)) combined.push(...sanitize(list, cat));
             }
             return combined;
@@ -536,7 +537,8 @@ const VibeMe = {
 
     mergeCustomQuotes: function(base) {
         const user = Array.isArray(this.state.customQuotes) ? this.state.customQuotes : [];
-        return [...base, ...user];
+        // By adding user quotes first, they will be prioritized during de-duplication
+        return [...user, ...base];
     },
 
     dedupeQuotes: function(arr) {
@@ -2245,6 +2247,21 @@ const VibeMe = {
         document.getElementById('toggle-add-quote-form').addEventListener('click', () => this.toggleAddQuoteForm());
         document.getElementById('submit-quote-btn').addEventListener('click', () => this.submitQuote());
         
+        // Search functionality
+        document.getElementById('search-toggle').addEventListener('click', () => this.toggleSearch());
+        document.getElementById('search-close-btn').addEventListener('click', () => this.toggleSearch());
+        document.getElementById('search-input').addEventListener('input', (e) => this.performSearch(e.target.value));
+        document.getElementById('search-overlay').addEventListener('click', (e) => {
+            if (e.target.id === 'search-overlay') {
+                this.toggleSearch();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !document.getElementById('search-overlay').classList.contains('hidden')) {
+                this.toggleSearch();
+            }
+        });
+
         // Matrix render mode selector
         const renderModeSelector = document.getElementById('matrix-render-mode');
         if (renderModeSelector) {
@@ -2951,6 +2968,81 @@ const VibeMe = {
                 settings.classList.add('hidden');
             }
         }
+    },
+
+    // ===== SEARCH FUNCTIONALITY =====
+    toggleSearch: function() {
+        const overlay = document.getElementById('search-overlay');
+        const searchInput = document.getElementById('search-input');
+        const isHidden = overlay.classList.contains('hidden');
+
+        if (isHidden) {
+            overlay.classList.remove('hidden');
+            searchInput.focus();
+            this.performSearch(''); // Show all quotes initially
+        } else {
+            overlay.classList.add('hidden');
+        }
+    },
+
+    performSearch: function(query) {
+        const allQuotes = [...this.quotes, ...this.state.customQuotes];
+        const lowerCaseQuery = query.toLowerCase();
+
+        const results = allQuotes.filter(quote => {
+            return quote.text.toLowerCase().includes(lowerCaseQuery) ||
+                   quote.author.toLowerCase().includes(lowerCaseQuery);
+        });
+
+        this.displaySearchResults(results);
+    },
+
+    displaySearchResults: function(results) {
+        const resultsContainer = document.getElementById('search-results');
+        resultsContainer.innerHTML = '';
+
+        if (results.length === 0) {
+            resultsContainer.innerHTML = `<p class="no-results">No quotes found.</p>`;
+            return;
+        }
+
+        results.forEach(quote => {
+            const resultItem = document.createElement('div');
+            resultItem.className = 'result-item';
+            resultItem.innerHTML = `
+                <p class="result-quote">"${quote.text}"</p>
+                <p class="result-author">— ${quote.author}</p>
+            `;
+            resultItem.addEventListener('click', () => {
+                this.displayQuote(quote);
+                this.toggleSearch();
+            });
+            resultsContainer.appendChild(resultItem);
+        });
+    },
+
+    displayQuote: function(quote) {
+        const quoteText = document.getElementById('quote-text');
+        const quoteAuthor = document.getElementById('quote-author');
+
+        if (quoteText) {
+            quoteText.textContent = quote.text;
+        }
+        if (quoteAuthor) {
+            quoteAuthor.textContent = `— ${quote.author}`;
+        }
+
+        // Find the index of the quote to set the state correctly
+        const allQuotes = [...this.quotes, ...this.state.customQuotes];
+        const index = allQuotes.findIndex(q => q.text === quote.text && q.author === quote.author);
+        if(index > -1) {
+            this.state.currentQuoteIndex = index;
+        }
+
+        this.updateFavoriteButton(quote);
+        this.updateRatingDisplay();
+        this.applyRandomTheme();
+        this.startTimer(); // Reset the auto-generation timer
     }
 };
 

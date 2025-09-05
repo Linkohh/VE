@@ -2652,3 +2652,42 @@ button:disabled {
 @media (forced-colors: active){
   .fc-date::before, .fc-date::after { display: none; }
 }
+
+/* Search Overlay Styles */
+#search-overlay.hidden {
+    display: none;
+}
+
+#search-results .result-item {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    text-align: left;
+}
+
+#search-results .result-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+#search-results .result-item:last-child {
+    border-bottom: none;
+}
+
+#search-results .result-quote {
+    font-size: 1.1rem;
+    color: #f0f0f0;
+    margin-bottom: 0.5rem;
+}
+
+#search-results .result-author {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    font-style: italic;
+}
+
+#search-results .no-results {
+    color: #a0a0a0;
+    text-align: center;
+    padding: 2rem;
+}
