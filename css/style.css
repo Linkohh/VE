@@ -1,11 +1,10 @@
 /* =============================
-   Date pill (top-left)
+   Date pill (re-positioned)
    ============================= */
 .fc-date {
-  position: fixed;
-  top: 1rem;
-  left: 8rem;  /* Safe zone for future left sidebar (128px from left) */
-  z-index: 10001;
+  /* Now lives inside the flex column of the title bar */
+  position: static;
+  z-index: 1;
   padding: 0.4rem 0.6rem;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.35);
@@ -16,6 +15,7 @@
   letter-spacing: 0.02em;
   line-height: 1;
   box-shadow: 0 8px 24px rgba(0,0,0,.18);
+  margin-top: 0.5rem; /* Space below clock */
 }
 
 /* Numeric stability */
@@ -31,7 +31,11 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
 
 /* Small screens */
 @media (max-width: 480px){
-  .fc-date { top: 0.75rem; left: 3rem; font-size: 1rem; padding: 0.35rem 0.55rem; }
+  .fc-date {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.5rem;
+    margin-top: 0.75rem;
+  }
 }
 /* css/style.css - VibeMe Enhanced Styles */
 
@@ -45,7 +49,7 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --inner-box-color: rgba(255, 255, 255, 0.85);
     --text-color-main: #374151;
     --text-color-secondary: #6b7280;
-    --social-icon-bg: #555555;
+    --social-icon-bg: #333333;
     
     /* Font Families (dynamically updated by JS) */
     --font-quote: 'Playfair Display', serif;
@@ -1008,12 +1012,12 @@ button:disabled {
     }
     
     .generate-btn {
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
     }
     
     .generate-btn i {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
     
     .generate-btn span {
@@ -1044,7 +1048,7 @@ button:disabled {
 
     #app-title-bar,
     .quote-container-outer {
-        max-width: min(94vw, 1100px); /* small-screen tweak to guarantee no horizontal creep */
+        max-width: min(90vw, 1100px); /* small-screen tweak to guarantee no horizontal creep */
     }
 }
 
@@ -1102,7 +1106,7 @@ button:disabled {
     --text-color-secondary: #d1d5db;
     --container-bg-color: rgba(31, 41, 55, 0.95);
     --inner-box-color: rgba(55, 65, 81, 0.85);
-    --social-icon-bg: #374151;
+    --social-icon-bg: #4b5563;
 }
 
 :root[data-theme="dark"] .gradient-bg {
@@ -1682,6 +1686,32 @@ button:disabled {
   }
 }
 
+/* Enable scrolling on mobile devices */
+@media (max-width: 639px) {
+    html, body {
+        height: auto !important;
+        overflow-y: auto !important;
+    }
+}
+
+@media (max-width: 399px) {
+    .quote-container-inner {
+        padding: 0.8rem;
+    }
+
+    #quote-text {
+        font-size: 1.1rem;
+    }
+
+    #quote-author {
+        font-size: 0.9rem;
+    }
+
+    section[aria-label="Quote actions"] {
+        font-size: 1.125rem;
+    }
+}
+
 /* ===== FlipClock V2: Fully-Namespaced fc-* Styles ====================== */
 /* Completely isolated namespace to eliminate all collision issues */
 
@@ -1848,6 +1878,30 @@ button:disabled {
   #app-title-bar .flip-clock-mount .fc-back .fc-bottom{
     font-size: 38px;
   }
+}
+
+@media (max-width: 480px) {
+    #app-title-bar .flip-clock-mount .fc-clock {
+        gap: 6px;
+    }
+
+    #app-title-bar .flip-clock-mount .fc-card {
+        width: 64px;
+        height: 46px;
+        font-size: 28px;
+    }
+
+    #app-title-bar .flip-clock-mount .fc-top,
+    #app-title-bar .flip-clock-mount .fc-bottom,
+    #app-title-bar .flip-clock-mount .fc-back .fc-top,
+    #app-title-bar .flip-clock-mount .fc-back .fc-bottom {
+        font-size: 28px;
+    }
+
+    .fc-meridiem-badge {
+        padding: 4px 8px;
+        font-size: 14px;
+    }
 }
 
 /* Respect reduced motion preferences */

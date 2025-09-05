@@ -102,10 +102,6 @@
         </button>
     </div>
 
-    <!-- Date mount (top-left, moved right) -->
-    <div id="date-mount" class="fc-date" aria-live="off" aria-label="Today's date">
-      <time id="date-time" datetime=""></time>
-    </div>
 
     <!-- Settings panel -->
     <div id="settings-panel" 
@@ -561,6 +557,10 @@
           <span class="logo-underline" aria-hidden="true"></span>
           <!-- Flip clock mount (directly under the VibeMe title) -->
           <div id="flip-clock-mount" class="flip-clock-mount" data-skin="v2" aria-label="Current time" role="timer"></div>
+          <!-- Date mount (moved here) -->
+          <div id="date-mount" class="fc-date" aria-live="off" aria-label="Today's date">
+            <time id="date-time" datetime=""></time>
+          </div>
         </div>
         <!-- Anchor bar lives directly under the title -->
         <!-- If this block already exists, skip (JS will also ensure it at runtime) -->
