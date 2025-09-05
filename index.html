@@ -663,49 +663,13 @@
                         </div>
 
                         <!-- Social sharing -->
-                        <nav class="flex space-x-3 md:space-x-4 mt-6" 
+                        <div class="flex flex-col items-center space-y-4 mt-6"
                              aria-label="Share quote on social media">
-                            <a href="#" id="twitter-share" 
-                               target="_blank" 
-                               rel="noopener noreferrer"
-                               class="social-bubble"
-                               aria-label="Share on Twitter"
-                               title="Share on Twitter">
-                                <i class="fab fa-twitter" aria-hidden="true"></i>
-                            </a>
-                            <a href="#" id="facebook-share" 
-                               target="_blank" 
-                               rel="noopener noreferrer"
-                               class="social-bubble"
-                               aria-label="Share on Facebook"
-                               title="Share on Facebook">
-                                <i class="fab fa-facebook-f" aria-hidden="true"></i>
-                            </a>
-                            <a href="#" id="linkedin-share" 
-                               target="_blank" 
-                               rel="noopener noreferrer"
-                               class="social-bubble"
-                               aria-label="Share on LinkedIn"
-                               title="Share on LinkedIn">
-                                <i class="fab fa-linkedin-in" aria-hidden="true"></i>
-                            </a>
-                            <a href="#" id="whatsapp-share" 
-                               target="_blank" 
-                               rel="noopener noreferrer"
-                               class="social-bubble"
-                               aria-label="Share on WhatsApp"
-                               title="Share on WhatsApp">
-                                <i class="fab fa-whatsapp" aria-hidden="true"></i>
-                            </a>
-                            <a href="#" id="pinterest-share" 
-                               target="_blank" 
-                               rel="noopener noreferrer"
-                               class="social-bubble"
-                               aria-label="Share on Pinterest"
-                               title="Share on Pinterest">
-                                <i class="fab fa-pinterest-p" aria-hidden="true"></i>
-                            </a>
-                        </nav>
+                            <button id="shareHubBtn" class="hub-btn" aria-expanded="false" aria-controls="shareFanContainer">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                            <div id="shareFanContainer" class="flex items-center justify-center gap-2" aria-hidden="true"></div>
+                        </div>
                     </section>
                 </div>
             </div>
