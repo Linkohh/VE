@@ -518,92 +518,108 @@ body:not(.using-keyboard) *:focus {
     transform: translatey(2px);
 }
 
-/* ===== SOCIAL BUTTONS ===== */
-.social-bubble {
-    position: relative;
-    z-index: var(--z-elevated);
-    transition: all var(--transition-medium);
-    border-radius: var(--radius-full);
-    background-color: var(--social-icon-bg);
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-md);
-    text-decoration: none;
+/* ===== SOCIAL SHARE FAN-OUT ===== */
+#shareHubBtn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  width: 60px; /* Smaller than generate-btn */
+  height: 60px;
+  border-radius: var(--radius-full);
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  cursor:pointer;
+  position: relative;
+  isolation:isolate;
+  background: linear-gradient(135deg, var(--color1), var(--color2));
+  box-shadow: var(--shadow-md);
+  transition: transform .2s cubic-bezier(.175,.885,.32,1.275), filter .2s ease, box-shadow .2s ease;
+  animation: float 6s ease-in-out infinite;
 }
 
-.social-bubble::before {
-    content: '';
-    position: absolute;
-    top: -4px; 
-    left: -4px; 
-    right: -4px; 
-    bottom: -4px;
-    border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.2);
-    z-index: var(--z-negative);
-    opacity: 0;
-    transition: all var(--transition-medium);
+/* Animated gradient ring from generate-btn */
+#shareHubBtn::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:inherit;
+  z-index:-1;
+  background: linear-gradient(60deg, var(--color1), var(--color2), var(--color3), var(--color1));
+  background-size: 300% 300%;
+  filter: blur(3px);
+  opacity:.9;
+  animation: gradient-border-flow 6s linear infinite;
 }
 
-.social-bubble:hover {
-    transform: translateY(-2px) scale(1.08);
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
+#shareHubBtn:hover{
+  transform: translateY(-1px) scale(1.03);
 }
 
-.social-bubble:hover::before {
-    opacity: 1;
-    top: -6px; 
-    left: -6px; 
-    right: -6px; 
-    bottom: -6px;
+#shareHubBtn:active{
+  transform: translateY(1px) scale(.97);
+  box-shadow: 0 8px 18px rgba(0,0,0,.18) inset;
 }
 
-.social-bubble i {
-    color: white;
-    font-size: 1rem;
-    width: 1rem;
-    height: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
+#shareFanContainer {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  position: relative; /* For child positioning */
+  height: 44px; /* Set a fixed height to avoid layout shifts */
 }
 
-/* Ensure brand icons are visible */
-.social-bubble .fab {
-    font-family: "Font Awesome 6 Brands", "Font Awesome 5 Brands", sans-serif;
-    font-weight: 400;
+/* Container reveal pulse */
+#shareFanContainer.reveal {
+  animation: container-pop .28s cubic-bezier(.2,.7,.2,1.1);
 }
 
-/* Fallback for icons if Font Awesome fails */
-.social-bubble .fab::before {
-    display: inline-block;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
+@keyframes container-pop {
+  from{ transform:scale(.98); opacity:.6 }
+  to{ transform:scale(1); opacity:1 }
 }
 
-/* Specific fallbacks for social media icons */
-#twitter-share .fab::before {
-    content: "\f099"; /* Twitter icon */
+.fan-btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: 44px; /* Good touch target size */
+  height: 44px;
+  border-radius: var(--radius-full);
+  font-size: 1.2rem; /* Icon size */
+  color: var(--text-color-main);
+  background: color-mix(in oklab, var(--color2) 20%, transparent);
+  border: 1px solid rgba(255,255,255,.18);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+          backdrop-filter: blur(10px) saturate(140%);
+  box-shadow: var(--shadow-sm);
+  transition: opacity .2s ease, transform .26s cubic-bezier(.2,.7,.2,1.1), box-shadow .2s ease;
+  opacity:0;
+  transform: translateY(6px) scale(.96);
 }
 
-#facebook-share .fab::before {
-    content: "\f09a"; /* Facebook icon */
+.fan-btn.in{
+  opacity:1;
+  transform: translateY(0) scale(1);
+  box-shadow: var(--shadow-md);
 }
 
-#linkedin-share .fab::before {
-    content: "\f0e1"; /* LinkedIn icon */
+.fan-btn.out{
+  opacity:0;
+  transform: translateY(-8px) scale(.92);
 }
 
-#whatsapp-share .fab::before {
-    content: "\f232"; /* WhatsApp icon */
+.fan-btn:hover{
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--shadow-lg);
+  color: white;
+  background: var(--color1);
 }
 
-#pinterest-share .fab::before {
-    content: "\f0d2"; /* Pinterest icon */
+.fan-btn:active{
+  transform: translateY(1px) scale(.97);
+  box-shadow: 0 8px 18px rgba(0,0,0,.18) inset;
 }
 
 /* ===== ENHANCED MOUSE GLOW EFFECT ===== */
@@ -986,13 +1002,18 @@ button:disabled {
         height: 90px;
     }
     
-    .social-bubble {
-        width: 36px;
-        height: 36px;
+    #shareFanContainer {
+        justify-content: center;
     }
-    
-    .social-bubble i {
-        font-size: 0.9rem;
+
+    #shareHubBtn {
+        width: 50px;
+        height: 50px;
+        font-size: 1rem;
+    }
+
+    .fan-btn {
+        /* No absolute positioning needed, flexbox handles layout. */
     }
     
     #settings-panel {

@@ -204,9 +204,9 @@ const VibeMe = {
         favorites: JSON.parse(localStorage.getItem('vibeme-favorites') || '[]'),
         customQuotes: JSON.parse(localStorage.getItem('vibeme-custom-quotes') || '[]'),
         quoteRatings: JSON.parse(localStorage.getItem('vibeme-ratings') || '{}'),
-        stats: JSON.parse(localStorage.getItem('vibeme-stats') || '{"quotesGenerated": 0, "quotesShared": 0, "dayStreak": 0, "lastVisit": null}')
-        ,
-        beepEnabled: JSON.parse(localStorage.getItem('vibeme-beep-enabled') || 'true')
+        stats: JSON.parse(localStorage.getItem('vibeme-stats') || '{"quotesGenerated": 0, "quotesShared": 0, "dayStreak": 0, "lastVisit": null}'),
+        beepEnabled: JSON.parse(localStorage.getItem('vibeme-beep-enabled') || 'true'),
+        collapseTimer: null
     },
 
     // Audio context for enhanced sound effects
@@ -638,7 +638,6 @@ const VibeMe = {
 
         if (typeof this.getCurrentQuote === 'function') {
             const q = this.getCurrentQuote();
-            this.updateSocialLinks && this.updateSocialLinks(q);
             this.updateFavoriteButton && this.updateFavoriteButton(q);
         }
 
@@ -704,7 +703,6 @@ const VibeMe = {
             }, 300);
         }
 
-        this.updateSocialLinks(quote);
         this.triggerHapticFeedback('light');
         
         // Apply new theme with each quote
@@ -859,23 +857,113 @@ const VibeMe = {
         this.saveFavorites();
     },
 
-    // ===== SOCIAL SHARING =====
-    updateSocialLinks: function(quote) {
-        const text = `"${quote.text}" — ${quote.author}`;
-        const url = window.location.href;
+    // ===== SOCIAL SHARE FAN-OUT =====
+    expandShareButtons: function() {
+      if (this.state.collapseTimer) {
+        clearTimeout(this.state.collapseTimer);
+        this.state.collapseTimer = null;
+      }
+
+      const shareHubBtn = document.getElementById('shareHubBtn');
+      const buttonContainer = document.getElementById('shareFanContainer');
+
+      if (!shareHubBtn || !buttonContainer) return;
+
+      shareHubBtn.style.display = 'none';
+      buttonContainer.innerHTML = '';
+      buttonContainer.setAttribute('aria-hidden', 'false');
+      buttonContainer.classList.add('reveal');
+
+      const items = [
+        { id: 'x',        icon: 'fas fa-comment-dots',   label: 'Twitter' },
+        { id: 'facebook', icon: 'fab fa-facebook-f',label: 'Facebook' },
+        { id: 'linkedin', icon: 'fab fa-linkedin-in', label: 'LinkedIn' },
+        { id: 'whatsapp', icon: 'fab fa-whatsapp',  label: 'WhatsApp' },
+        { id: 'pinterest',icon: 'fab fa-pinterest-p', label: 'Pinterest' }
+      ];
+
+      items.forEach((item, i) => {
+        const b = document.createElement('button');
+        b.className = 'fan-btn';
+        b.setAttribute('aria-label', `Share on ${item.label}`);
+        b.innerHTML = `<i class="${item.icon}" aria-hidden="true"></i>`;
+        b.style.transitionDelay = `${(i + 1) * 55}ms`;
+
+        b.addEventListener('click', () => this.handleShare(item.id));
+        buttonContainer.appendChild(b);
         
-        const links = {
-            'twitter-share': `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
-            'facebook-share': `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`,
-            'linkedin-share': `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=Inspirational%20Quote&summary=${encodeURIComponent(text)}`,
-            'whatsapp-share': `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`,
-            'pinterest-share': `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(text)}`
-        };
-        
-        Object.entries(links).forEach(([id, href]) => {
-            const element = document.getElementById(id);
-            if (element) element.href = href;
+        requestAnimationFrame(() => {
+            b.classList.add('in');
         });
+      });
+
+      setTimeout(() => buttonContainer.classList.remove('reveal'), 320);
+      this.state.collapseTimer = setTimeout(() => this.collapseShareButtons(), 5000);
+    },
+
+    collapseShareButtons: function() {
+      const buttonContainer = document.getElementById('shareFanContainer');
+      if (!buttonContainer) return;
+
+      const kids = Array.from(buttonContainer.querySelectorAll('.fan-btn'));
+      if (!kids.length) {
+        return this.resetShareButton();
+      }
+      kids.reverse().forEach((b, idx) => {
+        b.style.transitionDelay = `${idx * 55}ms`;
+        b.classList.remove('in');
+        b.classList.add('out');
+      });
+      const total = kids.length * 55 + 320;
+      setTimeout(() => {
+        buttonContainer.innerHTML = '';
+        this.resetShareButton();
+      }, total);
+    },
+
+    resetShareButton: function() {
+      const buttonContainer = document.getElementById('shareFanContainer');
+      const shareHubBtn = document.getElementById('shareHubBtn');
+      if (!buttonContainer || !shareHubBtn) return;
+
+      buttonContainer.setAttribute('aria-hidden', 'true');
+      shareHubBtn.style.display = 'inline-flex';
+      if (this.state.collapseTimer) clearTimeout(this.state.collapseTimer);
+      this.state.collapseTimer = null;
+      shareHubBtn.focus();
+    },
+
+    handleShare: function(action) {
+      const data = this.buildShareData();
+      if (data[action]) {
+        this.openPopup(data[action]);
+      } else if (navigator.share) {
+        const { text, author } = this.getCurrentQuote();
+        navigator.share({ title: 'VibeMe', text: `"${text}" — ${author}`, url: window.location.href });
+      }
+    },
+
+    buildShareData: function() {
+      const quote = this.getCurrentQuote();
+      if (!quote) return {};
+      const text = `"${quote.text}" — ${quote.author}`;
+      const pageUrl = window.location.href;
+      const encodedText = encodeURIComponent(text);
+      const encodedUrl = encodeURIComponent(pageUrl);
+      return {
+        x:        `https://x.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`,
+        linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=Inspirational%20Quote&summary=${encodedText}`,
+        whatsapp: `https://wa.me/?text=${encodedText}%20${encodedUrl}`,
+        pinterest:`https://www.pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedText}`
+      };
+    },
+
+    openPopup: function(url) {
+      const w = 620, h = 640;
+      const y = (window.outerHeight - h) / 2 + window.screenY;
+      const x = (window.outerWidth - w) / 2 + window.screenX;
+      window.open(url, '_blank', `noopener,noreferrer,width=${w},height=${h},left=${x},top=${y}`);
     },
 
     // ===== SETTINGS & PREFERENCES =====
@@ -2151,6 +2239,7 @@ const VibeMe = {
         document.getElementById('timer-toggle-btn').addEventListener('click', () => this.toggleTimer());
         document.getElementById('copy-quote-btn').addEventListener('click', () => this.copyQuote());
         document.getElementById('favorite-quote-btn').addEventListener('click', () => this.toggleFavorite());
+        document.getElementById('shareHubBtn').addEventListener('click', () => this.expandShareButtons());
         document.getElementById('effects-toggle-checkbox').addEventListener('change', () => this.toggleEffects());
         document.getElementById('clear-favorites-btn').addEventListener('click', () => this.clearFavorites());
         document.getElementById('toggle-add-quote-form').addEventListener('click', () => this.toggleAddQuoteForm());
