@@ -997,7 +997,6 @@ button:disabled {
     }
     
     #settings-panel {
-        width: 250px;
         right: 1rem;
     }
 }
@@ -1018,7 +1017,7 @@ button:disabled {
     }
     
     .generate-btn span {
-        font-size: 0.6rem;
+        font-size: 0.7rem;
     }
     
     .social-bubble {
@@ -1031,7 +1030,6 @@ button:disabled {
     }
     
     #settings-panel {
-        width: 200px;
         padding: var(--spacing-md);
     }
     
