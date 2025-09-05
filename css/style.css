@@ -156,7 +156,7 @@ body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding:
 /* Ensure inner card never pushes the page taller than the viewport */
 .quote-container-inner {
   max-height: calc(100dvh - 160px); /* room for title, clock, buttons */
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 /* ===== ACCESSIBILITY ===== */
@@ -244,6 +244,14 @@ body:not(.using-keyboard) *:focus {
     padding: var(--spacing-lg);
     position: relative;
     overflow: hidden;
+}
+
+.about-page .quote-container-inner {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 /* Quote pattern background */

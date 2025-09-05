@@ -3776,6 +3776,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 
+// Expose the applyRandomTheme function to the global scope
+window.VibeMe.applyRandomTheme = VibeMe.applyRandomTheme;
+
 
 // ---- Category filter (append-only) ----
 document.addEventListener('DOMContentLoaded', () => {
