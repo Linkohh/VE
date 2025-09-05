@@ -2274,6 +2274,31 @@ const VibeMe = {
                 renderModeSelector.value === 'canvas' || renderModeSelector.value === 'hybrid'
             );
         }
+
+        // Settings tabs
+        this.setupSettingsTabs();
+    },
+
+    setupSettingsTabs: function() {
+        const tabs = document.querySelectorAll('.settings-tab');
+        const tabContents = document.querySelectorAll('.settings-tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-tab');
+
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                tabContents.forEach(content => {
+                    if (content.id === `tab-${target}`) {
+                        content.classList.remove('hidden');
+                    } else {
+                        content.classList.add('hidden');
+                    }
+                });
+            });
+        });
     },
 
     // ===== DARK MODE =====
