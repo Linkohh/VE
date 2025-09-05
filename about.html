@@ -42,7 +42,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="meta/site.webmanifest">
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 gradient-bg">
+<body class="min-h-screen flex items-center justify-center p-4 gradient-bg about-page">
     <!-- Decorative background effects for consistency -->
     <div id="mouse-glow" class="mouse-glow" aria-hidden="true"></div>
     <div id="matrix-bg" class="matrix-bg" aria-hidden="true"></div>
@@ -50,6 +50,11 @@
 
     <!-- Main content container -->
     <main id="main-content" class="container mx-auto max-w-4xl relative z-10">
+        <!-- App Title Bar (left-aligned for about page) -->
+        <div id="app-title-bar" class="app-title-bar items-start -mb-8">
+          <h1 class="vb-logo heading-font !text-4xl" data-title="VibeMe">VibeMe</h1>
+        </div>
+
         <div class="quote-container-outer">
             <div class="quote-container-inner dynamic-text-secondary p-8 md:p-12">
 
@@ -73,7 +78,7 @@
                             <em>(This is where you can share the story behind the application. Talk about the creator, what inspired them, and the journey of bringing this idea to life. Your users will appreciate knowing the 'why' behind the project!)</em>
                         </p>
                         <div class="my-6 rounded-lg overflow-hidden shadow-lg">
-                            <img src="https://picsum.photos/seed/originality/800/400" alt="A placeholder image representing creativity and inspiration" class="w-full h-auto object-cover">
+                            <img src="https://picsum.photos/seed/vibeme-story/800/400" alt="A placeholder image representing the story of VibeMe" class="w-full h-auto object-cover">
                         </div>
                     </section>
 
@@ -116,5 +121,12 @@
 
     <!-- Main JS for theme handling -->
     <script data-main defer src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.VibeMe && typeof window.VibeMe.applyRandomTheme === 'function') {
+                window.VibeMe.applyRandomTheme();
+            }
+        });
+    </script>
 </body>
 </html>
