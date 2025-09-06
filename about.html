@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" class="about-page">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,49 +49,59 @@
     <canvas id="matrix-canvas" class="matrix-canvas" aria-hidden="true"></canvas>
 
     <!-- Main content container -->
-    <main id="main-content" class="container mx-auto max-w-4xl relative z-10">
-        <!-- App Title Bar (left-aligned for about page) -->
-        <div id="app-title-bar" class="app-title-bar items-start -mb-8">
+    <main id="main-content" class="container mx-auto max-w-4xl relative z-10 pt-8">
+        <!-- App Title Bar -->
+        <div id="app-title-bar" class="app-title-bar" role="banner" aria-label="Application Title">
           <h1 class="vb-logo heading-font !text-4xl" data-title="VibeMe">VibeMe</h1>
+          <span class="logo-underline" aria-hidden="true"></span>
+          <div id="flip-clock-mount" class="flip-clock-mount" data-skin="v2" aria-label="Current time" role="timer"></div>
         </div>
 
         <div class="quote-container-outer">
             <div class="quote-container-inner dynamic-text-secondary p-8 md:p-12">
 
                 <!-- Prominent Title -->
-                <h1 class="heading-font text-4xl md:text-5xl font-bold text-center mb-8 dynamic-text-main">
+                <h1 class="heading-font font-bold text-center mb-8 dynamic-text-main about-title">
                     About This Space
                 </h1>
 
-                <!-- Content sections will be added here in the next step -->
-                <div id="about-content-placeholder" class="space-y-10">
+                <!-- Content sections -->
+                <div id="about-content-placeholder" class="about-sections">
                     <section>
-                        <h2 class="heading-font text-2xl md:text-3xl font-semibold mb-4 dynamic-text-main border-b border-white/20 pb-3">Our Mission</h2>
-                        <p class="text-base md:text-lg leading-relaxed">
+                        <h2 class="about-section-title heading-font font-semibold mb-4 dynamic-text-main border-b border-white/20 pb-3">
+                            <span class="section-icon" aria-hidden="true">🎯</span>
+                            <span>Our Mission</span>
+                        </h2>
+                        <p class="leading-relaxed">
                             Our mission is to provide a sanctuary for original thought and authentic expression. In a world saturated with familiar voices, we celebrate the unique perspectives that come from individual walks of life. This platform is dedicated to fostering diversity, equity, and inclusion by empowering everyone to share their own motivational quotes, ideas, and experiences. We believe that your voice matters and that your originality is a source of inspiration.
                         </p>
                     </section>
 
                     <section>
-                        <h2 class="heading-font text-2xl md:text-3xl font-semibold mb-4 dynamic-text-main border-b border-white/20 pb-3">Our Story</h2>
-                        <p class="text-base md:text-lg leading-relaxed mb-4">
+                        <h2 class="about-section-title heading-font font-semibold mb-4 dynamic-text-main border-b border-white/20 pb-3">
+                            <span class="section-icon" aria-hidden="true">📖</span>
+                            <span>Our Story</span>
+                        </h2>
+                        <p class="leading-relaxed mb-4">
                             <em>(This is where you can share the story behind the application. Talk about the creator, what inspired them, and the journey of bringing this idea to life. Your users will appreciate knowing the 'why' behind the project!)</em>
                         </p>
                         <div class="my-6 rounded-lg overflow-hidden shadow-lg">
-                            <img src="https://picsum.photos/seed/vibeme-story/800/400" alt="A placeholder image representing the story of VibeMe" class="w-full h-auto object-cover">
+                            <img src="img/vibeme-story.svg" alt="Abstract gradient representing the VibeMe story" class="w-full h-auto object-cover">
                         </div>
                     </section>
 
-                    <section>
-                        <h2 class="heading-font text-2xl md:text-3xl font-semibold mb-4 dynamic-text-main border-b border-white/20 pb-3">Contact Us</h2>
-                        <p class="text-base md:text-lg leading-relaxed">
+                    <section class="contact">
+                        <h2 class="about-section-title heading-font font-semibold mb-4 dynamic-text-main border-b border-white/20 pb-3">
+                            <span class="section-icon" aria-hidden="true">✉️</span>
+                            <span>Contact Us</span>
+                        </h2>
+                        <p class="leading-relaxed">
                             We'd love to hear from you! Whether you have a question, feedback, or a story to share, please reach out.
                         </p>
                         <div class="mt-4">
-                            <p class="text-base md:text-lg">
+                            <p>
                                 <strong>Email:</strong>
-                                <a href="mailto:contact@example.com" class="text-cyan-300 hover:underline">contact@originality.app</a>
-                                <span class="text-sm dynamic-text-secondary">(Please replace with your actual email)</span>
+                                <a id="contact-email" class="text-cyan-300 hover:underline" data-user="contact" data-domain="vibeme.app"></a>
                             </p>
                             <!-- You can add other contact methods like social media links here -->
                         </div>
@@ -125,6 +135,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             if (window.VibeMe && typeof window.VibeMe.applyRandomTheme === 'function') {
                 window.VibeMe.applyRandomTheme();
+            }
+            const emailLink = document.getElementById('contact-email');
+            if (emailLink) {
+                const email = `${emailLink.dataset.user}@${emailLink.dataset.domain}`;
+                emailLink.href = `mailto:${email}`;
+                emailLink.textContent = email;
             }
         });
     </script>
