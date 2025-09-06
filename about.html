@@ -41,6 +41,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="meta/site.webmanifest">
+    <style>
+        /* Hide matrix preset controls injected by main.js */
+        .about-page #matrix-preset-wrapper {
+            display: none !important;
+        }
+    </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 gradient-bg about-page">
     <!-- Decorative background effects for consistency -->
@@ -50,6 +56,13 @@
 
     <!-- Main content container -->
     <main id="main-content" class="container mx-auto max-w-4xl relative z-10 pt-8">
+        <!-- Back button -->
+        <a href="index.html"
+           class="absolute top-4 left-4 inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 dynamic-text-main font-semibold py-2 px-4 rounded-lg transition-colors duration-300 shadow-lg">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            <span>Home</span>
+        </a>
+
         <!-- App Title Bar -->
         <div id="app-title-bar" class="app-title-bar" role="banner" aria-label="Application Title">
           <h1 class="vb-logo heading-font !text-4xl" data-title="VibeMe">VibeMe</h1>
@@ -108,14 +121,6 @@
                     </section>
                 </div>
 
-                <!-- Back to Home link -->
-                <div class="text-center mt-12">
-                    <a href="index.html" class="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 dynamic-text-main font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-lg">
-                        <i class="fas fa-arrow-left mr-2"></i>
-                        <span>Back to Home</span>
-                    </a>
-                </div>
-
             </div>
         </div>
     </main>
@@ -135,6 +140,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             if (window.VibeMe && typeof window.VibeMe.applyRandomTheme === 'function') {
                 window.VibeMe.applyRandomTheme();
+            }
+            const presetWrapper = document.getElementById('matrix-preset-wrapper');
+            if (presetWrapper) {
+                presetWrapper.remove();
             }
             const emailLink = document.getElementById('contact-email');
             if (emailLink) {
