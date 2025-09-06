@@ -49,10 +49,12 @@
     <canvas id="matrix-canvas" class="matrix-canvas" aria-hidden="true"></canvas>
 
     <!-- Main content container -->
-    <main id="main-content" class="container mx-auto max-w-4xl relative z-10">
-        <!-- App Title Bar (left-aligned for about page) -->
-        <div id="app-title-bar" class="app-title-bar items-start -mb-8">
+    <main id="main-content" class="container mx-auto max-w-4xl relative z-10 pt-8">
+        <!-- App Title Bar -->
+        <div id="app-title-bar" class="app-title-bar" role="banner" aria-label="Application Title">
           <h1 class="vb-logo heading-font !text-4xl" data-title="VibeMe">VibeMe</h1>
+          <span class="logo-underline" aria-hidden="true"></span>
+          <div id="flip-clock-mount" class="flip-clock-mount" data-skin="v2" aria-label="Current time" role="timer"></div>
         </div>
 
         <div class="quote-container-outer">
@@ -84,7 +86,7 @@
                             <em>(This is where you can share the story behind the application. Talk about the creator, what inspired them, and the journey of bringing this idea to life. Your users will appreciate knowing the 'why' behind the project!)</em>
                         </p>
                         <div class="my-6 rounded-lg overflow-hidden shadow-lg">
-                            <img src="https://picsum.photos/seed/vibeme-story/800/400" alt="A placeholder image representing the story of VibeMe" class="w-full h-auto object-cover">
+                            <img src="https://picsum.photos/seed/vibeme-story/800/400" alt="Person enjoying sunrise in a field representing the VibeMe story" class="w-full h-auto object-cover">
                         </div>
                     </section>
 
@@ -99,7 +101,7 @@
                         <div class="mt-4">
                             <p>
                                 <strong>Email:</strong>
-                                <a href="mailto:contact@example.com" class="text-cyan-300 hover:underline">contact@originality.app</a>
+                                <a href="mailto:contact@originality.app" class="text-cyan-300 hover:underline">contact@originality.app</a>
                                 <span class="text-sm dynamic-text-secondary">(Please replace with your actual email)</span>
                             </p>
                             <!-- You can add other contact methods like social media links here -->
