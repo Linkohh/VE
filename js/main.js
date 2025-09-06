@@ -3138,7 +3138,7 @@ const VibeMe = {
 
     displaySearchResults: function(results) {
         const resultsContainer = document.getElementById('search-results');
-        resultsContainer.innerHTML = '';
+        resultsContainer.textContent = '';
 
         if (results.length === 0) {
             const noResults = document.createElement('p');
@@ -3152,6 +3152,7 @@ const VibeMe = {
             const resultItem = document.createElement('div');
             resultItem.className = 'result-item';
 
+
             const quoteEl = document.createElement('p');
             quoteEl.className = 'result-quote';
             quoteEl.textContent = `"${quote.text}"`;
@@ -3162,6 +3163,7 @@ const VibeMe = {
 
             resultItem.appendChild(quoteEl);
             resultItem.appendChild(authorEl);
+
 
             resultItem.addEventListener('click', () => {
                 this.displayQuote(quote);
