@@ -525,7 +525,6 @@ const VibeMe = {
         if (raw && raw.categories && typeof raw.categories === 'object') {
             const combined = [];
             for (const [cat, list] of Object.entries(raw.categories)) {
-                if (cat === 'famous_quotes') continue; // Exclude the famous_quotes category
                 if (Array.isArray(list)) combined.push(...sanitize(list, cat));
             }
             return combined;
@@ -537,8 +536,7 @@ const VibeMe = {
 
     mergeCustomQuotes: function(base) {
         const user = Array.isArray(this.state.customQuotes) ? this.state.customQuotes : [];
-        // By adding user quotes first, they will be prioritized during de-duplication
-        return [...user, ...base];
+        return [...base, ...user];
     },
 
     dedupeQuotes: function(arr) {
@@ -656,7 +654,7 @@ const VibeMe = {
     },
 
     getRandomQuote: function() {
-        const allQuotes = [...this.quotes, ...this.state.customQuotes];
+        const allQuotes = this.quotes; // Use this.quotes directly
         let newIndex;
         do {
             newIndex = Math.floor(Math.random() * allQuotes.length);
@@ -2277,6 +2275,107 @@ const VibeMe = {
 
         // Settings tabs
         this.setupSettingsTabs();
+
+        // Settings accordion
+        this.setupSettingsAccordion();
+
+        // Re-wire restored settings
+        // Color Customization
+        document.getElementById('vibrancy-slider').addEventListener('input', (e) => this.updateColorSetting('vibrancy', e.target.value));
+        document.getElementById('warmth-slider').addEventListener('input', (e) => this.updateColorSetting('warmth', e.target.value));
+        document.getElementById('accessibility-mode').addEventListener('change', (e) => this.updateColorSetting('accessibility', e.target.checked));
+
+        // Mouse Glow
+        document.getElementById('glow-intensity').addEventListener('input', (e) => this.updateGlowSetting('intensity', e.target.value));
+        document.getElementById('glow-size').addEventListener('input', (e) => this.updateGlowSetting('size', e.target.value));
+
+        // Matrix
+        document.getElementById('matrix-opacity').addEventListener('input', (e) => this.updateMatrixSetting('opacity', e.target.value));
+        document.getElementById('matrix-intensity').addEventListener('input', (e) => this.updateMatrixSetting('intensity', e.target.value));
+        document.getElementById('matrix-speed').addEventListener('input', (e) => this.updateMatrixSetting('speed', e.target.value));
+        document.getElementById('matrix-high-contrast').addEventListener('change', (e) => this.updateMatrixSetting('highContrast', e.target.checked));
+        document.getElementById('matrix-blend-mode').addEventListener('change', (e) => this.updateMatrixSetting('blendMode', e.target.value));
+        document.getElementById('matrix-density').addEventListener('input', (e) => this.updateMatrixSetting('density', e.target.value));
+        document.getElementById('matrix-render-mode').addEventListener('change', (e) => this.updateMatrixRenderMode(e.target.value)); // Existing function is fine
+        document.getElementById('canvas-max-fps').addEventListener('input', (e) => this.updateMatrixSetting('maxFps', e.target.value));
+    },
+
+    setupSettingsAccordion: function() {
+        const accordions = document.querySelectorAll('.settings-accordion');
+
+        accordions.forEach(accordion => {
+            accordion.addEventListener('toggle', (event) => {
+                if (accordion.open) {
+                    accordions.forEach(otherAccordion => {
+                        if (otherAccordion !== accordion && otherAccordion.open) {
+                            otherAccordion.open = false;
+                        }
+                    });
+                }
+            });
+        });
+    },
+
+    // ===== SETTINGS HANDLERS =====
+    updateColorSetting: function(key, value) {
+        const prefs = JSON.parse(localStorage.getItem('vibeme-color-preferences') || '{}');
+        prefs[key] = value;
+        localStorage.setItem('vibeme-color-preferences', JSON.stringify(prefs));
+
+        // Update UI labels if they exist
+        const valueEl = document.getElementById(`${key}-value`);
+        if (valueEl) {
+            valueEl.textContent = typeof value === 'boolean' ? (value ? 'On' : 'Off') : `${value}%`;
+        }
+
+        this.applyRandomTheme();
+    },
+
+    updateGlowSetting: function(key, value) {
+        const glowElement = document.getElementById('mouse-glow');
+        if (!glowElement) return;
+
+        if (key === 'intensity') {
+            glowElement.style.setProperty('--glow-intensity', value / 100);
+            const valueEl = document.getElementById('glow-intensity-value');
+            if(valueEl) valueEl.textContent = `${value}%`;
+        }
+        if (key === 'size') {
+            glowElement.style.setProperty('--glow-size', `${value}px`);
+            const valueEl = document.getElementById('glow-size-value');
+            if(valueEl) valueEl.textContent = `${value}px`;
+        }
+    },
+
+    updateMatrixSetting: function(key, value) {
+        const matrixPrefs = JSON.parse(localStorage.getItem('vibeme-matrix-preferences') || '{}');
+        matrixPrefs[key] = value;
+        localStorage.setItem('vibeme-matrix-preferences', JSON.stringify(matrixPrefs));
+
+        const valueEl = document.getElementById(`matrix-${key}-value`);
+        if (valueEl) {
+            valueEl.textContent = key === 'speed' || key === 'density' ? `${value}x` : `${value}%`;
+        }
+
+        if (key === 'opacity') {
+            document.documentElement.style.setProperty('--matrix-opacity-token', value / 100);
+        }
+        if (key === 'speed') {
+            this.matrixConfig.updateInterval = 500 / value;
+            this.startMatrixUpdates();
+        }
+        if (key === 'density') {
+            this.matrixConfig.densityMultiplier = value;
+            this.handleMatrixResize();
+        }
+        if (key === 'highContrast' || key === 'blendMode') {
+            this.updateMatrixColors(this.currentTheme);
+        }
+         if (key === 'maxFps') {
+            this.matrixConfig.canvasConfig.maxFPS = value;
+            const valueEl = document.getElementById('canvas-max-fps-value');
+            if(valueEl) valueEl.textContent = value;
+        }
     },
 
     setupSettingsTabs: function() {
@@ -3011,12 +3110,27 @@ const VibeMe = {
     },
 
     performSearch: function(query) {
-        const allQuotes = [...this.quotes, ...this.state.customQuotes];
-        const lowerCaseQuery = query.toLowerCase();
+        const allQuotes = this.quotes;
+        const lowerCaseQuery = query.toLowerCase().trim();
+
+        if (!lowerCaseQuery) {
+            this.displaySearchResults([]);
+            return;
+        }
+
+        const queryWords = lowerCaseQuery.split(/\s+/);
 
         const results = allQuotes.filter(quote => {
-            return quote.text.toLowerCase().includes(lowerCaseQuery) ||
-                   quote.author.toLowerCase().includes(lowerCaseQuery);
+            const quoteText = quote.text.toLowerCase();
+            const authorText = quote.author.toLowerCase();
+
+            // Search author for the full query string
+            if (authorText.includes(lowerCaseQuery)) {
+                return true;
+            }
+
+            // Search quote text for all individual words
+            return queryWords.every(word => quoteText.includes(word));
         });
 
         this.displaySearchResults(results);
@@ -3058,7 +3172,7 @@ const VibeMe = {
         }
 
         // Find the index of the quote to set the state correctly
-        const allQuotes = [...this.quotes, ...this.state.customQuotes];
+        const allQuotes = this.quotes; // Use this.quotes directly
         const index = allQuotes.findIndex(q => q.text === quote.text && q.author === quote.author);
         if(index > -1) {
             this.state.currentQuoteIndex = index;

@@ -159,77 +159,165 @@
                     <option value="originality">Originality</option>
                     <option value="change">Change</option>
                     <option value="inner_strength">Inner Strength</option>
+                    <option value="famous_quotes">Famous</option>
                   </select>
                 </div>
             </div>
 
             <!-- Appearance Tab -->
             <div id="tab-appearance" class="settings-tab-content hidden space-y-3">
-                <!-- Color Customization Controls -->
-                <div id="color-controls" class="space-y-3">
-                    <h3 class="text-sm font-semibold text-gray-200">🎨 Color Customization</h3>
-                    <div class="space-y-2">
-                        <label for="harmony-type" class="text-xs text-gray-300">Color Harmony</label>
-                        <select id="harmony-type" class="w-full text-black p-1 rounded text-xs">
-                            <option value="auto">🎲 Auto (Intelligent)</option>
-                            <option value="analogous">🌊 Analogous (Peaceful)</option>
-                            <option value="triadic">⚡ Triadic (Energetic)</option>
-                            <option value="complementary">🔥 Complementary (Bold)</option>
-                            <option value="split-complementary">🌟 Split-Complementary</option>
-                            <option value="monochromatic">🎯 Monochromatic (Subtle)</option>
-                            <option value="vibrant">💎 Vibrant (Dynamic)</option>
-                        </select>
+                <details class="settings-accordion">
+                    <summary class="settings-accordion-header">🎨 Color Customization</summary>
+                    <div class="settings-accordion-content">
+                        <div id="color-controls" class="space-y-3">
+                             <div class="space-y-2">
+                                <label for="harmony-type" class="text-xs text-gray-300">Color Harmony</label>
+                                <select id="harmony-type" class="w-full text-black p-1 rounded text-xs">
+                                    <option value="auto">🎲 Auto (Intelligent)</option>
+                                    <option value="analogous">🌊 Analogous (Peaceful)</option>
+                                    <option value="triadic">⚡ Triadic (Energetic)</option>
+                                    <option value="complementary">🔥 Complementary (Bold)</option>
+                                    <option value="split-complementary">🌟 Split-Complementary</option>
+                                    <option value="monochromatic">🎯 Monochromatic (Subtle)</option>
+                                    <option value="vibrant">💎 Vibrant (Dynamic)</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2 mt-2">
+                                <label for="theme-preset" class="text-xs text-gray-300">Theme Preset</label>
+                                <select id="theme-preset" class="w-full text-black p-1 rounded text-xs">
+                                    <option value="auto">🎯 Auto (by quote category)</option>
+                                    <option value="retro_neon">🕹️ Retro Neon</option>
+                                    <option value="desert_dusk">🌵 Desert Dusk</option>
+                                    <option value="lavender_glow">💜 Lavender Glow</option>
+                                    <option value="midnight_arcade">🌌 Midnight Arcade</option>
+                                    <option value="punchy_reds">🔥 Punchy Reds</option>
+                                    <option value="synthwave_sunset">🎵 Synthwave Sunset</option>
+                                    <option value="cosmic_ocean">🌊 Cosmic Ocean</option>
+                                    <option value="forbidden_forest">🌲 Forbidden Forest</option>
+                                    <option value="galactic_grape">🌌 Galactic Grape</option>
+                                </select>
+                            </div>
+                             <div class="space-y-2">
+                                <label for="vibrancy-slider" class="flex items-center justify-between text-xs">
+                                    <span>Vibrancy</span>
+                                    <span id="vibrancy-value">70%</span>
+                                </label>
+                                <input type="range" id="vibrancy-slider" min="0" max="100" value="70" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="warmth-slider" class="flex items-center justify-between text-xs">
+                                    <span>Warmth</span>
+                                    <span id="warmth-value">50%</span>
+                                </label>
+                                <input type="range" id="warmth-slider" min="0" max="100" value="50" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-orange-500">
+                            </div>
+                             <div class="space-y-2">
+                                <label for="accessibility-mode" class="flex items-center cursor-pointer text-xs">
+                                    <input type="checkbox" id="accessibility-mode" class="mr-2 accent-green-500 h-3 w-3" checked>
+                                    <span>♿ Accessibility Mode</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="space-y-2 mt-2">
-                        <label for="theme-preset" class="text-xs text-gray-300">Theme Preset</label>
-                        <select id="theme-preset" class="w-full text-black p-1 rounded text-xs">
-                            <option value="auto">🎯 Auto (by quote category)</option>
-                            <option value="retro_neon">🕹️ Retro Neon</option>
-                            <option value="desert_dusk">🌵 Desert Dusk</option>
-                            <option value="lavender_glow">💜 Lavender Glow</option>
-                            <option value="midnight_arcade">🌌 Midnight Arcade</option>
-                            <option value="punchy_reds">🔥 Punchy Reds</option>
-                            <option value="synthwave_sunset">🎵 Synthwave Sunset</option>
-                            <option value="cosmic_ocean">🌊 Cosmic Ocean</option>
-                            <option value="forbidden_forest">🌲 Forbidden Forest</option>
-                            <option value="galactic_grape">🌌 Galactic Grape</option>
-                        </select>
-                        <p class="text-[10px] text-gray-400">Applies to gradient, glass, text contrast, glow & matrix.</p>
-                    </div>
-                    <div class="space-y-2">
-                        <label for="accessibility-mode" class="flex items-center cursor-pointer text-xs">
-                            <input type="checkbox" id="accessibility-mode" class="mr-2 accent-green-500 h-3 w-3" checked>
-                            <span>♿ Accessibility Mode</span>
-                        </label>
-                        <p class="text-xs text-gray-400">Ensures WCAG contrast compliance</p>
-                    </div>
-                </div>
+                </details>
 
-                <!-- Effects Customization -->
-                <div class="space-y-3 border-t border-gray-600 pt-3">
-                    <h3 class="text-sm font-semibold text-gray-200">🔮 Effects Customization</h3>
-                    <!-- Matrix Visibility -->
-                    <div class="space-y-2">
-                        <label for="matrix-opacity" class="flex items-center justify-between text-xs">
-                            <span>Matrix Visibility</span>
-                            <span id="matrix-opacity-value">80%</span>
-                        </label>
-                        <input type="range" id="matrix-opacity" min="0" max="100" value="80" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                <details class="settings-accordion">
+                    <summary class="settings-accordion-header">🔮 Effects Customization</summary>
+                    <div class="settings-accordion-content">
+                        <!-- Mouse Glow Customization -->
+                        <div id="glow-controls" class="space-y-2 pt-3">
+                            <h3 class="text-sm font-semibold text-gray-200">Mouse Glow</h3>
+                            <div class="space-y-2">
+                                <label for="glow-intensity" class="flex items-center justify-between text-xs">
+                                    <span>Intensity</span>
+                                    <span id="glow-intensity-value">90%</span>
+                                </label>
+                                <input type="range" id="glow-intensity" min="0" max="100" value="90" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                                <label for="glow-size" class="flex items-center justify-between text-xs">
+                                    <span>Size</span>
+                                    <span id="glow-size-value">100px</span>
+                                </label>
+                                <input type="range" id="glow-size" min="50" max="200" value="100" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                            </div>
+                        </div>
+                        <!-- Advanced Matrix Controls -->
+                        <div class="space-y-3 border-t border-gray-600 pt-3">
+                            <h4 class="text-sm font-semibold text-gray-200">Advanced Matrix</h4>
+                             <div class="space-y-2">
+                                <label for="matrix-opacity" class="flex items-center justify-between text-xs">
+                                    <span>Matrix Visibility</span>
+                                    <span id="matrix-opacity-value">80%</span>
+                                </label>
+                                <input type="range" id="matrix-opacity" min="0" max="100" value="80" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                            </div>
+                             <div class="space-y-2">
+                                <label for="matrix-intensity" class="flex items-center justify-between text-xs">
+                                    <span>Matrix Intensity</span>
+                                    <span id="matrix-intensity-value">100%</span>
+                                </label>
+                                <input type="range" id="matrix-intensity" min="50" max="200" value="100" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="matrix-speed" class="flex items-center justify-between text-xs">
+                                    <span>Animation Speed</span>
+                                    <span id="matrix-speed-value">1.0x</span>
+                                </label>
+                                <input type="range" id="matrix-speed" min="0.5" max="2.0" step="0.1" value="1.0" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-green-500">
+                            </div>
+                             <div class="space-y-2">
+                                <label for="matrix-high-contrast" class="flex items-center cursor-pointer text-xs">
+                                    <input type="checkbox" id="matrix-high-contrast" class="mr-2 accent-red-500 h-3 w-3">
+                                    <span>🔥 High Contrast Mode</span>
+                                </label>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="matrix-blend-mode" class="text-xs text-gray-300">Blend Mode</label>
+                                <select id="matrix-blend-mode" class="w-full text-black p-1 rounded text-xs">
+                                    <option value="auto">🎯 Auto (Intelligent)</option>
+                                    <option value="dark-bg">🌟 Screen (Classic Glow)</option>
+                                    <option value="light-bg">⚫ Multiply (Sharp Dark)</option>
+                                    <option value="high-contrast">🔥 Difference (Maximum Pop)</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="matrix-density" class="flex items-center justify-between text-xs">
+                                    <span>Stream Density</span>
+                                    <span id="matrix-density-value">1.5x</span>
+                                </label>
+                                <input type="range" id="matrix-density" min="0.5" max="3.0" step="0.1" value="1.5" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                            </div>
+                            <div class="space-y-2 border-t border-gray-700 pt-3">
+                                <label for="matrix-render-mode" class="text-xs text-gray-300">🎮 Rendering Engine</label>
+                                <select id="matrix-render-mode" class="w-full text-black p-1 rounded text-xs">
+                                    <option value="dom">🏠 DOM (Classic)</option>
+                                    <option value="canvas">🎨 Canvas (Performance)</option>
+                                    <option value="hybrid">⚡ Hybrid (Best of Both)</option>
+                                </select>
+                            </div>
+                             <div id="canvas-performance-settings" class="space-y-2 hidden">
+                                <h5 class="text-xs font-medium text-cyan-300">Canvas Performance</h5>
+                                <div class="space-y-2">
+                                    <label for="canvas-max-fps" class="flex items-center justify-between text-xs">
+                                        <span>Max FPS</span>
+                                        <span id="canvas-max-fps-value">60</span>
+                                    </label>
+                                    <input type="range" id="canvas-max-fps" min="30" max="120" step="15" value="60" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                                </div>
+                            </div>
+                            <div id="matrix-preset-wrapper" class="space-y-2 mt-3">
+                                <label for="matrix-preset" class="text-xs text-gray-300">Matrix Preset</label>
+                                <select id="matrix-preset" class="w-full text-black p-1 rounded text-xs">
+                                    <option value="auto">🎯 Auto (by quote category)</option>
+                                    <option value="neon_rain">🌧️ Rain Matrix (Neon)</option>
+                                    <option value="dual_drift">⇵ Dual Drift</option>
+                                    <option value="aurora_waves">🌊 Aurora Waves</option>
+                                    <option value="glyph_storm">⚡ Glyph Storm</option>
+                                    <option value="lowkey_minimal">🌫️ Low-Key Minimal</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Matrix Preset Selector -->
-                    <div id="matrix-preset-wrapper" class="space-y-2 mt-3">
-                        <label for="matrix-preset" class="text-xs text-gray-300">Matrix Preset</label>
-                        <select id="matrix-preset" class="w-full text-black p-1 rounded text-xs">
-                            <option value="auto">🎯 Auto (by quote category)</option>
-                            <option value="neon_rain">🌧️ Rain Matrix (Neon)</option>
-                            <option value="dual_drift">⇵ Dual Drift</option>
-                            <option value="aurora_waves">🌊 Aurora Waves</option>
-                            <option value="glyph_storm">⚡ Glyph Storm</option>
-                            <option value="lowkey_minimal">🌫️ Low-Key Minimal</option>
-                        </select>
-                        <p class="text-[10px] text-gray-400">Changes density, speed, trails, direction & symbols; colors follow the active theme.</p>
-                    </div>
-                </div>
+                </details>
             </div>
 
             <!-- Audio Tab -->

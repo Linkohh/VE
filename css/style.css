@@ -2683,6 +2683,43 @@ button:disabled {
     display: none;
 }
 
+/* Accordion Styles for Settings */
+.settings-accordion {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-accordion:last-child {
+    border-bottom: none;
+}
+
+.settings-accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0.25rem;
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none; /* Remove default marker */
+}
+
+.settings-accordion-header::-webkit-details-marker {
+    display: none; /* Hide default marker for Safari */
+}
+
+.settings-accordion-header::after {
+    content: '›';
+    font-size: 1.5rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.settings-accordion[open] > .settings-accordion-header::after {
+    transform: rotate(90deg);
+}
+
+.settings-accordion-content {
+    padding: 0.5rem 0.25rem 1rem;
+}
+
 /* Search Overlay Styles */
 #search-overlay.hidden {
     display: none;
