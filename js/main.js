@@ -654,12 +654,12 @@ const VibeMe = {
     },
 
     getRandomQuote: function() {
-        const allQuotes = this.quotes; // Use this.quotes directly
+        const allQuotes = [...this.quotes, ...this.state.customQuotes];
         let newIndex;
         do {
             newIndex = Math.floor(Math.random() * allQuotes.length);
         } while (newIndex === this.state.currentQuoteIndex && allQuotes.length > 1);
-        
+
         this.state.currentQuoteIndex = newIndex;
         return allQuotes[newIndex];
     },
@@ -3110,7 +3110,7 @@ const VibeMe = {
     },
 
     performSearch: function(query) {
-        const allQuotes = this.quotes;
+        const allQuotes = [...this.quotes, ...this.state.customQuotes];
         const lowerCaseQuery = query.toLowerCase().trim();
 
         if (!lowerCaseQuery) {
@@ -3152,16 +3152,18 @@ const VibeMe = {
             const resultItem = document.createElement('div');
             resultItem.className = 'result-item';
 
-            const quoteText = document.createElement('p');
-            quoteText.className = 'result-quote';
-            quoteText.textContent = `"${quote.text}"`;
 
-            const quoteAuthor = document.createElement('p');
-            quoteAuthor.className = 'result-author';
-            quoteAuthor.textContent = `— ${quote.author}`;
+            const quoteEl = document.createElement('p');
+            quoteEl.className = 'result-quote';
+            quoteEl.textContent = `"${quote.text}"`;
 
-            resultItem.appendChild(quoteText);
-            resultItem.appendChild(quoteAuthor);
+            const authorEl = document.createElement('p');
+            authorEl.className = 'result-author';
+            authorEl.textContent = `— ${quote.author}`;
+
+            resultItem.appendChild(quoteEl);
+            resultItem.appendChild(authorEl);
+
 
             resultItem.addEventListener('click', () => {
                 this.displayQuote(quote);
@@ -3183,7 +3185,7 @@ const VibeMe = {
         }
 
         // Find the index of the quote to set the state correctly
-        const allQuotes = this.quotes; // Use this.quotes directly
+        const allQuotes = [...this.quotes, ...this.state.customQuotes];
         const index = allQuotes.findIndex(q => q.text === quote.text && q.author === quote.author);
         if(index > -1) {
             this.state.currentQuoteIndex = index;
