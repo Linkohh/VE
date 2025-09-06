@@ -913,12 +913,15 @@ button:disabled {
 }
 
 /* ===== SETTINGS PANEL ===== */
+#dark-mode-toggle,
+#search-toggle,
 #settings-toggle {
     transition: all var(--transition-medium);
 }
 
+#dark-mode-toggle:hover,
+#search-toggle:hover,
 #settings-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.3);
     transform: rotate(45deg);
 }
 
