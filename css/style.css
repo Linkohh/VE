@@ -370,6 +370,85 @@ body:not(.using-keyboard) *:focus {
     }
 }
 
+.about-page .quote-container-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0)
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+.about-page .quote-container-inner > * {
+    position: relative;
+    z-index: 1;
+}
+
+.about-title {
+    font-size: clamp(2rem, 3vw + 1rem, 3.5rem);
+}
+
+.about-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+}
+
+.section-icon {
+    display: inline-block;
+    animation: icon-float 6s ease-in-out infinite;
+    will-change: transform;
+}
+
+.section-icon:hover {
+    animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .section-icon {
+        animation: none;
+    }
+}
+
+@keyframes icon-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.about-page p {
+    font-size: clamp(1rem, 0.5vw + 0.9rem, 1.25rem);
+}
+
+.about-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--about-grid-min), 1fr));
+    gap: 2rem;
+}
+
+.about-sections .contact {
+    grid-column: 1 / -1;
+}
+
+/* Allow the About page to scroll vertically */
+html.about-page,
+body.about-page {
+    overflow-y: auto !important;
+    height: auto;
+    min-height: 100vh;
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+    .about-page .quote-container-inner {
+        padding: 1.5rem 1rem;
+    }
+}
+
 /* Quote pattern background */
 .quote-pattern {
     position: absolute;
