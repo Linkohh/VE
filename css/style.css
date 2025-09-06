@@ -110,6 +110,12 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --rail-aura-outer: rgba(255,255,255,0.15);
     --rail-hide-delay: 18000ms;
     --rail-animation-duration: var(--transition-medium);
+
+    /* Layout breakpoints */
+    --breakpoint-sm: 600px;
+
+    /* About page grid */
+    --about-grid-min: 300px;
 }
 
 /* ===== RESET & BASE STYLES ===== */
@@ -252,6 +258,62 @@ body:not(.using-keyboard) *:focus {
     -webkit-backdrop-filter: blur(20px) saturate(150%);
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    z-index: 0; /* establish stacking context for ::before overlay */
+}
+
+.about-page .quote-container-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0)
+    );
+    pointer-events: none;
+    z-index: var(--z-negative);
+}
+
+.about-title {
+    font-size: clamp(2rem, 3vw + 1rem, 3.5rem);
+}
+
+.about-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+}
+
+.section-icon {
+    display: inline-block;
+    animation: icon-float 3s ease-in-out infinite;
+}
+
+@keyframes icon-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.about-page p {
+    font-size: clamp(1rem, 0.5vw + 0.9rem, 1.25rem);
+}
+
+.about-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--about-grid-min), 1fr));
+    gap: 2rem;
+}
+
+.about-sections .contact {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+    .about-page .quote-container-inner {
+        padding: 1.5rem 1rem;
+    }
 }
 
 /* Quote pattern background */
