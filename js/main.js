@@ -3650,6 +3650,7 @@ VibeMe.applyMatrixPreset = function(name){
 
 /* Auto wiring (selector + category changes) */
 document.addEventListener('DOMContentLoaded', () => {
+    if (document.documentElement.classList.contains('about-page')) return;
     // Create selector if it's not already in the DOM
     let sel = document.getElementById('matrix-preset');
     if (!sel){
@@ -3717,6 +3718,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 (function(){
   document.addEventListener('DOMContentLoaded', () => {
+    if (document.documentElement.classList.contains('about-page')) return;
     // 3a) Locate the settings panel and the "Matrix Visibility" block.
     const panel = document.getElementById('settings-panel') || document.body;
 
