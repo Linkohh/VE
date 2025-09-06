@@ -654,12 +654,12 @@ const VibeMe = {
     },
 
     getRandomQuote: function() {
-        const allQuotes = this.quotes; // Use this.quotes directly
+        const allQuotes = [...this.quotes, ...this.state.customQuotes];
         let newIndex;
         do {
             newIndex = Math.floor(Math.random() * allQuotes.length);
         } while (newIndex === this.state.currentQuoteIndex && allQuotes.length > 1);
-        
+
         this.state.currentQuoteIndex = newIndex;
         return allQuotes[newIndex];
     },
@@ -3110,7 +3110,7 @@ const VibeMe = {
     },
 
     performSearch: function(query) {
-        const allQuotes = this.quotes;
+        const allQuotes = [...this.quotes, ...this.state.customQuotes];
         const lowerCaseQuery = query.toLowerCase().trim();
 
         if (!lowerCaseQuery) {
@@ -3141,17 +3141,28 @@ const VibeMe = {
         resultsContainer.innerHTML = '';
 
         if (results.length === 0) {
-            resultsContainer.innerHTML = `<p class="no-results">No quotes found.</p>`;
+            const noResults = document.createElement('p');
+            noResults.className = 'no-results';
+            noResults.textContent = 'No quotes found.';
+            resultsContainer.appendChild(noResults);
             return;
         }
 
         results.forEach(quote => {
             const resultItem = document.createElement('div');
             resultItem.className = 'result-item';
-            resultItem.innerHTML = `
-                <p class="result-quote">"${quote.text}"</p>
-                <p class="result-author">— ${quote.author}</p>
-            `;
+
+            const quoteEl = document.createElement('p');
+            quoteEl.className = 'result-quote';
+            quoteEl.textContent = `"${quote.text}"`;
+
+            const authorEl = document.createElement('p');
+            authorEl.className = 'result-author';
+            authorEl.textContent = `— ${quote.author}`;
+
+            resultItem.appendChild(quoteEl);
+            resultItem.appendChild(authorEl);
+
             resultItem.addEventListener('click', () => {
                 this.displayQuote(quote);
                 this.toggleSearch();
@@ -3172,7 +3183,7 @@ const VibeMe = {
         }
 
         // Find the index of the quote to set the state correctly
-        const allQuotes = this.quotes; // Use this.quotes directly
+        const allQuotes = [...this.quotes, ...this.state.customQuotes];
         const index = allQuotes.findIndex(q => q.text === quote.text && q.author === quote.author);
         if(index > -1) {
             this.state.currentQuoteIndex = index;
