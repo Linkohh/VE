@@ -3138,20 +3138,31 @@ const VibeMe = {
 
     displaySearchResults: function(results) {
         const resultsContainer = document.getElementById('search-results');
-        resultsContainer.innerHTML = '';
+        resultsContainer.textContent = '';
 
         if (results.length === 0) {
-            resultsContainer.innerHTML = `<p class="no-results">No quotes found.</p>`;
+            const noResults = document.createElement('p');
+            noResults.className = 'no-results';
+            noResults.textContent = 'No quotes found.';
+            resultsContainer.appendChild(noResults);
             return;
         }
 
         results.forEach(quote => {
             const resultItem = document.createElement('div');
             resultItem.className = 'result-item';
-            resultItem.innerHTML = `
-                <p class="result-quote">"${quote.text}"</p>
-                <p class="result-author">— ${quote.author}</p>
-            `;
+
+            const quoteText = document.createElement('p');
+            quoteText.className = 'result-quote';
+            quoteText.textContent = `"${quote.text}"`;
+
+            const quoteAuthor = document.createElement('p');
+            quoteAuthor.className = 'result-author';
+            quoteAuthor.textContent = `— ${quote.author}`;
+
+            resultItem.appendChild(quoteText);
+            resultItem.appendChild(quoteAuthor);
+
             resultItem.addEventListener('click', () => {
                 this.displayQuote(quote);
                 this.toggleSearch();
