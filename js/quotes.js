@@ -5402,13 +5402,944 @@ window.quotesData =
         "text": "I've learned that the moment money becomes your master instead of your tool, you've become the poorest person in the room.",
         "author": "LO & Claude"
       }
+    ],
+    "balance_moderation": [
+      {
+        "text": "Balance isn't the middle; it's the wisdom to stop at enough.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Too much sun burns; too much praise blinds. Choose shade.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Moderation is quiet power—small hinges that swing big doors.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "The edge of excess is sharp; step back before you bleed.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Success breathes easier when it isn't overfed.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Hold your wins with open palms, not clenched fists.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Hustle hard, rest harder; both fuel the long road.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "A steady flame warms farther than a brief blaze.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "You can drink from the ocean and still die of thirst; choose a cup.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Discipline is the art of leaving good things on the table.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Peace lives where appetite and restraint shake hands.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Not every green light is your lane; let some cars pass.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Abundance without brakes is just another crash.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "The world is a double‑edged blade; hold it by the handle.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Excellence grows in gardens, not in wildfire.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "enoughness_contentment": [
+      {
+        "text": "Contentment isn't settling; it's mastering the word 'enough.'",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "When your heart says 'I have plenty,' your mind spends less.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Rich is a number; enough is a decision.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "The heaviest wallet can't outweigh an unquiet soul.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Stop counting what you own and notice what you enjoy.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Freedom starts where craving ends.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "The day you stop proving, you start living.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "A quiet life is not a small life.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Add rest to your resume; it's a credential too.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "You don't need everything you can afford; you need what lets you breathe.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Enough isn't the ceiling—it's the foundation of peace.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If more never satisfies, 'more' isn't the answer.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Simplicity: the luxury you can feel immediately.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let your goals grow roots, not just branches.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "A full life beats a full cart.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "wealth_stewardship_giving": [
+      {
+        "text": "Money multiplies you; choose what it multiplies.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Be a river, not a reservoir; let good flow through you.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Wealth without generosity is just storage.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If your fortune can't find the doorbell of need, it's lost.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Stewardship is wealth with a conscience.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Give from your center, not your leftovers.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "When your success feeds others, it stops starving you.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "The best compound interest is kindness with momentum.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Build accounts that gratitude can withdraw from.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Profit is fuel; purpose decides where you drive.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If your win isolates you, it wasn't a win.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Carry your riches like a lamp, not a mirror.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Legacy begins the day your gain becomes someone else's good.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "A generous plan is the safest investment.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Wealth is loud only when wisdom is quiet.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "ambition_vs_greed": [
+      {
+        "text": "Ambition climbs; greed claws.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Build big; just don't build a cage.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Goals have edges; greed ignores maps.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If success costs your soul, the receipt is worthless.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Ambition serves a mission; greed serves itself.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Become undeniable, not insatiable.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "More is a direction; enough is a destination.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Winning is sweetest when it doesn't sour your character.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Reach high with clean hands.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Expansion without reflection is erosion.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Chase miles, not mirages.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let your hunger sharpen skill, not dull empathy.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Ambition grows you; greed grows your shadow.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Scale the work, not the ego.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Greatness without guardrails becomes gravity.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "humanity_over_status": [
+      {
+        "text": "Become someone success can't change.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Status is rented; humanity is owned.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Famous is not the same as valuable.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Be known for what you give, not what you get.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If applause guides you, silence will scare you.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Treat people like headlines don't exist.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If your title walks in first, your heart walks in last.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Power adds volume; character chooses the song.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let kindness be the part they can't replace.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Don't outsource your morals to your metrics.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Win quietly, help loudly.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Being human is the highest position.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Influence is heavier than followers; lift carefully.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "What you can do matters less than who you are while doing it.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Shine in ways that don't blind others.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "power_responsibility_ethics": [
+      {
+        "text": "Hold power like fire: warm hands, burn nothing.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Because you can is not the same as because you should.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Integrity is the brake pedal success hopes you never cut.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Lead in ways a mirror can respect.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Capability without conscience is a storm without shore.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "The test of power is how gently it lands.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Your choices write headlines for people you'll never meet.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Aim for impact that survives scrutiny.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let ethics be the engine, not the ornament.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If your win requires a wound, choose a different win.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Responsibility is the price tag on influence.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Do work your future self would testify for.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Success is bigger when it's safe for others.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Guardrails don't slow you; they save you.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Use your leverage to lift, not to lean.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "perspective_purpose": [
+      {
+        "text": "Make money a tool, not a target.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Purpose turns earnings into outcomes.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If you can't explain your why to a child, it's probably ego.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Direction first, speed second.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "A meaningful life spends itself well.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let your calendar prove your values.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "You don't need the world in your hands to hold your purpose.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Trade some ambition for intention.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Measure success by the problems you solve, not the trophies you store.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Choose significance over spectacle.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let your goals be servants, not rulers.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Aim for work that outlives applause.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "When your why is clear, 'no' gets easier.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Meaning is the luxury no market can sell you.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Spend your life like it's precious—because it is.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "community_service": [
+      {
+        "text": "Your best self shows up when someone else needs it.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Community is wealth you can't hoard.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Success is sweetest when it has a seat for others.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Be the hand you once needed.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If your ladder doesn't lean against service, move it.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Share credit like sunshine; there's enough for growth.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Strong people make people strong.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "A rising tide is a responsibility, not just a view.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Be the reason someone believes in help.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Generosity makes neighborhoods out of strangers.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let your influence show up where cameras don't.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Serve quietly; let outcomes do the talking.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Care is the currency that never devalues.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If you have more, build longer tables.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Lift as you climb or you aren't climbing right.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "discipline_self_control_boundaries": [
+      {
+        "text": "Self‑control is freedom wearing work boots.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "You don't need more willpower; you need fewer temptations.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Boundaries keep the best parts of you available.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Saying no is how your yes stays honest.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Delay the cookie; bake the future.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Discipline is choosing what you want most over what you want now.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Guard your hunger; feed your purpose.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Practice is how talent becomes trustworthy.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Routine is a quiet rebellion against chaos.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Leave space between impulse and action.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Master your appetites or they'll master your calendar.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Habits are votes for the person you're becoming.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Your future is built in boring minutes; use them well.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Restraint is strength that doesn't need an audience.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If it costs your peace, it's overpriced.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "integrity_character_legacy": [
+      {
+        "text": "Character is who profits when no one's keeping score.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let your word outlive your wins.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Do the kind of good that doesn't trend.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Reputation is a rumor; integrity is a habit.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Be the same person across rooms and seasons.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Honesty is the shortest path that stays open.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Leave footprints, not fingerprints.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "A clean conscience sleeps on any pillow.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "When in doubt, choose the story you'll be proud to tell.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let your legacy be people, not plaques.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Make decisions your grandchildren would thank you for.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Greatness is kind when it doesn't have to be.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Your echo is made of choices.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Finish lines fade; who you became doesn't.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Live so that success looks small beside your character.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "caution_against_excess_overindulgence": [
+      {
+        "text": "Too much of a good thing still weighs you down.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Gluttony of anything makes hunger of everything.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Feeding every craving starves your clarity.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Overindulgence is just burnout with better branding.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "When you chase every shine, you miss the sun.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Luxury without limits turns comfort into cage.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Pleasure is a spice; don't drink it by the cup.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Collect experiences, not excess.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "A bigger plate doesn't mean a better meal.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If more leaves you emptier, you're holding a hole.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Savor, don't shovel.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Your desires need shepherds, not cheerleaders.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Leave room for wonder; don't crowd it with stuff.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If you can't step away, you're not in charge.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Excess is loud; wisdom whispers 'enough.'",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "identity_self_worth_humility": [
+      {
+        "text": "You are not your net worth; you're your next choice.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let humility be the room where greatness gets ready.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Confidence walks; arrogance parades.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Be proud of effort, not ornaments.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Own your strengths without renting your ego.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Self‑worth grows when comparison shrinks.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Brag less; build more.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Humility is courage without costume.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "You don't have to be loud to be certain.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Admire quietly, improve loudly.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Ego is expensive; humility compounds.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Becoming is better than being impressive.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let grace be your gravity.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Stay teachable—it's the richest posture.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Win the inside game; the outside will follow.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "guardrails_for_success": [
+      {
+        "text": "Set limits early; success only magnifies them.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Write your rules before the world writes them for you.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Policies protect promises.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Keep friends who tell you when you've had enough sunshine.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Mentors keep you from mistaking velocity for victory.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Audit your motives as often as your metrics.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Stop points are strategy, not surrender.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Build a life that doesn't need escape hatches.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Track what matters: impact, not impressions.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Protect your calendar from your impulses.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Say 'no' before you're famous enough to forget how.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Keep a 'why' on paper and a friend on speed dial.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Celebrate privately; correct publicly—yourself.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Success should pass audits, not just hit targets.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Make quitting certain things part of your plan.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "compassion_empathy_good_will": [
+      {
+        "text": "Empathy is success learning manners.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Kindness scales faster than any platform.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Assume struggle, offer dignity.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Be gentle; everyone's carrying something heavy and invisible.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Generosity is love with logistics.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Say less about people; do more for them.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Correct with care or don't correct at all.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "If you can't help, at least don't harm.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Compassion is the courage to stay.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Success is sterile without someone to share it with.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let mercy interrupt your schedule.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Offer grace before advice.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Kind eyes change hard days.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Be the proof that good is practical.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Love is the only metric that matters at the end.",
+        "author": "ChatGPT-5"
+      }
+    ],
+    "resilience_grounded_ambition_forward_motion": [
+      {
+        "text": "Stay hungry for growth, not applause.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "When you stumble on success, stand up wiser.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Grind with gratitude; it keeps the gears from grinding you.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Risk bravely, recover kindly.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Progress whispers; keep going anyway.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Take big swings with a moral compass.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Dream in plans, not just pictures.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Let failure be feedback, not identity.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Resilience is faith with calluses.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Ambition ages well when it eats humility.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Be relentless about values, flexible about tactics.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Climb steady; arrive human.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Keep your head in the clouds and your feet in accountability.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Win, then wonder how to share it.",
+        "author": "ChatGPT-5"
+      },
+      {
+        "text": "Make tomorrow grateful for what you did today.",
+        "author": "ChatGPT-5"
+      }
     ]
   },
   "metadata": {
-    "totalQuotes": 1294,
-    "categories": 78,
-    "lastUpdated": "09-05-2025",
+    "totalQuotes": 1537,
+    "categories": 92,
+    "lastUpdated": "09-06-2025",
     "version": "1.0.0"
   }
 }
+
 ;
