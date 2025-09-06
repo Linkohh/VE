@@ -654,7 +654,7 @@ const VibeMe = {
     },
 
     getRandomQuote: function() {
-        const allQuotes = [...this.quotes, ...this.state.customQuotes];
+        const allQuotes = this.quotes; // Use this.quotes directly
         let newIndex;
         do {
             newIndex = Math.floor(Math.random() * allQuotes.length);
@@ -2279,6 +2279,9 @@ const VibeMe = {
         // Settings accordion
         this.setupSettingsAccordion();
 
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
+
         // Re-wire restored settings
         // Color Customization
         document.getElementById('vibrancy-slider').addEventListener('input', (e) => this.updateColorSetting('vibrancy', e.target.value));
@@ -2314,6 +2317,40 @@ const VibeMe = {
                 }
             });
         });
+    },
+
+    handleKeyboardShortcuts: function(e) {
+        // Don't trigger shortcuts if user is typing in an input
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) {
+            return;
+        }
+
+        // Don't trigger shortcuts if a modal/overlay is open
+        if (!document.getElementById('search-overlay').classList.contains('hidden') ||
+            !document.getElementById('settings-panel').classList.contains('hidden')) {
+            return;
+        }
+
+        switch (e.key) {
+            case ' ':
+            case 'Enter':
+            case 'ArrowRight':
+                e.preventDefault();
+                this.updateQuote();
+                break;
+            case 'f':
+            case 'F':
+                this.toggleFavorite();
+                break;
+            case 'c':
+            case 'C':
+                this.copyQuote();
+                break;
+            case 't':
+            case 'T':
+                this.toggleTimer();
+                break;
+        }
     },
 
     // ===== SETTINGS HANDLERS =====
@@ -3110,7 +3147,7 @@ const VibeMe = {
     },
 
     performSearch: function(query) {
-        const allQuotes = [...this.quotes, ...this.state.customQuotes];
+        const allQuotes = this.quotes;
         const lowerCaseQuery = query.toLowerCase().trim();
 
         if (!lowerCaseQuery) {
@@ -3138,33 +3175,20 @@ const VibeMe = {
 
     displaySearchResults: function(results) {
         const resultsContainer = document.getElementById('search-results');
-        resultsContainer.textContent = '';
+        resultsContainer.innerHTML = '';
 
         if (results.length === 0) {
-            const noResults = document.createElement('p');
-            noResults.className = 'no-results';
-            noResults.textContent = 'No quotes found.';
-            resultsContainer.appendChild(noResults);
+            resultsContainer.innerHTML = `<p class="no-results">No quotes found.</p>`;
             return;
         }
 
         results.forEach(quote => {
             const resultItem = document.createElement('div');
             resultItem.className = 'result-item';
-
-
-            const quoteEl = document.createElement('p');
-            quoteEl.className = 'result-quote';
-            quoteEl.textContent = `"${quote.text}"`;
-
-            const authorEl = document.createElement('p');
-            authorEl.className = 'result-author';
-            authorEl.textContent = `— ${quote.author}`;
-
-            resultItem.appendChild(quoteEl);
-            resultItem.appendChild(authorEl);
-
-
+            resultItem.innerHTML = `
+                <p class="result-quote">"${quote.text}"</p>
+                <p class="result-author">— ${quote.author}</p>
+            `;
             resultItem.addEventListener('click', () => {
                 this.displayQuote(quote);
                 this.toggleSearch();
@@ -3185,7 +3209,7 @@ const VibeMe = {
         }
 
         // Find the index of the quote to set the state correctly
-        const allQuotes = [...this.quotes, ...this.state.customQuotes];
+        const allQuotes = this.quotes; // Use this.quotes directly
         const index = allQuotes.findIndex(q => q.text === quote.text && q.author === quote.author);
         if(index > -1) {
             this.state.currentQuoteIndex = index;
