@@ -4234,6 +4234,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // === Flip Clock under title — V2 (namespaced, classic geometry) =================
 (function(){
+  if (window.FcClock) return; // Guard against re-declaration
   'use strict';
 
   function FcPiece(label, value){
@@ -4297,6 +4298,9 @@ document.addEventListener('DOMContentLoaded', () => {
       wrap.appendChild(map[k].el);
     });
 
+    if (map.Hours)   map.Hours.el.setAttribute('data-sep', ':');
+    if (map.Minutes) map.Minutes.el.setAttribute('data-sep', ':');
+
     // remove any old badge (defensive if clock remounts)
     const oldBadge = wrap.querySelector('.fc-meridiem-badge');
     if (oldBadge) oldBadge.remove();
@@ -4329,9 +4333,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      requestAnimationFrame(tick);
+      const ms = 1000 - (Date.now() % 1000) + 5;
+      this.timer = setTimeout(tick, ms);
     }
-    requestAnimationFrame(tick);
+    tick.call(this); // Use call to set `this` context correctly for the first tick
+
+    this.stop = function(){
+      if (this.timer) clearTimeout(this.timer);
+    };
+
     return wrap;
   }
 
