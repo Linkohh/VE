@@ -1168,7 +1168,6 @@ const VibeMe = {
             vibrancy: theme.vibrancy,
             baseHue: theme.baseHue
         });
-        return theme;
     },
 
     applyTheme: function(theme) {
@@ -3241,22 +3240,6 @@ const VibeMe = {
     }
 };
 
-// 1) When you apply a random theme/palette
-const _prevApplyRandomTheme = VibeMe.applyRandomTheme?.bind(VibeMe);
-VibeMe.applyRandomTheme = function() {
-  const palette = _prevApplyRandomTheme ? _prevApplyRandomTheme() : null;
-  try { applyFlipClockTokens(palette); } catch(_) {}
-  return palette;
-};
-
-// 2) Also respond to your quote/theme events
-document.addEventListener('vibeme:quote:changed', () => {
-  try {
-    // If your current palette is tracked somewhere, pass it; otherwise rely on CSS vars
-    applyFlipClockTokens();
-  } catch(_) {}
-});
-
 // ---- VibeMe core extensions (non-destructive) ----
 window.VibeMe = window.VibeMe || VibeMe || {}; // use existing const if present
 VibeMe.kit = VibeMe.kit || {
@@ -3566,20 +3549,6 @@ function __vibeme_hexLuma(hex){
   const b = parseInt(c.slice(4,6),16)/255;
   const lin = v => v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4);
   return 0.2126*lin(r) + 0.7152*lin(g) + 0.0722*lin(b);
-}
-
-function applyFlipClockTokens(palette){
-  const root = document.documentElement;
-
-  // Use your existing accessible text computation
-  const bg = getComputedStyle(root).getPropertyValue('--container-bg-color').trim() || palette?.color1;
-  const safeText = VibeMe.generateAccessibleTextColor(bg, 'main');
-
-  root.style.setProperty('--flip-text',  safeText);
-  root.style.setProperty('--flip-glow',  palette?.color2 || getComputedStyle(root).getPropertyValue('--color2').trim());
-  // border can remain a translucent white; if you want dynamic:
-  const goodOnBg = VibeMe.getContrastRatio('#ffffff', bg) >= 1.5 ? 'rgba(255,255,255,.22)' : 'rgba(0,0,0,.22)';
-  root.style.setProperty('--flip-border', goodOnBg);
 }
 
 function applyPalette({ color1, color2, color3, accent }){
@@ -4265,45 +4234,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // === Flip Clock under title — V2 (namespaced, classic geometry) =================
 (function(){
+  if (window.FcClock) return; // Guard against re-declaration
   'use strict';
-
-  function GlassFcPiece(label, value){
-    var el = document.createElement('span');
-    el.className = 'fc-piece';
-    el.dataset.unit = label.toLowerCase();
-
-    el.innerHTML =
-      '<div class="fc-card">' +
-        '<i class="fc-digit" data-pos="tens">0</i>' +
-        '<i class="fc-digit" data-pos="ones">0</i>' +
-      '</div>' +
-      '<span class="fc-slot">' + label + '</span>';
-    this.el = el;
-
-    var tensDigit = el.querySelector('[data-pos="tens"]');
-    var onesDigit = el.querySelector('[data-pos="ones"]');
-
-    this.update = function(val){
-      const next = ('0' + val).slice(-2);
-      if (next !== this.currentValue) {
-        const prev = this.currentValue || next;
-
-        if (prev[0] !== next[0]) {
-          tensDigit.classList.add('is-flipping');
-          setTimeout(() => tensDigit.classList.remove('is-flipping'), 260);
-        }
-        if (prev[1] !== next[1]) {
-          onesDigit.classList.add('is-flipping');
-          setTimeout(() => onesDigit.classList.remove('is-flipping'), 260);
-        }
-
-        tensDigit.textContent = next[0];
-        onesDigit.textContent = next[1];
-        this.currentValue = next;
-      }
-    };
-    this.update(value);
-  }
 
   function FcPiece(label, value){
     var el = document.createElement('span');
@@ -4354,31 +4286,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  function FcClock(updateFn, skin){
+  function FcClock(updateFn){
     var state = updateFn();
     var map = {};
     var wrap = document.createElement('div');
     wrap.className = 'fc-clock';
 
-    function makeColon(){
-      const c = document.createElement('i');
-      c.className = 'fc-colon';
-      c.setAttribute('aria-hidden','true');
-      return c;
-    }
-
     Object.keys(state).forEach(function(k){
-      if (k === 'Total' || k === 'Meridiem') return;
-
-      if (skin === 'glass') {
-        map[k] = new GlassFcPiece(k, state[k]);
-        wrap.appendChild(map[k].el);
-        if (k === 'Hours' || k === 'Minutes') wrap.appendChild(makeColon());
-      } else {
-        map[k] = new FcPiece(k, state[k]);
-        wrap.appendChild(map[k].el);
-      }
+      if (k === 'Total' || k === 'Meridiem') return;  // no flip tile for AM/PM
+      map[k] = new FcPiece(k, state[k]);
+      wrap.appendChild(map[k].el);
     });
+
+    if (map.Hours)   map.Hours.el.setAttribute('data-sep', ':');
+    if (map.Minutes) map.Minutes.el.setAttribute('data-sep', ':');
 
     // remove any old badge (defensive if clock remounts)
     const oldBadge = wrap.querySelector('.fc-meridiem-badge');
@@ -4412,9 +4333,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      requestAnimationFrame(tick);
+      const ms = 1000 - (Date.now() % 1000) + 5;
+      this.timer = setTimeout(tick, ms);
     }
-    requestAnimationFrame(tick);
+    tick.call(this); // Use call to set `this` context correctly for the first tick
+
+    this.stop = function(){
+      if (this.timer) clearTimeout(this.timer);
+    };
+
     return wrap;
   }
 
@@ -4433,11 +4360,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (h1 && h1.parentNode) h1.parentNode.insertBefore(mount, h1.nextSibling);
       else bar.appendChild(mount);
     }
-    mount.dataset.skin = 'glass'; // Set to 'glass' to activate the new skin
+    mount.dataset.skin = 'classic';
     if (mount.style && mount.style.width) mount.style.removeProperty('width');
 
     if (!mount.dataset.mounted){
-      var clock = new FcClock(getLocal12h, mount.dataset.skin);
+      var clock = new FcClock(getLocal12h);
       mount.appendChild(clock);
       mount.dataset.mounted = 'true';
     }
