@@ -43,7 +43,14 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --fc-gap:    10px;
     --fc-radius: 12px;
     --fc-shadow: 0 6px 18px rgba(0,0,0,.28);
-    --fc-divider: rgba(0,0,0,.66);
+    --fc-divider: rgba(0,0,0,.18);
+
+    /* Flip Clock – theme tokens (LIGHT defaults) */
+    --fc-card-bg: rgba(255,255,255,0.80);
+    --fc-top-bg:  linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.72));
+    --fc-bot-bg:  linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.55));
+    --fc-top-fg:  #1f2937;   /* gray-800 */
+    --fc-bot-fg:  #111827;   /* gray-900 */
 
     /* Theme Colors (dynamically updated by JS) */
     --color1: #aaaaaa;
@@ -1149,6 +1156,13 @@ button:disabled {
 
 /* ===== DARK MODE ===== */
 :root[data-theme="dark"] {
+    --fc-card-bg: rgba(0,0,0,0.35);
+    --fc-top-bg:  linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.10));
+    --fc-bot-bg:  linear-gradient(180deg, rgba(0,0,0,.12), rgba(255,255,255,.03));
+    --fc-top-fg:  #d1d5db;   /* gray-300 */
+    --fc-bot-fg:  #f9fafb;   /* gray-50  */
+    --fc-divider: rgba(0,0,0,.66);
+
     --text-color-main: #e5e7eb;
     --text-color-secondary: #d1d5db;
     --container-bg-color: rgba(31, 41, 55, 0.95);
@@ -1789,7 +1803,7 @@ button:disabled {
   margin-top: 0.35rem;
   font-size: 11px;
   letter-spacing: 0.2px;
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--text-color-secondary);
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
 }
 
@@ -1801,8 +1815,8 @@ button:disabled {
   height: var(--fc-card-h);
   border-radius: var(--fc-radius);
   overflow: hidden;
-  background: color-mix(in oklab, var(--container-bg-color) 14%, #111);
-  color: var(--text-color-main);
+  background: var(--fc-card-bg);
+  color: var(--fc-bot-fg);
   box-shadow: var(--fc-shadow);
   transform-style: preserve-3d;
   font-size: var(--fc-font);                     /* Em-based geometry root */
@@ -1820,8 +1834,8 @@ button:disabled {
   padding: 0.25em;
   display: block;
   text-align: center;
-  color: #ccc;
-  background: #222;
+  color: var(--fc-top-fg);
+  background: var(--fc-top-bg);
   border-radius: 0.15em 0.15em 0 0;
   border-bottom: 1px solid var(--fc-divider);
   font: 800 var(--fc-font)/1.05 var(--heading-font, ui-sans-serif), system-ui, -apple-system, "Segoe UI", Roboto;
@@ -1844,10 +1858,10 @@ button:disabled {
   padding: 0.25em;
   display: block;
   text-align: center;
-  color: #fff;
-  background: #393939;
+  color: var(--fc-bot-fg);
+  background: var(--fc-bot-bg);
   border-radius: 0 0 0.15em 0.15em;
-  border-top: 1px solid #000;
+  border-top: 1px solid var(--fc-divider);
   font: 800 var(--fc-font)/1.05 var(--heading-font, ui-sans-serif), system-ui, -apple-system, "Segoe UI", Roboto;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
@@ -1878,13 +1892,13 @@ button:disabled {
 }
 
 #app-title-bar .flip-clock-mount .fc-back .fc-top{
-  color: #ccc;
-  background: #222;
+  color: var(--fc-top-fg);
+  background: var(--fc-top-bg);
 }
 
 #app-title-bar .flip-clock-mount .fc-back .fc-bottom{
-  color: #fff;
-  background: #393939;
+  color: var(--fc-bot-fg);
+  background: var(--fc-bot-bg);
 }
 
 #app-title-bar .flip-clock-mount .fc-back .fc-bottom::after{
