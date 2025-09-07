@@ -2439,8 +2439,26 @@ const VibeMe = {
 
     // ===== DARK MODE =====
     initializeDarkMode: function() {
-        if (this.state.isDarkMode) {
+        const isDark = this.state.isDarkMode;
+
+        if (isDark) {
+            document.documentElement.dataset.theme = 'dark';
             document.body.classList.add('dark-mode');
+        } else {
+            document.documentElement.dataset.theme = 'light';
+            document.body.classList.remove('dark-mode');
+        }
+
+        this.updateDarkModeIcon(isDark);
+    },
+
+    updateDarkModeIcon: function(isDark) {
+        const toggleButton = document.getElementById('dark-mode-toggle');
+        if (toggleButton) {
+            const icon = toggleButton.querySelector('i');
+            if (icon) {
+                icon.className = isDark ? 'fas fa-sun text-white text-lg' : 'fas fa-moon text-white text-lg';
+            }
         }
     },
 
@@ -4647,9 +4665,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (darkBtn) {
       darkBtn.addEventListener('click', () => {
         const root = document.documentElement;
-        const isDark = (root.dataset.theme === 'dark');
-        root.dataset.theme = isDark ? 'light' : 'dark';
-        try { localStorage.setItem('vibeme-dark-mode', JSON.stringify(!isDark)); } catch {}
+        let isDark = root.dataset.theme === 'dark';
+
+        // Toggle the theme
+        isDark = !isDark;
+        root.dataset.theme = isDark ? 'dark' : 'light';
+
+        // Also toggle the body class
+        document.body.classList.toggle('dark-mode', isDark);
+
+        // Update state and icon
+        VibeMe.state.isDarkMode = isDark;
+        VibeMe.updateDarkModeIcon(isDark);
+
+        // Update local storage
+        try { localStorage.setItem('vibeme-dark-mode', JSON.stringify(isDark)); } catch {}
+
+        // Update meta theme color
         updateThemeColorMeta();
       }, { capture: true });
     }
