@@ -1189,6 +1189,12 @@ const VibeMe = {
         root.style.setProperty('--color1', theme.color1);
         root.style.setProperty('--color2', theme.color2);
         root.style.setProperty('--color3', theme.color3);
+        const c1 = this.hexToRgb(theme.color1);
+        const c2 = this.hexToRgb(theme.color2);
+        const c3 = this.hexToRgb(theme.color3);
+        root.style.setProperty('--color1-rgb', `${c1.r}, ${c1.g}, ${c1.b}`);
+        root.style.setProperty('--color2-rgb', `${c2.r}, ${c2.g}, ${c2.b}`);
+        root.style.setProperty('--color3-rgb', `${c3.r}, ${c3.g}, ${c3.b}`);
         
         // Calculate optimal text colors using WCAG standards
         const backgroundColor = theme.color1; // Primary background color
@@ -3283,6 +3289,13 @@ function applyPalette({ color1, color2, color3, accent }){
   root.style.setProperty('--color1', color1);
   root.style.setProperty('--color2', color2);
   root.style.setProperty('--color3', color3);
+  const toRgb = hex => {
+    const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return m ? `${parseInt(m[1],16)}, ${parseInt(m[2],16)}, ${parseInt(m[3],16)}` : '0,0,0';
+  };
+  root.style.setProperty('--color1-rgb', toRgb(color1));
+  root.style.setProperty('--color2-rgb', toRgb(color2));
+  root.style.setProperty('--color3-rgb', toRgb(color3));
   if (accent) root.style.setProperty('--social-icon-bg', accent);
 
   const avg = (__vibeme_hexLuma(color1) + __vibeme_hexLuma(color2) + __vibeme_hexLuma(color3)) / 3;

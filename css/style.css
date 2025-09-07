@@ -41,6 +41,9 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --color1: #aaaaaa;
     --color2: #bbbbbb;
     --color3: #cccccc;
+    --color1-rgb: 170, 170, 170;
+    --color2-rgb: 187, 187, 187;
+    --color3-rgb: 204, 204, 204;
     --container-bg-color: rgba(255, 255, 255, 0.95);
     --inner-box-color: rgba(255, 255, 255, 0.85);
     --text-color-main: #374151;
@@ -103,7 +106,12 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --rail-width: 120px;
     --rail-width-collapsed: 56px;
     --rail-edge-hotzone: 28px;
-    --rail-bg: rgba(30, 16, 60, 0.8);
+    --rail-bg: linear-gradient(
+      135deg,
+      rgba(var(--color1-rgb), 0.5),
+      rgba(var(--color2-rgb), 0.6),
+      rgba(var(--color3-rgb), 0.5)
+    );
     --rail-stroke: rgba(255, 255, 255, 0.1);
     --rail-blur: 16px;
     --rail-aura-inner: rgba(124, 58, 237, 0.35);
