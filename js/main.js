@@ -4719,7 +4719,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (x < parseInt(getComputedStyle(hotzone).width)) {
       show();
     } else if (!rail.contains(e.target) && !pinned) {
-      scheduleHide();
+      hide();
+    }
+  });
+
+  addEvent(document, 'mousedown', (e) => {
+    if (!rail.contains(e.target) && !hotzone.contains(e.target) && !pinned) {
+      hide();
     }
   });
 
