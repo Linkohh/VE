@@ -118,6 +118,12 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --rail-aura-outer: rgba(124, 58, 237, 0.15);
     --rail-hide-delay: 18000ms;
     --rail-animation-duration: var(--transition-medium);
+
+    /* Layout breakpoints */
+    --breakpoint-sm: 600px;
+
+    /* About page grid */
+    --about-grid-min: 300px;
 }
 
 /* ===== RESET & BASE STYLES ===== */
@@ -164,7 +170,7 @@ body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding:
 /* Ensure inner card never pushes the page taller than the viewport */
 .quote-container-inner {
   max-height: calc(100dvh - 160px); /* room for title, clock, buttons */
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 /* ===== ACCESSIBILITY ===== */
@@ -252,6 +258,274 @@ body:not(.using-keyboard) *:focus {
     padding: var(--spacing-lg);
     position: relative;
     overflow: hidden;
+}
+
+.about-page .quote-container-inner {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    z-index: 0; /* establish stacking context for ::before overlay */
+}
+
+.about-page .quote-container-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0)
+    );
+    pointer-events: none;
+    z-index: var(--z-negative);
+}
+
+.about-title {
+    font-size: clamp(2rem, 3vw + 1rem, 3.5rem);
+}
+
+.about-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+}
+
+.section-icon {
+    display: inline-block;
+    animation: icon-float 3s ease-in-out infinite;
+}
+
+@keyframes icon-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.about-page p {
+    font-size: clamp(1rem, 0.5vw + 0.9rem, 1.25rem);
+}
+
+.about-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--about-grid-min), 1fr));
+    gap: 2rem;
+}
+
+.about-sections .contact {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+    .about-page .quote-container-inner {
+        padding: 1.5rem 1rem;
+    }
+}
+
+.about-page .quote-container-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0)
+    );
+    pointer-events: none;
+}
+
+.about-title {
+    font-size: clamp(2rem, 3vw + 1rem, 3.5rem);
+}
+
+.about-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+}
+
+.section-icon {
+    display: inline-block;
+    animation: icon-float 3s ease-in-out infinite;
+}
+
+@keyframes icon-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.about-page p {
+    font-size: clamp(1rem, 0.5vw + 0.9rem, 1.25rem);
+}
+
+.about-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.about-sections .contact {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+    .about-page .quote-container-inner {
+        padding: 1.5rem 1rem;
+    }
+}
+
+.about-page .quote-container-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0)
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+.about-page .quote-container-inner > * {
+    position: relative;
+    z-index: 1;
+}
+
+.about-title {
+    font-size: clamp(2rem, 3vw + 1rem, 3.5rem);
+}
+
+.about-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+}
+
+.section-icon {
+    display: inline-block;
+    animation: icon-float 6s ease-in-out infinite;
+    will-change: transform;
+}
+
+.section-icon:hover {
+    animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .section-icon {
+        animation: none;
+    }
+}
+
+@keyframes icon-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.about-page p {
+    font-size: clamp(1rem, 0.5vw + 0.9rem, 1.25rem);
+}
+
+.about-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--about-grid-min), 1fr));
+    gap: 2rem;
+}
+
+.about-sections .contact {
+    grid-column: 1 / -1;
+}
+
+/* Allow the About page to scroll vertically */
+html.about-page,
+body.about-page {
+    overflow-y: auto !important;
+    height: auto;
+    min-height: 100vh;
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+    .about-page .quote-container-inner {
+        padding: 1.5rem 1rem;
+    }
+}
+
+.about-page .quote-container-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0)
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+.about-page .quote-container-inner > * {
+    position: relative;
+    z-index: 1;
+}
+
+.about-title {
+    font-size: clamp(2rem, 3vw + 1rem, 3.5rem);
+}
+
+.about-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+}
+
+.section-icon {
+    display: inline-block;
+    animation: icon-float 6s ease-in-out infinite;
+    will-change: transform;
+}
+
+.section-icon:hover {
+    animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .section-icon {
+        animation: none;
+    }
+}
+
+@keyframes icon-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.about-page p {
+    font-size: clamp(1rem, 0.5vw + 0.9rem, 1.25rem);
+}
+
+.about-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--about-grid-min), 1fr));
+    gap: 2rem;
+}
+
+.about-sections .contact {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+    .about-page .quote-container-inner {
+        padding: 1.5rem 1rem;
+    }
 }
 
 /* Quote pattern background */
