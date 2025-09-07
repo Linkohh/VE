@@ -110,6 +110,8 @@
     // Unlock audio context on first user interaction (touch/click/keydown)
     const unlockHandler = () => {
         window.VibeMeAudioSafetyNet.unlock();
+        try { window.VibeMeAudioSafetyNet.context?.resume?.(); } catch (_) {}
+        try { VibeMe?.audioContext?.resume?.(); } catch (_) {}
         window.removeEventListener('touchstart', unlockHandler, true);
         window.removeEventListener('mousedown', unlockHandler, true);
         window.removeEventListener('keydown', unlockHandler, true);
@@ -1073,7 +1075,36 @@ const VibeMe = {
     },
 
     playSound: function(type) {
-        if (!this.audioContext || !this.state.effectsEnabled) return;
+        // Never play if user turned beeps off
+        if (VibeMe?.state?.beepEnabled === false) return;
+
+        const isGenerate = (type === 'generate');
+
+        // For non-generate sounds, keep honoring the Visual Effects toggle
+        if (!isGenerate && (!this.audioContext || !this.state.effectsEnabled)) return;
+
+        // Prefer the already unlocked safety-net for the generate beep (mobile friendly)
+        if (isGenerate && window.VibeMeAudioSafetyNet) {
+            try {
+                window.VibeMeAudioSafetyNet.unlock?.();
+                const ctx = window.VibeMeAudioSafetyNet.context;
+                const doBeep = () => { try { VibeMeAudioSafetyNet.beep(600, 0.12, 0.22); } catch (_) {} };
+                if (ctx && ctx.state === 'suspended' && ctx.resume) {
+                    ctx.resume().then(doBeep).catch(doBeep);
+                } else {
+                    doBeep();
+                }
+                return;
+            } catch (_) {}
+        }
+
+        // Fallback to app AudioContext for everything else
+        try {
+            if (!this.audioContext) this.initializeAudio?.();
+            if (!this.audioContext) return;
+            // Try to resume on mobile; ignore if the browser requires user gesture
+            try { this.audioContext.resume?.(); } catch (_) {}
+        } catch (_) {}
 
         const frequencies = {
             click: 800,
@@ -1082,26 +1113,25 @@ const VibeMe = {
             favorite: 659.25, // E5
             error: 200
         };
+        const freq = frequencies[type] || frequencies.click;
 
-        const frequency = frequencies[type] || frequencies.click;
-        
         try {
-            const oscillator = this.audioContext.createOscillator();
-            const gainNode = this.audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(this.audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
-            oscillator.type = type === 'error' ? 'sawtooth' : 'sine';
-            
-            gainNode.gain.setValueAtTime(0.1, this.audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 0.2);
-            
-            oscillator.start(this.audioContext.currentTime);
-            oscillator.stop(this.audioContext.currentTime + 0.2);
-        } catch (error) {
-            // Silent failure for audio
+            const ctx = this.audioContext;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            osc.type = (type === 'error') ? 'sawtooth' : 'sine';
+
+            gain.gain.setValueAtTime(0.12, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.2);
+        } catch (_) {
+            // silent fail
         }
     },
 
