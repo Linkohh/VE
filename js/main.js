@@ -110,7 +110,6 @@
     // Unlock audio context on first user interaction (touch/click/keydown)
     const unlockHandler = () => {
         window.VibeMeAudioSafetyNet.unlock();
-        try { window.VibeMeAudioSafetyNet.context?.resume?.(); } catch (_) {}
         try { VibeMe?.audioContext?.resume?.(); } catch (_) {}
         window.removeEventListener('touchstart', unlockHandler, true);
         window.removeEventListener('mousedown', unlockHandler, true);
@@ -1085,17 +1084,7 @@ const VibeMe = {
 
         // Prefer the already unlocked safety-net for the generate beep (mobile friendly)
         if (isGenerate && window.VibeMeAudioSafetyNet) {
-            try {
-                window.VibeMeAudioSafetyNet.unlock?.();
-                const ctx = window.VibeMeAudioSafetyNet.context;
-                const doBeep = () => { try { VibeMeAudioSafetyNet.beep(600, 0.12, 0.22); } catch (_) {} };
-                if (ctx && ctx.state === 'suspended' && ctx.resume) {
-                    ctx.resume().then(doBeep).catch(doBeep);
-                } else {
-                    doBeep();
-                }
-                return;
-            } catch (_) {}
+            try { VibeMeAudioSafetyNet.beep(600, 0.12, 0.22); return; } catch (_) {}
         }
 
         // Fallback to app AudioContext for everything else
