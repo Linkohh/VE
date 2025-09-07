@@ -103,7 +103,7 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --rail-width: 120px;
     --rail-width-collapsed: 56px;
     --rail-edge-hotzone: 28px;
-    --rail-bg: rgba(30, 16, 60, 0.85);
+    --rail-bg: rgba(30, 16, 60, 0.8);
     --rail-stroke: rgba(255, 255, 255, 0.1);
     --rail-blur: 16px;
     --rail-aura-inner: rgba(124, 58, 237, 0.35);
@@ -2612,11 +2612,10 @@ button:disabled {
 
 #left-rail {
   position: fixed;
-  top: 4rem;
+  top: 50%;
   left: 1rem;
   width: var(--rail-width);
-  max-height: calc(100vh - 8rem);
-  transform: translateX(-140%);
+  transform: translate(-140%, -50%);
   opacity: 0;
   transition: transform var(--rail-animation-duration), opacity var(--rail-animation-duration);
   backdrop-filter: blur(var(--rail-blur)) saturate(160%);
@@ -2632,7 +2631,7 @@ button:disabled {
 }
 
 #left-rail.show {
-  transform: translateX(0);
+  transform: translate(0, -50%);
   opacity: 1;
 }
 
