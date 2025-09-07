@@ -41,6 +41,9 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --color1: #aaaaaa;
     --color2: #bbbbbb;
     --color3: #cccccc;
+    --color1-rgb: 170, 170, 170;
+    --color2-rgb: 187, 187, 187;
+    --color3-rgb: 204, 204, 204;
     --container-bg-color: rgba(255, 255, 255, 0.95);
     --inner-box-color: rgba(255, 255, 255, 0.85);
     --text-color-main: #374151;
@@ -100,14 +103,19 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --card-radius: var(--radius-lg);
 
     /* Left rail tokens */
-    --rail-width: 160px;
+    --rail-width: 120px;
     --rail-width-collapsed: 56px;
     --rail-edge-hotzone: 28px;
-    --rail-bg: rgba(255, 255, 255, 0.25);
-    --rail-stroke: rgba(255, 255, 255, 0.35);
+    --rail-bg: linear-gradient(
+      135deg,
+      rgba(var(--color1-rgb), 0.5),
+      rgba(var(--color2-rgb), 0.6),
+      rgba(var(--color3-rgb), 0.5)
+    );
+    --rail-stroke: rgba(255, 255, 255, 0.1);
     --rail-blur: 16px;
-    --rail-aura-inner: rgba(255,255,255,0.35);
-    --rail-aura-outer: rgba(255,255,255,0.15);
+    --rail-aura-inner: rgba(124, 58, 237, 0.35);
+    --rail-aura-outer: rgba(124, 58, 237, 0.15);
     --rail-hide-delay: 18000ms;
     --rail-animation-duration: var(--transition-medium);
 }
@@ -2612,26 +2620,26 @@ button:disabled {
 
 #left-rail {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 1rem;
   width: var(--rail-width);
-  height: 100vh;
-  transform: translateX(-140%);
+  transform: translate(-140%, -50%);
   opacity: 0;
   transition: transform var(--rail-animation-duration), opacity var(--rail-animation-duration);
   backdrop-filter: blur(var(--rail-blur)) saturate(160%);
   -webkit-backdrop-filter: blur(var(--rail-blur)) saturate(160%);
   background: var(--rail-bg);
   border: 1px solid var(--rail-stroke);
-  border-radius: var(--radius-lg);
+  border-radius: 1rem;
   z-index: var(--z-popover);
-  color: #fff;
+  color: rgba(255, 255, 255, 0.9);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 #left-rail.show {
-  transform: translateX(0);
+  transform: translate(0, -50%);
   opacity: 1;
 }
 
@@ -2644,6 +2652,20 @@ button:disabled {
     radial-gradient(closest-side, var(--rail-aura-inner), transparent),
     radial-gradient(closest-side, var(--rail-aura-outer), transparent);
   filter: blur(12px);
+  z-index: -2;
+}
+
+#left-rail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(at top left, rgba(255,255,255,0.08), transparent 60%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  background-size: cover, 150px 150px;
+  mix-blend-mode: overlay;
+  opacity: 0.15;
   z-index: -1;
 }
 
@@ -2692,10 +2714,30 @@ button:disabled {
   border-radius: var(--radius-md);
   cursor: pointer;
   text-align: left;
+  transition: background 0.2s;
 }
 
-#left-rail .rail-btn:hover {
+#left-rail .rail-btn:not(.active):hover {
   background: rgba(255, 255, 255, 0.1);
+}
+
+#left-rail .rail-btn.active {
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 9999px;
+}
+
+#left-rail .rail-btn i {
+  font-size: 1rem;
+  width: 1rem;
+  text-align: center;
+}
+
+#left-rail .rail-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 4px 0;
+  border: 0;
 }
 
 #left-rail[data-size="collapsed"] .rail-btn {
