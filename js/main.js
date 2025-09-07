@@ -4611,6 +4611,11 @@ document.addEventListener('DOMContentLoaded', () => {
   rail.dataset.size = size;
   const pinBtn = rail.querySelector('.rail-pin');
   const collapseBtn = rail.querySelector('.rail-collapse');
+  const defaultBtn = rail.querySelector('.rail-btn');
+  if (defaultBtn) {
+    defaultBtn.classList.add('active');
+    defaultBtn.setAttribute('aria-current', 'page');
+  }
   if (pinned) {
     rail.classList.add('show');
     rail.dataset.state = 'visible';
@@ -4676,6 +4681,12 @@ document.addEventListener('DOMContentLoaded', () => {
   addEvent(rail, 'click', (e) => {
     const btn = e.target.closest('.rail-btn');
     if (!btn) return;
+    rail.querySelectorAll('.rail-btn').forEach(b => {
+      const active = b === btn;
+      b.classList.toggle('active', active);
+      if (active) b.setAttribute('aria-current', 'page');
+      else b.removeAttribute('aria-current');
+    });
     const action = btn.dataset.action;
     if (navigator.vibrate) navigator.vibrate(10);
     document.dispatchEvent(new CustomEvent('rail:action', {detail:{action}}));
