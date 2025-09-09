@@ -6340,6 +6340,4 @@ window.quotesData =
     "lastUpdated": "09-06-2025",
     "version": "1.0.0"
   }
-}
-
-;
+};
