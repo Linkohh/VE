@@ -205,8 +205,7 @@ const VibeMe = {
         customQuotes: JSON.parse(localStorage.getItem('vibeme-custom-quotes') || '[]'),
         quoteRatings: JSON.parse(localStorage.getItem('vibeme-ratings') || '{}'),
         stats: JSON.parse(localStorage.getItem('vibeme-stats') || '{"quotesGenerated": 0, "quotesShared": 0, "dayStreak": 0, "lastVisit": null}'),
-        beepEnabled: JSON.parse(localStorage.getItem('vibeme-beep-enabled') || 'true'),
-        collapseTimer: null
+        beepEnabled: JSON.parse(localStorage.getItem('vibeme-beep-enabled') || 'true')
     },
 
     // Audio context for enhanced sound effects
@@ -858,81 +857,6 @@ const VibeMe = {
     },
 
     // ===== SOCIAL SHARE FAN-OUT =====
-    expandShareButtons: function() {
-      if (this.state.collapseTimer) {
-        clearTimeout(this.state.collapseTimer);
-        this.state.collapseTimer = null;
-      }
-
-      const shareHubBtn = document.getElementById('shareHubBtn');
-      const buttonContainer = document.getElementById('shareFanContainer');
-
-      if (!shareHubBtn || !buttonContainer) return;
-
-      shareHubBtn.style.display = 'none';
-      buttonContainer.innerHTML = '';
-      buttonContainer.setAttribute('aria-hidden', 'false');
-      buttonContainer.classList.add('reveal');
-
-      const items = [
-        { id: 'x',        icon: 'fas fa-comment-dots',   label: 'Twitter' },
-        { id: 'facebook', icon: 'fab fa-facebook-f',label: 'Facebook' },
-        { id: 'linkedin', icon: 'fab fa-linkedin-in', label: 'LinkedIn' },
-        { id: 'whatsapp', icon: 'fab fa-whatsapp',  label: 'WhatsApp' },
-        { id: 'pinterest',icon: 'fab fa-pinterest-p', label: 'Pinterest' }
-      ];
-
-      items.forEach((item, i) => {
-        const b = document.createElement('button');
-        b.className = 'fan-btn';
-        b.setAttribute('aria-label', `Share on ${item.label}`);
-        b.innerHTML = `<i class="${item.icon}" aria-hidden="true"></i>`;
-        b.style.transitionDelay = `${(i + 1) * 55}ms`;
-
-        b.addEventListener('click', () => this.handleShare(item.id));
-        buttonContainer.appendChild(b);
-        
-        requestAnimationFrame(() => {
-            b.classList.add('in');
-        });
-      });
-
-      setTimeout(() => buttonContainer.classList.remove('reveal'), 320);
-      this.state.collapseTimer = setTimeout(() => this.collapseShareButtons(), 5000);
-    },
-
-    collapseShareButtons: function() {
-      const buttonContainer = document.getElementById('shareFanContainer');
-      if (!buttonContainer) return;
-
-      const kids = Array.from(buttonContainer.querySelectorAll('.fan-btn'));
-      if (!kids.length) {
-        return this.resetShareButton();
-      }
-      kids.reverse().forEach((b, idx) => {
-        b.style.transitionDelay = `${idx * 55}ms`;
-        b.classList.remove('in');
-        b.classList.add('out');
-      });
-      const total = kids.length * 55 + 320;
-      setTimeout(() => {
-        buttonContainer.innerHTML = '';
-        this.resetShareButton();
-      }, total);
-    },
-
-    resetShareButton: function() {
-      const buttonContainer = document.getElementById('shareFanContainer');
-      const shareHubBtn = document.getElementById('shareHubBtn');
-      if (!buttonContainer || !shareHubBtn) return;
-
-      buttonContainer.setAttribute('aria-hidden', 'true');
-      shareHubBtn.style.display = 'inline-flex';
-      if (this.state.collapseTimer) clearTimeout(this.state.collapseTimer);
-      this.state.collapseTimer = null;
-      shareHubBtn.focus();
-    },
-
     handleShare: function(action) {
       const data = this.buildShareData();
       if (data[action]) {
@@ -2239,7 +2163,39 @@ const VibeMe = {
         document.getElementById('timer-toggle-btn').addEventListener('click', () => this.toggleTimer());
         document.getElementById('copy-quote-btn').addEventListener('click', () => this.copyQuote());
         document.getElementById('favorite-quote-btn').addEventListener('click', () => this.toggleFavorite());
-        document.getElementById('shareHubBtn').addEventListener('click', () => this.expandShareButtons());
+        const mainShareContainer = document.getElementById('main-share-container');
+        if (mainShareContainer) {
+            const shareHubBtn = mainShareContainer.querySelector('#shareHubBtn');
+
+            shareHubBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const isOpen = mainShareContainer.classList.toggle('open');
+                shareHubBtn.setAttribute('aria-expanded', String(isOpen));
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!mainShareContainer.contains(e.target)) {
+                    mainShareContainer.classList.remove('open');
+                    shareHubBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            mainShareContainer.addEventListener('click', (e) => {
+                const option = e.target.closest('.fan-out-option');
+                if (!option) return;
+                e.preventDefault();
+                const action = option.dataset.share;
+                if (action === 'copy-link') {
+                    navigator.clipboard.writeText(window.location.href)
+                        .then(() => this.showFeedback('Link copied!', 'success'))
+                        .catch(() => this.showFeedback('Failed to copy link', 'error'));
+                } else {
+                    this.handleShare(action);
+                }
+                mainShareContainer.classList.remove('open');
+                shareHubBtn.setAttribute('aria-expanded', 'false');
+            });
+        }
         document.getElementById('effects-toggle-checkbox').addEventListener('change', () => this.toggleEffects());
         document.getElementById('clear-favorites-btn').addEventListener('click', () => this.clearFavorites());
         document.getElementById('toggle-add-quote-form').addEventListener('click', () => this.toggleAddQuoteForm());

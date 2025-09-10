@@ -514,10 +514,16 @@
                         <!-- Social sharing -->
                         <div class="flex flex-col items-center space-y-4 mt-6"
                              aria-label="Share quote on social media">
-                            <button id="shareHubBtn" class="hub-btn" aria-expanded="false" aria-controls="shareFanContainer">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                            <div id="shareFanContainer" class="flex items-center justify-center gap-2" aria-hidden="true"></div>
+                            <div class="share-fan-out-container" id="main-share-container">
+                                <button id="shareHubBtn" class="hub-btn" aria-label="Share this quote" title="Share this quote" aria-expanded="false">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                                <div class="fan-out-options" role="menu">
+                                    <a href="#" role="menuitem" class="fan-out-option copy-link" data-share="copy-link" title="Copy Link"><i class="fas fa-link"></i></a>
+                                    <a href="#" role="menuitem" class="fan-out-option twitter" data-share="x" title="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" role="menuitem" class="fan-out-option facebook" data-share="facebook" title="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </div>

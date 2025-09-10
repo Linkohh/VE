@@ -595,64 +595,77 @@ body:not(.using-keyboard) *:focus {
   box-shadow: 0 8px 18px rgba(0,0,0,.18) inset;
 }
 
-#shareFanContainer {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  position: relative; /* For child positioning */
-  height: 44px; /* Set a fixed height to avoid layout shifts */
+/* --- Main Fan-Out Share Button --- */
+.share-fan-out-container {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
 }
 
-/* Container reveal pulse */
-#shareFanContainer.reveal {
-  animation: container-pop .28s cubic-bezier(.2,.7,.2,1.1);
+.share-fan-out-container #shareHubBtn {
+  position: relative;
+  z-index: 2;
 }
 
-@keyframes container-pop {
-  from{ transform:scale(.98); opacity:.6 }
-  to{ transform:scale(1); opacity:1 }
+.fan-out-options {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 1;
 }
 
-.fan-btn {
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width: 44px; /* Good touch target size */
+.share-fan-out-container:hover .fan-out-options,
+.share-fan-out-container.open .fan-out-options,
+.share-fan-out-container:focus-within .fan-out-options {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fan-out-option {
+  --fan-angle: 0deg;
+  --fan-distance: 70px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 44px;
   height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: var(--radius-full);
-  font-size: 1.2rem; /* Icon size */
-  color: var(--text-color-main);
   background: color-mix(in oklab, var(--color2) 20%, transparent);
   border: 1px solid rgba(255,255,255,.18);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
-          backdrop-filter: blur(10px) saturate(140%);
-  box-shadow: var(--shadow-sm);
-  transition: opacity .2s ease, transform .26s cubic-bezier(.2,.7,.2,1.1), box-shadow .2s ease;
-  opacity:0;
-  transform: translateY(6px) scale(.96);
+  color: var(--text-color-main);
+  opacity: 0;
+  transform: scale(.5);
+  transition: transform .3s cubic-bezier(.68,-0.55,.265,1.55), opacity .3s ease, background .2s ease;
 }
 
-.fan-btn.in{
-  opacity:1;
-  transform: translateY(0) scale(1);
-  box-shadow: var(--shadow-md);
+.share-fan-out-container:hover .fan-out-option,
+.share-fan-out-container.open .fan-out-option,
+.share-fan-out-container:focus-within .fan-out-option {
+  opacity: 1;
+  transform: scale(1) translate(-50%, -50%) rotate(var(--fan-angle)) translate(var(--fan-distance)) rotate(calc(-1 * var(--fan-angle)));
 }
 
-.fan-btn.out{
-  opacity:0;
-  transform: translateY(-8px) scale(.92);
-}
+.fan-out-option.copy-link { --fan-angle: -45deg; }
+.fan-out-option.twitter { --fan-angle: 0deg; }
+.fan-out-option.facebook { --fan-angle: 45deg; }
 
-.fan-btn:hover{
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: var(--shadow-lg);
-  color: white;
+.fan-out-option:hover {
   background: var(--color1);
-}
-
-.fan-btn:active{
-  transform: translateY(1px) scale(.97);
-  box-shadow: 0 8px 18px rgba(0,0,0,.18) inset;
+  color: white;
+  transform: scale(1.1) translate(-50%, -50%) rotate(var(--fan-angle)) translate(var(--fan-distance)) rotate(calc(-1 * var(--fan-angle)));
 }
 
 /* ===== ENHANCED MOUSE GLOW EFFECT ===== */
@@ -1047,30 +1060,26 @@ button:disabled {
 }
 
 @media (max-width: 768px) {
-    .binary-column { 
+    .binary-column {
         width: 14px; /* Proper width for tablet fonts */
-        font-size: 12px; 
+        font-size: 12px;
     }
-    
+
     .generate-btn {
         width: 90px;
         height: 90px;
     }
-    
-    #shareFanContainer {
-        justify-content: center;
+
+    .share-fan-out-container,
+    .share-fan-out-container #shareHubBtn {
+        width: 50px;
+        height: 50px;
     }
 
     #shareHubBtn {
-        width: 50px;
-        height: 50px;
         font-size: 1rem;
     }
 
-    .fan-btn {
-        /* No absolute positioning needed, flexbox handles layout. */
-    }
-    
     #settings-panel {
         right: 1rem;
     }
