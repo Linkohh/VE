@@ -113,6 +113,23 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --matrix-opacity-token: 0.8;
     --container-blur: 20px;
     --card-radius: var(--radius-lg);
+
+    /* Left rail tokens */
+    --rail-width: 120px;
+    --rail-width-collapsed: 56px;
+    --rail-edge-hotzone: 28px;
+    --rail-bg: linear-gradient(
+      135deg,
+      rgba(var(--color1-rgb), 0.5),
+      rgba(var(--color2-rgb), 0.6),
+      rgba(var(--color3-rgb), 0.5)
+    );
+    --rail-stroke: rgba(255, 255, 255, 0.1);
+    --rail-blur: 16px;
+    --rail-aura-inner: rgba(124, 58, 237, 0.35);
+    --rail-aura-outer: rgba(124, 58, 237, 0.15);
+    --rail-hide-delay: 18000ms;
+    --rail-animation-duration: var(--transition-medium);
 }
 
 /* ===== RESET & BASE STYLES ===== */
