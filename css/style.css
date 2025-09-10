@@ -128,7 +128,7 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
     --rail-blur: 16px;
     --rail-aura-inner: rgba(124, 58, 237, 0.35);
     --rail-aura-outer: rgba(124, 58, 237, 0.15);
-    --rail-hide-delay: 18000ms;
+    --rail-hide-delay: 8000ms;
     --rail-animation-duration: var(--transition-medium);
 }
 
