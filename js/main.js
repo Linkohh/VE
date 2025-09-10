@@ -2165,21 +2165,6 @@ const VibeMe = {
         document.getElementById('favorite-quote-btn').addEventListener('click', () => this.toggleFavorite());
         const mainShareContainer = document.getElementById('main-share-container');
         if (mainShareContainer) {
-            const shareHubBtn = mainShareContainer.querySelector('#shareHubBtn');
-
-            shareHubBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const isOpen = mainShareContainer.classList.toggle('open');
-                shareHubBtn.setAttribute('aria-expanded', String(isOpen));
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!mainShareContainer.contains(e.target)) {
-                    mainShareContainer.classList.remove('open');
-                    shareHubBtn.setAttribute('aria-expanded', 'false');
-                }
-            });
-
             mainShareContainer.addEventListener('click', (e) => {
                 const option = e.target.closest('.fan-out-option');
                 if (!option) return;
@@ -2192,8 +2177,6 @@ const VibeMe = {
                 } else {
                     this.handleShare(action);
                 }
-                mainShareContainer.classList.remove('open');
-                shareHubBtn.setAttribute('aria-expanded', 'false');
             });
         }
         document.getElementById('effects-toggle-checkbox').addEventListener('change', () => this.toggleEffects());
