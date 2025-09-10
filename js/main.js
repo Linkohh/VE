@@ -4898,7 +4898,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const PIN_KEY = 'vibeme.railPinned';
   const SIZE_KEY = 'vibeme.railSize';
   const rootStyles = getComputedStyle(root);
-  const HIDE_DELAY = parseInt(rootStyles.getPropertyValue('--rail-hide-delay')) || 18000;
+  const HIDE_DELAY = parseInt(rootStyles.getPropertyValue('--rail-hide-delay')) || 8000;
 
   const announcer = document.createElement('div');
   announcer.setAttribute('aria-live', 'polite');
@@ -5001,14 +5001,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && !pinned) hide();
   });
 
-  addEvent(document, 'touchstart', (e) => {
-    const x = e.touches[0]?.clientX || 0;
-    if (x < parseInt(getComputedStyle(hotzone).width)) {
-      show();
-    } else if (!rail.contains(e.target) && !pinned) {
-      scheduleHide();
+  // --- New Feature: Click/Tap outside to close ---
+  function handleClickOutside(e) {
+    if (pinned) return; // Do nothing if the rail is pinned
+    // Hide if the click is not on the rail itself, and not within the hover hotzone
+    if (!rail.contains(e.target) && !hotzone.contains(e.target)) {
+      hide();
     }
-  });
+  }
+
+  addEvent(document, 'click', handleClickOutside);
+  // Also handle touch events for mobile users
+  addEvent(document, 'touchstart', (e) => {
+    // We only need to re-check for touchstart, the existing logic handles the hotzone activation
+    handleClickOutside(e);
+  }, { passive: true }); // Use passive listener for better scroll performance
 
   addEvent(document, 'rail:action', ({detail:{action}}) => {
     switch(action){
