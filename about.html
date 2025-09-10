@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" data-theme="light" class="about-page">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About VibeMe - an application for sharing original and motivational quotes.">
+    <meta name="keywords" content="about, originality, quotes, motivation, inspiration, DEI, diversity, equity, inclusion">
+    <meta name="author" content="VibeMe">
+    <meta name="theme-color" content="#aaaaaa">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="About VibeMe">
+    <meta property="og:description" content="Learn about the mission and story behind VibeMe.">
+    <meta property="og:image" content="/assets/og-image.jpg">
+    <meta property="og:url" content="https://vibeme.app/about.html">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About VibeMe">
+    <meta name="twitter:description" content="Learn about the mission and story behind VibeMe.">
+    <meta name="twitter:image" content="/assets/twitter-image.jpg">
+
+    <title>VibeMe - About</title>
+
+    <!-- Frameworks & libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
+
+    <!-- Project-specific stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Favicon and icons -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="meta/site.webmanifest">
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 gradient-bg about-page">
+    <!-- Decorative background effects for consistency -->
+    <div id="mouse-glow" class="mouse-glow" aria-hidden="true"></div>
+    <div id="matrix-bg" class="matrix-bg" aria-hidden="true"></div>
+    <canvas id="matrix-canvas" class="matrix-canvas" aria-hidden="true"></canvas>
+
+    <!-- Main content container -->
+    <main id="main-content" class="container mx-auto max-w-4xl relative z-10 pt-8">
+        <!-- Back button -->
+        <nav class="mb-6">
+            <a href="index.html" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 dynamic-text-main font-semibold py-2 px-4 rounded-lg transition-colors duration-300 shadow-lg">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                <span>Home</span>
+            </a>
+        </nav>
+
+        <!-- App Title Bar -->
+        <div id="app-title-bar" class="app-title-bar" role="banner" aria-label="Application Title">
+          <h1 class="vb-logo heading-font !text-4xl" data-title="VibeMe">VibeMe</h1>
+          <span class="logo-underline" aria-hidden="true"></span>
+          <div id="flip-clock-mount" class="flip-clock-mount" data-skin="v2" aria-label="Current time" role="timer"></div>
+        </div>
+
+        <div class="quote-container-outer">
+            <div class="quote-container-inner dynamic-text-secondary p-8 md:p-12">
+
+                <!-- Prominent Title -->
+                <h1 class="heading-font font-bold text-center mb-8 dynamic-text-main about-title">
+                    About This Space
+                </h1>
+
+                <!-- Content sections -->
+                <div id="about-content-placeholder" class="about-sections">
+                    <section>
+                        <h2 class="about-section-title heading-font font-semibold mb-4 dynamic-text-main border-b border-white/20 pb-3">
+                            <span class="section-icon" aria-hidden="true">🎯</span>
+                            <span>Our Mission</span>
+                        </h2>
+                        <p class="leading-relaxed">
+                            Our mission is to provide a sanctuary for original thought and authentic expression. In a world saturated with familiar voices, we celebrate the unique perspectives that come from individual walks of life. This platform is dedicated to fostering diversity, equity, and inclusion by empowering everyone to share their own motivational quotes, ideas, and experiences. We believe that your voice matters and that your originality is a source of inspiration.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 class="about-section-title heading-font font-semibold mb-4 dynamic-text-main border-b border-white/20 pb-3">
+                            <span class="section-icon" aria-hidden="true">📖</span>
+                            <span>Our Story</span>
+                        </h2>
+                        <p class="leading-relaxed mb-4">
+                            <em>(This is where you can share the story behind the application. Talk about the creator, what inspired them, and the journey of bringing this idea to life. Your users will appreciate knowing the 'why' behind the project!)</em>
+                        </p>
+                        <div class="my-6 rounded-lg overflow-hidden shadow-lg">
+
+                        </div>
+                    </section>
+
+                    <section class="contact">
+                        <h2 class="about-section-title heading-font font-semibold mb-4 dynamic-text-main border-b border-white/20 pb-3">
+                            <span class="section-icon" aria-hidden="true">✉️</span>
+                            <span>Contact Us</span>
+                        </h2>
+                        <p class="leading-relaxed">
+                            We'd love to hear from you! Whether you have a question, feedback, or a story to share, please reach out.
+                        </p>
+                        <div class="mt-4">
+                            <p>
+                                <strong>Email:</strong>
+
+                            </p>
+                            <!-- You can add other contact methods like social media links here -->
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer for consistency -->
+    <footer class="fixed bottom-0 left-0 right-0 bg-black/20 backdrop-blur-sm border-t border-white/10 text-center py-2 z-[9999]">
+        <div class="container mx-auto px-4">
+            <p class="text-sm text-white/70">
+                Copyright © 2025 VibeMe By LHO. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Main JS for theme handling -->
+    <script data-main defer src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.VibeMe && typeof window.VibeMe.applyRandomTheme === 'function') {
+                window.VibeMe.applyRandomTheme();
+            }
+            const emailLink = document.getElementById('contact-email');
+            if (emailLink) {
+                const email = `${emailLink.dataset.user}@${emailLink.dataset.domain}`;
+                emailLink.href = `mailto:${email}`;
+                emailLink.textContent = email;
+            }
+        });
+    </script>
+</body>
+</html>
