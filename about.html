@@ -130,7 +130,8 @@
     </footer>
 
     <!-- Main JS for theme handling -->
-    <script data-main defer src="js/main.js"></script>
+    <script type="module" data-main src="/src/legacy/main-legacy.js"></script>
+    <script type="module" src="/src/main.ts"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             if (window.VibeMe && typeof window.VibeMe.applyRandomTheme === 'function') {
