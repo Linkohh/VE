@@ -2,7 +2,9 @@ import { MatrixConfig } from './config';
 
 interface Column {
   el: HTMLElement;
-  end: number;
+  y: number;
+  speed: number;
+  start: number;
 }
 
 let running = false;
@@ -10,12 +12,7 @@ let rafId = 0;
 let cfg: MatrixConfig;
 let active: Column[] = [];
 let pool: HTMLElement[] = [];
-let lastTime = 0;
-let avgFrameTime = 16;
-let currentDensity = 1;
-let targetDensity = 1;
-let dropInterval = 0;
-let timeoutId = 0;
+ 
 
 function createElement(): HTMLElement {
   const el = pool.pop() || document.createElement('div');
@@ -82,15 +79,14 @@ function recycle(col: Column, now: number): void {
   col.el.style.left = `${Math.random() * 100}%`;
   col.el.innerHTML = generateContent();
   applyColors(col.el);
-  const duration = 12 + Math.random() * 8;
-  const delay = Math.random() * 4;
-  col.el.dataset.startTime = String(now + delay * 1000);
-  col.el.dataset.duration = String(duration * 1000);
-  col.el.style.animation = 'none';
-  requestAnimationFrame(() => {
-    col.el.style.animation = `fall ${duration}s linear ${delay}s`;
-  });
-  col.end = now + (delay + duration) * 1000;
+  const duration = 12 + Math.random() * 8; // seconds
+  const delay = Math.random() * 4; // seconds
+  col.y = -col.el.offsetHeight;
+  col.start = now + delay * 1000;
+  const distance = window.innerHeight + col.el.offsetHeight;
+  col.speed = distance / (duration * 1000); // px per ms
+  col.el.style.transform = `translate3d(0, ${col.y}px, 0)`;
+  col.el.style.opacity = '0';
 }
 
 function scheduleNext(): void {
@@ -110,23 +106,14 @@ function scheduleNext(): void {
 
 function loop(now: number): void {
   if (!running) return;
-  const delta = lastTime ? now - lastTime : 16;
-  lastTime = now;
-  avgFrameTime = avgFrameTime * 0.9 + delta * 0.1;
-  if (avgFrameTime > 22) {
-    currentDensity = Math.max(targetDensity * 0.5, currentDensity * 0.9);
-    dropInterval = Math.min(200, dropInterval + 5);
-  } else if (avgFrameTime < 18) {
-    currentDensity = Math.min(targetDensity, currentDensity + (targetDensity - currentDensity) * 0.02);
-    dropInterval = Math.max(0, dropInterval - 5);
-  }
-  const count = Math.floor((window.innerWidth / cfg.columnWidth) * currentDensity);
+ 
   if (active.length < count) {
     for (let i = active.length; i < count; i++) {
       const el = createElement();
       document.body.appendChild(el);
-      const col: Column = { el, end: 0 };
+      const col: Column = { el, y: 0, speed: 0, start: now };
       active.push(col);
+      recycle(col, now);
     }
   } else if (active.length > count) {
     for (let i = active.length - 1; i >= count; i--) {
@@ -137,8 +124,14 @@ function loop(now: number): void {
   }
 
   active.forEach((col) => {
-    if (now >= col.end) {
+    if (now < col.start) return;
+    col.y += col.speed * dt;
+    if (col.y > window.innerHeight) {
       recycle(col, now);
+    } else {
+      col.el.style.transform = `translate3d(0, ${col.y}px, 0)`;
+      const opacity = 1 - col.y / window.innerHeight;
+      col.el.style.opacity = Math.max(0, Math.min(1, opacity)).toFixed(3);
     }
   });
   scheduleNext();
@@ -148,12 +141,7 @@ export function startDOM(config: MatrixConfig): void {
   if (running) return;
   cfg = config;
   running = true;
-  targetDensity = cfg.densityMultiplier;
-  currentDensity = targetDensity;
-  lastTime = 0;
-  avgFrameTime = 16;
-  dropInterval = 0;
-  scheduleNext();
+ 
 }
 
 export function stopDOM(): void {
