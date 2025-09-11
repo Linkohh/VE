@@ -82,9 +82,6 @@ function recycle(col: Column, now: number): void {
  
   }
 }
-
-function loop(now: number): void {
-  if (!running) return;
  
   if (active.length < count) {
     for (let i = active.length; i < count; i++) {
@@ -101,7 +98,10 @@ function loop(now: number): void {
       pool.push(col.el);
     }
   }
+}
 
+function loop(now: number): void {
+  if (!running) return;
   active.forEach((col) => {
     if (now < col.start) return;
     col.y += col.speed * dt;
@@ -126,7 +126,7 @@ export function startDOM(config: MatrixConfig): void {
 export function stopDOM(): void {
   running = false;
   cancelAnimationFrame(rafId);
-  clearTimeout(timeoutId);
+ 
   active.forEach((col) => {
     col.el.remove();
     pool.push(col.el);

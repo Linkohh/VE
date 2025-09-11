@@ -15,7 +15,8 @@ interface CanvasState {
   pool: Drop[];
   rafId: number;
   lastFrame: number;
-  resizeHandler: (() => void) | null;
+  resizeObserver: ResizeObserver | null;
+  resizeRaf: number;
   running: boolean;
   config: MatrixConfig | null;
   avgFrameTime: number;
@@ -30,7 +31,8 @@ const state: CanvasState = {
   pool: [],
   rafId: 0,
   lastFrame: 0,
-  resizeHandler: null,
+  resizeObserver: null,
+  resizeRaf: 0,
   running: false,
   config: null,
   avgFrameTime: 0,
@@ -38,28 +40,12 @@ const state: CanvasState = {
   baseMaxFPS: 60,
 };
 
-function createDrop(x: number): Drop {
-  return {
-    x,
-    y: 0,
-    speed: 1 + Math.random() * 2,
-    glyphIndex: state.config ? Math.floor(Math.random() * state.config.characters.length) : 0,
-    opacity: 0,
-  };
-}
-
-function resetDrop(drop: Drop, x: number): Drop {
-  drop.x = x;
-  drop.y = 0;
-  drop.speed = 1 + Math.random() * 2;
-  drop.glyphIndex = state.config ? Math.floor(Math.random() * state.config.characters.length) : 0;
-  drop.opacity = 0;
-  return drop;
+ 
 }
 
 function resizeCanvas(): void {
   if (!state.canvas || !state.ctx || !state.config) return;
-  const dpr = window.devicePixelRatio || 1;
+  const dpr = getDpr();
   const canvas = state.canvas;
 
   // CSS size
@@ -159,30 +145,20 @@ export function startCanvas(config: MatrixConfig): void {
 
   resizeCanvas();
 
-  state.running = true;
-  if (config.reducedMotion) {
-    draw();
-    state.resizeHandler = () => {
-      resizeCanvas();
-      draw();
-    };
-  } else {
-    state.rafId = requestAnimationFrame(loop);
-    state.resizeHandler = () => {
-      resizeCanvas();
-    };
-  }
-
-  window.addEventListener('resize', state.resizeHandler);
+ 
 }
 
 export function stopCanvas(): void {
   if (!state.running) return;
   state.running = false;
   cancelAnimationFrame(state.rafId);
-  if (state.resizeHandler) {
-    window.removeEventListener('resize', state.resizeHandler);
-    state.resizeHandler = null;
+  if (state.resizeObserver) {
+    state.resizeObserver.disconnect();
+    state.resizeObserver = null;
+  }
+  if (state.resizeRaf) {
+    cancelAnimationFrame(state.resizeRaf);
+    state.resizeRaf = 0;
   }
   if (state.ctx && state.canvas) {
     state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
