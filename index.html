@@ -575,22 +575,22 @@
         var main = document.querySelector('script[data-main]');
         console.log('[injector] Main script found:', !!main, main ? main.getAttribute('src') : 'none');
         
-        var prefix = 'js/'; // default if we can't detect
+        var prefix = 'src/legacy/'; // default if we can't detect
         if (main && main.getAttribute('src')) {
-          // "js/main.js" -> "js/"
-          // "../js/main.js?x" -> "../js/"
-          // "../../js/main.js" -> "../../js/"
-          prefix = main.getAttribute('src').replace(/main\.js(\?.*)?$/, '');
+          // "src/legacy/main-legacy.js" -> "src/legacy/"
+          // "../src/legacy/main-legacy.js?x" -> "../src/legacy/"
+          // "../../src/legacy/main-legacy.js" -> "../../src/legacy/"
+          prefix = main.getAttribute('src').replace(/main-legacy\.js(\?.*)?$/, '');
         }
         
         console.log('[injector] Using prefix:', prefix);
 
         var s = document.createElement('script');
         s.src = prefix + 'quotes.js';
-        s.async = false;                   // ensure window.quotesData exists before main.js runs
+        s.async = false;                   // ensure window.quotesData exists before main-legacy.js runs
         console.log('[injector] Loading script:', s.src);
         
-        // 👉 Expose a promise so main.js can wait for quotes.js
+        // 👉 Expose a promise so main-legacy.js can wait for quotes.js
         window.__QUOTES_JS_PROMISE = new Promise(function(resolve) {
           s.onload = function() { 
             console.log('[injector] quotes.js loaded successfully'); 
@@ -605,14 +605,14 @@
         document.head.appendChild(s);
         console.log('[injector] Script appended to head, promise exposed');
 
-        // Note: main.js will set the actual source flag accurately
+        // Note: main-legacy.js will set the actual source flag accurately
       })();
     </script>
     
     <!-- Enhanced diagnostic script for file protocol debugging -->
     <script>
       if (location.protocol === 'file:') {
-        // Wait for main.js to load and create comprehensive diagnostic
+        // Wait for main-legacy.js to load and create comprehensive diagnostic
         setTimeout(function() {
           console.log('\n=== ENHANCED FILE PROTOCOL DIAGNOSTICS ===');
           console.log('Protocol:', location.protocol);
@@ -650,7 +650,7 @@
       }
     </script>
     
-    <script data-main defer src="js/main.js"></script>
+    <script data-main defer src="src/legacy/main-legacy.js"></script>
 
     <!-- Fallback for browsers without script support -->
     <noscript>
