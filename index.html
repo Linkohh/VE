@@ -571,15 +571,10 @@
         
         console.log('[injector] File protocol detected, loading quotes.js...');
 
-        var quotesPath = new URL('js/quotes.js', location.href).href;
-        console.log('[injector] Loading quotes from:', quotesPath);
 
-        var s = document.createElement('script');
-        s.src = quotesPath;
-        s.async = false;                   // ensure window.quotesData exists before main.js runs
         console.log('[injector] Loading script:', s.src);
         
-        // 👉 Expose a promise so main.js can wait for quotes.js
+        // 👉 Expose a promise so main-legacy.js can wait for quotes.js
         window.__QUOTES_JS_PROMISE = new Promise(function(resolve) {
           s.onload = function() { 
             console.log('[injector] quotes.js loaded successfully'); 
@@ -601,7 +596,7 @@
     <!-- Enhanced diagnostic script for file protocol debugging -->
     <script>
       if (location.protocol === 'file:') {
-        // Wait for main.js to load and create comprehensive diagnostic
+        // Wait for main-legacy.js to load and create comprehensive diagnostic
         setTimeout(function() {
           console.log('\n=== ENHANCED FILE PROTOCOL DIAGNOSTICS ===');
           console.log('Protocol:', location.protocol);
@@ -639,8 +634,6 @@
       }
     </script>
     
-    <script type="module" data-main src="/src/legacy/main-legacy.js"></script>
-    <script type="module" src="/src/main.ts"></script>
 
     <!-- Fallback for browsers without script support -->
     <noscript>
