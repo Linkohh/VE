@@ -10,6 +10,8 @@ let rafId = 0;
 let cfg: MatrixConfig;
 let active: Column[] = [];
 let pool: HTMLElement[] = [];
+let resizeObserver: ResizeObserver | null = null;
+let resizeRaf = 0;
 
 function createElement(): HTMLElement {
   const el = pool.pop() || document.createElement('div');
@@ -87,15 +89,16 @@ function recycle(col: Column, now: number): void {
   col.end = now + (delay + duration) * 1000;
 }
 
-function loop(now: number): void {
-  if (!running) return;
+function updateColumnCount(): void {
   const count = Math.floor((window.innerWidth / cfg.columnWidth) * cfg.densityMultiplier);
+  const now = performance.now();
   if (active.length < count) {
     for (let i = active.length; i < count; i++) {
       const el = createElement();
       document.body.appendChild(el);
       const col: Column = { el, end: 0 };
       active.push(col);
+      recycle(col, now);
     }
   } else if (active.length > count) {
     for (let i = active.length - 1; i >= count; i--) {
@@ -104,7 +107,10 @@ function loop(now: number): void {
       pool.push(col.el);
     }
   }
+}
 
+function loop(now: number): void {
+  if (!running) return;
   active.forEach((col) => {
     if (now >= col.end) {
       recycle(col, now);
@@ -118,12 +124,30 @@ export function startDOM(config: MatrixConfig): void {
   if (running) return;
   cfg = config;
   running = true;
+  updateColumnCount();
   rafId = requestAnimationFrame(loop);
+
+  resizeObserver = new ResizeObserver(() => {
+    if (resizeRaf) cancelAnimationFrame(resizeRaf);
+    resizeRaf = requestAnimationFrame(() => {
+      resizeRaf = 0;
+      updateColumnCount();
+    });
+  });
+  resizeObserver.observe(document.body);
 }
 
 export function stopDOM(): void {
   running = false;
   cancelAnimationFrame(rafId);
+  if (resizeObserver) {
+    resizeObserver.disconnect();
+    resizeObserver = null;
+  }
+  if (resizeRaf) {
+    cancelAnimationFrame(resizeRaf);
+    resizeRaf = 0;
+  }
   active.forEach((col) => {
     col.el.remove();
     pool.push(col.el);

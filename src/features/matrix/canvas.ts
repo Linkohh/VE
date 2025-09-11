@@ -6,7 +6,8 @@ interface CanvasState {
   drops: number[];
   rafId: number;
   lastFrame: number;
-  resizeHandler: (() => void) | null;
+  resizeObserver: ResizeObserver | null;
+  resizeRaf: number;
   running: boolean;
   config: MatrixConfig | null;
 }
@@ -17,14 +18,21 @@ const state: CanvasState = {
   drops: [],
   rafId: 0,
   lastFrame: 0,
-  resizeHandler: null,
+  resizeObserver: null,
+  resizeRaf: 0,
   running: false,
   config: null,
 };
 
+function getDpr(): number {
+  const dpr = window.devicePixelRatio || 1;
+  const isMobile = /Mobi|Android|iP(ad|hone|od)/.test(navigator.userAgent);
+  return isMobile ? Math.min(2, dpr) : dpr;
+}
+
 function resizeCanvas(): void {
   if (!state.canvas || !state.ctx || !state.config) return;
-  const dpr = window.devicePixelRatio || 1;
+  const dpr = getDpr();
   const canvas = state.canvas;
 
   // CSS size
@@ -94,19 +102,27 @@ export function startCanvas(config: MatrixConfig): void {
   resizeCanvas();
   state.rafId = requestAnimationFrame(loop);
 
-  state.resizeHandler = () => {
-    resizeCanvas();
-  };
-  window.addEventListener('resize', state.resizeHandler);
+  state.resizeObserver = new ResizeObserver(() => {
+    if (state.resizeRaf) cancelAnimationFrame(state.resizeRaf);
+    state.resizeRaf = requestAnimationFrame(() => {
+      state.resizeRaf = 0;
+      resizeCanvas();
+    });
+  });
+  state.resizeObserver.observe(document.body);
 }
 
 export function stopCanvas(): void {
   if (!state.running) return;
   state.running = false;
   cancelAnimationFrame(state.rafId);
-  if (state.resizeHandler) {
-    window.removeEventListener('resize', state.resizeHandler);
-    state.resizeHandler = null;
+  if (state.resizeObserver) {
+    state.resizeObserver.disconnect();
+    state.resizeObserver = null;
+  }
+  if (state.resizeRaf) {
+    cancelAnimationFrame(state.resizeRaf);
+    state.resizeRaf = 0;
   }
   if (state.ctx && state.canvas) {
     state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
