@@ -1,66 +1,12 @@
 // src/legacy/main-legacy.js - VibeMe Enhanced JavaScript (No Modules)
 
-// ===== Unified Quotes Loader (single source: data/quotes.json; optional inline fallback for file://) =====
-(function(){
-  async function loadQuotes() {
-    const isFile = location.protocol === 'file:';
-
-    // --- Primary Loading Strategy ---
-    if (isFile) {
-      // OFFLINE: Use quotes.js, loaded by the injector script in index.html
-      console.info('[quotes] Offline mode: waiting for quotes.js...');
-      if (window.__QUOTES_JS_PROMISE) {
-        const loaded = await window.__QUOTES_JS_PROMISE;
-        if (loaded && window.quotesData && window.quotesData.categories) {
-          window.__QUOTES_SOURCE = 'js';
-          console.info('[quotes] Success: Loaded from quotes.js');
-          return window.quotesData;
-        }
-      }
-      console.warn('[quotes] Failed to load from quotes.js promise.');
-    } else {
-      // ONLINE: Fetch from data/quotes.json
-      console.info('[quotes] Online mode: fetching data/quotes.json...');
-      try {
-        const res = await fetch('data/quotes.json', { cache: 'no-cache' });
-        if (res.ok) {
-          const data = await res.json();
-          window.__QUOTES_SOURCE = 'json';
-          console.info('[quotes] Success: Loaded from data/quotes.json');
-          return data;
-        }
-        console.warn(`[quotes] Fetch failed with status: ${res.status}`);
-      } catch (err) {
-        console.warn('[quotes] Fetch failed with error:', err);
-      }
-    }
-
-    // --- Fallback Loading Strategies ---
-
-    // 1) Inline fallback (manual JSON paste into #quotes-inline element)
-    const inline = document.getElementById('quotes-inline');
-    if (inline && inline.textContent.trim()) {
-      try {
-        const data = JSON.parse(inline.textContent);
-        if (data && data.categories) {
-            window.__QUOTES_SOURCE = 'inline';
-            console.info('[quotes] Fallback: Using inline JSON.');
-            return data;
-        }
-      } catch (e) {
-        console.error('[quotes] Fallback: Inline JSON is invalid.', e);
-      }
-    }
-
-    // 2) Final fallback if all else fails (should be rare)
-    window.__QUOTES_SOURCE = 'minimal';
-    console.error('[quotes] CRITICAL: All quote sources failed. Using minimal fallback.');
-    return { categories: {} };
-  }
-
-  // Expose a promise so app code can await quotes without coupling to loader details
-  window.VIBE_QUOTES_PROMISE = loadQuotes();
-})();
+import { QUOTES_PROMISE } from '../quotes.js';
+import {
+  loadFavorites,
+  toggleFavorite as toggleFavoriteData,
+  clearFavorites as clearFavoritesData,
+  initFavoritesPanel
+} from '../favorites.js';
 
 // ===== Global Audio Safety Net (constructor + oscillator patch) =====
 (function() {
@@ -201,7 +147,7 @@ const VibeMe = {
         timerInterval: null,
         effectsEnabled: true,
         isDarkMode: JSON.parse(localStorage.getItem('vibeme-dark-mode') || 'false'),
-        favorites: JSON.parse(localStorage.getItem('vibeme-favorites') || '[]'),
+        favorites: loadFavorites(),
         customQuotes: JSON.parse(localStorage.getItem('vibeme-custom-quotes') || '[]'),
         quoteRatings: JSON.parse(localStorage.getItem('vibeme-ratings') || '{}'),
         stats: JSON.parse(localStorage.getItem('vibeme-stats') || '{"quotesGenerated": 0, "quotesShared": 0, "dayStreak": 0, "lastVisit": null}'),
@@ -563,7 +509,7 @@ const VibeMe = {
     loadQuotes: async function() {
         try {
             // Use the unified quotes loader
-            const quotesData = await window.VIBE_QUOTES_PROMISE;
+            const quotesData = await QUOTES_PROMISE;
             const normalized = this.normalizeQuotes(quotesData);
             
             if (Array.isArray(normalized) && normalized.length > 0) {
@@ -819,26 +765,10 @@ const VibeMe = {
         const quote = this.getCurrentQuote();
         const favoriteBtn = document.getElementById('favorite-quote-btn');
         const icon = favoriteBtn ? favoriteBtn.querySelector('i') : null;
-        
-        const existingIndex = this.state.favorites.findIndex(fav => 
-            fav.text === quote.text && fav.author === quote.author
-        );
-        
-        if (existingIndex >= 0) {
-            // Remove from favorites
-            this.state.favorites.splice(existingIndex, 1);
-            if (icon) {
-                icon.classList.remove('fas');
-                icon.classList.add('far');
-            }
-            if (favoriteBtn) {
-                favoriteBtn.setAttribute('aria-pressed', 'false');
-            }
-            this.showFeedback("Removed from favorites", 'info');
-            this.playSound('click');
-        } else {
-            // Add to favorites
-            this.state.favorites.push(quote);
+
+        const isNowFavorite = toggleFavoriteData(this.state.favorites, quote);
+
+        if (isNowFavorite) {
             if (icon) {
                 icon.classList.remove('far');
                 icon.classList.add('fas');
@@ -852,9 +782,17 @@ const VibeMe = {
             this.playSound('favorite');
             this.triggerHapticFeedback('medium');
             this.createHeartParticles();
+        } else {
+            if (icon) {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+            }
+            if (favoriteBtn) {
+                favoriteBtn.setAttribute('aria-pressed', 'false');
+            }
+            this.showFeedback("Removed from favorites", 'info');
+            this.playSound('click');
         }
-        
-        this.saveFavorites();
     },
 
     // ===== SOCIAL SHARE FAN-OUT =====
@@ -1025,8 +963,7 @@ const VibeMe = {
 
     clearFavorites: function() {
         if (confirm('Are you sure you want to clear all favorites?')) {
-            this.state.favorites = [];
-            this.saveFavorites();
+            clearFavoritesData(this.state.favorites);
             this.showFeedback("Favorites cleared", 'info');
             this.playSound('click');
         }
@@ -2556,11 +2493,6 @@ const VibeMe = {
         document.body.classList.toggle('effects-disabled', !this.state.effectsEnabled);
     },
 
-    saveFavorites: function() {
-        localStorage.setItem('vibeme-favorites', JSON.stringify(this.state.favorites));
-        // Emit event for favorites panel to update
-        document.dispatchEvent(new CustomEvent('vibeme:favorites:changed'));
-    },
     updateFavoriteButton: function(quote) {
         const favoriteBtn = document.getElementById('favorite-quote-btn');
         const icon = favoriteBtn ? favoriteBtn.querySelector('i') : null;
@@ -3243,6 +3175,7 @@ const VibeMe = {
 // ---- VibeMe core extensions (non-destructive) ----
 window.VibeMe = window.VibeMe || VibeMe || {}; // use existing const if present
 export default VibeMe;
+initFavoritesPanel(VibeMe.state.favorites);
 VibeMe.kit = VibeMe.kit || {
   $: (s) => document.querySelector(s),
   $$: (s) => Array.from(document.querySelectorAll(s)),
@@ -4394,213 +4327,6 @@ document.addEventListener('DOMContentLoaded', () => {
   } else { ensureClassicSkin(); }
 })();
 
-// ===== FAVORITES (BEGIN) =====
-(function(){
-  if (window.__favoritesInit) return; // double-load guard
-  window.__favoritesInit = true;
-
-  function $(id){ return document.getElementById(id); }
-
-  // Read from app state or localStorage; also merge a few legacy keys defensively.
-  function readRaw(){
-    const merge = [];
-    const push = (val) => { if (Array.isArray(val)) merge.push(...val); };
-    push(window.VibeMe?.state?.favorites);
-    try { push(JSON.parse(localStorage.getItem('vibeme-favorites') || '[]')); } catch {}
-    try { push(JSON.parse(localStorage.getItem('favorites') || '[]')); } catch {}
-    try { push(JSON.parse(localStorage.getItem('vibemeFavorites') || '[]')); } catch {}
-    return merge;
-  }
-
-  function saveRaw(raw){
-    try { localStorage.setItem('vibeme-favorites', JSON.stringify(raw)); } catch {}
-    if (window.VibeMe?.state) window.VibeMe.state.favorites = raw;
-    refreshCount();
-  }
-
-  // Normalize items to {text, author}
-  function normalize(raw){
-    const items = (raw || []).map((it) => {
-      if (typeof it === 'string') return { text: it, author: null };
-      if (it && typeof it === 'object') {
-        const text = it.text ?? it.quote ?? it.q ?? '';
-        const author = it.author ?? it.a ?? null;
-        return { text, author };
-      }
-      return { text: String(it ?? ''), author: null };
-    }).filter(x => x.text);
-    // de-dupe by text+author
-    const seen = new Set();
-    return items.filter(x => {
-      const k = (x.text + '|' + (x.author ?? '')).toLowerCase();
-      if (seen.has(k)) return false;
-      seen.add(k);
-      return true;
-    });
-  }
-
-  // Build a stable identity key for favorites
-  function favKey(q){
-    // q is expected normalized: {text, author}
-    return ((q?.text ?? '') + '|' + (q?.author ?? '')).toLowerCase();
-  }
-
-  function escapeHTML(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-  function refreshCount(forceN){
-    const el = $('favorites-count');
-    if (!el) return;
-    if (typeof forceN === 'number') { el.textContent = forceN; return; }
-    el.textContent = normalize(readRaw()).length;
-  }
-
-  function renderList(){
-    const listEl  = $('favorites-list');
-    const emptyEl = $('favorites-empty');
-    if (!listEl) return;
-
-    const items = normalize(readRaw());
-    listEl.innerHTML = '';
-    if (!items.length){
-      if (emptyEl) emptyEl.style.display = '';
-      refreshCount(0);
-      return;
-    }
-    if (emptyEl) emptyEl.style.display = 'none';
-
-    items.forEach((q, idx) => {
-      const row = document.createElement('div');
-      row.className = 'fav-item';
-      row.innerHTML = `
-        <div class="fav-text-wrap">
-          <div class="fav-quote">"${escapeHTML(q.text)}"</div>
-          ${q.author ? `<div class="fav-author">— ${escapeHTML(q.author)}</div>` : ''}
-        </div>
-        <div class="fav-actions">
-          <button class="fav-copy" title="Copy"><i class="fas fa-copy"></i></button>
-          <button class="fav-remove" title="Remove"><i class="fas fa-trash"></i></button>
-        </div>`;
-      row.dataset.index = String(idx);
-      listEl.appendChild(row);
-    });
-
-    // Delegated actions
-    listEl.onclick = async (ev) => {
-      const btn = ev.target.closest('button');
-      if (!btn) return;
-
-      const row = ev.target.closest('.fav-item');
-      if (!row) return;
-
-      const idx = Number(row.dataset.index);
-
-      // Re-read items as the source of truth the user sees
-      const itemsNow = normalize(readRaw());
-      const target = itemsNow[idx];
-      if (!target) return;
-
-      if (btn.classList.contains('fav-copy')) {
-        // COPY: best-effort clipboard with graceful failure
-        const toCopy = target.text || '';
-        try { await navigator.clipboard?.writeText(toCopy); } catch {}
-        return;
-      }
-
-      if (btn.classList.contains('fav-remove')) {
-        // REMOVE: compute key from normalized target
-        const keyToRemove = favKey(target);
-
-        // Work against the *raw* array but compare via normalized identity
-        const raw = readRaw();
-
-        // Find first raw item whose normalized identity matches the target key
-        let removeAt = -1;
-        for (let i = 0; i < raw.length; i++) {
-          const r = raw[i];
-          // Inline normalize-lite for speed; must match normalize() logic
-          const norm = (typeof r === 'string')
-            ? { text: r, author: null }
-            : (r && typeof r === 'object')
-              ? { text: (r.text ?? r.quote ?? r.q ?? ''), author: (r.author ?? r.a ?? null) }
-              : { text: String(r ?? ''), author: null };
-
-          if (!norm.text) continue;
-          if (favKey(norm) === keyToRemove) { removeAt = i; break; }
-        }
-
-        if (removeAt >= 0) {
-          raw.splice(removeAt, 1);
-          saveRaw(raw);
-          renderList(); // re-render the list and count
-        }
-        return;
-      }
-    };
-
-    refreshCount(items.length);
-  }
-
-  // Patch localStorage.setItem so same-tab updates trigger UI refresh for our key
-  (function patchSetItem(){
-    const _set = localStorage.setItem.bind(localStorage);
-    localStorage.setItem = function(k, v){
-      const r = _set(k, v);
-      if (k === 'vibeme-favorites') {
-        refreshCount();
-        if ($('favorites-panel')?.dataset.state === 'open') renderList();
-      }
-      return r;
-    };
-  })();
-
-  function init(){
-    const toggleBtn = $('favorites-toggle');
-    const panel     = $('favorites-panel');
-    const btnClose  = $('favorites-close');
-    if (!toggleBtn || !panel || !btnClose) { requestAnimationFrame(init); return; }
-
-    const STATES = { CLOSED:'closed', OPEN:'open' };
-    let state = (localStorage.getItem('favorites:state') === 'open') ? 'open' : 'closed';
-
-    function apply(next){
-      state = next;
-      panel.dataset.state = state;
-      localStorage.setItem('favorites:state', state);
-      if (state === STATES.OPEN){
-        toggleBtn.setAttribute('aria-label','Close favorites');
-        toggleBtn.setAttribute('title','Close favorites');
-        toggleBtn.setAttribute('aria-expanded','true');
-        panel.setAttribute('aria-modal','true');
-        renderList();
-      } else {
-        toggleBtn.setAttribute('aria-label','Open favorites');
-        toggleBtn.setAttribute('title','Open favorites');
-        toggleBtn.setAttribute('aria-expanded','false');
-        panel.setAttribute('aria-modal','false');
-      }
-    }
-
-    apply(state);
-
-    // Toggle open/close
-    toggleBtn.addEventListener('click', (e) => { e.stopPropagation(); apply(state === 'open' ? 'closed' : 'open'); });
-    btnClose.addEventListener('click', (e) => { e.stopPropagation(); apply('closed'); });
-
-    // Contain clicks; outside/esc close when open
-    panel.addEventListener('click', (e) => e.stopPropagation());
-    document.addEventListener('click', (e) => {
-      const outside = !panel.contains(e.target) && e.target !== toggleBtn;
-      if (outside && state === 'open') apply('closed');
-    });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && state === 'open') apply('closed'); });
-
-    // Cross-tab sync
-    window.addEventListener('storage', (ev) => { if (ev.key === 'vibeme-favorites') { refreshCount(); if (state === 'open') renderList(); } });
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
-})();
 // ===== FAVORITES (END) =====
 
 
@@ -4871,7 +4597,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.readyState === 'loading'){
       await new Promise(r => document.addEventListener('DOMContentLoaded', r, {once:true}));
     }
-    const data = await (window.VIBE_QUOTES_PROMISE || Promise.resolve({categories:{}}));
+    const data = await (QUOTES_PROMISE || Promise.resolve({categories:{}}));
     if (window.VibeMe) {
       VibeMe.quotesByCategory = data.categories || {};
       VibeMe.quotesFlat = flatten(VibeMe.quotesByCategory);
