@@ -571,22 +571,11 @@
         
         console.log('[injector] File protocol detected, loading quotes.js...');
 
-        // 🔒 More robust: target the main script explicitly
-        var main = document.querySelector('script[data-main]');
-        console.log('[injector] Main script found:', !!main, main ? main.getAttribute('src') : 'none');
-        
-        var prefix = 'js/'; // default if we can't detect
-        if (main && main.getAttribute('src')) {
-          // "js/main.js" -> "js/"
-          // "../js/main.js?x" -> "../js/"
-          // "../../js/main.js" -> "../../js/"
-          prefix = main.getAttribute('src').replace(/main\.js(\?.*)?$/, '');
-        }
-        
-        console.log('[injector] Using prefix:', prefix);
+        var quotesPath = new URL('js/quotes.js', location.href).href;
+        console.log('[injector] Loading quotes from:', quotesPath);
 
         var s = document.createElement('script');
-        s.src = prefix + 'quotes.js';
+        s.src = quotesPath;
         s.async = false;                   // ensure window.quotesData exists before main.js runs
         console.log('[injector] Loading script:', s.src);
         
@@ -605,7 +594,7 @@
         document.head.appendChild(s);
         console.log('[injector] Script appended to head, promise exposed');
 
-        // Note: main.js will set the actual source flag accurately
+        // Note: main-legacy.js will set the actual source flag accurately
       })();
     </script>
     
@@ -650,7 +639,8 @@
       }
     </script>
     
-    <script data-main defer src="js/main.js"></script>
+    <script type="module" data-main src="/src/legacy/main-legacy.js"></script>
+    <script type="module" src="/src/main.ts"></script>
 
     <!-- Fallback for browsers without script support -->
     <noscript>
