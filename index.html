@@ -574,15 +574,15 @@
         // 🔒 More robust: target the main script explicitly
         var main = document.querySelector('script[data-main]');
         console.log('[injector] Main script found:', !!main, main ? main.getAttribute('src') : 'none');
-        
-        var prefix = 'js/'; // default if we can't detect
+
+        // Determine path to quotes.js relative to the main script.
+        // Supports both main.js and main.ts while defaulting to "js/".
+        var prefix = 'js/';
         if (main && main.getAttribute('src')) {
-          // "js/main.js" -> "js/"
-          // "../js/main.js?x" -> "../js/"
-          // "../../js/main.js" -> "../../js/"
-          prefix = main.getAttribute('src').replace(/main\.js(\?.*)?$/, '');
+          var src = main.getAttribute('src').replace(/main\.(?:js|ts)(\?.*)?$/, '');
+          prefix = /js\/$/.test(src) ? src : 'js/';
         }
-        
+
         console.log('[injector] Using prefix:', prefix);
 
         var s = document.createElement('script');
