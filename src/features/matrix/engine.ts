@@ -1,8 +1,8 @@
 import { bus, EVENTS } from '../../lib/bus';
 import { store } from '../../lib/store';
 import { MatrixConfig, RenderMode } from './config';
-import { startDOM, stopDOM } from './dom';
-import { startCanvas, stopCanvas } from './canvas';
+import { startDOM, stopDOM, teardownDOM } from './dom';
+import { startCanvas, stopCanvas, teardownCanvas } from './canvas';
 
 let currentMode: RenderMode | null = null;
 
@@ -38,9 +38,9 @@ export function updateMatrix(): void {
 export function teardownMatrix(): void {
   bus.off(EVENTS.THEME_CHANGED, updateMatrix);
   if (currentMode === RenderMode.CANVAS) {
-    stopCanvas();
+    teardownCanvas();
   } else if (currentMode !== null) {
-    stopDOM();
+    teardownDOM();
   }
   currentMode = null;
 }

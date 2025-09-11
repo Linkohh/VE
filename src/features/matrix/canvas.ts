@@ -118,5 +118,11 @@ export function stopCanvas(): void {
   state.canvas = null;
   state.ctx = null;
   state.config = null;
+  state.rafId = 0;
+  state.lastFrame = 0;
+}
+
+export function teardownCanvas(): void {
+  stopCanvas();
 }
 
