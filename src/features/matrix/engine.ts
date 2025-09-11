@@ -3,8 +3,13 @@ import { store } from '../../lib/store';
 import { MatrixConfig, RenderMode } from './config';
 import { startDOM, stopDOM } from './dom';
 import { startCanvas, stopCanvas } from './canvas';
+import { applyMatrixColors } from './colors';
 
 let currentMode: RenderMode | null = null;
+
+function refreshColors(): void {
+  applyMatrixColors(getConfig());
+}
 
 function getConfig(): MatrixConfig {
   return store.get('matrix');
@@ -27,16 +32,20 @@ function apply(config: MatrixConfig): void {
 }
 
 export function initMatrix(): void {
-  apply(getConfig());
-  bus.on(EVENTS.THEME_CHANGED, updateMatrix);
+  const config = getConfig();
+  applyMatrixColors(config);
+  apply(config);
+  bus.on(EVENTS.THEME_CHANGED, refreshColors);
 }
 
 export function updateMatrix(): void {
-  apply(getConfig());
+  const config = getConfig();
+  applyMatrixColors(config);
+  apply(config);
 }
 
 export function teardownMatrix(): void {
-  bus.off(EVENTS.THEME_CHANGED, updateMatrix);
+  bus.off(EVENTS.THEME_CHANGED, refreshColors);
   if (currentMode === RenderMode.CANVAS) {
     stopCanvas();
   } else if (currentMode !== null) {
