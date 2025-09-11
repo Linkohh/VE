@@ -47,7 +47,7 @@ export function applyMatrixColors(config: MatrixConfig, theme?: Theme): void {
   if (config.renderMode === RenderMode.DOM || config.renderMode === RenderMode.HYBRID) {
     const columns = document.querySelectorAll<HTMLElement>('.binary-column');
     columns.forEach((column, index) => {
-      const color = colors[index % colors.length];
+      const color = config.colors[index % config.colors.length];
       column.style.color = color;
       column.style.textShadow = `0 0 5px ${color}`;
     });

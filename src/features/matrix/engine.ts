@@ -1,8 +1,7 @@
 import { bus, EVENTS } from '../../lib/bus';
 import { store } from '../../lib/store';
 import { MatrixConfig, RenderMode } from './config';
-import { startDOM, stopDOM } from './dom';
-import { startCanvas, stopCanvas } from './canvas';
+ 
 
 interface MatrixStats {
   fps: number;
@@ -12,14 +11,7 @@ interface MatrixStats {
 }
 
 let currentMode: RenderMode | null = null;
-const stats: MatrixStats = { fps: 0, avgFrameMs: 0, density: 0, drops: 0 };
-let statsRaf = 0;
-let lastStatsTs = 0;
-const frameSamples: number[] = [];
-let overlayEl: HTMLDivElement | null = null;
-
-const env = (globalThis as any).process?.env ?? {};
-const SHOW_OVERLAY = env.NODE_ENV !== 'production' && !!env.MATRIX_STATS;
+ 
 
 function getConfig(): MatrixConfig {
   return store.get('matrix');
@@ -100,21 +92,11 @@ function apply(config: MatrixConfig): void {
 }
 
 export function initMatrix(): void {
-  apply(getConfig());
-  bus.on(EVENTS.THEME_CHANGED, updateMatrix);
-  startStats();
-}
-
-export function updateMatrix(): void {
-  apply(getConfig());
-}
-
-export function teardownMatrix(): void {
-  bus.off(EVENTS.THEME_CHANGED, updateMatrix);
+ 
   if (currentMode === RenderMode.CANVAS) {
-    stopCanvas();
+    teardownCanvas();
   } else if (currentMode !== null) {
-    stopDOM();
+    teardownDOM();
   }
   currentMode = null;
   stopStats();

@@ -2,14 +2,17 @@ import { MatrixConfig } from './config';
 
 interface Column {
   el: HTMLElement;
-  end: number;
+  y: number;
+  speed: number;
+  start: number;
 }
 
 let running = false;
 let rafId = 0;
-let cfg: MatrixConfig;
+let cfg: MatrixConfig | undefined;
 let active: Column[] = [];
 let pool: HTMLElement[] = [];
+ 
 
 function createElement(): HTMLElement {
   const el = pool.pop() || document.createElement('div');
@@ -32,24 +35,26 @@ function interpolateColor(c1: string, c2: string, t: number): string {
 }
 
 function applyColors(el: HTMLElement): void {
-  if (!cfg.colors || cfg.colors.length === 0) return;
+  const cfgRef = cfg;
+  if (!cfgRef?.colors || cfgRef.colors.length === 0) return;
   const rect = el.getBoundingClientRect();
   const x = Math.min(1, Math.max(0, rect.left / Math.max(1, window.innerWidth)));
-  const maxIdx = cfg.colors.length - 1;
+  const maxIdx = cfgRef.colors.length - 1;
   const pos = x * maxIdx;
   const base = Math.floor(pos);
   const t = pos - base;
-  const c1 = cfg.colors[base];
-  const c2 = cfg.colors[Math.min(base + 1, maxIdx)];
+  const c1 = cfgRef.colors[base];
+  const c2 = cfgRef.colors[Math.min(base + 1, maxIdx)];
   const mixed = interpolateColor(c1, c2, t);
   el.style.color = mixed;
   el.style.textShadow = `0 0 5px ${mixed}`;
 }
 
 function generateContent(): string {
-  const chars = cfg.characters;
-  const maxLength = cfg.trailLength;
-  const fadeRate = cfg.trailFadeRate;
+  const cfgRef = cfg!;
+  const chars = cfgRef.characters;
+  const maxLength = cfgRef.trailLength;
+  const fadeRate = cfgRef.trailFadeRate;
   const length = Math.floor(Math.random() * maxLength) + Math.floor(maxLength * 0.3);
   let content = '';
   for (let i = 0; i < length; i++) {
@@ -76,26 +81,17 @@ function recycle(col: Column, now: number): void {
   col.el.style.left = `${Math.random() * 100}%`;
   col.el.innerHTML = generateContent();
   applyColors(col.el);
-  const duration = 12 + Math.random() * 8;
-  const delay = Math.random() * 4;
-  col.el.dataset.startTime = String(now + delay * 1000);
-  col.el.dataset.duration = String(duration * 1000);
-  col.el.style.animation = 'none';
-  requestAnimationFrame(() => {
-    col.el.style.animation = `fall ${duration}s linear ${delay}s`;
-  });
-  col.end = now + (delay + duration) * 1000;
+ 
+  }
 }
-
-function loop(now: number): void {
-  if (!running) return;
-  const count = Math.floor((window.innerWidth / cfg.columnWidth) * cfg.densityMultiplier);
+ 
   if (active.length < count) {
     for (let i = active.length; i < count; i++) {
       const el = createElement();
       document.body.appendChild(el);
-      const col: Column = { el, end: 0 };
+      const col: Column = { el, y: 0, speed: 0, start: now };
       active.push(col);
+      recycle(col, now);
     }
   } else if (active.length > count) {
     for (let i = active.length - 1; i >= count; i--) {
@@ -104,30 +100,47 @@ function loop(now: number): void {
       pool.push(col.el);
     }
   }
+}
 
+function loop(now: number): void {
+  if (!running) return;
   active.forEach((col) => {
-    if (now >= col.end) {
+    if (now < col.start) return;
+    col.y += col.speed * dt;
+    if (col.y > window.innerHeight) {
       recycle(col, now);
+    } else {
+      col.el.style.transform = `translate3d(0, ${col.y}px, 0)`;
+      const opacity = 1 - col.y / window.innerHeight;
+      col.el.style.opacity = Math.max(0, Math.min(1, opacity)).toFixed(3);
     }
   });
-
-  rafId = requestAnimationFrame(loop);
+ 
 }
 
 export function startDOM(config: MatrixConfig): void {
   if (running) return;
   cfg = config;
   running = true;
-  rafId = requestAnimationFrame(loop);
+ 
 }
 
 export function stopDOM(): void {
   running = false;
   cancelAnimationFrame(rafId);
+ 
   active.forEach((col) => {
     col.el.remove();
     pool.push(col.el);
   });
   active = [];
+  rafId = 0;
+}
+
+export function teardownDOM(): void {
+  stopDOM();
+  pool.forEach((el) => el.remove());
+  pool = [];
+  cfg = undefined;
 }
 
