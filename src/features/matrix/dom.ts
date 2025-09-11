@@ -12,7 +12,7 @@ let rafId = 0;
 let cfg: MatrixConfig;
 let active: Column[] = [];
 let pool: HTMLElement[] = [];
-let last = 0;
+ 
 
 function createElement(): HTMLElement {
   const el = pool.pop() || document.createElement('div');
@@ -89,18 +89,24 @@ function recycle(col: Column, now: number): void {
   col.el.style.opacity = '0';
 }
 
+function scheduleNext(): void {
+  if (!running) return;
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+    timeoutId = 0;
+  }
+  if (dropInterval > 0) {
+    timeoutId = window.setTimeout(() => {
+      rafId = requestAnimationFrame(loop);
+    }, dropInterval);
+  } else {
+    rafId = requestAnimationFrame(loop);
+  }
+}
+
 function loop(now: number): void {
   if (!running) return;
-  const minFrame = 1000 / (cfg.canvasConfig.maxFPS || 60);
-  if (!last) last = now;
-  const dt = now - last;
-  if (dt < minFrame) {
-    rafId = requestAnimationFrame(loop);
-    return;
-  }
-  last = now;
-
-  const count = Math.floor((window.innerWidth / cfg.columnWidth) * cfg.densityMultiplier);
+ 
   if (active.length < count) {
     for (let i = active.length; i < count; i++) {
       const el = createElement();
@@ -128,21 +134,20 @@ function loop(now: number): void {
       col.el.style.opacity = Math.max(0, Math.min(1, opacity)).toFixed(3);
     }
   });
-
-  rafId = requestAnimationFrame(loop);
+  scheduleNext();
 }
 
 export function startDOM(config: MatrixConfig): void {
   if (running) return;
   cfg = config;
   running = true;
-  last = 0;
-  rafId = requestAnimationFrame(loop);
+ 
 }
 
 export function stopDOM(): void {
   running = false;
   cancelAnimationFrame(rafId);
+  clearTimeout(timeoutId);
   active.forEach((col) => {
     col.el.remove();
     pool.push(col.el);
