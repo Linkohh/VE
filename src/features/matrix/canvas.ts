@@ -72,24 +72,7 @@ function resizeCanvas(): void {
   state.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
   const cfg = state.config.canvasConfig;
-  const columns = Math.floor((canvas.width / cfg.columnSpacing) * state.config.densityMultiplier);
-  const drops = state.drops;
-  const pool = state.pool;
-
-  if (drops.length > columns) {
-    while (drops.length > columns) {
-      pool.push(drops.pop()!);
-    }
-  } else {
-    for (let i = drops.length; i < columns; i++) {
-      const drop = pool.pop() || createDrop(i * cfg.columnSpacing);
-      resetDrop(drop, i * cfg.columnSpacing);
-      drops.push(drop);
-    }
-  }
-  for (let i = 0; i < drops.length; i++) {
-    drops[i].x = i * cfg.columnSpacing;
-  }
+ 
 }
 
 function draw(): void {
@@ -171,18 +154,25 @@ export function startCanvas(config: MatrixConfig): void {
   state.canvas = canvas;
   state.ctx = ctx;
   state.config = config;
-  state.running = true;
-  state.avgFrameTime = 0;
-  state.baseDensityMultiplier = config.densityMultiplier;
-  state.baseMaxFPS = config.canvasConfig.maxFPS;
+ 
   canvas.style.display = 'block';
 
   resizeCanvas();
-  state.rafId = requestAnimationFrame(loop);
 
-  state.resizeHandler = () => {
-    resizeCanvas();
-  };
+  state.running = true;
+  if (config.reducedMotion) {
+    draw();
+    state.resizeHandler = () => {
+      resizeCanvas();
+      draw();
+    };
+  } else {
+    state.rafId = requestAnimationFrame(loop);
+    state.resizeHandler = () => {
+      resizeCanvas();
+    };
+  }
+
   window.addEventListener('resize', state.resizeHandler);
 }
 

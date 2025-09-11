@@ -79,28 +79,7 @@ function recycle(col: Column, now: number): void {
   col.el.style.left = `${Math.random() * 100}%`;
   col.el.innerHTML = generateContent();
   applyColors(col.el);
-  const duration = 12 + Math.random() * 8; // seconds
-  const delay = Math.random() * 4; // seconds
-  col.y = -col.el.offsetHeight;
-  col.start = now + delay * 1000;
-  const distance = window.innerHeight + col.el.offsetHeight;
-  col.speed = distance / (duration * 1000); // px per ms
-  col.el.style.transform = `translate3d(0, ${col.y}px, 0)`;
-  col.el.style.opacity = '0';
-}
-
-function scheduleNext(): void {
-  if (!running) return;
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-    timeoutId = 0;
-  }
-  if (dropInterval > 0) {
-    timeoutId = window.setTimeout(() => {
-      rafId = requestAnimationFrame(loop);
-    }, dropInterval);
-  } else {
-    rafId = requestAnimationFrame(loop);
+ 
   }
 }
 
@@ -134,7 +113,7 @@ function loop(now: number): void {
       col.el.style.opacity = Math.max(0, Math.min(1, opacity)).toFixed(3);
     }
   });
-  scheduleNext();
+ 
 }
 
 export function startDOM(config: MatrixConfig): void {
