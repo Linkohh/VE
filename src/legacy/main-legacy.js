@@ -1,4 +1,4 @@
-// js/main.js - VibeMe Enhanced JavaScript (No Modules)
+// src/legacy/main-legacy.js - VibeMe Enhanced JavaScript (No Modules)
 
 // ===== Unified Quotes Loader (single source: data/quotes.json; optional inline fallback for file://) =====
 (function(){
@@ -3242,6 +3242,7 @@ const VibeMe = {
 
 // ---- VibeMe core extensions (non-destructive) ----
 window.VibeMe = window.VibeMe || VibeMe || {}; // use existing const if present
+export default VibeMe;
 VibeMe.kit = VibeMe.kit || {
   $: (s) => document.querySelector(s),
   $$: (s) => Array.from(document.querySelectorAll(s)),

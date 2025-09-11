@@ -571,26 +571,10 @@
         
         console.log('[injector] File protocol detected, loading quotes.js...');
 
-        // 🔒 More robust: target the main script explicitly
-        var main = document.querySelector('script[data-main]');
-        console.log('[injector] Main script found:', !!main, main ? main.getAttribute('src') : 'none');
 
-        // Determine path to quotes.js relative to the main script.
-        // Supports both main.js and main.ts while defaulting to "js/".
-        var prefix = 'js/';
-        if (main && main.getAttribute('src')) {
-          var src = main.getAttribute('src').replace(/main\.(?:js|ts)(\?.*)?$/, '');
-          prefix = /js\/$/.test(src) ? src : 'js/';
-        }
-
-        console.log('[injector] Using prefix:', prefix);
-
-        var s = document.createElement('script');
-        s.src = prefix + 'quotes.js';
-        s.async = false;                   // ensure window.quotesData exists before main.js runs
         console.log('[injector] Loading script:', s.src);
         
-        // 👉 Expose a promise so main.js can wait for quotes.js
+        // 👉 Expose a promise so main-legacy.js can wait for quotes.js
         window.__QUOTES_JS_PROMISE = new Promise(function(resolve) {
           s.onload = function() { 
             console.log('[injector] quotes.js loaded successfully'); 
@@ -605,14 +589,14 @@
         document.head.appendChild(s);
         console.log('[injector] Script appended to head, promise exposed');
 
-        // Note: main.js will set the actual source flag accurately
+        // Note: main-legacy.js will set the actual source flag accurately
       })();
     </script>
     
     <!-- Enhanced diagnostic script for file protocol debugging -->
     <script>
       if (location.protocol === 'file:') {
-        // Wait for main.js to load and create comprehensive diagnostic
+        // Wait for main-legacy.js to load and create comprehensive diagnostic
         setTimeout(function() {
           console.log('\n=== ENHANCED FILE PROTOCOL DIAGNOSTICS ===');
           console.log('Protocol:', location.protocol);
@@ -650,7 +634,6 @@
       }
     </script>
     
-    <script data-main defer src="js/main.js"></script>
 
     <!-- Fallback for browsers without script support -->
     <noscript>
