@@ -10,6 +10,12 @@ let rafId = 0;
 let cfg: MatrixConfig;
 let active: Column[] = [];
 let pool: HTMLElement[] = [];
+let lastTime = 0;
+let avgFrameTime = 16;
+let currentDensity = 1;
+let targetDensity = 1;
+let dropInterval = 0;
+let timeoutId = 0;
 
 function createElement(): HTMLElement {
   const el = pool.pop() || document.createElement('div');
@@ -87,9 +93,34 @@ function recycle(col: Column, now: number): void {
   col.end = now + (delay + duration) * 1000;
 }
 
+function scheduleNext(): void {
+  if (!running) return;
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+    timeoutId = 0;
+  }
+  if (dropInterval > 0) {
+    timeoutId = window.setTimeout(() => {
+      rafId = requestAnimationFrame(loop);
+    }, dropInterval);
+  } else {
+    rafId = requestAnimationFrame(loop);
+  }
+}
+
 function loop(now: number): void {
   if (!running) return;
-  const count = Math.floor((window.innerWidth / cfg.columnWidth) * cfg.densityMultiplier);
+  const delta = lastTime ? now - lastTime : 16;
+  lastTime = now;
+  avgFrameTime = avgFrameTime * 0.9 + delta * 0.1;
+  if (avgFrameTime > 22) {
+    currentDensity = Math.max(targetDensity * 0.5, currentDensity * 0.9);
+    dropInterval = Math.min(200, dropInterval + 5);
+  } else if (avgFrameTime < 18) {
+    currentDensity = Math.min(targetDensity, currentDensity + (targetDensity - currentDensity) * 0.02);
+    dropInterval = Math.max(0, dropInterval - 5);
+  }
+  const count = Math.floor((window.innerWidth / cfg.columnWidth) * currentDensity);
   if (active.length < count) {
     for (let i = active.length; i < count; i++) {
       const el = createElement();
@@ -110,20 +141,25 @@ function loop(now: number): void {
       recycle(col, now);
     }
   });
-
-  rafId = requestAnimationFrame(loop);
+  scheduleNext();
 }
 
 export function startDOM(config: MatrixConfig): void {
   if (running) return;
   cfg = config;
   running = true;
-  rafId = requestAnimationFrame(loop);
+  targetDensity = cfg.densityMultiplier;
+  currentDensity = targetDensity;
+  lastTime = 0;
+  avgFrameTime = 16;
+  dropInterval = 0;
+  scheduleNext();
 }
 
 export function stopDOM(): void {
   running = false;
   cancelAnimationFrame(rafId);
+  clearTimeout(timeoutId);
   active.forEach((col) => {
     col.el.remove();
     pool.push(col.el);
