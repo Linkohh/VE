@@ -28,6 +28,7 @@ export interface MatrixConfig {
   trailLength: number;
   trailFadeRate: number;
   characters: string[];
+  reducedMotion: boolean;
   canvasConfig: CanvasConfig;
 }
 
@@ -43,6 +44,7 @@ export const DEFAULTS: MatrixConfig = {
   trailLength: 20,
   trailFadeRate: 0.05,
   characters: ['0', '1', '|', '/', '\', '-', '+', '*', '#', '@', '&', '%', '$', '〃', '¦', '｜'],
+  reducedMotion: false,
   canvasConfig: {
     fontSize: 28,
     columnSpacing: 10,

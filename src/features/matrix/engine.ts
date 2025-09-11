@@ -1,10 +1,18 @@
 import { bus, EVENTS } from '../../lib/bus';
 import { store } from '../../lib/store';
 import { MatrixConfig, RenderMode } from './config';
-import { startDOM, stopDOM, teardownDOM } from './dom';
-import { startCanvas, stopCanvas, teardownCanvas } from './canvas';
+ 
 
 let currentMode: RenderMode | null = null;
+let motionQuery: MediaQueryList | null = null;
+
+function handleMotionChange(e: MediaQueryListEvent): void {
+  updateMatrix({ reducedMotion: e.matches });
+}
+
+function refreshColors(): void {
+  applyMatrixColors(getConfig());
+}
 
 function getConfig(): MatrixConfig {
   return store.get('matrix');
@@ -27,16 +35,7 @@ function apply(config: MatrixConfig): void {
 }
 
 export function initMatrix(): void {
-  apply(getConfig());
-  bus.on(EVENTS.THEME_CHANGED, updateMatrix);
-}
-
-export function updateMatrix(): void {
-  apply(getConfig());
-}
-
-export function teardownMatrix(): void {
-  bus.off(EVENTS.THEME_CHANGED, updateMatrix);
+ 
   if (currentMode === RenderMode.CANVAS) {
     teardownCanvas();
   } else if (currentMode !== null) {
