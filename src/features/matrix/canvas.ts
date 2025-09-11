@@ -171,6 +171,6 @@ export function stopCanvas(): void {
   state.canvas = null;
   state.ctx = null;
   state.config = null;
-  state.avgFrameTime = 0;
+ 
 }
 

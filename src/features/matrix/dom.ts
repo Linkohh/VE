@@ -9,7 +9,7 @@ interface Column {
 
 let running = false;
 let rafId = 0;
-let cfg: MatrixConfig;
+let cfg: MatrixConfig | undefined;
 let active: Column[] = [];
 let pool: HTMLElement[] = [];
  
@@ -35,24 +35,26 @@ function interpolateColor(c1: string, c2: string, t: number): string {
 }
 
 function applyColors(el: HTMLElement): void {
-  if (!cfg.colors || cfg.colors.length === 0) return;
+  const cfgRef = cfg;
+  if (!cfgRef?.colors || cfgRef.colors.length === 0) return;
   const rect = el.getBoundingClientRect();
   const x = Math.min(1, Math.max(0, rect.left / Math.max(1, window.innerWidth)));
-  const maxIdx = cfg.colors.length - 1;
+  const maxIdx = cfgRef.colors.length - 1;
   const pos = x * maxIdx;
   const base = Math.floor(pos);
   const t = pos - base;
-  const c1 = cfg.colors[base];
-  const c2 = cfg.colors[Math.min(base + 1, maxIdx)];
+  const c1 = cfgRef.colors[base];
+  const c2 = cfgRef.colors[Math.min(base + 1, maxIdx)];
   const mixed = interpolateColor(c1, c2, t);
   el.style.color = mixed;
   el.style.textShadow = `0 0 5px ${mixed}`;
 }
 
 function generateContent(): string {
-  const chars = cfg.characters;
-  const maxLength = cfg.trailLength;
-  const fadeRate = cfg.trailFadeRate;
+  const cfgRef = cfg!;
+  const chars = cfgRef.characters;
+  const maxLength = cfgRef.trailLength;
+  const fadeRate = cfgRef.trailFadeRate;
   const length = Math.floor(Math.random() * maxLength) + Math.floor(maxLength * 0.3);
   let content = '';
   for (let i = 0; i < length; i++) {
@@ -132,5 +134,13 @@ export function stopDOM(): void {
     pool.push(col.el);
   });
   active = [];
+  rafId = 0;
+}
+
+export function teardownDOM(): void {
+  stopDOM();
+  pool.forEach((el) => el.remove());
+  pool = [];
+  cfg = undefined;
 }
 

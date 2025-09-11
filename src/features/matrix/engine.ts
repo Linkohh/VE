@@ -1,9 +1,7 @@
 import { bus, EVENTS } from '../../lib/bus';
 import { store } from '../../lib/store';
 import { MatrixConfig, RenderMode } from './config';
-import { startDOM, stopDOM } from './dom';
-import { startCanvas, stopCanvas } from './canvas';
-import { applyMatrixColors } from './colors';
+ 
 
 let currentMode: RenderMode | null = null;
 let motionQuery: MediaQueryList | null = null;
@@ -39,9 +37,9 @@ function apply(config: MatrixConfig): void {
 export function initMatrix(): void {
  
   if (currentMode === RenderMode.CANVAS) {
-    stopCanvas();
+    teardownCanvas();
   } else if (currentMode !== null) {
-    stopDOM();
+    teardownDOM();
   }
   currentMode = null;
 }
