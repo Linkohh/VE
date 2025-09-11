@@ -76,20 +76,26 @@ function recycle(col: Column, now: number): void {
   col.el.style.left = `${Math.random() * 100}%`;
   col.el.innerHTML = generateContent();
   applyColors(col.el);
-  const duration = 12 + Math.random() * 8;
-  const delay = Math.random() * 4;
-  col.el.dataset.startTime = String(now + delay * 1000);
-  col.el.dataset.duration = String(duration * 1000);
-  col.el.style.animation = 'none';
-  requestAnimationFrame(() => {
-    col.el.style.animation = `fall ${duration}s linear ${delay}s`;
-  });
-  col.end = now + (delay + duration) * 1000;
+  if (!cfg.reducedMotion) {
+    const duration = 12 + Math.random() * 8;
+    const delay = Math.random() * 4;
+    col.el.dataset.startTime = String(now + delay * 1000);
+    col.el.dataset.duration = String(duration * 1000);
+    col.el.style.animation = 'none';
+    requestAnimationFrame(() => {
+      col.el.style.animation = `fall ${duration}s linear ${delay}s`;
+    });
+    col.end = now + (delay + duration) * 1000;
+  } else {
+    col.el.style.animation = 'none';
+    col.end = Infinity;
+  }
 }
 
 function loop(now: number): void {
   if (!running) return;
-  const count = Math.floor((window.innerWidth / cfg.columnWidth) * cfg.densityMultiplier);
+  const reduction = cfg.reducedMotion ? 0.25 : 1;
+  const count = Math.floor((window.innerWidth / cfg.columnWidth) * cfg.densityMultiplier * reduction);
   if (active.length < count) {
     for (let i = active.length; i < count; i++) {
       const el = createElement();
@@ -111,14 +117,22 @@ function loop(now: number): void {
     }
   });
 
-  rafId = requestAnimationFrame(loop);
+  if (!cfg.reducedMotion) {
+    rafId = requestAnimationFrame(loop);
+  } else {
+    running = false;
+  }
 }
 
 export function startDOM(config: MatrixConfig): void {
   if (running) return;
   cfg = config;
   running = true;
-  rafId = requestAnimationFrame(loop);
+  if (cfg.reducedMotion) {
+    loop(performance.now());
+  } else {
+    rafId = requestAnimationFrame(loop);
+  }
 }
 
 export function stopDOM(): void {

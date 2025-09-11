@@ -37,7 +37,8 @@ function resizeCanvas(): void {
   state.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
   const cfg = state.config.canvasConfig;
-  const columns = Math.floor((canvas.width / cfg.columnSpacing) * state.config.densityMultiplier);
+  const reduction = state.config.reducedMotion ? 0.25 : 1;
+  const columns = Math.floor((canvas.width / cfg.columnSpacing) * state.config.densityMultiplier * reduction);
   state.drops = Array(columns).fill(0);
 }
 
@@ -88,15 +89,24 @@ export function startCanvas(config: MatrixConfig): void {
   state.canvas = canvas;
   state.ctx = ctx;
   state.config = config;
-  state.running = true;
   canvas.style.display = 'block';
 
   resizeCanvas();
-  state.rafId = requestAnimationFrame(loop);
 
-  state.resizeHandler = () => {
-    resizeCanvas();
-  };
+  state.running = true;
+  if (config.reducedMotion) {
+    draw();
+    state.resizeHandler = () => {
+      resizeCanvas();
+      draw();
+    };
+  } else {
+    state.rafId = requestAnimationFrame(loop);
+    state.resizeHandler = () => {
+      resizeCanvas();
+    };
+  }
+
   window.addEventListener('resize', state.resizeHandler);
 }
 
