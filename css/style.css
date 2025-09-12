@@ -1624,10 +1624,10 @@ button:disabled {
 
 #app-title-bar .flip-clock-mount[data-skin="classic"] .flip-clock__card{
   position:relative; width:104px; height:74px; border-radius:12px; overflow:hidden;
-  background:#2b2b2b;
+  background: var(--fc-card-bg);
   box-shadow: 0 1px 0 rgba(255,255,255,.04) inset,
               0 -1px 0 rgba(0,0,0,.35) inset,
-              0 6px 18px rgba(0,0,0,.28);
+              var(--fc-shadow);
   transform-style:preserve-3d;
 }
 
@@ -1638,17 +1638,20 @@ button:disabled {
   display:flex; align-items:center; justify-content:center;
   font: 800 46px/1.05 var(--heading-font, ui-sans-serif), system-ui, -apple-system, Segoe UI, Roboto;
   font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased;
-  color:#fff;
   letter-spacing:.5px;
 }
 
 #app-title-bar .flip-clock-mount[data-skin="classic"] .card__top{
-  top:0; border-bottom:1px solid rgba(0,0,0,.66);
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.10));
+  top:0;
+  color: var(--fc-top-fg);
+  background: var(--fc-top-bg);
+  border-bottom:1px solid var(--fc-divider);
 }
 #app-title-bar .flip-clock-mount[data-skin="classic"] .card__bottom{
   bottom:0; transform-origin: top;
-  background: linear-gradient(180deg, rgba(0,0,0,.12), rgba(255,255,255,.03));
+  color: var(--fc-bot-fg);
+  background: var(--fc-bot-bg);
+  border-top:1px solid var(--fc-divider);
 }
 
 @keyframes fcFlipTop { 0%{transform:rotateX(0)} 100%{transform:rotateX(-90deg)} }
@@ -1700,26 +1703,26 @@ button:disabled {
 
 /* Top half visuals */
 #app-title-bar .flip-clock-mount[data-skin="classic"] .card__top{
-  color: #ccc;
-  background: #222;
+  color: var(--fc-top-fg);
+  background: var(--fc-top-bg);
   border-radius: 0.15em 0.15em 0 0;
   transform-style: preserve-3d;
   backface-visibility: hidden;
   transform: translateZ(0);
-  border-bottom: 1px solid rgba(0,0,0,.66);
+  border-bottom: 1px solid var(--fc-divider);
 }
 
 /* Bottom half container (clips the lower half) */
 #app-title-bar .flip-clock-mount[data-skin="classic"] .card__bottom{
-  color: #fff;
+  color: var(--fc-bot-fg);
   position: absolute;
   top: 50%;
   left: 0;
-  background: #393939;
+  background: var(--fc-bot-bg);
   border-radius: 0 0 0.15em 0.15em;
   pointer-events: none;
   overflow: hidden;
-  border-top: 1px solid #000;
+  border-top: 1px solid var(--fc-divider);
   transform-style: preserve-3d;
   backface-visibility: hidden;
   transform: translateZ(0);
@@ -1741,6 +1744,17 @@ button:disabled {
 #app-title-bar .flip-clock-mount[data-skin="classic"] .card__back::before,
 #app-title-bar .flip-clock-mount[data-skin="classic"] .card__back .card__bottom::after{
   content: attr(data-value);
+}
+
+#app-title-bar .flip-clock-mount[data-skin="classic"] .card__back::before{
+  color: var(--fc-top-fg);
+  background: var(--fc-top-bg);
+  border-bottom: 1px solid var(--fc-divider);
+}
+#app-title-bar .flip-clock-mount[data-skin="classic"] .card__back .card__bottom{
+  color: var(--fc-bot-fg);
+  background: var(--fc-bot-bg);
+  border-top: 1px solid var(--fc-divider);
 }
 
 /* Update animations to target ::before on back and ::after on bottom */
