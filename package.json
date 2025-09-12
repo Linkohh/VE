@@ -2,9 +2,10 @@
   "name": "vibeme",
   "version": "1.0.0",
   "description": "A beautiful motivational quote generator with dynamic themes and inspiring messages",
-
+  
   "scripts": {
-    "sync-quotes": "node scripts/sync-quotes.js"
+    "sync-quotes": "node scripts/sync-quotes.js",
+    "test": "vitest run"
   },
   "keywords": [
     "quotes",
@@ -12,5 +13,9 @@
     "inspiration"
   ],
   "author": "VibeMe",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jsdom": "^22.1.0",
+    "vitest": "^0.34.6"
+  }
 }
