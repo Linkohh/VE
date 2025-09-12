@@ -131,11 +131,10 @@
 
     <!-- Main JS for theme handling -->
 
-    <script>
+    <script type="module">
+        import { nextTheme } from './src/features/theme/theme.ts';
         document.addEventListener('DOMContentLoaded', () => {
-            if (window.VibeMe && typeof window.VibeMe.applyRandomTheme === 'function') {
-                window.VibeMe.applyRandomTheme();
-            }
+            nextTheme();
             const emailLink = document.getElementById('contact-email');
             if (emailLink) {
                 const email = `${emailLink.dataset.user}@${emailLink.dataset.domain}`;
