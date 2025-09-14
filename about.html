@@ -132,9 +132,9 @@
     <!-- Main JS for theme handling -->
 
     <script type="module">
-        import { nextTheme } from './src/features/theme/theme.ts';
+        import { bus, EVENTS } from './src/lib/bus.ts';
         document.addEventListener('DOMContentLoaded', () => {
-            nextTheme();
+            bus.emit(EVENTS.THEME_CHANGED, { action: 'next' });
             const emailLink = document.getElementById('contact-email');
             if (emailLink) {
                 const email = `${emailLink.dataset.user}@${emailLink.dataset.domain}`;
