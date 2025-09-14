@@ -2172,30 +2172,30 @@ const VibeMe = {
 
     // ===== EVENT LISTENERS =====
     setupEventListeners: function() {
-        document.getElementById('generate-btn').addEventListener('click', () => this.updateQuote());
-        document.getElementById('timer-toggle-btn').addEventListener('click', () => this.toggleTimer());
-        document.getElementById('copy-quote-btn').addEventListener('click', () => this.copyQuote());
-        document.getElementById('favorite-quote-btn').addEventListener('click', () => this.toggleFavorite());
-        document.getElementById('shareHubBtn').addEventListener('click', () => this.expandShareButtons());
-        document.getElementById('effects-toggle-checkbox').addEventListener('change', () => this.toggleEffects());
-        document.getElementById('clear-favorites-btn').addEventListener('click', () => this.clearFavorites());
-        document.getElementById('toggle-add-quote-form').addEventListener('click', () => this.toggleAddQuoteForm());
-        document.getElementById('submit-quote-btn').addEventListener('click', () => this.submitQuote());
+        // document.getElementById('generate-btn').addEventListener('click', () => this.updateQuote());
+        // document.getElementById('timer-toggle-btn').addEventListener('click', () => this.toggleTimer());
+        // document.getElementById('copy-quote-btn').addEventListener('click', () => this.copyQuote());
+        // document.getElementById('favorite-quote-btn').addEventListener('click', () => this.toggleFavorite());
+        // document.getElementById('shareHubBtn').addEventListener('click', () => this.expandShareButtons());
+        // document.getElementById('effects-toggle-checkbox').addEventListener('change', () => this.toggleEffects());
+        // document.getElementById('clear-favorites-btn').addEventListener('click', () => this.clearFavorites());
+        // document.getElementById('toggle-add-quote-form').addEventListener('click', () => this.toggleAddQuoteForm());
+        // document.getElementById('submit-quote-btn').addEventListener('click', () => this.submitQuote());
         
         // Search functionality
-        document.getElementById('search-toggle').addEventListener('click', () => this.toggleSearch());
-        document.getElementById('search-close-btn').addEventListener('click', () => this.toggleSearch());
-        document.getElementById('search-input').addEventListener('input', (e) => this.performSearch(e.target.value));
-        document.getElementById('search-overlay').addEventListener('click', (e) => {
-            if (e.target.id === 'search-overlay') {
-                this.toggleSearch();
-            }
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !document.getElementById('search-overlay').classList.contains('hidden')) {
-                this.toggleSearch();
-            }
-        });
+        // document.getElementById('search-toggle').addEventListener('click', () => this.toggleSearch());
+        // document.getElementById('search-close-btn').addEventListener('click', () => this.toggleSearch());
+        // document.getElementById('search-input').addEventListener('input', (e) => this.performSearch(e.target.value));
+        // document.getElementById('search-overlay').addEventListener('click', (e) => {
+        //     if (e.target.id === 'search-overlay') {
+        //         this.toggleSearch();
+        //     }
+        // });
+        // document.addEventListener('keydown', (e) => {
+        //     if (e.key === 'Escape' && !document.getElementById('search-overlay').classList.contains('hidden')) {
+        //         this.toggleSearch();
+        //     }
+        // });
 
         // Matrix render mode selector
         const renderModeSelector = document.getElementById('matrix-render-mode');
@@ -4394,40 +4394,40 @@ document.addEventListener('DOMContentLoaded', () => {
         effectsCb.checked = !!saved;
         apply(!!saved);
       } catch { apply(effectsCb.checked); }
-      effectsCb.addEventListener('change', () => apply(effectsCb.checked));
+      // effectsCb.addEventListener('change', () => apply(effectsCb.checked));
     }
 
     // Dark mode toggle hookup (if not already wired)
     const darkBtn = $('#dark-mode-toggle');
     if (darkBtn) {
-      darkBtn.addEventListener('click', () => {
-        const root = document.documentElement;
-        let isDark = root.dataset.theme === 'dark';
-
-        // Toggle the theme
-        isDark = !isDark;
-        root.dataset.theme = isDark ? 'dark' : 'light';
-
-        // Also toggle the body class
-        document.body.classList.toggle('dark-mode', isDark);
-
-        // Update state and icon
-        VibeMe.state.isDarkMode = isDark;
-        VibeMe.updateDarkModeIcon(isDark);
-
-        // Update local storage
-        try { localStorage.setItem('vibeme-dark-mode', JSON.stringify(isDark)); } catch {}
-
-        // Update meta theme color
-        updateThemeColorMeta();
-      }, { capture: true });
+      // darkBtn.addEventListener('click', () => {
+      //   const root = document.documentElement;
+      //   let isDark = root.dataset.theme === 'dark';
+      //
+      //   // Toggle the theme
+      //   isDark = !isDark;
+      //   root.dataset.theme = isDark ? 'dark' : 'light';
+      //
+      //   // Also toggle the body class
+      //   document.body.classList.toggle('dark-mode', isDark);
+      //
+      //   // Update state and icon
+      //   VibeMe.state.isDarkMode = isDark;
+      //   VibeMe.updateDarkModeIcon(isDark);
+      //
+      //   // Update local storage
+      //   try { localStorage.setItem('vibeme-dark-mode', JSON.stringify(isDark)); } catch {}
+      //
+      //   // Update meta theme color
+      //   updateThemeColorMeta();
+      // }, { capture: true });
     }
 
     // Theme/preset + apply colors -> update theme-color
     const presetSel = $('#theme-preset');
     const applyBtn = $('#apply-colors-btn');
-    presetSel?.addEventListener('change', updateThemeColorMeta, { capture: true });
-    applyBtn?.addEventListener('click', () => setTimeout(updateThemeColorMeta, 0));
+    // presetSel?.addEventListener('change', updateThemeColorMeta, { capture: true });
+    // applyBtn?.addEventListener('click', () => setTimeout(updateThemeColorMeta, 0));
 
     // Show with '?' key
     document.addEventListener('keydown', (e) => {
@@ -4440,10 +4440,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const favBtn = document.getElementById('favorite-quote-btn');
     if (favBtn) {
       favBtn.setAttribute('aria-pressed', 'false');
-      favBtn.addEventListener('click', () => {
-        const newState = favBtn.getAttribute('aria-pressed') !== 'true';
-        favBtn.setAttribute('aria-pressed', String(newState));
-      });
+      // favBtn.addEventListener('click', () => {
+      //   const newState = favBtn.getAttribute('aria-pressed') !== 'true';
+      //   favBtn.setAttribute('aria-pressed', String(newState));
+      // });
     }
 
     // Global Escape closes settings panel
@@ -4542,12 +4542,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Enforce state on load
         applyBeepAudioState();
         // Persist on change
-        toggle.addEventListener('change', function () {
-          const on = !!toggle.checked;
-          try { VibeMe.state.beepEnabled = on; } catch (_) {}
-          try { localStorage.setItem('vibeme-beep-enabled', JSON.stringify(on)); } catch (_) {}
-          applyBeepAudioState();
-        });
+        // toggle.addEventListener('change', function () {
+        //   const on = !!toggle.checked;
+        //   try { VibeMe.state.beepEnabled = on; } catch (_) {}
+        //   try { localStorage.setItem('vibeme-beep-enabled', JSON.stringify(on)); } catch (_) {}
+        //   applyBeepAudioState();
+        // });
       }
 
       // Ensure Settings gear cannot re-enable audio when beeps are OFF
