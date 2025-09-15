@@ -25,12 +25,7 @@ export const themes: Theme[] = [
 export let current: Theme = themes[0];
 
 export function applyTheme(theme: Theme): void {
-  const root = document.documentElement;
-  root.style.setProperty('--color1', theme.color1);
-  root.style.setProperty('--color2', theme.color2);
-  root.style.setProperty('--color3', theme.color3);
   current = theme;
-  bus.emit(EVENTS.THEME_CHANGED, theme);
 }
 
 export function nextTheme(): Theme {
@@ -48,3 +43,11 @@ export function setThemeByKey(key: string): Theme | undefined {
   }
   return undefined;
 }
+
+bus.on(EVENTS.THEME_CHANGED, (payload: { action?: 'next'; key?: string }) => {
+  if (payload?.action === 'next') {
+    nextTheme();
+  } else if (payload?.key) {
+    setThemeByKey(payload.key);
+  }
+});
