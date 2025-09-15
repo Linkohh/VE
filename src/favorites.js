@@ -1,3 +1,5 @@
+import { bus, EVENTS } from './lib/bus';
+
 export function loadFavorites() {
   try {
     return JSON.parse(localStorage.getItem('vibeme-favorites') || '[]');
@@ -8,7 +10,8 @@ export function loadFavorites() {
 
 export function saveFavorites(favorites) {
   localStorage.setItem('vibeme-favorites', JSON.stringify(favorites));
-  document.dispatchEvent(new CustomEvent('vibeme:favorites:changed'));
+  bus.emit(EVENTS.FAVORITES_CHANGED, favorites);
+  document.dispatchEvent(new CustomEvent(EVENTS.FAVORITES_CHANGED));
 }
 
 export function toggleFavorite(favorites, quote) {
