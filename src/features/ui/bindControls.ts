@@ -52,11 +52,22 @@ export function bindControls(): () => void {
     })
   );
 
-  const escHandler = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') bus.emit(EVENTS.SEARCH_TOGGLE);
+  const keyHandler = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      bus.emit(EVENTS.SEARCH_TOGGLE);
+      return;
+    }
+
+    if (e.key === 'Enter' || e.key === ' ') {
+      const active = document.activeElement;
+      if (active instanceof HTMLButtonElement) {
+        e.preventDefault();
+        active.click();
+      }
+    }
   };
-  document.addEventListener('keydown', escHandler);
-  offs.push(() => document.removeEventListener('keydown', escHandler));
+  document.addEventListener('keydown', keyHandler);
+  offs.push(() => document.removeEventListener('keydown', keyHandler));
 
   return () => offs.forEach((off) => off());
 }
