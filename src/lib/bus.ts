@@ -43,8 +43,11 @@ export const SEARCH_TOGGLE = 'SEARCH_TOGGLE';
 export const SEARCH_QUERY = 'SEARCH_QUERY';
 export const QUOTES_READY = 'QUOTES_READY';
 export const QUOTE_STATS_UPDATED = 'QUOTE_STATS_UPDATED';
-export const QUOTE_RATED = 'QUOTE_RATED';
 export const QUOTE_CATEGORY_CHANGED = 'QUOTE_CATEGORY_CHANGED';
+export const FAV_OPEN = 'fav:open';
+export const FAV_CLOSE = 'fav:close';
+export const FAV_CLEAR = 'fav:clear';
+export const FAV_CHANGED = 'fav:changed';
 
 export const EVENTS = {
   QUOTE_REQUEST,
@@ -69,7 +72,10 @@ export const EVENTS = {
   SEARCH_QUERY,
   QUOTES_READY,
   QUOTE_STATS_UPDATED,
-  QUOTE_RATED,
   QUOTE_CATEGORY_CHANGED,
+  FAV_OPEN,
+  FAV_CLOSE,
+  FAV_CLEAR,
+  FAV_CHANGED,
 } as const;
 

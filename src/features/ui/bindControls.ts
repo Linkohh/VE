@@ -57,7 +57,7 @@ export function bindControls(): () => void {
       bus.emit(EVENTS.MATRIX_TOGGLE, (e.target as HTMLInputElement).checked)
     )
   );
-  offs.push(on('clear-favorites-btn', 'click', () => bus.emit(EVENTS.FAVORITES_CLEAR)));
+  offs.push(on('clear-favorites-btn', 'click', () => bus.emit(EVENTS.FAV_CLEAR)));
   offs.push(on('toggle-add-quote-form', 'click', () => bus.emit(EVENTS.QUOTE_FORM_TOGGLE)));
   offs.push(on('submit-quote-btn', 'click', () => bus.emit(EVENTS.QUOTE_SUBMIT)));
   offs.push(
@@ -96,6 +96,27 @@ export function bindControls(): () => void {
   };
   document.addEventListener('keydown', keyHandler);
   offs.push(() => document.removeEventListener('keydown', keyHandler));
+
+  const toggleFavorites = document.getElementById('favorites-toggle');
+  if (toggleFavorites) {
+    const handleToggle = (event: Event) => {
+      event.preventDefault();
+      const expanded = toggleFavorites.getAttribute('aria-expanded') === 'true';
+      bus.emit(expanded ? EVENTS.FAV_CLOSE : EVENTS.FAV_OPEN, { opener: toggleFavorites });
+    };
+    toggleFavorites.addEventListener('click', handleToggle);
+    offs.push(() => toggleFavorites.removeEventListener('click', handleToggle));
+  }
+
+  const favoritesClose = document.getElementById('favorites-close');
+  if (favoritesClose) {
+    const handleClose = (event: Event) => {
+      event.preventDefault();
+      bus.emit(EVENTS.FAV_CLOSE);
+    };
+    favoritesClose.addEventListener('click', handleClose);
+    offs.push(() => favoritesClose.removeEventListener('click', handleClose));
+  }
 
   return () => offs.forEach((off) => off());
 }
