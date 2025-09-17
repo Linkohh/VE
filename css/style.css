@@ -177,6 +177,19 @@ body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding:
   margin-right: auto;
 }
 
+body.has-svelte-app #quote-text,
+body.has-svelte-app #quote-author {
+  visibility: hidden;
+}
+
+body.has-svelte-app section[aria-label="Quote actions"],
+body.has-svelte-app section[aria-label="Quote generation"],
+body.has-svelte-app #favorites-panel,
+body.has-svelte-app #favorites-toggle,
+body.has-svelte-app #settings-panel {
+  display: none !important;
+}
+
 /* Ensure inner card never pushes the page taller than the viewport */
 .quote-container-inner {
   max-height: calc(100dvh - 160px); /* room for title, clock, buttons */
