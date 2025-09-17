@@ -14,18 +14,21 @@ export class EventBus {
     this.listeners.get(event)?.delete(handler as Handler);
   }
 
-  emit<T = any>(event: string, payload: T): void {
-    this.listeners.get(event)?.forEach((handler) => handler(payload));
+  emit<T = any>(event: string, payload?: T): void {
+    this.listeners.get(event)?.forEach((handler) => handler(payload as T));
   }
 }
 
 export const bus = new EventBus();
 
-export const QUOTE_GENERATED = 'QUOTE_GENERATED';
+export const QUOTE_REQUEST = 'quote:request';
+export const QUOTE_FILTER = 'quote:filter';
+export const QUOTE_RATED = 'quote:rated';
+export const QUOTE_GENERATED = 'quote:generated';
 export const THEME_CHANGED = 'THEME_CHANGED';
 export const FAVORITE_ADDED = 'FAVORITE_ADDED';
 export const FAVORITE_REMOVED = 'FAVORITE_REMOVED';
-export const GENERATE_QUOTE = 'GENERATE_QUOTE';
+export const GENERATE_QUOTE = QUOTE_REQUEST;
 export const MATRIX_TOGGLE = 'MATRIX_TOGGLE';
 export const FAVORITE_TOGGLE = 'FAVORITE_TOGGLE';
 export const FAVORITES_CHANGED = 'FAVORITES_CHANGED';
@@ -38,8 +41,15 @@ export const QUOTE_FORM_TOGGLE = 'QUOTE_FORM_TOGGLE';
 export const QUOTE_SUBMIT = 'QUOTE_SUBMIT';
 export const SEARCH_TOGGLE = 'SEARCH_TOGGLE';
 export const SEARCH_QUERY = 'SEARCH_QUERY';
+export const QUOTES_READY = 'QUOTES_READY';
+export const QUOTE_STATS_UPDATED = 'QUOTE_STATS_UPDATED';
+export const QUOTE_RATED = 'QUOTE_RATED';
+export const QUOTE_CATEGORY_CHANGED = 'QUOTE_CATEGORY_CHANGED';
 
 export const EVENTS = {
+  QUOTE_REQUEST,
+  QUOTE_FILTER,
+  QUOTE_RATED,
   QUOTE_GENERATED,
   THEME_CHANGED,
   FAVORITE_ADDED,
@@ -57,5 +67,9 @@ export const EVENTS = {
   QUOTE_SUBMIT,
   SEARCH_TOGGLE,
   SEARCH_QUERY,
+  QUOTES_READY,
+  QUOTE_STATS_UPDATED,
+  QUOTE_RATED,
+  QUOTE_CATEGORY_CHANGED,
 } as const;
 

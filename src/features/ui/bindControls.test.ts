@@ -6,9 +6,9 @@ describe('bindControls', () => {
   it('activates focused buttons on Enter or Space and returns unbinder', () => {
     document.body.innerHTML = `<button id="generate-btn"></button>`;
 
-    const events: string[] = [];
-    const handler = () => events.push('gen');
-    bus.on(EVENTS.GENERATE_QUOTE, handler);
+    const payloads: Array<Record<string, unknown>> = [];
+    const handler = (payload: Record<string, unknown>) => payloads.push(payload);
+    bus.on(EVENTS.QUOTE_REQUEST, handler);
 
     const unbind = bindControls();
 
@@ -17,15 +17,21 @@ describe('bindControls', () => {
 
     btn.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     btn.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
-    expect(events).toEqual(['gen', 'gen']);
+    expect(payloads).toEqual([
+      { source: 'ui:generate-button' },
+      { source: 'ui:generate-button' },
+    ]);
 
     unbind();
 
     btn.focus();
     btn.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-    expect(events).toEqual(['gen', 'gen']);
+    expect(payloads).toEqual([
+      { source: 'ui:generate-button' },
+      { source: 'ui:generate-button' },
+    ]);
 
-    bus.off(EVENTS.GENERATE_QUOTE, handler);
+    bus.off(EVENTS.QUOTE_REQUEST, handler);
   });
 });
 

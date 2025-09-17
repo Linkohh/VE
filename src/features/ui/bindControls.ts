@@ -38,7 +38,16 @@ export function bindControls(): () => void {
       bus.emit(EVENTS.THEME_CHANGED, { key: (e.target as HTMLSelectElement).value })
     )
   );
-  offs.push(on('generate-btn', 'click', () => bus.emit(EVENTS.GENERATE_QUOTE)));
+  offs.push(
+    on('category-filter', 'change', (e) =>
+      bus.emit(EVENTS.QUOTE_FILTER, (e.target as HTMLSelectElement).value)
+    )
+  );
+  offs.push(
+    on('generate-btn', 'click', () =>
+      bus.emit(EVENTS.QUOTE_REQUEST, { source: 'ui:generate-button' })
+    )
+  );
   offs.push(on('timer-toggle-btn', 'click', () => bus.emit(EVENTS.TIMER_TOGGLE)));
   offs.push(on('copy-quote-btn', 'click', () => bus.emit(EVENTS.COPY_QUOTE)));
   offs.push(on('favorite-quote-btn', 'click', () => bus.emit(EVENTS.FAVORITE_TOGGLE)));
