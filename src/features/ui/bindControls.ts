@@ -1,4 +1,5 @@
 import { bus, EVENTS } from '../../lib/bus';
+import { ariaAnnounce } from '../quotes/announce';
 
 function on<K extends keyof HTMLElementEventMap>(
   id: string,
@@ -12,6 +13,24 @@ function on<K extends keyof HTMLElementEventMap>(
 
 export function bindControls(): () => void {
   const offs: Array<() => void> = [];
+
+  const announceQuote = (payload: { text?: string; quote?: string; author?: string | null }): void => {
+    const toText = (value: unknown): string => {
+      if (typeof value === 'string') return value;
+      if (value == null) return '';
+      return String(value);
+    };
+
+    const text = toText(payload?.text ?? payload?.quote).trim();
+    if (!text) return;
+
+    const author = toText(payload?.author).trim();
+    const message = author ? `${text} — ${author}` : text;
+    ariaAnnounce(message);
+  };
+
+  bus.on(EVENTS.QUOTE_GENERATED, announceQuote);
+  offs.push(() => bus.off(EVENTS.QUOTE_GENERATED, announceQuote));
 
   offs.push(on('dark-mode-toggle', 'click', () => bus.emit(EVENTS.THEME_CHANGED, { action: 'next' })));
   offs.push(
