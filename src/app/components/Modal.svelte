@@ -4,8 +4,8 @@
   const FOCUSABLE = '[tabindex]:not([tabindex="-1"]),a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled])';
 
   export let open = false;
-  export let labelledBy: string | undefined;
-  export let describedBy: string | undefined;
+  export let labelledBy: string | undefined = undefined;
+  export let describedBy: string | undefined = undefined;
   export let returnFocus: HTMLElement | null = null;
   export let closeOnBackdrop = true;
 
@@ -88,23 +88,21 @@
 </script>
 
 {#if open}
-  <svelte:teleport to="body">
+  <div
+    class="fixed inset-0 z-[10050] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+    role="presentation"
+    on:click={handleBackdrop}
+  >
     <div
-      class="fixed inset-0 z-[10050] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-      role="presentation"
-      on:click={handleBackdrop}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={labelledBy}
+      aria-describedby={describedBy}
+      class="w-full max-w-xl rounded-2xl bg-slate-900/90 text-slate-100 shadow-2xl border border-white/10"
+      tabindex="-1"
+      bind:this={dialog}
     >
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={labelledBy}
-        aria-describedby={describedBy}
-        class="w-full max-w-xl rounded-2xl bg-slate-900/90 text-slate-100 shadow-2xl border border-white/10"
-        tabindex="-1"
-        bind:this={dialog}
-      >
-        <slot />
-      </div>
+      <slot />
     </div>
-  </svelte:teleport>
+  </div>
 {/if}

@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { bus, EVENTS } from '../../lib/bus';
+  import { FontAwesomeIcon as Fa } from '@fortawesome/svelte-fontawesome';
+  import { faBookmark, faGear, faPalette } from '@fortawesome/free-solid-svg-icons';
+  import { nextTheme } from '../../features/theme';
   import { openFavorites } from '../stores/favorites';
   import type { QuoteViewModel } from '../stores/quote';
 
@@ -9,7 +11,7 @@
   let favoritesButton: HTMLButtonElement | null = null;
 
   function handleTheme(): void {
-    bus.emit(EVENTS.THEME_CHANGED, { action: 'next' });
+    nextTheme();
   }
 
   function handleFavorites(): void {
@@ -32,7 +34,7 @@
       aria-label="Shuffle theme"
       on:click={handleTheme}
     >
-      <i class="fas fa-palette" aria-hidden="true" />
+      <Fa icon={faPalette} class="h-4 w-4" />
     </button>
 
     <button
@@ -42,7 +44,7 @@
       bind:this={favoritesButton}
       on:click={handleFavorites}
     >
-      <i class="fas fa-bookmark" aria-hidden="true" />
+      <Fa icon={faBookmark} class="h-4 w-4" />
     </button>
 
     <button
@@ -51,7 +53,7 @@
       aria-label="Open settings"
       on:click={onOpenSettings}
     >
-      <i class="fas fa-gear" aria-hidden="true" />
+      <Fa icon={faGear} class="h-4 w-4" />
     </button>
   </div>
 </header>

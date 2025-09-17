@@ -1,0 +1,175 @@
+@import '@fontsource/poppins/latin-300.css';
+@import '@fontsource/poppins/latin-400.css';
+@import '@fontsource/poppins/latin-600.css';
+@import '@fontsource/playfair-display/latin-500.css';
+@import '@fontsource/playfair-display/latin-600.css';
+@import '@fontsource/playfair-display/latin-700.css';
+@import '@fontsource/merriweather/latin-300.css';
+@import '@fontsource/merriweather/latin-400.css';
+@import '@fontsource/merriweather/latin-700.css';
+@import '@fontsource/roboto-mono/latin-700.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --matrix-opacity-token: 0.75;
+    --gradient-1: rgba(56, 189, 248, 0.25);
+    --gradient-2: rgba(129, 140, 248, 0.2);
+    --gradient-3: rgba(236, 72, 153, 0.2);
+    --glow-color: rgba(59, 130, 246, 0.25);
+  }
+
+  body {
+    @apply min-h-screen bg-slate-950 text-white antialiased;
+    margin: 0;
+    font-family: 'Poppins', system-ui, sans-serif;
+    background-image:
+      radial-gradient(circle at 20% 20%, var(--gradient-1), transparent 55%),
+      radial-gradient(circle at 80% 0%, var(--gradient-2), transparent 50%),
+      radial-gradient(circle at 50% 80%, var(--gradient-3), transparent 55%),
+      linear-gradient(135deg, rgba(15, 118, 110, 0.35), rgba(30, 64, 175, 0.35));
+    background-attachment: fixed;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(circle at top right, var(--glow-color), transparent 60%);
+    filter: blur(90px);
+    opacity: 0.8;
+  }
+
+  body.has-svelte-app {
+    overflow-x: hidden;
+  }
+
+  #app {
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .heading-font {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.01em;
+  }
+
+  .quote-text-font {
+    font-family: 'Merriweather', serif;
+  }
+
+  .matrix-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    overflow: hidden;
+    opacity: 0.7;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .matrix-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -9;
+    pointer-events: none;
+    opacity: var(--matrix-opacity-token);
+    display: none;
+  }
+
+  .binary-column {
+    position: absolute;
+    top: 0;
+    width: 16px;
+    font-family: 'Roboto Mono', 'Courier New', 'Monaco', 'Menlo', monospace;
+    font-size: 14px;
+    line-height: 1.1;
+    font-weight: 700;
+    color: rgba(0, 255, 0, 0.9);
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+    image-rendering: auto;
+    isolation: isolate;
+    contain: paint;
+    pointer-events: none;
+    user-select: none;
+    overflow: hidden;
+    display: block;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    letter-spacing: 0px;
+  }
+
+  .binary-column.visible {
+    opacity: 1;
+  }
+
+  .binary-column .matrix-char {
+    display: block;
+    font-size: inherit;
+    text-align: center;
+  }
+
+  .binary-column .matrix-char.head {
+    background: transparent !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .matrix-mode-dark-bg .binary-column {
+    mix-blend-mode: screen;
+    text-shadow:
+      0 0 1px rgba(255, 255, 255, 0.9),
+      0 0 3px currentColor,
+      0 0 8px currentColor,
+      0 0 15px currentColor;
+  }
+
+  .matrix-mode-light-bg .binary-column {
+    mix-blend-mode: multiply;
+    text-shadow:
+      0 0 1px rgba(0, 0, 0, 0.8),
+      0 0 2px currentColor,
+      0 0 4px currentColor,
+      1px 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  .matrix-mode-high-contrast .binary-column {
+    mix-blend-mode: difference;
+    text-shadow:
+      0 0 1px rgba(255, 255, 255, 1),
+      0 0 3px currentColor,
+      0 0 6px currentColor,
+      0 0 12px currentColor,
+      2px 2px 4px rgba(0, 0, 0, 0.5);
+    filter: drop-shadow(0 0 2px currentColor) drop-shadow(0 0 6px currentColor);
+  }
+
+  .app-surface {
+    @apply relative mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-12;
+  }
+
+  .panel-surface {
+    @apply rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl backdrop-blur-xl;
+  }
+}
+
+@layer utilities {
+  .glass-button {
+    @apply rounded-full bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-white/80 transition hover:bg-white/20;
+  }
+}

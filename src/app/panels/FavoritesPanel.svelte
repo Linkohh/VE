@@ -1,12 +1,14 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-  import { bus, EVENTS } from '../../lib/bus';
+  import { FontAwesomeIcon as Fa } from '@fortawesome/svelte-fontawesome';
+  import { faBookmark, faShareNodes, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+  import { onDestroy } from 'svelte';
   import type { FavoriteItem } from '../../features/favorites/store';
   import Modal from '../components/Modal.svelte';
   import {
     clearFavorites,
     closeFavorites,
     favorites,
+    favoritesPanel,
     removeFavorite,
     shareFavoriteById,
   } from '../stores/favorites';
@@ -15,28 +17,18 @@
   let opener: HTMLElement | null = null;
   let items: FavoriteItem[] = [];
 
-  const unsubscribe = favorites.subscribe((value) => {
+  const unsubscribeFavorites = favorites.subscribe((value) => {
     items = value;
   });
 
-  function handleOpen(payload?: { opener?: HTMLElement | null }): void {
-    open = true;
-    opener = payload?.opener ?? null;
-  }
-
-  function handleClose(): void {
-    open = false;
-  }
-
-  onMount(() => {
-    bus.on(EVENTS.FAV_OPEN, handleOpen);
-    bus.on(EVENTS.FAV_CLOSE, handleClose);
+  const unsubscribePanel = favoritesPanel.subscribe((value) => {
+    open = value.open;
+    opener = value.opener;
   });
 
   onDestroy(() => {
-    bus.off(EVENTS.FAV_OPEN, handleOpen);
-    bus.off(EVENTS.FAV_CLOSE, handleClose);
-    unsubscribe();
+    unsubscribeFavorites();
+    unsubscribePanel();
   });
 
   function onRequestClose(): void {
@@ -59,7 +51,7 @@
 <Modal open={open} on:close={onRequestClose} labelledBy="favorites-title" returnFocus={opener}>
   <div class="flex items-center justify-between border-b border-white/10 px-5 py-4">
     <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white/80">
-      <i class="fas fa-bookmark text-xs" aria-hidden="true" />
+      <Fa icon={faBookmark} class="h-3.5 w-3.5" />
       <span id="favorites-title">Favorites</span>
       <span class="rounded-full bg-white/10 px-2 py-0.5 text-xs font-medium text-white/70">{items.length}</span>
     </div>
@@ -69,7 +61,7 @@
       aria-label="Close favorites"
       on:click={onRequestClose}
     >
-      <i class="fas fa-times" aria-hidden="true" />
+      <Fa icon={faTimes} class="h-4 w-4" />
     </button>
   </div>
 
@@ -78,7 +70,7 @@
       <p class="text-sm text-white/60">Your saved inspiration will appear here.</p>
     {:else}
       <ul class="space-y-3">
-        {#each items as item}
+        {#each items as item (item.id)}
           <li class="rounded-2xl bg-white/5 p-4 shadow-inner">
             <p class="text-base text-white">{item.text}</p>
             {#if item.author}
@@ -91,14 +83,14 @@
                 class="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 transition hover:bg-white/20"
                 on:click={() => onShare(item.id)}
               >
-                <i class="fas fa-share-nodes" aria-hidden="true" /> Share
+                <Fa icon={faShareNodes} class="h-3.5 w-3.5" /> Share
               </button>
               <button
                 type="button"
                 class="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 transition hover:bg-rose-500/80 hover:text-white"
                 on:click={() => onRemove(item.id)}
               >
-                <i class="fas fa-trash" aria-hidden="true" /> Remove
+                <Fa icon={faTrash} class="h-3.5 w-3.5" /> Remove
               </button>
             </div>
           </li>

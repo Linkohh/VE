@@ -1,4 +1,4 @@
-import { Quote, QuoteFilters, QuoteHistory } from './types';
+import type { Quote, QuoteFilters, QuoteHistory } from './types';
 
 function sanitizeQuote(raw: any, defaultCategory?: string): Quote {
   const text = String(raw?.text ?? raw?.quote ?? '').trim();

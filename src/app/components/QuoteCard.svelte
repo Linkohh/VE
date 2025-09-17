@@ -5,11 +5,14 @@
 </script>
 
 <section
-  class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/10 p-6 text-center text-white shadow-2xl backdrop-blur-xl"
+  class="panel-surface relative overflow-hidden p-6 text-center text-white"
   aria-live="polite"
   aria-atomic="true"
 >
-  <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5" aria-hidden="true" />
+  <div
+    class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5"
+    aria-hidden="true"
+  ></div>
 
   <p class="quote-text-font text-2xl leading-relaxed md:text-3xl">
     {#if quote?.text}

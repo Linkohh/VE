@@ -1,4 +1,3 @@
-import { bus, EVENTS } from '../../lib/bus';
 import type { Quote } from '../quotes/types';
 
 export interface FavoriteItem {
@@ -20,6 +19,7 @@ export const FAVORITES_STORAGE_KEYS = ['vibeme-favorites', 'favorites', 'vibemeF
 export const FAVORITES_PRIMARY_STORAGE_KEY = FAVORITES_STORAGE_KEYS[0];
 
 let favorites: FavoriteItem[] = loadFromStorage();
+const subscribers = new Set<(items: FavoriteItem[]) => void>();
 
 function toText(value: unknown): string {
   if (typeof value === 'string') return value.trim();
@@ -114,10 +114,6 @@ function persist(): void {
   }
 }
 
-function emitChanged(): void {
-  bus.emit(EVENTS.FAV_CHANGED, { count: favorites.length });
-}
-
 function replaceInternal(items: FavoriteItem[]): void {
   favorites = dedupe(items);
   persist();
@@ -202,4 +198,19 @@ export function reloadFromStorage(): void {
     favorites = loaded;
     emitChanged();
   }
+}
+
+function emitChanged(): void {
+  const snapshot = all();
+  subscribers.forEach((listener) => {
+    listener(snapshot);
+  });
+}
+
+export function subscribe(listener: (items: FavoriteItem[]) => void): () => void {
+  subscribers.add(listener);
+  listener(all());
+  return () => {
+    subscribers.delete(listener);
+  };
 }

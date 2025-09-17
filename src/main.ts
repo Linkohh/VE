@@ -1,17 +1,12 @@
-import { bridgeLegacy } from './shell/legacy-bridge';
-import { bootstrap } from './shell/bootstrap';
-import { bindControls } from './features/ui/bindControls';
-import './features/quotes';
-import { initFavorites } from './features/favorites/wiring';
- 
+import './app.css';
+import App from './App.svelte';
 
-async function main(): Promise<void> {
-  await bridgeLegacy();
-  initMatrix();
-  bootstrap();
-  bindMatrixUI();
-  bindControls();
-  initFavorites();
+const target = document.getElementById('app');
+
+if (!target) {
+  throw new Error('Failed to find #app container');
 }
 
-void main();
+const app = new App({ target });
+
+export default app;
