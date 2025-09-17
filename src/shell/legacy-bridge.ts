@@ -1,4 +1,6 @@
 import { initMatrix, updateMatrix, teardownMatrix } from '../features/matrix/engine';
+import { initQuoteEngine } from '../features/quotes/engine';
+import type { QuoteEngineAPI } from '../features/quotes/engine';
 
 // Ensure TypeScript knows about the global VibeMe stub used by the legacy code.
 declare global {
@@ -8,6 +10,7 @@ declare global {
       stopMatrixAnimation?: () => void;
       reinitMatrix?: () => void;
       updateMatrixConfig?: () => void;
+      quoteEngine?: QuoteEngineAPI;
       [key: string]: any;
     };
   }
@@ -22,6 +25,10 @@ export async function bridgeLegacy(): Promise<void> {
   await import('../legacy/main-legacy.js');
 
   const vibeme = (window.VibeMe ||= {});
+
+  // Initialize the modern quote engine but retain the legacy surface.
+  const quotes = await initQuoteEngine(vibeme);
+  vibeme.quoteEngine = quotes;
 
   // Bridge legacy matrix helpers to the new engine implementation
   vibeme.startMatrixAnimation = initMatrix;
