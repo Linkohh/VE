@@ -2,10 +2,13 @@
   "name": "vibeme",
   "version": "1.0.0",
   "description": "A beautiful motivational quote generator with dynamic themes and inspiring messages",
-  
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "sync-quotes": "node scripts/sync-quotes.js",
-    "test": "vitest run"
+    "test": "vitest run",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "keywords": [
     "quotes",
@@ -15,7 +18,14 @@
   "author": "VibeMe",
   "license": "ISC",
   "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "@tsconfig/svelte": "^5.0.0",
     "jsdom": "^22.1.0",
+    "svelte": "^4.2.12",
+    "svelte-check": "^3.6.7",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.2",
+    "vite": "^5.2.11",
     "vitest": "^0.34.6"
   }
 }
