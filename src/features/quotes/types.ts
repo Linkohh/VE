@@ -30,6 +30,6 @@ export interface QuoteRating {
 
 export type QuoteRatingMap = Record<string, QuoteRating>;
 
-export type QuoteSource = 'unified-loader' | 'fallback';
+export type QuoteSource = 'catalog' | 'fallback';
 
 export type RatingDirection = 'up' | 'down';

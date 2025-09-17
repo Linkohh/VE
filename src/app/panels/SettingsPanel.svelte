@@ -1,42 +1,58 @@
 <script lang="ts">
-  import { bus, EVENTS } from '../../lib/bus';
-  import { store } from '../../lib/store';
-  import { RenderMode, type MatrixConfig } from '../../features/matrix/config';
-  import { updateMatrix } from '../../features/matrix/engine';
+  import { FontAwesomeIcon as Fa } from '@fortawesome/svelte-fontawesome';
+  import { faTimes } from '@fortawesome/free-solid-svg-icons';
+  import { onDestroy } from 'svelte';
+  import { RenderMode } from '../../features/matrix/config';
+  import {
+    settings,
+    setBeepEnabled,
+    setMatrixEnabled,
+    updateMatrixConfig,
+  } from '../stores/settings';
   import Modal from '../components/Modal.svelte';
 
   export let open = false;
   export let onClose: () => void = () => {};
 
   let matrixEnabled = true;
-  let beepEnabled = true;
-  let reducedMotion = store.get('matrix').reducedMotion;
-  let renderMode: RenderMode = store.get('matrix').renderMode;
+  let beepEnabled = false;
+  let reducedMotion = false;
+  let renderMode: RenderMode = RenderMode.Canvas;
 
-  function applyMatrixConfig(next: Partial<MatrixConfig>): void {
-    const current = store.get('matrix');
-    store.set('matrix', { ...current, ...next });
-    updateMatrix();
+  const unsubscribe = settings.subscribe((value) => {
+    matrixEnabled = value.matrixEnabled;
+    beepEnabled = value.beepEnabled;
+    reducedMotion = value.matrix.reducedMotion;
+    renderMode = value.matrix.renderMode;
+  });
+
+  onDestroy(() => {
+    unsubscribe();
+  });
+
+  function handleMatrixChange(event: Event): void {
+    const input = event.currentTarget instanceof HTMLInputElement ? event.currentTarget : null;
+    if (!input) return;
+    setMatrixEnabled(input.checked);
   }
 
-  function toggleMatrix(): void {
-    matrixEnabled = !matrixEnabled;
-    bus.emit(EVENTS.MATRIX_TOGGLE, matrixEnabled);
+  function handleBeepChange(event: Event): void {
+    const input = event.currentTarget instanceof HTMLInputElement ? event.currentTarget : null;
+    if (!input) return;
+    setBeepEnabled(input.checked);
   }
 
-  function toggleBeep(): void {
-    beepEnabled = !beepEnabled;
-    bus.emit(EVENTS.BEEP_TOGGLE, beepEnabled);
+  function handleReducedMotionChange(event: Event): void {
+    const input = event.currentTarget instanceof HTMLInputElement ? event.currentTarget : null;
+    if (!input) return;
+    updateMatrixConfig({ reducedMotion: input.checked });
   }
 
-  function toggleReducedMotion(): void {
-    reducedMotion = !reducedMotion;
-    applyMatrixConfig({ reducedMotion });
-  }
-
-  function changeRenderMode(mode: RenderMode): void {
-    renderMode = mode;
-    applyMatrixConfig({ renderMode: mode });
+  function handleRenderModeChange(event: Event): void {
+    const select = event.currentTarget instanceof HTMLSelectElement ? event.currentTarget : null;
+    if (!select) return;
+    const value = (select.value as RenderMode) || RenderMode.Canvas;
+    updateMatrixConfig({ renderMode: value });
   }
 </script>
 
@@ -49,7 +65,7 @@
       aria-label="Close settings"
       on:click={onClose}
     >
-      <i class="fas fa-times" aria-hidden="true" />
+      <Fa icon={faTimes} class="h-4 w-4" />
     </button>
   </div>
 
@@ -58,11 +74,11 @@
       <h3 class="text-xs font-semibold uppercase tracking-wide text-white/60">General</h3>
       <label class="flex items-center justify-between gap-4 rounded-2xl bg-white/5 px-4 py-3">
         <span>Visual effects</span>
-        <input type="checkbox" bind:checked={matrixEnabled} on:change={toggleMatrix} />
+        <input type="checkbox" checked={matrixEnabled} on:change={handleMatrixChange} />
       </label>
       <label class="flex items-center justify-between gap-4 rounded-2xl bg-white/5 px-4 py-3">
         <span>Sound chime before quotes</span>
-        <input type="checkbox" bind:checked={beepEnabled} on:change={toggleBeep} />
+        <input type="checkbox" checked={beepEnabled} on:change={handleBeepChange} />
       </label>
     </section>
 
@@ -70,19 +86,18 @@
       <h3 class="text-xs font-semibold uppercase tracking-wide text-white/60">Matrix renderer</h3>
       <label class="flex items-center justify-between gap-4 rounded-2xl bg-white/5 px-4 py-3">
         <span>Reduced motion</span>
-        <input type="checkbox" bind:checked={reducedMotion} on:change={toggleReducedMotion} />
+        <input type="checkbox" checked={reducedMotion} on:change={handleReducedMotionChange} />
       </label>
       <div class="rounded-2xl bg-white/5 px-4 py-3">
-        <label for="matrix-mode" class="block text-xs uppercase tracking-wide text-white/60">Render mode</label>
+        <label for="matrix-mode" class="block text-xs uppercase tracking-wide text-white/60">Render style</label>
         <select
           id="matrix-mode"
           class="mt-2 w-full rounded-xl bg-slate-900/60 px-3 py-2 text-sm text-white"
-          bind:value={renderMode}
-          on:change={(event) => changeRenderMode((event.target as HTMLSelectElement).value as RenderMode)}
+          value={renderMode}
+          on:change={handleRenderModeChange}
         >
-          <option value={RenderMode.DOM}>DOM</option>
-          <option value={RenderMode.CANVAS}>Canvas</option>
-          <option value={RenderMode.HYBRID}>Hybrid</option>
+          <option value={RenderMode.Canvas}>Animated canvas</option>
+          <option value={RenderMode.Minimal}>Minimal glow</option>
         </select>
       </div>
     </section>

@@ -1,24 +1,29 @@
 import { get, writable } from 'svelte/store';
-import { bus, EVENTS } from '../../lib/bus';
 import {
   add,
   all,
   clear,
   favoriteId,
   remove,
+  subscribe as subscribeToFavorites,
   type FavoriteItem,
 } from '../../features/favorites/store';
 import type { QuoteViewModel } from './quote';
 
-const store = writable<FavoriteItem[]>(all());
+const itemsStore = writable<FavoriteItem[]>(all());
 
-function sync(): void {
-  store.set(all());
-}
+subscribeToFavorites((items) => {
+  itemsStore.set(items);
+});
 
-bus.on(EVENTS.FAV_CHANGED, sync);
+export const favorites = { subscribe: itemsStore.subscribe };
 
-export const favorites = { subscribe: store.subscribe };
+const panelStore = writable<{ open: boolean; opener: HTMLElement | null }>({
+  open: false,
+  opener: null,
+});
+
+export const favoritesPanel = { subscribe: panelStore.subscribe };
 
 function toFavoriteInput(quote: QuoteViewModel | null): FavoriteItem | null {
   if (!quote) return null;
@@ -36,7 +41,7 @@ export function isFavorite(quote: QuoteViewModel | null): boolean {
   if (!quote) return false;
   const target = toFavoriteInput(quote);
   if (!target) return false;
-  return get(store).some((item) => item.id === target.id);
+  return get(itemsStore).some((item) => item.id === target.id);
 }
 
 export function toggleFavorite(quote: QuoteViewModel | null): void {
@@ -58,11 +63,11 @@ export function clearFavorites(): void {
 }
 
 export function openFavorites(opener?: HTMLElement | null): void {
-  bus.emit(EVENTS.FAV_OPEN, { opener: opener ?? null });
+  panelStore.set({ open: true, opener: opener ?? null });
 }
 
 export function closeFavorites(): void {
-  bus.emit(EVENTS.FAV_CLOSE);
+  panelStore.update((state) => ({ ...state, open: false }));
 }
 
 async function shareText(text: string): Promise<void> {
@@ -88,7 +93,9 @@ export async function shareFavorite(item: FavoriteItem): Promise<void> {
 }
 
 export async function shareFavoriteById(id: string): Promise<void> {
-  const item = get(store).find((entry) => entry.id === id);
+  const item = get(itemsStore).find((entry) => entry.id === id);
   if (!item) return;
   await shareFavorite(item);
 }
+
+export const __testing__ = { toFavoriteInput };
