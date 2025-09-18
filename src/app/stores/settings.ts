@@ -12,9 +12,16 @@ import {
 export interface AppSettingsState {
   matrixEnabled: boolean;
   beepEnabled: boolean;
+  speechEnabled: boolean;
+  autoAdvanceEnabled: boolean;
+  autoAdvanceInterval: number;
   matrix: MatrixConfig;
   aura: AuraSettings;
 }
+
+const AUTO_ADVANCE_INTERVAL_MIN = 5;
+const AUTO_ADVANCE_INTERVAL_MAX = 60;
+const DEFAULT_AUTO_ADVANCE_INTERVAL = 8;
 
 const STORAGE_KEY = 'vibeme:settings:v1';
 
@@ -40,6 +47,9 @@ function resolveInitialState(): AppSettingsState {
   const baseState: AppSettingsState = {
     matrixEnabled: true,
     beepEnabled: false,
+    speechEnabled: false,
+    autoAdvanceEnabled: false,
+    autoAdvanceInterval: DEFAULT_AUTO_ADVANCE_INTERVAL,
     matrix: baseMatrix,
     aura: baseAura,
   };
@@ -73,10 +83,22 @@ function resolveInitialState(): AppSettingsState {
         ? clamp(parsedAura.size, AURA_SIZE_MIN, AURA_SIZE_MAX)
         : baseAura.size;
 
+    const persistedInterval =
+      typeof parsed.autoAdvanceInterval === 'number' && Number.isFinite(parsed.autoAdvanceInterval)
+        ? clamp(parsed.autoAdvanceInterval, AUTO_ADVANCE_INTERVAL_MIN, AUTO_ADVANCE_INTERVAL_MAX)
+        : baseState.autoAdvanceInterval;
+
     return {
       matrixEnabled:
         typeof parsed.matrixEnabled === 'boolean' ? parsed.matrixEnabled : baseState.matrixEnabled,
       beepEnabled: typeof parsed.beepEnabled === 'boolean' ? parsed.beepEnabled : baseState.beepEnabled,
+      speechEnabled:
+        typeof parsed.speechEnabled === 'boolean' ? parsed.speechEnabled : baseState.speechEnabled,
+      autoAdvanceEnabled:
+        typeof parsed.autoAdvanceEnabled === 'boolean'
+          ? parsed.autoAdvanceEnabled
+          : baseState.autoAdvanceEnabled,
+      autoAdvanceInterval: persistedInterval,
       matrix: {
         ...baseMatrix,
         ...(parsed.matrix && typeof parsed.matrix === 'object' ? parsed.matrix : {}),
@@ -126,6 +148,33 @@ export function setBeepEnabled(enabled: boolean): void {
 
 export function toggleBeepEnabled(): void {
   store.update((state) => ({ ...state, beepEnabled: !state.beepEnabled }));
+}
+
+export function setSpeechEnabled(enabled: boolean): void {
+  store.update((state) => ({ ...state, speechEnabled: enabled }));
+}
+
+export function setAutoAdvanceEnabled(enabled: boolean): void {
+  store.update((state) => ({ ...state, autoAdvanceEnabled: enabled }));
+}
+
+export function setAutoAdvanceInterval(seconds: number): void {
+  if (!Number.isFinite(seconds)) {
+    return;
+  }
+
+  const clamped = clamp(seconds, AUTO_ADVANCE_INTERVAL_MIN, AUTO_ADVANCE_INTERVAL_MAX);
+
+  store.update((state) => {
+    if (state.autoAdvanceInterval === clamped) {
+      return state;
+    }
+
+    return {
+      ...state,
+      autoAdvanceInterval: clamped,
+    };
+  });
 }
 
 export function updateMatrixConfig(patch: Partial<MatrixConfig>): void {

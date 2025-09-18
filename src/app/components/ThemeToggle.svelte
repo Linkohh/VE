@@ -1,7 +1,7 @@
 <script lang="ts">
   import { currentTheme, setThemeByKey, themes } from '../../features/theme';
 
-  export type ThemeToggleSize = 'md' | 'sm';
+  type ThemeToggleSize = 'md' | 'sm';
 
   export let size: ThemeToggleSize = 'md';
   export let className = '';
