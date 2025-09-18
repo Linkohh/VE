@@ -68,6 +68,19 @@ function normalizeFilter(payload: QuoteFilterEventPayload): QuoteFilter | null {
         delete filter.category;
       }
     }
+    if ('search' in filter) {
+      const search = filter.search;
+      if (typeof search === 'string') {
+        const trimmed = search.trim();
+        if (trimmed) {
+          filter.search = trimmed;
+        } else {
+          delete filter.search;
+        }
+      } else if (search == null) {
+        delete filter.search;
+      }
+    }
     return Object.keys(filter).length ? filter : null;
   }
   return null;
