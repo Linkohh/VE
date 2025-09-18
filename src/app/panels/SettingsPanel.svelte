@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FontAwesomeIcon as Fa } from '@fortawesome/svelte-fontawesome';
   import { faTimes } from '@fortawesome/free-solid-svg-icons';
-  import { onDestroy } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { RenderMode } from '../../features/matrix/config';
   import {
     AURA_PALETTE,
@@ -14,8 +14,11 @@
     settings,
     setAuraColor,
     setAuraSize,
+    setAutoAdvanceEnabled,
+    setAutoAdvanceInterval,
     setBeepEnabled,
     setMatrixEnabled,
+    setSpeechEnabled,
     updateMatrixConfig,
   } from '../stores/settings';
   import Modal from '../components/Modal.svelte';
@@ -27,6 +30,10 @@
   let matrixEnabled = true;
   let beepEnabled = false;
   let reducedMotion = false;
+  let speechEnabled = false;
+  let autoAdvanceEnabled = false;
+  let autoAdvanceInterval = 8;
+  let speechAvailable = false;
   let renderMode: RenderMode = RenderMode.Canvas;
   let auraColorKey = DEFAULT_AURA_SETTINGS.colorKey;
   let auraSize = DEFAULT_AURA_SETTINGS.size;
@@ -34,6 +41,9 @@
   const unsubscribe = settings.subscribe((value) => {
     matrixEnabled = value.matrixEnabled;
     beepEnabled = value.beepEnabled;
+    speechEnabled = value.speechEnabled;
+    autoAdvanceEnabled = value.autoAdvanceEnabled;
+    autoAdvanceInterval = value.autoAdvanceInterval;
     reducedMotion = value.matrix.reducedMotion;
     renderMode = value.matrix.renderMode;
     auraColorKey = value.aura.colorKey;
@@ -42,6 +52,13 @@
 
   onDestroy(() => {
     unsubscribe();
+  });
+
+  onMount(() => {
+    speechAvailable =
+      typeof window !== 'undefined' &&
+      typeof window.speechSynthesis !== 'undefined' &&
+      typeof SpeechSynthesisUtterance !== 'undefined';
   });
 
   function handleMatrixChange(event: Event): void {
@@ -54,6 +71,27 @@
     const input = event.currentTarget instanceof HTMLInputElement ? event.currentTarget : null;
     if (!input) return;
     setBeepEnabled(input.checked);
+  }
+
+  function handleSpeechChange(event: Event): void {
+    const input = event.currentTarget instanceof HTMLInputElement ? event.currentTarget : null;
+    if (!input) return;
+    setSpeechEnabled(input.checked);
+  }
+
+  function handleAutoAdvanceChange(event: Event): void {
+    const input = event.currentTarget instanceof HTMLInputElement ? event.currentTarget : null;
+    if (!input) return;
+    setAutoAdvanceEnabled(input.checked);
+  }
+
+  function handleAutoAdvanceIntervalInput(event: Event): void {
+    const input = event.currentTarget instanceof HTMLInputElement ? event.currentTarget : null;
+    if (!input) return;
+    const next = Number.parseFloat(input.value);
+    if (Number.isFinite(next)) {
+      setAutoAdvanceInterval(next);
+    }
   }
 
   function handleReducedMotionChange(event: Event): void {
@@ -110,6 +148,48 @@
         <span>Sound chime before quotes</span>
         <input type="checkbox" checked={beepEnabled} on:change={handleBeepChange} />
       </label>
+      <div class="space-y-2 rounded-2xl bg-white/5 px-4 py-3">
+        <label class="flex items-center justify-between gap-4">
+          <span>Read quotes aloud</span>
+          <input
+            type="checkbox"
+            checked={speechEnabled && speechAvailable}
+            on:change={handleSpeechChange}
+            disabled={!speechAvailable}
+            aria-disabled={!speechAvailable}
+          />
+        </label>
+        {#if !speechAvailable}
+          <p class="text-[0.7rem] text-white/50">
+            Voice playback requires a browser with speech synthesis support.
+          </p>
+        {/if}
+      </div>
+      <div class="space-y-2 rounded-2xl bg-white/5 px-4 py-3">
+        <label class="flex items-center justify-between gap-4">
+          <span>Auto-refresh quotes</span>
+          <input type="checkbox" checked={autoAdvanceEnabled} on:change={handleAutoAdvanceChange} />
+        </label>
+        <div class="text-xs text-white/60">
+          Choose how often a new quote appears automatically.
+        </div>
+        <div class="flex items-center gap-3">
+          <input
+            type="range"
+            class="w-full accent-white/80"
+            min="5"
+            max="60"
+            step="1"
+            value={autoAdvanceInterval}
+            on:input={handleAutoAdvanceIntervalInput}
+            disabled={!autoAdvanceEnabled}
+            aria-disabled={!autoAdvanceEnabled}
+          />
+          <span class="w-16 text-right text-xs font-semibold text-white/70">
+            {autoAdvanceInterval}s
+          </span>
+        </div>
+      </div>
     </section>
 
     <section class="space-y-3">
