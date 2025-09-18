@@ -2,6 +2,7 @@
   import { onDestroy, onMount } from 'svelte';
   import { initMatrix, teardownMatrix, updateMatrix } from '../../../features/matrix/engine';
   import { DEFAULTS } from '../../../features/matrix/config';
+  import { DEFAULT_AURA_SETTINGS } from '../../config/aura';
   import { settings, type AppSettingsState } from '../../stores/settings';
 
   let initialized = false;
@@ -10,6 +11,7 @@
     matrixEnabled: true,
     beepEnabled: false,
     matrix: DEFAULTS,
+    aura: { ...DEFAULT_AURA_SETTINGS },
   };
 
   function applyState(): void {
