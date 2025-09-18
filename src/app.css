@@ -1,0 +1,324 @@
+@font-face {
+    font-family: 'system-fallback';
+    src: local('system-ui'), local('-apple-system'), local('Segoe UI'), local('Roboto'), local('Arial');
+    font-display: swap;
+}
+
+:root {
+    --fc-card-w: 80px;
+    --fc-card-h: 56px;
+    --fc-font: 34px;
+    --fc-gap: 10px;
+    --fc-radius: 12px;
+    --fc-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+    --fc-divider: rgba(0, 0, 0, 0.18);
+
+    --fc-card-bg: rgba(255, 255, 255, 0.8);
+    --fc-top-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72));
+    --fc-bot-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.55));
+    --fc-top-fg: #1f2937;
+    --fc-bot-fg: #111827;
+
+    --color1: #aaaaaa;
+    --color2: #bbbbbb;
+    --color3: #cccccc;
+    --container-bg-color: rgba(255, 255, 255, 0.95);
+    --inner-box-color: rgba(255, 255, 255, 0.85);
+    --text-color-main: #374151;
+    --text-color-secondary: #6b7280;
+    --social-icon-bg: #333333;
+
+    --font-quote: 'Playfair Display', serif;
+    --font-heading: 'Poppins', sans-serif;
+    --font-author: 'Poppins', sans-serif;
+
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    --transition-theme: 1.5s ease;
+    --bounce-timing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --elastic-timing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --typewriter-speed: 0.05s;
+
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 18px;
+    --radius-full: 50%;
+
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+    --z-negative: -1;
+    --z-base: 1;
+    --z-elevated: 10;
+    --z-sticky: 100;
+    --z-fixed: 1000;
+    --z-modal-backdrop: 9999;
+    --z-modal: 10000;
+    --z-popover: 10001;
+    --z-tooltip: 10002;
+
+    --glow-size: 150px;
+    --glow-intensity: 0.8;
+    --matrix-opacity-token: 0.8;
+    --container-blur: 20px;
+    --card-radius: var(--radius-lg);
+
+    --rail-width: 120px;
+    --rail-width-collapsed: 56px;
+    --rail-edge-hotzone: 28px;
+    --rail-bg: linear-gradient(
+        135deg,
+        rgba(var(--color1-rgb), 0.5),
+        rgba(var(--color2-rgb), 0.6),
+        rgba(var(--color3-rgb), 0.5)
+    );
+    --rail-stroke: rgba(255, 255, 255, 0.1);
+    --rail-blur: 16px;
+    --rail-aura-inner: rgba(124, 58, 237, 0.35);
+    --rail-aura-outer: rgba(124, 58, 237, 0.15);
+    --rail-hide-delay: 8000ms;
+    --rail-animation-duration: var(--transition-medium);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow: hidden;
+}
+
+@supports (overflow: clip) {
+    html,
+    body {
+        overflow: clip;
+    }
+}
+
+body {
+    font-family: var(--font-heading);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background var(--transition-theme);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+body.theme-love {
+    --theme-primary: #ff758c;
+    --theme-secondary: #ff7eb3;
+    --theme-tertiary: #ff8e9e;
+}
+
+body.theme-perseverance {
+    --theme-primary: #1e3c72;
+    --theme-secondary: #2a5298;
+    --theme-tertiary: #1e4d8c;
+}
+
+body.theme-originality {
+    --theme-primary: #8e44ad;
+    --theme-secondary: #9b59b6;
+    --theme-tertiary: #d2b4de;
+}
+
+body.theme-change {
+    --theme-primary: #4CAF50;
+    --theme-secondary: #8BC34A;
+    --theme-tertiary: #CDDC39;
+}
+
+body.theme-inner_strength {
+    --theme-primary: #795548;
+    --theme-secondary: #8D6E63;
+    --theme-tertiary: #A1887F;
+}
+
+body.theme-default {
+    --theme-primary: #6366f1;
+    --theme-secondary: #8b5cf6;
+    --theme-tertiary: #a855f7;
+}
+
+body.theme-retro_neon {
+    --theme-primary: #DF3C5F;
+    --theme-secondary: #224193;
+    --theme-tertiary: #6F9BD1;
+}
+
+body.theme-desert_dusk {
+    --theme-primary: #E17888;
+    --theme-secondary: #AE3B8B;
+    --theme-tertiary: #1C5789;
+    --theme-accent: #341514;
+}
+
+body.theme-lavender_glow {
+    --theme-primary: #6B57B7;
+    --theme-secondary: #7C62C6;
+    --theme-tertiary: #E3D6FF;
+}
+
+body.theme-midnight_arcade {
+    --theme-primary: #0F1A52;
+    --theme-secondary: #4CA3E0;
+    --theme-tertiary: #6A0F3A;
+}
+
+body.theme-punchy_reds {
+    --theme-primary: #EA1D44;
+    --theme-secondary: #FF5A6E;
+    --theme-tertiary: #FF858E;
+}
+
+body.theme-synthwave_sunset {
+    --theme-primary: #ff00ff;
+    --theme-secondary: #00ffff;
+    --theme-tertiary: #ffff00;
+}
+
+body.theme-cosmic_ocean {
+    --theme-primary: #1d2f6f;
+    --theme-secondary: #374895;
+    --theme-tertiary: #83b6e8;
+}
+
+body.theme-forbidden_forest {
+    --theme-primary: #2e4a3b;
+    --theme-secondary: #6d8c54;
+    --theme-tertiary: #e3d18a;
+}
+
+body.theme-galactic_grape {
+    --theme-primary: #4a148c;
+    --theme-secondary: #9b27af;
+    --theme-tertiary: #e1bee7;
+}
+
+body.theme-belief {
+    --theme-primary: #1E40AF;
+    --theme-secondary: #3B82F6;
+    --theme-tertiary: #93C5FD;
+}
+
+body.theme-perspective {
+    --theme-primary: #065F46;
+    --theme-secondary: #059669;
+    --theme-tertiary: #6EE7B7;
+}
+
+body.theme-action {
+    --theme-primary: #DC2626;
+    --theme-secondary: #F97316;
+    --theme-tertiary: #FCD34D;
+}
+
+body.theme-growth {
+    --theme-primary: #166534;
+    --theme-secondary: #16A34A;
+    --theme-tertiary: #86EFAC;
+}
+
+body.theme-wisdom {
+    --theme-primary: #581C87;
+    --theme-secondary: #7C2D12;
+    --theme-tertiary: #D97706;
+}
+
+body.theme-discipline {
+    --theme-primary: #374151;
+    --theme-secondary: #6B7280;
+    --theme-tertiary: #D1D5DB;
+}
+
+body.theme-success {
+    --theme-primary: #B45309;
+    --theme-secondary: #D97706;
+    --theme-tertiary: #FCD34D;
+}
+
+body.theme-mindset_group {
+    --theme-primary: #7C3AED;
+    --theme-secondary: #A855F7;
+    --theme-tertiary: #C4B5FD;
+}
+
+body.theme-courage_group {
+    --theme-primary: #DC2626;
+    --theme-secondary: #F87171;
+    --theme-tertiary: #FCA5A5;
+}
+
+body.theme-productivity_group {
+    --theme-primary: #0F766E;
+    --theme-secondary: #14B8A6;
+    --theme-tertiary: #5EEAD4;
+}
+
+body.theme-relationships_group {
+    --theme-primary: #BE185D;
+    --theme-secondary: #EC4899;
+    --theme-tertiary: #F9A8D4;
+}
+
+body.theme-identity_group {
+    --theme-primary: #92400E;
+    --theme-secondary: #D97706;
+    --theme-tertiary: #FCD34D;
+}
+
+body.theme-creativity_group {
+    --theme-primary: #BE123C;
+    --theme-secondary: #F43F5E;
+    --theme-tertiary: #FDA4AF;
+}
+
+body.theme-resilience_group {
+    --theme-primary: #374151;
+    --theme-secondary: #6B7280;
+    --theme-tertiary: #D1D5DB;
+}
+
+body.theme-time_group {
+    --theme-primary: #5B21B6;
+    --theme-secondary: #7C3AED;
+    --theme-tertiary: #C4B5FD;
+}
+
+body.theme-character_group {
+    --theme-primary: #166534;
+    --theme-secondary: #16A34A;
+    --theme-tertiary: #86EFAC;
+}
+
+body.theme-learning_group {
+    --theme-primary: #B45309;
+    --theme-secondary: #D97706;
+    --theme-tertiary: #FCD34D;
+}
+
+body.theme-balance_group {
+    --theme-primary: #065F46;
+    --theme-secondary: #047857;
+    --theme-tertiary: #6EE7B7;
+}
+
+body.theme-comparison_group {
+    --theme-primary: #7E22CE;
+    --theme-secondary: #A855F7;
+    --theme-tertiary: #DDD6FE;
+}
