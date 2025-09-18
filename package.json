@@ -5,8 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:lan": "cross-env VITE_DEV_HOST=true vite",
+    "dev:https": "cross-env VITE_DEV_HTTPS=true vite",
+    "dev:lan:https": "cross-env VITE_DEV_HOST=true VITE_DEV_HTTPS=true vite",
     "build": "vite build",
     "preview": "vite preview",
+ 
     "test": "vitest run",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "eslint .",
@@ -23,7 +27,9 @@
     "@sveltejs/vite-plugin-svelte": "^6.2.0",
     "@tsconfig/svelte": "^5.0.3",
     "autoprefixer": "^10.4.21",
+    "cross-env": "^7.0.3",
     "jsdom": "^22.1.0",
+ 
     "postcss": "^8.5.6",
     "svelte": "^5.1.0",
     "svelte-check": "^4.1.4",
