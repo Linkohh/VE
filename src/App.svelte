@@ -7,9 +7,22 @@
     import SettingsPanel from './lib/components/SettingsPanel.svelte';
     import Footer from './lib/components/Footer.svelte';
     import { loadQuotes } from './lib/stores/quoteStore';
+    import { settingsStore } from './lib/stores/settingsStore';
+
+    let soundEnabled = false;
+
+    // Subscribe to settings to get sound preference
+    const unsubscribe = settingsStore.subscribe(settings => {
+        soundEnabled = settings.soundEnabled;
+    });
 
     onMount(() => {
         loadQuotes().catch((error) => console.error('Failed to load quotes', error));
+
+        // Clean up subscription
+        return () => {
+            unsubscribe();
+        };
     });
 </script>
 
@@ -24,9 +37,15 @@
     <SettingsPanel />
 </div>
 
+{#if soundEnabled}
 <audio id="generate" src="/sounds/generate.mp3" preload="auto" data-respect-beep></audio>
 <audio id="favorite" src="/sounds/favorite.mp3" preload="auto" data-respect-beep></audio>
 <audio id="previous" src="/sounds/previous.mp3" preload="auto" data-respect-beep></audio>
+{:else}
+<audio id="generate" data-respect-beep></audio>
+<audio id="favorite" data-respect-beep></audio>
+<audio id="previous" data-respect-beep></audio>
+{/if}
 
 <style>
     .app-shell {

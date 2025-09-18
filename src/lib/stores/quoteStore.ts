@@ -19,12 +19,39 @@ export const currentQuote = derived([allQuotes, currentQuoteIndex], ([$allQuotes
     return $allQuotes[normalizedIndex];
 });
 
+async function fetchWithRetry(url: string, retries = 3): Promise<Response> {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch(url, { cache: 'no-cache' });
+            if (response.ok) return response;
+            if (i === retries - 1) throw new Error('Network response was not ok');
+        } catch (error) {
+            if (i === retries - 1) throw error;
+            await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1))); // Exponential backoff
+        }
+    }
+    throw new Error('Failed to fetch after retries');
+}
+
 export async function loadQuotes(): Promise<void> {
     try {
-        const response = await fetch('/data/quotes.json', { cache: 'no-cache' });
-        if (!response.ok) throw new Error('Network response was not ok');
-        const quotes: Quote[] = await response.json();
-        if (Array.isArray(quotes)) {
+        const response = await fetchWithRetry('/data/quotes.json');
+        const data = await response.json();
+
+        // Handle both flat array and categorized structure
+        let quotes: Quote[] = [];
+        if (Array.isArray(data)) {
+            quotes = data;
+        } else if (data.categories && typeof data.categories === 'object') {
+            // Flatten categories into a single array, adding category to each quote
+            for (const [category, categoryQuotes] of Object.entries(data.categories)) {
+                if (Array.isArray(categoryQuotes)) {
+                    quotes.push(...categoryQuotes.map((q: Quote) => ({ ...q, category })));
+                }
+            }
+        }
+
+        if (quotes.length > 0) {
             allQuotes.set(quotes);
             return;
         }
@@ -40,9 +67,15 @@ export async function loadQuotes(): Promise<void> {
                 if (fallback) {
                     allQuotes.set(fallback);
                 }
+                // Clean up the script element to prevent memory leak
+                document.head.removeChild(script);
                 resolve();
             };
-            script.onerror = () => resolve();
+            script.onerror = () => {
+                // Clean up the script element even on error
+                document.head.removeChild(script);
+                resolve();
+            };
             document.head.appendChild(script);
         });
     }
