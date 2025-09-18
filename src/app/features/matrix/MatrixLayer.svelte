@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
   import { initMatrix, teardownMatrix, updateMatrix } from '../../../features/matrix/engine';
-  import { DEFAULTS, RenderMode } from '../../../features/matrix/config';
+ 
   import { settings, type AppSettingsState } from '../../stores/settings';
   import AuraGlow from './AuraGlow.svelte';
 
@@ -11,6 +11,7 @@
     matrixEnabled: true,
     beepEnabled: false,
     matrix: DEFAULTS,
+    aura: { ...DEFAULT_AURA_SETTINGS },
   };
 
   function applyState(): void {

@@ -1,3 +1,5 @@
+import { writable, type Readable } from 'svelte/store';
+
 export interface Theme {
   key: string;
   gradient1: string;
@@ -5,6 +7,8 @@ export interface Theme {
   gradient3: string;
   glow: string;
 }
+
+const STORAGE_KEY = 'vibeme.theme';
 
 const DEFAULT_THEME: Theme = {
   key: 'synthwave',
@@ -32,9 +36,48 @@ export const themes: Theme[] = [
   },
 ];
 
-export let current: Theme = DEFAULT_THEME;
+function readStoredThemeKey(): string | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    return window.localStorage.getItem(STORAGE_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export function getThemeByKey(key: string): Theme | undefined {
+  return themes.find((item) => item.key === key);
+}
+
+function loadInitialTheme(): Theme {
+  const storedKey = readStoredThemeKey();
+  if (storedKey) {
+    const storedTheme = getThemeByKey(storedKey);
+    if (storedTheme) {
+      return storedTheme;
+    }
+  }
+  return DEFAULT_THEME;
+}
+
+let currentThemeValue: Theme = loadInitialTheme();
+
+const internalThemeStore = writable<Theme>(currentThemeValue);
+export const currentTheme: Readable<Theme> = {
+  subscribe: internalThemeStore.subscribe,
+};
+
+function persistThemeKey(key: string): void {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(STORAGE_KEY, key);
+  } catch {
+    /* ignore storage failures */
+  }
+}
 
 function updateDocument(theme: Theme): void {
+  if (typeof document === 'undefined') return;
   const root = document.documentElement;
   root.style.setProperty('--gradient-1', theme.gradient1);
   root.style.setProperty('--gradient-2', theme.gradient2);
@@ -43,27 +86,44 @@ function updateDocument(theme: Theme): void {
   document.body.dataset.theme = theme.key;
 }
 
-export function applyTheme(theme: Theme): void {
-  current = theme;
-  updateDocument(theme);
+export function getCurrentTheme(): Theme {
+  return currentThemeValue;
 }
 
-export function nextTheme(): Theme {
-  const index = themes.findIndex((item) => item.key === current.key);
-  const next = themes[(index + 1) % themes.length];
-  applyTheme(next);
-  return next;
+export function getCurrentThemeKey(): string {
+  return currentThemeValue.key;
+}
+
+export function applyTheme(theme: Theme, options: { persist?: boolean } = {}): Theme {
+  const { persist = true } = options;
+  currentThemeValue = theme;
+  internalThemeStore.set(theme);
+  if (persist) {
+    persistThemeKey(theme.key);
+  }
+  updateDocument(theme);
+  return theme;
+}
+
+export function setTheme(theme: Theme): Theme {
+  return applyTheme(theme);
 }
 
 export function setThemeByKey(key: string): Theme | undefined {
-  const theme = themes.find((item) => item.key === key);
+  const theme = getThemeByKey(key);
   if (theme) {
     applyTheme(theme);
-    return theme;
   }
-  return undefined;
+  return theme;
 }
 
-if (typeof window !== 'undefined') {
-  updateDocument(current);
+export function nextTheme(): Theme {
+  const currentKey = getCurrentThemeKey();
+  const index = themes.findIndex((item) => item.key === currentKey);
+  const next = index >= 0 ? themes[(index + 1) % themes.length] : themes[0];
+  return applyTheme(next);
+}
+
+if (typeof document !== 'undefined') {
+  updateDocument(currentThemeValue);
 }
