@@ -7,7 +7,7 @@ import { defineConfig } from 'vite';
 function resolveHost() {
   const value = process.env.VITE_DEV_HOST;
 
-  if (!value || value.trim().length === 0) {
+  if (!value || value.trim().length === 0 || value === 'false') {
     return undefined;
   }
 
@@ -15,8 +15,8 @@ function resolveHost() {
     return true;
   }
 
-  if (value === 'false') {
-    return undefined;
+  if (value === 'lan') {
+    return '0.0.0.0';
   }
 
   return value;
@@ -40,6 +40,13 @@ function resolveHttps() {
   const certResolved = path.resolve(certPath);
 
   try {
+    if (!fs.existsSync(keyResolved) || !fs.existsSync(certResolved)) {
+      console.warn(
+        '[vite] HTTPS is enabled but the provided key/cert paths do not exist. Falling back to a self-signed certificate.',
+      );
+      return true;
+    }
+
     return {
       key: fs.readFileSync(keyResolved),
       cert: fs.readFileSync(certResolved),
