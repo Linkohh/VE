@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+import { onMount } from 'svelte';
   import { fade, fly, scale } from 'svelte/transition';
   import { quintIn, quintOut } from 'svelte/easing';
   import type { QuoteViewModel } from '../stores/quote';
@@ -7,11 +7,23 @@
 
   export let quote: QuoteViewModel | null = null;
 
-  let reduceMotion = false;
+let reduceMotion = false;
+let transitionDepth = 0;
+let isTransitioning = false;
 
-  function motion(duration: number): number {
-    return reduceMotion ? 0 : duration;
-  }
+function motion(duration: number): number {
+  return reduceMotion ? 0 : duration;
+}
+
+function markTransitionStart(): void {
+  transitionDepth += 1;
+  isTransitioning = transitionDepth > 0;
+}
+
+function markTransitionEnd(): void {
+  transitionDepth = Math.max(0, transitionDepth - 1);
+  isTransitioning = transitionDepth > 0;
+}
 
   onMount(() => {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
@@ -42,16 +54,23 @@
   {#key quote?.id ?? quote?.text ?? 'loading'}
     <div
       class="quote-animator"
+      class:is-transitioning={isTransitioning}
       in:fly={{ y: 36, duration: motion(420), easing: quintOut }}
       out:fly={{ y: -28, duration: motion(320), easing: quintIn }}
+      on:introstart={markTransitionStart}
+      on:outrostart={markTransitionStart}
+      on:introend={markTransitionEnd}
+      on:outroend={markTransitionEnd}
     >
       <div
         class="quote-animator-shell"
+        class:is-transitioning={isTransitioning}
         in:scale={{ start: 0.92, duration: motion(420), easing: quintOut }}
         out:scale={{ start: 0.92, duration: motion(260), easing: quintIn }}
       >
         <div
           class="quote-animator-body"
+          class:is-transitioning={isTransitioning}
           in:fade={{ duration: motion(360) }}
           out:fade={{ duration: motion(220) }}
         >
@@ -81,6 +100,12 @@
     display: flex;
     justify-content: center;
     position: relative;
+  }
+
+  .quote-animator.is-transitioning,
+  .quote-animator-shell.is-transitioning,
+  .quote-animator-body.is-transitioning {
+    will-change: transform, opacity;
   }
 
   .quote-animator-shell {

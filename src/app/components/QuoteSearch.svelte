@@ -73,7 +73,7 @@
 </script>
 
 <form class="quote-search" role="search" aria-label="Search quotes" on:submit={handleSubmit}>
-  <div class="search-shell" class:is-loading={isLoading}>
+  <div class="search-shell" class:is-loading={isLoading} aria-busy={isLoading}>
     <span class="search-icon" aria-hidden="true">
       <Fa icon={faSearch} class="h-4 w-4 flex-shrink-0 text-white/50" />
     </span>
@@ -86,9 +86,14 @@
       autocomplete="off"
       spellcheck="false"
       enterkeyhint="search"
+      maxlength="100"
       bind:value={query}
       on:input={handleInput}
     />
+
+    {#if isLoading}
+      <span class="loading-indicator" role="status" aria-live="polite">Searching…</span>
+    {/if}
 
     {#if query}
       <button
@@ -129,6 +134,13 @@
     backdrop-filter: blur(18px);
     position: relative;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .loading-indicator {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72);
+    letter-spacing: 0.04em;
   }
 
   .search-icon {
