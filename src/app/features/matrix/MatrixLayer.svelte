@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
   import { initMatrix, teardownMatrix, updateMatrix } from '../../../features/matrix/engine';
-  import { DEFAULTS } from '../../../features/matrix/config';
-  import { DEFAULT_AURA_SETTINGS } from '../../config/aura';
+ 
   import { settings, type AppSettingsState } from '../../stores/settings';
+  import AuraGlow from './AuraGlow.svelte';
 
   let initialized = false;
   let mounted = false;
@@ -19,7 +19,9 @@
       return;
     }
 
-    if (state.matrixEnabled) {
+    const wantsCanvas = state.matrixEnabled && state.matrix.renderMode === RenderMode.Canvas;
+
+    if (wantsCanvas) {
       if (!initialized) {
         initMatrix(state.matrix);
         initialized = true;
@@ -51,3 +53,7 @@
     unsubscribe();
   });
 </script>
+
+{#if state.matrixEnabled && state.matrix.renderMode === RenderMode.Minimal}
+  <AuraGlow />
+{/if}
