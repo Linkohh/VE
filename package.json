@@ -26,6 +26,7 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^6.2.0",
     "@tsconfig/svelte": "^5.0.3",
+    "@testing-library/svelte": "^5.2.4",
     "autoprefixer": "^10.4.21",
     "cross-env": "^7.0.3",
     "jsdom": "^22.1.0",

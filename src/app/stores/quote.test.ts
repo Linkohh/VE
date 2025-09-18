@@ -9,7 +9,7 @@ import {
   __testing__,
 } from './quote';
 
-const { clearState } = __testing__;
+const { clearState, normalizeFilter } = __testing__;
 
 describe('quote store', () => {
   beforeEach(() => {
@@ -49,5 +49,36 @@ describe('quote store', () => {
     if (cleared?.category) {
       expect(cleared.category.toLowerCase()).not.toBe('productivity');
     }
+  });
+
+  describe('normalizeFilter', () => {
+    it('trims category strings and ignores all keyword', () => {
+      expect(normalizeFilter('  focus  ')).toEqual({ category: 'focus' });
+      expect(normalizeFilter('all')).toBeNull();
+      expect(normalizeFilter('  ALL ')).toBeNull();
+    });
+
+    it('cleans filter objects by removing empty values', () => {
+      expect(
+        normalizeFilter({
+          category: '  inspiration  ',
+          search: '   deep work   ',
+        }),
+      ).toEqual({ category: 'inspiration', search: 'deep work' });
+
+      expect(
+        normalizeFilter({
+          category: ' all ',
+          search: '   ',
+        }),
+      ).toBeNull();
+
+      expect(
+        normalizeFilter({
+          category: null,
+          search: undefined,
+        }),
+      ).toBeNull();
+    });
   });
 });

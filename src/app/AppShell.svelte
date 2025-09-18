@@ -11,6 +11,8 @@ import SettingsPanel from './panels/SettingsPanel.svelte';
 import { currentQuote, ensureInitialQuote, requestNextQuote, type QuoteViewModel } from './stores/quote';
 import { settings, setSpeechEnabled } from './stores/settings';
 
+const currentYear = new Date().getFullYear();
+
   let quote: QuoteViewModel | null = null;
 let settingsOpen = false;
 let autoAdvanceEnabled = false;
@@ -180,7 +182,7 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
   </main>
 
   <footer class="app-footer">
-    <p>&copy; 2025 Vibe Me. All Rights Reserved.</p>
+    <p>&copy; {currentYear} Vibe Me. All Rights Reserved.</p>
   </footer>
 </div>
 
