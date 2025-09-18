@@ -2,13 +2,19 @@
   "name": "vibeme",
   "version": "1.0.0",
   "description": "A beautiful motivational quote generator with dynamic themes and inspiring messages",
+  "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:lan": "cross-env VITE_DEV_HOST=true vite",
+    "dev:https": "cross-env VITE_DEV_HTTPS=true vite",
+    "dev:lan:https": "cross-env VITE_DEV_HOST=true VITE_DEV_HTTPS=true vite",
     "build": "vite build",
     "preview": "vite preview",
-    "sync-quotes": "node scripts/sync-quotes.js",
+    "preview:https": "cross-env VITE_DEV_HTTPS=true vite preview",
     "test": "vitest run",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "lint": "eslint .",
+    "security:audit": "npm audit --audit-level=moderate"
   },
   "keywords": [
     "quotes",
@@ -18,14 +24,33 @@
   "author": "VibeMe",
   "license": "ISC",
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^3.0.2",
-    "@tsconfig/svelte": "^5.0.0",
+    "@sveltejs/vite-plugin-svelte": "^6.2.0",
+    "@tsconfig/svelte": "^5.0.3",
+    "autoprefixer": "^10.4.21",
     "jsdom": "^22.1.0",
-    "svelte": "^4.2.12",
-    "svelte-check": "^3.6.7",
+    "cross-env": "^7.0.3",
+    "postcss": "^8.5.6",
+    "svelte": "^5.1.0",
+    "svelte-check": "^4.1.4",
+    "tailwindcss": "^3.4.14",
     "tslib": "^2.6.2",
     "typescript": "^5.4.2",
-    "vite": "^5.2.11",
-    "vitest": "^0.34.6"
+    "vite": "^7.1.5",
+    "vitest": "^3.2.4",
+    "@eslint/js": "^9.35.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-svelte": "^3.12.3",
+    "globals": "^16.4.0",
+    "typescript-eslint": "^8.44.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.0.1",
+    "@fortawesome/free-solid-svg-icons": "^7.0.1",
+    "@fortawesome/svelte-fontawesome": "^0.2.4",
+    "@fontsource/merriweather": "^5.2.0",
+    "@fontsource/playfair-display": "^5.2.0",
+    "@fontsource/poppins": "^5.2.0",
+    "@fontsource/roboto-mono": "^5.2.0"
   }
 }

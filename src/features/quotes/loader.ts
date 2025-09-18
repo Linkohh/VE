@@ -1,6 +1,6 @@
-import { QUOTES_PROMISE } from '../../quotes.js';
+import catalog from '../../../data/quotes.json';
 import { dedupeQuotes, mergeCustomQuotes, normalizeQuotes } from './data';
-import { Quote, QuoteSource } from './types';
+import type { Quote, QuoteSource } from './types';
 
 const FALLBACK_QUOTES: Quote[] = [
   { text: "You're not behind—you're just loading.", author: 'Lincoln Ogden', category: 'perseverance' },
@@ -13,16 +13,12 @@ export interface QuotesLoadResult {
   source: QuoteSource;
 }
 
+const BASE_QUOTES: Quote[] = normalizeQuotes(catalog as unknown);
+
 export async function loadQuotes(customQuotes: Quote[]): Promise<QuotesLoadResult> {
-  try {
-    const raw = await QUOTES_PROMISE;
-    const normalized = normalizeQuotes(raw);
-    if (normalized.length > 0) {
-      const merged = mergeCustomQuotes(normalized, customQuotes);
-      return { quotes: dedupeQuotes(merged), source: 'unified-loader' };
-    }
-  } catch (err) {
-    console.warn('[quotes] unified loader failed', err);
+  if (BASE_QUOTES.length > 0) {
+    const merged = mergeCustomQuotes(BASE_QUOTES, customQuotes);
+    return { quotes: dedupeQuotes(merged), source: 'catalog' };
   }
 
   const mergedFallback = mergeCustomQuotes(FALLBACK_QUOTES, customQuotes);

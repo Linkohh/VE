@@ -1,4 +1,4 @@
-import { Quote, QuoteRating, QuoteRatingMap, RatingDirection } from './types';
+import type { Quote, QuoteRating, QuoteRatingMap, RatingDirection } from './types';
 
 const STORAGE_KEY = 'vibeme-ratings';
 

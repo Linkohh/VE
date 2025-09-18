@@ -1,16 +1,27 @@
 <script lang="ts">
+  import { FontAwesomeIcon as Fa } from '@fortawesome/svelte-fontawesome';
+  import { writable } from 'svelte/store';
+  import {
+    faCopy,
+    faHeart,
+    faHeartCirclePlus,
+    faShareNodes,
+    faThumbsDown,
+    faThumbsUp,
+    faWandMagicSparkles,
+  } from '@fortawesome/free-solid-svg-icons';
   import type { Quote } from '../../features/quotes/types';
   import { bumpRating, getRating, loadRatings, persistRatings } from '../../features/quotes/rating';
-  import { bus, EVENTS } from '../../lib/bus';
   import { isFavorite, openFavorites, toggleFavorite } from '../stores/favorites';
   import type { QuoteViewModel } from '../stores/quote';
   import { requestNextQuote } from '../stores/quote';
 
   const ratings = loadRatings();
+  const ratingState = writable({ up: 0, down: 0 });
 
   export let quote: QuoteViewModel | null = null;
 
-  $: currentRating = quote ? getRating(ratings, toQuote(quote)) : { up: 0, down: 0 };
+  $: ratingState.set(quote ? getRating(ratings, toQuote(quote)) : { up: 0, down: 0 });
   $: favoriteActive = isFavorite(quote);
 
   function toQuote(value: QuoteViewModel): Quote {
@@ -63,15 +74,19 @@
   }
 
   function handleGenerate(): void {
-    requestNextQuote({ source: 'svelte:controls' });
+    requestNextQuote({ reason: 'controls' });
   }
 
   function rate(direction: 'up' | 'down'): void {
     if (!quote) return;
     const next = bumpRating(ratings, toQuote(quote), direction);
     persistRatings(ratings);
-    currentRating = next;
-    bus.emit(EVENTS.QUOTE_RATED, { direction, quote });
+    ratingState.set(next);
+  }
+
+  function handleOpenFavorites(event: MouseEvent): void {
+    const opener = event.currentTarget instanceof HTMLElement ? event.currentTarget : null;
+    openFavorites(opener ?? undefined);
   }
 </script>
 
@@ -83,7 +98,7 @@
       aria-label="Copy quote"
       on:click={copyQuote}
     >
-      <i class="fas fa-copy text-white/80 group-hover:text-white" aria-hidden="true" />
+      <Fa icon={faCopy} class="h-4 w-4 text-white/80 group-hover:text-white" />
     </button>
 
     <button
@@ -92,9 +107,9 @@
       aria-label={favoriteActive ? 'Remove from favorites' : 'Add to favorites'}
       on:click={handleFavorite}
     >
-      <i
-        class={`fas ${favoriteActive ? 'fa-heart' : 'fa-heart-circle-plus'} text-white`}
-        aria-hidden="true"
+      <Fa
+        icon={favoriteActive ? faHeart : faHeartCirclePlus}
+        class={`h-4 w-4 ${favoriteActive ? 'text-white' : 'text-white/80 group-hover:text-white'}`}
       />
     </button>
 
@@ -104,14 +119,14 @@
       aria-label="Share quote"
       on:click={shareQuote}
     >
-      <i class="fas fa-share-nodes text-white/80 group-hover:text-white" aria-hidden="true" />
+      <Fa icon={faShareNodes} class="h-4 w-4 text-white/80 group-hover:text-white" />
     </button>
 
     <button
       type="button"
       class="group rounded-full bg-white/10 px-4 py-2 text-sm transition hover:bg-white/20"
       aria-label="Open favorites"
-      on:click={(event) => openFavorites(event.currentTarget as HTMLElement)}
+      on:click={handleOpenFavorites}
     >
       Favorites
     </button>
@@ -124,8 +139,8 @@
       aria-label="Rate quote positively"
       on:click={() => rate('up')}
     >
-      <i class="fas fa-thumbs-up" aria-hidden="true" />
-      <span>{currentRating.up}</span>
+      <Fa icon={faThumbsUp} class="h-4 w-4" />
+      <span>{$ratingState.up}</span>
     </button>
 
     <button
@@ -134,8 +149,8 @@
       aria-label="Rate quote negatively"
       on:click={() => rate('down')}
     >
-      <i class="fas fa-thumbs-down" aria-hidden="true" />
-      <span>{currentRating.down}</span>
+      <Fa icon={faThumbsDown} class="h-4 w-4" />
+      <span>{$ratingState.down}</span>
     </button>
   </div>
 
@@ -144,7 +159,7 @@
     class="group inline-flex items-center gap-2 rounded-full bg-white/15 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-white/25"
     on:click={handleGenerate}
   >
-    <i class="fas fa-wand-magic-sparkles text-white/80 group-hover:text-white" aria-hidden="true" />
+    <Fa icon={faWandMagicSparkles} class="h-4 w-4 text-white/80 group-hover:text-white" />
     New Vibe
   </button>
 </div>
