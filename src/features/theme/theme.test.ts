@@ -1,13 +1,20 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { applyTheme, nextTheme, setThemeByKey, current, themes } from './index';
+import { get } from 'svelte/store';
+import {
+  applyTheme,
+  currentTheme,
+  getCurrentTheme,
+  nextTheme,
+  setThemeByKey,
+  themes,
+} from './index';
 
 describe('theme', () => {
   beforeEach(() => {
-    // reset to first theme before each test
     setThemeByKey(themes[0].key);
   });
 
-  it('applyTheme updates current theme', () => {
+  it('applyTheme updates current theme and store', () => {
     const theme = {
       key: 'test',
       gradient1: '#111111',
@@ -15,39 +22,40 @@ describe('theme', () => {
       gradient3: '#333333',
       glow: '#ffffff',
     };
-    applyTheme(theme);
-    expect(current).toBe(theme);
+    applyTheme(theme, { persist: false });
+    expect(getCurrentTheme()).toBe(theme);
+    expect(get(currentTheme)).toBe(theme);
   });
 
   it('nextTheme selects next theme and updates current', () => {
-    const first = current;
+    const first = getCurrentTheme();
     const second = nextTheme();
-    expect(current).toBe(second);
-    expect(current).not.toBe(first);
+    expect(getCurrentTheme()).toBe(second);
+    expect(getCurrentTheme()).not.toBe(first);
 
     const third = nextTheme();
-    expect(current).toBe(third);
-    expect(current).not.toBe(first);
+    expect(getCurrentTheme()).toBe(third);
+    expect(getCurrentTheme()).not.toBe(first);
 
-    // cycle back
     const looped = nextTheme();
-    expect(current).toBe(looped);
-    expect(current).toBe(first);
+    expect(getCurrentTheme()).toBe(looped);
+    expect(getCurrentTheme()).toBe(first);
   });
 
   it('setThemeByKey selects theme and updates current', () => {
     const target = themes[1];
     setThemeByKey(target.key);
-    expect(current).toBe(target);
+    expect(getCurrentTheme()).toBe(target);
+    expect(get(currentTheme)).toBe(target);
   });
 
-  it('allows selecting next theme via helper', () => {
-    const first = current;
+  it('resets to a specific theme after cycling', () => {
+    const first = getCurrentTheme();
     const next = nextTheme();
-    expect(current).toBe(next);
-    expect(current).not.toBe(first);
+    expect(getCurrentTheme()).toBe(next);
+    expect(getCurrentTheme()).not.toBe(first);
 
     setThemeByKey(first.key);
-    expect(current).toBe(first);
+    expect(getCurrentTheme()).toBe(first);
   });
 });
