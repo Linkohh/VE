@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FontAwesomeIcon as Fa } from '@fortawesome/svelte-fontawesome';
-  import { faBookmark, faGear, faPalette } from '@fortawesome/free-solid-svg-icons';
-  import { nextTheme } from '../../features/theme';
+  import { faBookmark, faGear } from '@fortawesome/free-solid-svg-icons';
+  import ThemeToggle from './ThemeToggle.svelte';
   import { openFavorites } from '../stores/favorites';
   import type { QuoteViewModel } from '../stores/quote';
 
@@ -9,10 +9,6 @@
   export let onOpenSettings: () => void = () => {};
 
   let favoritesButton: HTMLButtonElement | null = null;
-
-  function handleTheme(): void {
-    nextTheme();
-  }
 
   function handleFavorites(): void {
     openFavorites(favoritesButton ?? undefined);
@@ -28,14 +24,7 @@
   </div>
 
   <div class="flex items-center gap-2">
-    <button
-      type="button"
-      class="rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
-      aria-label="Shuffle theme"
-      on:click={handleTheme}
-    >
-      <Fa icon={faPalette} class="h-4 w-4" />
-    </button>
+    <ThemeToggle />
 
     <button
       type="button"

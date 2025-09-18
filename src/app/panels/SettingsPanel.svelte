@@ -19,6 +19,7 @@
     updateMatrixConfig,
   } from '../stores/settings';
   import Modal from '../components/Modal.svelte';
+  import ThemeToggle from '../components/ThemeToggle.svelte';
 
   export let open = false;
   export let onClose: () => void = () => {};
@@ -94,6 +95,13 @@
   <div class="space-y-6 px-5 py-4 text-sm text-white/80">
     <section class="space-y-3">
       <h3 class="text-xs font-semibold uppercase tracking-wide text-white/60">General</h3>
+      <div class="flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-white/5 px-4 py-3">
+        <div>
+          <span class="text-sm text-white">Theme</span>
+          <p class="text-xs text-white/50">Choose your vibe palette</p>
+        </div>
+        <ThemeToggle size="sm" />
+      </div>
       <label class="flex items-center justify-between gap-4 rounded-2xl bg-white/5 px-4 py-3">
         <span>Visual effects</span>
         <input type="checkbox" checked={matrixEnabled} on:change={handleMatrixChange} />
