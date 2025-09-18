@@ -17,10 +17,13 @@
 
 <header class="flex flex-wrap items-center justify-between gap-4 text-white">
   <div>
-    <h1 class="text-3xl font-semibold tracking-tight heading-font">VibeMe</h1>
-    {#if quote?.category}
-      <p class="text-sm text-white/70">Exploring {quote.category} vibes</p>
-    {/if}
+    <div class="header-title-container">
+      <h1 class="title-vibe">Vibe</h1>
+      <h1 class="title-me">Me</h1>
+    </div>
+    <p class="tagline">
+      {quote ? 'Tune into your next vibe.' : 'Preparing your first vibe...'}
+    </p>
   </div>
 
   <div class="flex items-center gap-2">
@@ -46,3 +49,34 @@
     </button>
   </div>
 </header>
+
+<style>
+  .header-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+  }
+
+  .title-vibe,
+  .title-me {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+
+  .title-vibe {
+    color: #ff00ff;
+  }
+
+  .title-me {
+    color: #00ffff;
+  }
+
+  .tagline {
+    margin: 0;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+</style>
