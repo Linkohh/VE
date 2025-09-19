@@ -194,6 +194,16 @@
 })();
 
 // ===== GLOBAL CONFIGURATION =====
+function safeParse(raw, fallback, label) {
+    if (!raw) return fallback;
+    try {
+        return JSON.parse(raw);
+    } catch (err) {
+        console.warn(`[storage] Failed to parse ${label}:`, err);
+        return fallback;
+    }
+}
+
 const VibeMe = {
     // Application state
     state: {
@@ -202,12 +212,12 @@ const VibeMe = {
         isPaused: false,
         timerInterval: null,
         effectsEnabled: true,
-        isDarkMode: JSON.parse(localStorage.getItem('vibeme-dark-mode') || 'false'),
-        favorites: JSON.parse(localStorage.getItem('vibeme-favorites') || '[]'),
-        customQuotes: JSON.parse(localStorage.getItem('vibeme-custom-quotes') || '[]'),
-        quoteRatings: JSON.parse(localStorage.getItem('vibeme-ratings') || '{}'),
-        stats: JSON.parse(localStorage.getItem('vibeme-stats') || '{"quotesGenerated": 0, "quotesShared": 0, "dayStreak": 0, "lastVisit": null}'),
-        beepEnabled: JSON.parse(localStorage.getItem('vibeme-beep-enabled') || 'true'),
+        isDarkMode: safeParse(localStorage.getItem('vibeme-dark-mode'), false, 'dark mode preference'),
+        favorites: safeParse(localStorage.getItem('vibeme-favorites'), [], 'favorites list'),
+        customQuotes: safeParse(localStorage.getItem('vibeme-custom-quotes'), [], 'custom quotes'),
+        quoteRatings: safeParse(localStorage.getItem('vibeme-ratings'), {}, 'quote ratings'),
+        stats: safeParse(localStorage.getItem('vibeme-stats'), {quotesGenerated: 0, quotesShared: 0, dayStreak: 0, lastVisit: null}, 'stats'),
+        beepEnabled: safeParse(localStorage.getItem('vibeme-beep-enabled'), true, 'beep preference'),
         collapseTimer: null
     },
 

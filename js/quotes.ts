@@ -6345,5 +6345,3 @@ const quotesData: QuotesData =
 
 
 window.quotesData = quotesData;
-
-export {};
