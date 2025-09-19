@@ -1,0 +1,1713 @@
+/* =============================
+   Date pill (default desktop)
+   ============================= */
+.fc-date {
+  position: fixed;
+  top: 1rem;
+  left: 8rem;
+  z-index: 10001;
+  padding: 0.4rem 0.6rem;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.35);
+  @include glass-effect(6px, 120%);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+
+  html:not([data-theme="dark"]) & {
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  @media (forced-colors: active) {
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
+}
+
+/* Numeric stability */
+#date-time {
+  font-variant-numeric: tabular-nums;
+}
+/* css/style.css - VibeMe Enhanced Styles */
+
+/* ===== QUOTE TEXT ANIMATIONS ===== */
+.quote-animation-container {
+    perspective: 1000px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Typewriter effect */
+.typewriter-active {
+    overflow: hidden;
+    border-right: 3px solid var(--text-color-main);
+    white-space: nowrap;
+    animation: typewriter 2s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+
+
+/* Floating micro-animation */
+.floating {
+    animation: floating 3s ease-in-out infinite;
+}
+
+
+/* Pulse effect for favorites */
+.pulse-favorite {
+    animation: pulseFavorite 0.6s var(--elastic-timing);
+}
+
+
+/* Button press effect */
+.button-press {
+    animation: buttonPress 0.15s var(--bounce-timing);
+}
+
+
+.quote-text-animate {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+}
+
+.exit-active { 
+    animation: exitAnimation 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; 
+}
+
+
+.enter-active { 
+    animation: enterAnimation 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
+}
+
+
+/* Author animations */
+.author-animate { 
+    transform-origin: center bottom; 
+    will-change: transform, opacity; 
+}
+
+.author-exit { 
+    animation: authorExit 0.6s ease-out forwards; 
+}
+
+
+.author-enter { 
+    animation: authorEnter 0.6s ease-in forwards; 
+}
+
+/* ===== GLITCH EFFECT ===== */
+.glitch-effect { 
+    position: relative; 
+}
+
+.glitch-effect::before,
+.glitch-effect::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.glitch-effect::before { 
+    color: #f0f; 
+    z-index: var(--z-negative); 
+    animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; 
+}
+
+.glitch-effect::after { 
+    color: #0ff; 
+    z-index: calc(var(--z-negative) - 1); 
+    animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both; 
+}
+
+/* ===== GENERATE BUTTON ===== */
+.generate-btn {
+    width: 110px;
+    height: 110px;
+    padding: 5px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--color1), var(--color2));
+    color: white;
+    border: none;
+    position: relative;
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+    animation: float 6s ease-in-out infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: none;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: var(--z-elevated);
+}
+
+.generate-btn::before {
+    content: '';
+    position: absolute;
+    z-index: var(--z-negative);
+    inset: -3px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(60deg, var(--color1), var(--color2), var(--color3), var(--color1));
+    background-size: 300% 300%;
+    animation: gradient-border-flow 4s linear infinite;
+    filter: blur(2px);
+}
+
+.generate-btn i {
+    font-size: 1.4rem;
+    margin-bottom: 0.2rem;
+    margin-right: 0;
+}
+
+.generate-btn span {
+    font-size: 0.7rem;
+    line-height: 1.1;
+    display: block;
+    font-weight: 600;
+}
+
+.generate-btn:hover {
+    transform: translatey(0px);
+}
+
+.generate-btn:hover::before {
+    filter: blur(4px);
+}
+
+.generate-btn:active {
+    transform: translatey(2px);
+}
+
+/* ===== SOCIAL SHARE FAN-OUT ===== */
+#shareHubBtn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  width: 60px; /* Smaller than generate-btn */
+  height: 60px;
+  border-radius: var(--radius-full);
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  cursor:pointer;
+  position: relative;
+  isolation:isolate;
+  background: linear-gradient(135deg, var(--color1), var(--color2));
+  box-shadow: var(--shadow-md);
+  transition: transform .2s cubic-bezier(.175,.885,.32,1.275), filter .2s ease, box-shadow .2s ease;
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Animated gradient ring from generate-btn */
+#shareHubBtn::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:inherit;
+  z-index:-1;
+  background: linear-gradient(60deg, var(--color1), var(--color2), var(--color3), var(--color1));
+  background-size: 300% 300%;
+  filter: blur(3px);
+  opacity:.9;
+  animation: gradient-border-flow 6s linear infinite;
+}
+
+#shareHubBtn:hover{
+  transform: translateY(-1px) scale(1.03);
+}
+
+#shareHubBtn:active{
+  transform: translateY(1px) scale(.97);
+  box-shadow: 0 8px 18px rgba(0,0,0,.18) inset;
+}
+
+#shareFanContainer {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  position: relative; /* For child positioning */
+  height: 44px; /* Set a fixed height to avoid layout shifts */
+}
+
+/* Container reveal pulse */
+#shareFanContainer.reveal {
+  animation: container-pop .28s cubic-bezier(.2,.7,.2,1.1);
+}
+
+
+.fan-btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: 44px; /* Good touch target size */
+  height: 44px;
+  border-radius: var(--radius-full);
+  font-size: 1.2rem; /* Icon size */
+  color: var(--text-color-main);
+  background: color-mix(in oklab, var(--color2) 20%, transparent);
+  border: 1px solid rgba(255,255,255,.18);
+  @include glass-effect(10px, 140%);
+  box-shadow: var(--shadow-sm);
+  transition: opacity .2s ease, transform .26s cubic-bezier(.2,.7,.2,1.1), box-shadow .2s ease;
+  opacity:0;
+  transform: translateY(6px) scale(.96);
+}
+
+.fan-btn.in{
+  opacity:1;
+  transform: translateY(0) scale(1);
+  box-shadow: var(--shadow-md);
+}
+
+.fan-btn.out{
+  opacity:0;
+  transform: translateY(-8px) scale(.92);
+}
+
+.fan-btn:hover{
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--shadow-lg);
+  color: white;
+  background: var(--color1);
+}
+
+.fan-btn:active{
+  transform: translateY(1px) scale(.97);
+  box-shadow: 0 8px 18px rgba(0,0,0,.18) inset;
+}
+
+/* ===== ENHANCED MOUSE GLOW EFFECT ===== */
+.mouse-glow {
+    position: fixed;
+    width: var(--glow-size);
+    height: var(--glow-size);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
+    mix-blend-mode: screen;
+    filter: blur(40px);
+    will-change: transform, background;
+    
+    /* CSS variables for dynamic color changes via JavaScript */
+    --glow-hue: 200;
+    --glow-saturation: 100%;
+    --glow-lightness: 60%;
+
+    /* The radial gradient creates the layered glow effect */
+    background: radial-gradient(
+        circle,
+        hsla(var(--glow-hue), var(--glow-saturation), var(--glow-lightness), 0.8) 0%,
+        hsla(var(--glow-hue), var(--glow-saturation), var(--glow-lightness), 0.5) 30%,
+        hsla(var(--glow-hue), var(--glow-saturation), var(--glow-lightness), 0.2) 50%,
+        hsla(var(--glow-hue), var(--glow-saturation), var(--glow-lightness), 0) 70%
+    );
+}
+
+/* A special class applied when hovering over interactive elements */
+.mouse-glow.hover-effect {
+    width: 200px;
+    height: 200px;
+    filter: blur(50px);
+    opacity: 1 !important;
+}
+
+/* High contrast mode for better visibility on light backgrounds */
+@media (prefers-contrast: high) {
+    .mouse-glow {
+        mix-blend-mode: difference;
+        filter: blur(15px) contrast(1.5);
+    }
+}
+
+/* Alternative glow styles for different background luminance */
+.mouse-glow.high-contrast {
+    mix-blend-mode: difference;
+    filter: blur(18px) contrast(1.2);
+}
+
+.mouse-glow.low-contrast {
+    mix-blend-mode: screen;
+    filter: blur(22px) brightness(1.3);
+    
+    /* Enhanced visibility on similar colors */
+    background: 
+        radial-gradient(
+            circle at center,
+            hsl(calc(var(--glow-hue) + 180), 100%, 70%) 0%,
+            hsla(calc(var(--glow-hue) + 180), 90%, 65%, 0.8) 25%,
+            hsla(var(--glow-hue), var(--glow-saturation), var(--glow-lightness), 0.6) 50%,
+            transparent 100%
+        );
+}
+
+/* Dark mode optimizations */
+:root[data-theme="dark"] .mouse-glow {
+    mix-blend-mode: screen;
+    filter: blur(20px) brightness(1.2);
+}
+
+/* Light mode optimizations */
+html:not([data-theme="dark"]) .mouse-glow {
+    mix-blend-mode: multiply;
+    filter: blur(20px) contrast(1.3);
+}
+
+/* ===== MATRIX BACKGROUND EFFECT ===== */
+/* Main container for the matrix effect - covers entire viewport */
+.matrix-bg {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    z-index: var(--z-negative); 
+    overflow: hidden; 
+    opacity: 0.7; /* Slightly transparent for layered look */
+    background: rgba(0, 0, 0, 0.1);
+    /* Mix blend mode is now dynamic - set by JavaScript */
+}
+
+/* Canvas matrix effect - layered above DOM matrix */
+.matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: calc(var(--z-negative) + 1); /* Above DOM matrix but below content */
+    pointer-events: none; /* Allow interaction with elements below */
+    opacity: var(--matrix-opacity-token); /* Slightly more visible than DOM matrix */
+    display: none; /* Hidden by default, shown when canvas mode is active */
+}
+
+/* Individual column of falling characters */
+.binary-column {
+    position: absolute; 
+    top: 0; 
+    width: 16px; 
+    font-family: 'Roboto Mono', 'Courier New', 'Monaco', 'Menlo', monospace; 
+    font-size: 14px;
+    line-height: 1.1;
+    font-weight: bold;
+    color: rgba(0, 255, 0, 0.9); /* Fallback green color */
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7); /* Fallback glow */
+    
+    /* Enhanced text rendering for crisp characters */
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    /* Performance optimizations */
+    transform: translateZ(0); /* Force GPU acceleration */
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+    
+    /* Improve compositing to avoid square glow tiles on blends */
+    image-rendering: auto;
+    isolation: isolate;
+    contain: paint;
+    
+    pointer-events: none;
+    user-select: none;
+    overflow: hidden;
+    
+    /* Matrix column specific */
+    display: block;
+    text-align: center; 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    letter-spacing: 0px;
+}
+
+/* Class to make column visible after creation */
+.binary-column.visible { 
+    opacity: 1; 
+}
+
+/* Individual character within a column - display:block stacks vertically */
+.binary-column .matrix-char {
+    display: block; 
+    font-size: inherit;
+    text-align: center;
+    /* Opacity set inline by JavaScript for trailing effect */
+}
+
+/* Guard the head glyph itself */
+.binary-column .matrix-char.head {
+    background: transparent !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== EFFECTS DISABLED STATE ===== */
+body.effects-disabled .mouse-glow,
+body.effects-disabled .matrix-bg,
+body.effects-disabled .matrix-canvas {
+    display: none !important;
+}
+
+/* ===== INTELLIGENT MATRIX BLEND MODES ===== */
+
+/* Dark backgrounds - use screen blend mode for classic glow effect */
+.matrix-mode-dark-bg .binary-column {
+    mix-blend-mode: screen;
+    /* Enhanced multi-layer text shadow for dark backgrounds */
+    text-shadow: 
+        0 0 1px rgba(255, 255, 255, 0.9),    /* Sharp white corona for definition */
+        0 0 3px currentColor,                 /* Main color glow */
+        0 0 8px currentColor,                 /* Extended glow */
+        0 0 15px currentColor;                /* Outer halo */
+}
+
+/* Light backgrounds - use multiply blend mode for sharp contrast */
+.matrix-mode-light-bg .binary-column {
+    mix-blend-mode: multiply;
+    /* Enhanced multi-layer text shadow for light backgrounds */
+    text-shadow: 
+        0 0 1px rgba(0, 0, 0, 0.8),          /* Dark outline for definition */
+        0 0 2px currentColor,                 /* Subtle color glow */
+        0 0 4px currentColor,                 /* Medium glow */
+        1px 1px 2px rgba(0, 0, 0, 0.3);      /* Backdrop shadow for separation */
+}
+
+/* High contrast mode - forces maximum visibility */
+.matrix-mode-high-contrast .binary-column {
+    mix-blend-mode: difference;
+    font-weight: bold;
+    text-shadow: 
+        0 0 1px rgba(255, 255, 255, 1),      /* Strong white outline */
+        0 0 3px currentColor,                 /* Strong color glow */
+        0 0 6px currentColor,                 /* Extended strong glow */
+        0 0 12px currentColor,                /* Maximum outer glow */
+        2px 2px 4px rgba(0, 0, 0, 0.5);      /* Strong backdrop shadow */
+    filter: drop-shadow(0 0 2px currentColor) drop-shadow(0 0 6px currentColor);
+}
+
+/* Leading character highlight system */
+/* [region:matrix-head] — rounded "head" highlight without boxy artifacts */
+.matrix-head {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: 700;
+    /* Kill layered text-shadow (causes square tiles when blended) */
+    text-shadow: none;
+    /* GPU-friendly, round glow */
+    filter:
+      drop-shadow(0 0 2px rgba(255, 255, 255, 0.95))
+      drop-shadow(0 0 6px currentColor)
+      drop-shadow(0 0 12px currentColor);
+    background: transparent !important;
+    /* Feather edges so the leading cell is circular */
+    -webkit-mask-image: radial-gradient(70% 60% at 50% 55%, #000 70%, transparent 100%);
+            mask-image: radial-gradient(70% 60% at 50% 55%, #000 70%, transparent 100%);
+}
+/* [end:matrix-head] */
+
+/* Trailing characters with fade effect */
+.matrix-trail-1 { opacity: 0.8; }
+.matrix-trail-2 { opacity: 0.6; }
+.matrix-trail-3 { opacity: 0.4; }
+.matrix-trail-4 { opacity: 0.2; }
+.matrix-trail-5 { opacity: 0.1; }
+
+/* ===== BUTTONS & INTERACTIVE ELEMENTS ===== */
+button {
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Action buttons (copy, favorite, timer) */
+.action-button {
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-medium);
+}
+
+.action-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* TTS Inline Controls Polish */
+#tts-inline-controls .action-button i {
+    font-size: 0.95rem;
+    line-height: 1;
+}
+
+/* Enhanced disabled state for stop button */
+#tts-stop-btn[disabled] {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+/* Toggle button pressed state */
+#tts-toggle-btn[aria-pressed="true"] {
+    background-color: rgba(255,255,255,0.2);
+    box-shadow: var(--shadow-sm) inset;
+}
+
+/* ===== SETTINGS PANEL ===== */
+#dark-mode-toggle,
+#search-toggle,
+#settings-toggle {
+    transition: all var(--transition-medium);
+}
+
+#dark-mode-toggle:hover,
+#search-toggle:hover,
+#settings-toggle:hover {
+    transform: rotate(45deg);
+}
+
+#settings-panel {
+    @include glass-effect(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    input[type="checkbox"] {
+        cursor: pointer;
+    }
+
+    button {
+        transition: all var(--transition-fast);
+        font-weight: 500;
+
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+    }
+}
+
+/* ===== ADD QUOTE FORM ===== */
+#add-quote-form {
+    animation: slideDown 0.3s ease-out;
+}
+
+#add-quote-form.hidden {
+    animation: slideUp 0.3s ease-in;
+}
+
+
+
+#add-quote-form textarea,
+#add-quote-form input {
+    transition: all var(--transition-fast);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+#add-quote-form textarea:focus,
+#add-quote-form input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Mobile scales */
+@media (max-width: 520px){
+  :root{
+    --fc-card-w: 70px;  /* was 88px  */
+    --fc-card-h: 50px;  /* was 62px  */
+    --fc-font:   30px;  /* was 38px  */
+    --fc-gap:    10px;  /* unchanged */
+  }
+}
+@media (max-width: 480px){
+  :root{
+    --fc-card-w: 52px;  /* was 64px  */
+    --fc-card-h: 37px;  /* was 46px  */
+    --fc-font:   24px;  /* was 28px  */
+    --fc-gap:     8px;  /* was 6px→8 gives a bit more air */
+  }
+}
+
+@media (max-width: 768px) {
+    .binary-column { 
+        width: 14px; /* Proper width for tablet fonts */
+        font-size: 12px; 
+    }
+    
+    .generate-btn {
+        width: 90px;
+        height: 90px;
+    }
+    
+    #shareFanContainer {
+        justify-content: center;
+    }
+
+    #shareHubBtn {
+        width: 50px;
+        height: 50px;
+        font-size: 1rem;
+    }
+
+    .fan-btn {
+        /* No absolute positioning needed, flexbox handles layout. */
+    }
+    
+    #settings-panel {
+        right: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .binary-column { 
+        width: 13px; /* Proper width for mobile fonts */
+        font-size: 11px; 
+    }
+    
+    .generate-btn {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .generate-btn i {
+        font-size: 1.1rem;
+    }
+    
+    .generate-btn span {
+        font-size: 0.7rem;
+    }
+    
+    .social-bubble {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .social-bubble i {
+        font-size: 0.8rem;
+    }
+    
+    #settings-panel {
+        padding: var(--spacing-md);
+    }
+    
+    .quote-container-outer {
+        margin-inline: auto;            /* center horizontally without adding width */
+        margin-block: var(--spacing-sm);/* keep top/bottom breathing room */
+    }
+    
+    .quote-container-inner {
+        padding: var(--spacing-md);
+    }
+
+    #app-title-bar,
+    .quote-container-outer {
+        max-width: min(90vw, 1100px); /* small-screen tweak to guarantee no horizontal creep */
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .mouse-glow,
+    .matrix-bg,
+    .matrix-canvas,
+    .generate-btn,
+    .social-bubble,
+    #settings-toggle,
+    #settings-panel,
+    .action-button {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+    }
+    
+    .quote-container-outer,
+    .quote-container-inner {
+        background: white !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+    
+    .dynamic-text-main,
+    .dynamic-text-secondary {
+        color: #000 !important;
+    }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+    :root {
+        --text-color-main: #000000;
+        --text-color-secondary: #333333;
+    }
+    
+    .quote-container-inner {
+        background: rgba(255, 255, 255, 0.95);
+        border: 2px solid #000000;
+    }
+    
+    .social-bubble {
+        background-color: #000000;
+        border: 2px solid #ffffff;
+    }
+}
+
+/* ===== DARK MODE ===== */
+:root[data-theme="dark"] {
+    --fc-card-bg: rgba(0,0,0,0.35);
+    --fc-top-bg:  linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.10));
+    --fc-bot-bg:  linear-gradient(180deg, rgba(0,0,0,.12), rgba(255,255,255,.03));
+    --fc-top-fg:  #d1d5db;   /* gray-300 */
+    --fc-bot-fg:  #f9fafb;   /* gray-50  */
+    --fc-divider: rgba(0,0,0,.66);
+
+    --text-color-main: #e5e7eb;
+    --text-color-secondary: #d1d5db;
+    --container-bg-color: rgba(31, 41, 55, 0.95);
+    --inner-box-color: rgba(55, 65, 81, 0.85);
+    --social-icon-bg: #4b5563;
+}
+
+:root[data-theme="dark"] .gradient-bg {
+    background: linear-gradient(135deg, #1f2937, #374151, #4b5563);
+}
+
+:root[data-theme="dark"] .quote-container-inner {
+    background: rgba(31, 41, 55, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme="dark"] #settings-panel {
+    background: rgba(17, 24, 39, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme="dark"] #daily-quote-widget {
+    background: rgba(31, 41, 55, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme="dark"] .action-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme="dark"] .binary-column {
+    color: rgba(34, 197, 94, 0.9);
+    text-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+    /* Auto dark mode based on system preference */
+    :root {
+        --text-color-main: #e5e7eb;
+        --text-color-secondary: #d1d5db;
+        --container-bg-color: rgba(31, 41, 55, 0.95);
+        --inner-box-color: rgba(55, 65, 81, 0.85);
+        --social-icon-bg: #374151;
+    }
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+.quote-container-outer,
+.quote-container-inner,
+.generate-btn,
+.social-bubble,
+.mouse-glow,
+.binary-column {
+    will-change: transform;
+}
+
+/* Optimize for touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .social-bubble:hover,
+    .generate-btn:hover,
+    button:hover {
+        transform: none;
+    }
+    
+    .social-bubble:active,
+    .generate-btn:active,
+    button:active {
+        transform: scale(0.95);
+    }
+}
+
+/* ===== LOADING STATES ===== */
+.app-loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.app-loaded {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity var(--transition-slow);
+}
+
+/* ===== UTILITY CLASSES ===== */
+.hidden {
+    display: none !important;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+/* ===== DEBUG STYLES (Development only) ===== */
+.debug-outline * {
+    outline: 1px solid red;
+}
+
+.debug-performance .slow-element {
+    background-color: rgba(255, 0, 0, 0.2) !important;
+}
+
+/* ===== FALLBACK FONTS ===== */
+@font-face {
+    font-family: 'system-fallback';
+    src: local('system-ui'), local('-apple-system'), local('Segoe UI'), local('Roboto'), local('Arial');
+    font-display: swap;
+}
+
+/* Apply fallback if Google Fonts fail to load */
+.fonts-failed {
+    font-family: 'system-fallback', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.fonts-failed .quote-text-font,
+.fonts-failed .heading-font,
+.fonts-failed .author-font {
+    font-family: inherit;
+}
+
+/* ===== VibeMe theme-aware logo ===== */
+.vb-logo{
+  position: relative;
+  display: inline-block;
+  font-weight: 900;
+  letter-spacing: .02em;
+  /* responsive size without breaking layout */
+  font-size: clamp(2.25rem, 6vw, 4.75rem);
+  line-height: 1.1;
+
+  /* gradient fill from theme */
+  color: transparent;
+  background: linear-gradient(90deg, var(--color1), var(--color2), var(--color3));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* crisp outline (flips in dark mode below) */
+  -webkit-text-stroke: 1.6px rgba(0,0,0,.35);
+
+  /* gentle motion */
+  animation: vb-logo-pan 12s linear infinite;
+
+  /* layered glow that doesn't blur glyph edges */
+  text-shadow:
+    0 0 10px var(--color1),
+    0 0 22px var(--color2),
+    0 0 36px var(--color3);
+}
+
+/* flip outline for dark themes */
+.dark .vb-logo,
+:root[data-theme="dark"] .vb-logo{
+  -webkit-text-stroke-color: rgba(255,255,255,.25);
+}
+
+/* gradient underline pill */
+.vb-logo::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -.35em;
+  width: clamp(120px, 55%, 520px);
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--color1), var(--color2), var(--color3));
+  box-shadow:
+    0 0 10px var(--color2),
+    0 0 22px var(--color3);
+}
+
+/* accessibility: prefer crispness over motion if requested */
+@media (prefers-reduced-motion: reduce){
+  .vb-logo{ animation: none; }
+}
+
+/* subtle gradient pan for life without distraction */
+
+/* ===== ENHANCED FAVORITES SYSTEM ===== */
+
+/* Favorites Panel States */
+.favorites-panel {
+    transform-origin: bottom right;
+    will-change: transform, opacity;
+}
+
+.favorites-closed {
+    transform: scale(0.85) translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.favorites-open {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+}
+
+.favorites-minimized {
+    transform: scale(0.95) translateY(10px);
+    opacity: 0.7;
+    pointer-events: none;
+    max-height: 60px;
+    overflow: hidden;
+}
+
+/* Enhanced Glass Morphism */
+.favorites-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(ellipse at top left, rgba(255,255,255,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(0,0,0,0.08) 0%, transparent 50%);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.favorites-panel::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    right: 1px;
+    bottom: 1px;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255,255,255,0.02) 0%,
+            rgba(255,255,255,0.05) 50%,
+            rgba(0,0,0,0.02) 100%
+        );
+    border-radius: calc(1rem - 1px);
+    pointer-events: none;
+}
+
+/* Header Styling */
+.favorites-header {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Action Buttons */
+.favorites-action-btn {
+    position: relative;
+    z-index: 1;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    @include glass-effect(8px);
+}
+
+.favorites-action-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.favorites-action-btn:active {
+    transform: scale(0.98);
+}
+
+/* Body Content */
+.favorites-body {
+    position: relative;
+    z-index: 1;
+}
+
+/* Footer Styling */
+.favorites-footer {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.03) 100%);
+}
+
+/* Favorite Items */
+.favorite-item {
+    position: relative;
+    background: linear-gradient(135deg,
+        rgba(255,255,255,0.08) 0%,
+        rgba(255,255,255,0.03) 50%,
+        rgba(0,0,0,0.02) 100%
+    );
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 16px;
+    @include glass-effect(12px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.favorite-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255,255,255,0.2), 
+        transparent
+    );
+}
+
+.favorite-item:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, 
+        rgba(255,255,255,0.12) 0%,
+        rgba(255,255,255,0.06) 50%,
+        rgba(0,0,0,0.01) 100%
+    );
+    border-color: rgba(255,255,255,0.15);
+    box-shadow: 
+        0 8px 32px rgba(0,0,0,0.12),
+        0 4px 16px rgba(0,0,0,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+/* Favorite Content */
+.favorite-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.favorite-text {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    word-wrap: break-word;
+    position: relative;
+}
+
+.favorite-author {
+    font-size: 12px;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+/* Favorite Actions */
+.favorite-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 16px;
+    align-items: flex-start;
+}
+
+.favorite-action-btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 12px;
+    transition: all 0.2s ease;
+    @include glass-effect(8px);
+}
+
+.favorite-action-btn:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.2);
+    transform: scale(1.05);
+}
+
+.favorite-action-remove:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+/* Empty State */
+.favorites-empty {
+    text-align: center;
+    padding: 32px 16px;
+    background: linear-gradient(135deg,
+        rgba(255,255,255,0.03) 0%,
+        rgba(255,255,255,0.01) 100%
+    );
+    border: 1px dashed rgba(255,255,255,0.1);
+    border-radius: 12px;
+    @include glass-effect(8px);
+}
+
+.favorites-empty-icon {
+    font-size: 32px;
+    opacity: 0.3;
+    margin-bottom: 12px;
+}
+
+.favorites-empty-text {
+    font-size: 14px;
+    margin-bottom: 8px;
+    opacity: 0.7;
+}
+
+.favorites-empty-hint {
+    font-size: 12px;
+    opacity: 0.5;
+}
+
+/* Badge Styling */
+#favorites-count-badge {
+    animation: pulse-badge 2s infinite;
+}
+
+
+/* Scrollbar Styling */
+.favorites-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.favorites-list::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.05);
+    border-radius: 2px;
+}
+
+.favorites-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+}
+
+.favorites-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* Cross-tab Sync Animation */
+
+.favorites-syncing {
+    animation: sync-pulse 1s ease-in-out;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+    .favorites-panel {
+        margin-right: 8px;
+        margin-left: 8px;
+        right: 0 !important;
+        width: calc(100% - 16px) !important;
+        max-width: calc(100% - 16px) !important;
+    }
+    
+    .favorite-item {
+        padding: 12px;
+    }
+    
+    .favorite-actions {
+        margin-left: 8px;
+    }
+    
+    .favorite-action-btn {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+}
+
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+    .favorites-panel,
+    .favorite-item,
+    .favorites-action-btn,
+    .favorite-action-btn {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+@media (prefers-contrast: high) {
+    .favorites-panel {
+        border: 2px solid rgba(255,255,255,0.5);
+    }
+    
+    .favorite-item {
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+    
+    .favorite-action-btn {
+        border: 1px solid rgba(255,255,255,0.4);
+    }
+}
+
+/* Focus Styles */
+.favorites-action-btn:focus,
+.favorite-action-btn:focus {
+    outline: 2px solid rgba(59, 130, 246, 0.5);
+    outline-offset: 2px;
+}
+
+/* Dark theme optimizations */
+@media (prefers-color-scheme: dark) {
+    .favorites-panel {
+        box-shadow: 
+            0 25px 45px rgba(0,0,0,0.3),
+            0 15px 25px rgba(0,0,0,0.2),
+            inset 0 1px 0 rgba(255,255,255,0.1),
+            inset 0 -1px 0 rgba(0,0,0,0.2);
+    }
+    
+    .favorite-item:hover {
+        box-shadow: 
+            0 8px 32px rgba(0,0,0,0.2),
+            0 4px 16px rgba(0,0,0,0.1),
+            inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+}
+
+/* Panel transitions: only CLOSED and OPEN used */
+#favorites-panel[data-state="open"] {
+  max-height: 80vh;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+#favorites-panel[data-state="closed"] {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+
+/* Hide body entirely when closed (defensive) */
+#favorites-panel[data-state="closed"] .favorites-body { display:none; }
+
+/* ===== Flip Clock AM/PM Badge (inline with clock) ===== */
+/* Hide the dedicated AM/PM flip piece if it exists */
+#app-title-bar .flip-clock-mount[data-skin="classic"] .fc-piece--ampm {
+  display: none !important;
+}
+
+/* AM/PM badge — inline pill next to Seconds, theme-aware, no boxy aura */
+.fc-meridiem-badge{
+  /* inline, sits to the right of Seconds */
+  position: static;
+  align-self: center;
+  margin-left: 4px;
+  transform: translateY(-1px);
+
+  padding: 6px 10px;
+  border-radius: 9999px;
+  font-size: clamp(12px, 1.6vw, 16px);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: .5px;
+
+  /* use your flip-clock tokens so it matches every theme */
+  color: var(--flip-text);
+  background:
+    linear-gradient(135deg,
+      color-mix(in oklab, var(--flip-bg), transparent 22%),
+      color-mix(in oklab, var(--flip-glow), transparent 70%)
+    );
+  border: 1px solid var(--flip-divider);
+
+  /* depth + colored glow that follows the pill shape */
+  box-shadow: 0 6px 18px rgba(0,0,0,.28);
+  filter: drop-shadow(0 0 14px var(--flip-glow));
+
+  /* prevent rectangular compositing artifacts */
+  background-clip: padding-box;
+  isolation: isolate;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+          mask-image: radial-gradient(white, black);
+}
+
+/* Subtle PM accent */
+.fc-meridiem-badge[data-ampm="PM"]{
+  filter: brightness(1.05) saturate(1.08);
+}
+
+@media (max-width: 520px){
+  .fc-meridiem-badge{
+    margin-left: 4px;
+    padding: 6px 10px;
+    font-size: 15px;
+    border-radius: 9px;
+  }
+}
+#tts-toggle-btn[aria-busy="true"] { opacity: 0.6; pointer-events: none; }
+/* =============================
+   Vibe Title hardening (scoped)
+   - Keeps existing look, improves fallbacks & perf
+   - Only affects .vb-logo and .app-title-bar
+   ============================= */
+
+/* Default readable color + sizing; overrides earlier heavy shadows */
+.vb-logo {
+  font-size: clamp(3.25rem, 8vw, 6.75rem);
+  line-height: 1.05;
+  text-wrap: balance;
+  color: var(--text-color-main);
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.28);
+  
+  /* New, enhanced darker aura that wraps the letters */
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.95),      /* Brighter crisp white core */
+    0 0 16px var(--color1),                  /* Stronger medium layer */
+    0 0 32px var(--color2),                  /* More intense wide layer */
+    0 0 48px var(--color3),                  /* Larger diffused halo */
+    0 0 64px var(--color1);                  /* Extra outer glow for depth */
+  
+  /* Remove the old drop-shadow filter entirely to avoid conflicts */
+  filter: none;
+}
+
+:root[data-theme="dark"] .vb-logo {
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Use gradient-as-text only when background-clip is supported */
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .vb-logo {
+    background: linear-gradient(90deg, var(--color1), var(--color2), var(--color3));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: vb-logo-pan 16s linear infinite; /* calmer motion */
+  }
+}
+
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .vb-logo { animation: none !important; }
+}
+
+/* High-contrast / forced-colors safety */
+@media (forced-colors: active) {
+  .vb-logo {
+    -webkit-text-stroke: 0;
+    text-shadow: none;
+    filter: none;
+    color: CanvasText;
+    background: none !important;
+  }
+}
+
+/* Print-friendly title */
+@media print {
+  .vb-logo {
+    -webkit-text-stroke: 0;
+    text-shadow: none;
+    filter: none;
+    color: #000 !important;
+    background: none !important;
+  }
+}
+
+/* Ensure the title bar can receive clicks if previously disabled */
+.app-title-bar { pointer-events: auto; }
+
+/* ===== ENHANCED FLIP CLOCK AESTHETICS (Drop-in) ===== */
+/* Container - .fc-clock */
+.fc-clock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  white-space: nowrap;
+  user-select: none;
+  perspective: 900px; /* subtle 3D */
+  contain: layout paint; /* guard against overflow side-effects */
+}
+
+/* One piece = HH / MM / SS */
+.fc-piece {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Card shell */
+.fc-card {
+  position: relative;
+  display: block;
+  width: 6.5ch; /* fixed width fits two digits nicely */
+  max-width: 9rem;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.25); /* glassy base; your theme can override */
+  @include glass-effect(6px, 120%);
+  box-shadow: 0 8px 24px rgba(0,0,0,.18);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Top & bottom faces */
+.fc-top, .fc-bottom {
+  display: block;
+  text-align: center;
+  font-size: clamp(1.6rem, 4.5vw, 3rem);
+  line-height: 1.1;
+  padding: 0.45em 0.2em;
+  color: white; /* readable even if gradient fails */
+  letter-spacing: 0.02em;
+}
+
+/* Subtle bevel to sell the card */
+.fc-top {
+  background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
+  border-bottom: 1px solid rgba(255,255,255,.15);
+}
+
+.fc-bottom {
+  background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.18));
+}
+
+/* Flip back face—kept invisible until animated by your existing classes */
+.fc-back {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Labels */
+.fc-slot {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: .75;
+}
+
+/* Optional visual separators */
+.fc-piece::after {
+  content: attr(data-sep);
+  position: absolute;
+  right: -0.6rem;
+  top: 0.2rem;
+  font-size: 1.25rem;
+  opacity: .5;
+}
+
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .fc-card, .fc-top, .fc-bottom, .fc-back {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* =============================
+   Palette-aware enhancements for date pill
+   ============================= */
+:root {
+  --date-fg: var(--text-color-main);
+  --date-glass: color-mix(in oklab, #000 32%, transparent);
+  --date-ring-opacity: .45;
+}
+:root[data-theme="dark"] {
+  --date-fg: #fff;
+  --date-glass: color-mix(in oklab, #000 55%, transparent);
+  --date-ring-opacity: .6;
+}
+
+/* Tie pill visuals to active palette and add premium ring */
+.fc-date {
+  color: var(--date-fg);
+  background: var(--date-glass);
+  border: 1px solid color-mix(in oklab, var(--color2) 28%, transparent);
+  padding-left: 0.75rem; /* space for accent bar */
+  isolation: isolate;    /* keep glow effects contained */
+  font-size: 1.125rem;   /* Increased from default for better readability */
+}
+
+/* Gradient ring using a mask (no layout shift) */
+.fc-date::before{
+  content: "";
+  position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+  background: linear-gradient(135deg, var(--color1), var(--color2), var(--color3));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: var(--date-ring-opacity);
+  pointer-events: none;
+}
+
+/* Slim accent bar that echoes the gradient */
+.fc-date::after{
+  content: "";
+  position: absolute; left: 0; top: .25rem; bottom: .25rem; width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--color1), var(--color2));
+  opacity: .85;
+  filter: drop-shadow(0 0 4px var(--color2));
+}
+
+/* Slightly refine text spacing */
+#date-time { letter-spacing: .02em; }
+
+/* Hover micro-shimmer (respects reduced-motion) */
+@media (prefers-reduced-motion: no-preference){
+  .fc-date:hover::before{ opacity: calc(var(--date-ring-opacity) + .1); }
+}
+
+/* Ensure forced-colors stays clean of decoration */
+@media (forced-colors: active){
+  .fc-date::before, .fc-date::after { display: none; }
+}
+
+/* Settings Panel Tab Styles */
+.settings-tab {
+    flex-grow: 1;
+    padding: 0.5rem 0.25rem;
+    cursor: pointer;
+    text-align: center;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.settings-tab:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.settings-tab.active {
+    border-bottom-color: #a855f7; /* purple-500 */
+    color: white;
+    font-weight: 600;
+}
+
+.settings-tab-content.hidden {
+    display: none;
+}
+
+/* Accordion Styles for Settings */
+.settings-accordion {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-accordion:last-child {
+    border-bottom: none;
+}
+
+.settings-accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0.25rem;
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none; /* Remove default marker */
+}
+
+.settings-accordion-header::-webkit-details-marker {
+    display: none; /* Hide default marker for Safari */
+}
+
+.settings-accordion-header::after {
+    content: '›';
+    font-size: 1.5rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.settings-accordion[open] > .settings-accordion-header::after {
+    transform: rotate(90deg);
+}
+
+.settings-accordion-content {
+    padding: 0.5rem 0.25rem 1rem;
+}
+
+/* Search Overlay Styles */
+#search-overlay.hidden {
+    display: none;
+}
+
+#search-results .result-item {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    text-align: left;
+}
+
+#search-results .result-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+#search-results .result-item:last-child {
+    border-bottom: none;
+}
+
+#search-results .result-quote {
+    font-size: 1.1rem;
+    color: #f0f0f0;
+    margin-bottom: 0.5rem;
+}
+
+#search-results .result-author {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    font-style: italic;
+}
+
+#search-results .no-results {
+    color: #a0a0a0;
+    text-align: center;
+    padding: 2rem;
+}

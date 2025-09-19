@@ -5,7 +5,9 @@
   "main": "dist/main.js",
   "scripts": {
     "sync-quotes": "node scripts/sync-quotes.js",
-    "build": "tsc"
+    "build": "tsc && npm run build:styles",
+    "build:styles": "sass --no-source-map src/scss/main.scss css/style.css",
+    "watch:styles": "sass --watch --no-source-map src/scss/main.scss css/style.css"
   },
   "keywords": [
     "quotes",
@@ -15,6 +17,7 @@
   "author": "VibeMe",
   "license": "ISC",
   "devDependencies": {
+    "sass": "^1.93.0",
     "typescript": "^5.4.5"
   }
 }

@@ -1,0 +1,11 @@
+// Shared mixins for the VibeMe styles
+
+@mixin glass-effect($blur: 16px, $saturate: 160%) {
+  backdrop-filter: blur($blur) saturate($saturate);
+  -webkit-backdrop-filter: blur($blur) saturate($saturate);
+}
+
+@mixin elevated-card($radius: var(--card-radius), $shadow: var(--shadow-lg)) {
+  border-radius: $radius;
+  box-shadow: $shadow;
+}
