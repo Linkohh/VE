@@ -1,15 +1,23 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte';
+  import { createEventDispatcher, onDestroy } from 'svelte';
   import { FontAwesomeIcon as Fa } from '@fortawesome/svelte-fontawesome';
   import { faCircleXmark, faSearch } from '@fortawesome/free-solid-svg-icons';
   import { applyQuoteFilter, quoteLoading } from '../stores/quote';
 
   const SEARCH_DELAY = 280;
 
+  const dispatch = createEventDispatcher<{
+    submit: { query: string };
+    clear: void;
+  }>();
+
   let query = '';
   let lastApplied: string | null = null;
   let debounceHandle: ReturnType<typeof setTimeout> | null = null;
   let isLoading = false;
+  let searchInput: HTMLInputElement | null = null;
+
+  export { searchInput as inputElement };
 
   $: isLoading = $quoteLoading;
 
@@ -55,16 +63,18 @@
     scheduleSearch(value);
   }
 
-  function handleSubmit(event: Event): void {
+  async function handleSubmit(event: Event): Promise<void> {
     event.preventDefault();
     clearDebounce();
-    void runSearch(query);
+    await runSearch(query);
+    dispatch('submit', { query: query.trim() });
   }
 
-  function handleClear(): void {
+  async function handleClear(): Promise<void> {
     query = '';
     clearDebounce();
-    void runSearch('');
+    await runSearch('');
+    dispatch('clear');
   }
 
   onDestroy(() => {
@@ -89,6 +99,7 @@
       maxlength="100"
       bind:value={query}
       on:input={handleInput}
+      bind:this={searchInput}
     />
 
     {#if isLoading}
