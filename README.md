@@ -4,8 +4,8 @@ VibeMe is a beautiful motivational quote generator with dynamic themes and inspi
 
 ## How It Works
 
--   **Online Mode:** When hosted on a web server, the application fetches the latest quotes from the `data/quotes.json` file.
--   **Offline Mode:** When you open the `index.html` file directly in your browser, it loads the quotes from the `js/quotes.js` file.
+- **Online Mode:** When hosted on a web server, the application fetches the latest quotes from the `data/quotes.json` file.
+- **Offline Mode:** When you open the `index.html` file directly in your browser, it loads the quotes from the `js/quotes.js` file.
 
 ## How to Update Quotes
 

@@ -8,13 +8,18 @@ interface AboutPageProps {
 const AboutPage: React.FC<AboutPageProps> = ({ onClose }) => (
   <div className={styles.overlay} role="dialog" aria-modal="true">
     <div className={styles.card}>
-      <button type="button" className={styles.closeButton} onClick={onClose} aria-label="Close about dialog">
+      <button
+        type="button"
+        className={styles.closeButton}
+        onClick={onClose}
+        aria-label="Close about dialog"
+      >
         ×
       </button>
       <h2>About VibeMe</h2>
       <p>
-        VibeMe is a mindful space for motivational quotes curated to match your mood. Enjoy a blend of ambient
-        experiences, from soothing chimes to flowing matrix rain visuals.
+        VibeMe is a mindful space for motivational quotes curated to match your mood. Enjoy a blend
+        of ambient experiences, from soothing chimes to flowing matrix rain visuals.
       </p>
       <ul>
         <li>Discover a fresh vibe at any moment.</li>

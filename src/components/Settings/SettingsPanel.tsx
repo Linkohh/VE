@@ -51,7 +51,8 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose }) => {
       aria-hidden={!isOpen}
       aria-label="Settings panel"
       role="dialog"
-      aria-modal="true">
+      aria-modal="true"
+    >
       <div className={styles.header}>
         <h2>Settings</h2>
         <button
@@ -113,9 +114,11 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose }) => {
       <section className={styles.section} aria-labelledby="favorites-heading">
         <h3 id="favorites-heading">Favorites</h3>
         {favorites.length === 0 ? (
-          <p className={styles.empty}>You haven&apos;t favorited a quote yet. Tap the heart to save one.</p>
+          <p className={styles.empty}>
+            You haven&apos;t favorited a quote yet. Tap the heart to save one.
+          </p>
         ) : (
-          <ul className={styles.favoritesList} role="list">
+          <ul className={styles.favoritesList}>
             {favorites.map((favorite) => (
               <li key={favorite.id}>
                 <p className={styles.favoriteQuote}>“{favorite.text}”</p>

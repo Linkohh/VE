@@ -1,11 +1,19 @@
 :root {
   color-scheme: dark light;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
   background-color: #020617;
   color: #f8fafc;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -15,7 +23,8 @@ body {
   background: transparent;
 }
 
-button, input {
+button,
+input {
   font: inherit;
 }
 

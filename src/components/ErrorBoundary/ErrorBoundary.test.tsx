@@ -1,41 +1,42 @@
 import React from 'react';
-// Uncomment when dependencies are installed:
-// import { render, screen } from '@testing-library/react';
-// import ErrorBoundary from './ErrorBoundary';
+import { render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import ErrorBoundary from './ErrorBoundary';
 
-// Sample test structure - uncomment when testing dependencies are installed:
-/*
 describe('ErrorBoundary', () => {
-  it('should render children when there is no error', () => {
+  const originalError = console.error;
+
+  beforeEach(() => {
+    vi.restoreAllMocks();
+    vi.spyOn(console, 'error').mockImplementation(() => undefined);
+  });
+
+  afterEach(() => {
+    console.error = originalError;
+  });
+
+  it('renders children when there is no error', () => {
     render(
       <ErrorBoundary>
         <div>Test content</div>
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
+
     expect(screen.getByText('Test content')).toBeInTheDocument();
   });
 
-  it('should catch errors and display fallback UI', () => {
-    const ThrowError = () => {
+  it('displays fallback UI when a child throws an error', () => {
+    const ThrowError: React.FC = () => {
       throw new Error('Test error');
-      return null;
     };
-
-    // Suppress console.error for this test
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     render(
       <ErrorBoundary>
         <ThrowError />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     expect(screen.getByRole('alert')).toBeInTheDocument();
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
-
-    spy.mockRestore();
   });
 });
-*/
-
-export {}; // Ensure this file is treated as a module

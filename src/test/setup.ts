@@ -1,9 +1,6 @@
-// Add any global test setup here
-// When you install @testing-library/jest-dom, uncomment:
-// import '@testing-library/jest-dom';
+import '@testing-library/jest-dom';
 
-// Mock window.AudioContext if needed for tests
-global.AudioContext = class AudioContext {
+class MockAudioContext {
   createOscillator() {
     return {
       connect: () => this,
@@ -14,6 +11,7 @@ global.AudioContext = class AudioContext {
       frequency: { value: 0 },
     };
   }
+
   createGain() {
     return {
       connect: () => this,
@@ -21,16 +19,34 @@ global.AudioContext = class AudioContext {
       gain: { value: 0 },
     };
   }
+
   get destination() {
     return {};
   }
+
   get currentTime() {
     return 0;
   }
+
   get state() {
     return 'running';
   }
+
   resume() {
     return Promise.resolve();
   }
-} as any;
+}
+
+const mockAudioContext = MockAudioContext as unknown as typeof AudioContext;
+
+Object.defineProperty(globalThis, 'AudioContext', {
+  configurable: true,
+  writable: true,
+  value: mockAudioContext,
+});
+
+Object.defineProperty(globalThis, 'webkitAudioContext', {
+  configurable: true,
+  writable: true,
+  value: mockAudioContext,
+});

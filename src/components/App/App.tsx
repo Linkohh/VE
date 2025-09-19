@@ -1,4 +1,14 @@
-import React, { createContext, lazy, Suspense, useCallback, useContext, useMemo, useRef, useState } from 'react';
+import React, {
+  createContext,
+  lazy,
+  Suspense,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useQuotes, UseQuotesResult } from '../../hooks/useQuotes';
 import { SettingsState, Theme } from '../../types';
 import QuoteDisplay from '../Quote/QuoteDisplay';
@@ -56,15 +66,49 @@ const App: React.FC = () => {
   const [isSettingsOpen, setSettingsOpen] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const userInteractedRef = useRef(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return undefined;
+    }
+
+    const markInteracted = () => {
+      userInteractedRef.current = true;
+    };
+
+    window.addEventListener('pointerdown', markInteracted, { once: true });
+    window.addEventListener('keydown', markInteracted, { once: true });
+
+    return () => {
+      window.removeEventListener('pointerdown', markInteracted);
+      window.removeEventListener('keydown', markInteracted);
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (audioContextRef.current) {
+        audioContextRef.current
+          .close()
+          .catch((error) => console.warn('Failed to close AudioContext cleanly', error));
+        audioContextRef.current = null;
+      }
+    };
+  }, []);
 
   const ensureAudioContext = useCallback(async () => {
     if (typeof window === 'undefined') {
       return null;
     }
 
+    if (!userInteractedRef.current) {
+      console.warn('Audio playback requires a user interaction before it can start.');
+      return null;
+    }
+
     if (!audioContextRef.current) {
-      const audioCtor =
-        window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      const audioCtor = window.AudioContext || window.webkitAudioContext;
       if (!audioCtor) {
         return null;
       }
@@ -102,6 +146,7 @@ const App: React.FC = () => {
   }, [ensureAudioContext, settings.beepEnabled]);
 
   const handleNewVibe = useCallback(() => {
+    userInteractedRef.current = true;
     quotes.showRandomQuote();
     void playBeep();
   }, [quotes, playBeep]);
@@ -148,7 +193,8 @@ const App: React.FC = () => {
     quotes.toggleFavorite(quotes.currentQuote);
   }, [quotes]);
 
-  const favoriteLabel = quotes.currentQuote && quotes.isFavorite(quotes.currentQuote) ? 'Unfavorite' : 'Favorite';
+  const favoriteLabel =
+    quotes.currentQuote && quotes.isFavorite(quotes.currentQuote) ? 'Unfavorite' : 'Favorite';
   const themeClassName = settings.theme === 'dark' ? styles.dark : styles.light;
   const globalThemeClass = settings.theme === 'dark' ? 'dark' : 'light';
 
