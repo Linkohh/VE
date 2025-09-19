@@ -1,6 +1,7 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
   import { FontAwesomeIcon as Fa } from '@fortawesome/svelte-fontawesome';
-  import { faBookmark, faGear } from '@fortawesome/free-solid-svg-icons';
+  import { faBookmark, faGear, faSearch } from '@fortawesome/free-solid-svg-icons';
   import ThemeToggle from './ThemeToggle.svelte';
   import { openFavorites } from '../stores/favorites';
   import type { QuoteViewModel } from '../stores/quote';
@@ -9,10 +10,15 @@
   export let onOpenSettings: (anchor?: HTMLElement | null) => void = () => {};
 
   let favoritesButton: HTMLButtonElement | null = null;
-  let settingsButton: HTMLButtonElement | null = null;
+ 
 
   function handleFavorites(): void {
     openFavorites(favoritesButton ?? undefined);
+  }
+
+  function handleOpenSearch(event: MouseEvent): void {
+    const trigger = searchButton ?? (event.currentTarget instanceof HTMLElement ? event.currentTarget : null);
+    dispatch('openSearch', { trigger });
   }
 </script>
 
@@ -29,6 +35,16 @@
 
   <div class="flex items-center gap-2">
     <ThemeToggle />
+
+    <button
+      type="button"
+      class="rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
+      aria-label="Search quotes"
+      bind:this={searchButton}
+      on:click={handleOpenSearch}
+    >
+      <Fa icon={faSearch} class="h-4 w-4" />
+    </button>
 
     <button
       type="button"
