@@ -1,0 +1,26 @@
+            - name: DeepSeek CR
+  # You may pin to the exact commit or the version.
+  # uses: hustcer/deepseek-review@938790c65b549c7214252ffad7ae317b91f04c79
+  uses: hustcer/deepseek-review@v1.19
+  with:
+    # Your DeepSeek API token.
+    chat-token: 
+    # The maximum length of the content for review, 0 means no limit.
+    max-length: # optional, default is 0
+    # The DeepSeek model to choose for code review.
+    model: # optional, default is deepseek-chat
+    # The temperature of the model.
+    temperature: # optional, default is 0.3
+    # The base url of DeepSeek API.
+    base-url: # optional, default is https://api.deepseek.com
+    # The system prompt for DeepSeek API.
+    sys-prompt: # optional, default is You are a professional code review assistant responsible for analyzing code changes in GitHub Pull Requests. Identify potential issues such as code style violations, logical errors, security vulnerabilities, and provide improvement suggestions. Clearly list the problems and recommendations in a concise manner.
+    # The user prompt for DeepSeek API.
+    user-prompt: # optional, default is Please review the following code changes
+    # The comma separated file patterns to include in the code review.
+    include-patterns: # optional
+    # The comma separated file patterns to exclude in the code review.
+    exclude-patterns: # optional, default is pnpm-lock.yaml,package-lock.json,*.lock
+    # The GITHUB_TOKEN secret or personal access token to authenticate. Defaults to `github.token`.
+    github-token: # optional, default is ${{ github.token }}
+          
