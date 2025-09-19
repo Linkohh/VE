@@ -84,9 +84,8 @@
     ratingState.set(next);
   }
 
-  function handleOpenFavorites(event: MouseEvent): void {
-    const opener = event.currentTarget instanceof HTMLElement ? event.currentTarget : null;
-    openFavorites(opener ?? undefined);
+  function handleOpenFavorites(): void {
+    openFavorites();
   }
 </script>
 

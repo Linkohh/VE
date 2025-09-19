@@ -18,12 +18,63 @@ subscribeToFavorites((items) => {
 
 export const favorites = { subscribe: itemsStore.subscribe };
 
-const panelStore = writable<{ open: boolean; opener: HTMLElement | null }>({
-  open: false,
-  opener: null,
+const panelStore = writable(false);
+
+let panelElement: HTMLElement | null = null;
+let toggleElement: HTMLElement | null = null;
+let listenersAttached = false;
+
+function isEventInside(target: EventTarget | null): boolean {
+  if (!(target instanceof Node)) return false;
+  const withinPanel = panelElement?.contains(target) ?? false;
+  const withinToggle = toggleElement?.contains(target) ?? false;
+  return withinPanel || withinToggle;
+}
+
+function handlePointerDown(event: PointerEvent): void {
+  if (!get(panelStore)) return;
+  if (isEventInside(event.target)) return;
+  closeFavorites();
+}
+
+function handleKeydown(event: KeyboardEvent): void {
+  if (event.key === 'Escape' && get(panelStore)) {
+    event.stopPropagation();
+    closeFavorites();
+  }
+}
+
+function attachListeners(): void {
+  if (listenersAttached || typeof document === 'undefined') return;
+  document.addEventListener('pointerdown', handlePointerDown, true);
+  document.addEventListener('keydown', handleKeydown);
+  listenersAttached = true;
+}
+
+function detachListeners(): void {
+  if (!listenersAttached || typeof document === 'undefined') return;
+  document.removeEventListener('pointerdown', handlePointerDown, true);
+  document.removeEventListener('keydown', handleKeydown);
+  listenersAttached = false;
+}
+
+panelStore.subscribe((open) => {
+  if (open) {
+    attachListeners();
+  } else {
+    detachListeners();
+  }
 });
 
 export const favoritesPanel = { subscribe: panelStore.subscribe };
+
+export function setFavoritesPanelElement(node: HTMLElement | null): void {
+  panelElement = node;
+}
+
+export function setFavoritesToggleElement(node: HTMLElement | null): void {
+  toggleElement = node;
+}
 
 function toFavoriteInput(quote: QuoteViewModel | null): FavoriteItem | null {
   if (!quote) return null;
@@ -62,12 +113,16 @@ export function clearFavorites(): void {
   clear();
 }
 
-export function openFavorites(opener?: HTMLElement | null): void {
-  panelStore.set({ open: true, opener: opener ?? null });
+export function openFavorites(): void {
+  panelStore.set(true);
 }
 
 export function closeFavorites(): void {
-  panelStore.update((state) => ({ ...state, open: false }));
+  panelStore.set(false);
+}
+
+export function toggleFavorites(): void {
+  panelStore.update((state) => !state);
 }
 
 async function shareText(text: string): Promise<void> {

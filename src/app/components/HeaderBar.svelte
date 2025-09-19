@@ -2,13 +2,6 @@
   import { createEventDispatcher } from 'svelte';
   import { FontAwesomeIcon as Fa } from '@fortawesome/svelte-fontawesome';
  
-  import type { QuoteViewModel } from '../stores/quote';
-
-  const dispatch = createEventDispatcher<{ openSearch: void; openSettings: void }>();
-
-  export let quote: QuoteViewModel | null = null;
- 
-  }
 </script>
 
 <header class="hero-header text-white">
