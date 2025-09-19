@@ -51,6 +51,7 @@ class MatrixRenderer {
 
     this.mount();
     this.resize();
+    this.applyDisplaySettings();
     this.seedDrops();
 
     if (!this.running) {
@@ -71,6 +72,7 @@ class MatrixRenderer {
       return;
     }
 
+    this.applyDisplaySettings();
     this.seedDrops();
   }
 
@@ -132,7 +134,8 @@ class MatrixRenderer {
       const drop = this.drops[i];
       const color = palette[i % palette.length];
       ctx.fillStyle = color;
-      ctx.globalAlpha = drop.opacity;
+      const intensity = Math.max(0.2, Math.min(1.6, 0.4 + this.config.intensity * 1.2));
+      ctx.globalAlpha = Math.min(1, drop.opacity * intensity);
       ctx.fillText(drop.glyph, drop.x, drop.y);
       ctx.globalAlpha = 1;
 
@@ -151,6 +154,12 @@ class MatrixRenderer {
     this.canvas.style.display = 'block';
     this.raf = requestAnimationFrame(this.loop);
   };
+
+  private applyDisplaySettings(): void {
+    const visibility = Math.max(0, Math.min(1, this.config.visibility));
+    this.canvas.style.opacity = visibility.toFixed(2);
+    this.canvas.style.mixBlendMode = this.config.blendMode;
+  }
 }
 
 let renderer: MatrixRenderer | null = null;

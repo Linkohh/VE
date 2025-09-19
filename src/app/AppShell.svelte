@@ -15,6 +15,7 @@ const currentYear = new Date().getFullYear();
 
   let quote: QuoteViewModel | null = null;
 let settingsOpen = false;
+let settingsAnchor: HTMLElement | null = null;
 let autoAdvanceEnabled = false;
 let autoAdvanceInterval = 8;
 let speechEnabled = false;
@@ -97,9 +98,9 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
   });
 
   const unsubscribeSettings = settings.subscribe((value) => {
-    autoAdvanceEnabled = value.autoAdvanceEnabled;
-    autoAdvanceInterval = value.autoAdvanceInterval;
-    speechEnabled = value.speechEnabled;
+    autoAdvanceEnabled = value.content.autoAdvanceEnabled;
+    autoAdvanceInterval = value.content.autoAdvanceInterval;
+    speechEnabled = value.general.speechEnabled;
 
     if (!mounted) {
       lastSpeechEnabled = speechEnabled;
@@ -149,12 +150,14 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
     unsubscribeSettings();
   });
 
-  function openSettings(): void {
+  function openSettings(opener?: HTMLElement | null): void {
+    settingsAnchor = opener ?? null;
     settingsOpen = true;
   }
 
   function closeSettings(): void {
     settingsOpen = false;
+    settingsAnchor = null;
   }
 </script>
 
@@ -187,7 +190,7 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
 </div>
 
 <FavoritesPanel />
-<SettingsPanel open={settingsOpen} onClose={closeSettings} />
+<SettingsPanel open={settingsOpen} anchor={settingsAnchor} onClose={closeSettings} />
 
 <style>
   .app-shell {

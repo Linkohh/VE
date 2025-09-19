@@ -7,12 +7,14 @@ export interface AuraPaletteEntry {
 export interface AuraSettings {
   colorKey: string;
   size: number;
+  intensity: number;
 }
 
 export const AURA_SIZE_MIN = 60;
 export const AURA_SIZE_MAX = 160;
 export const AURA_SIZE_STEP = 5;
 export const DEFAULT_AURA_SIZE = 110;
+export const DEFAULT_AURA_INTENSITY = 80;
 
 export const AURA_PALETTE: AuraPaletteEntry[] = [
   {
@@ -56,4 +58,5 @@ export const AURA_LOOKUP = new Map<string, AuraPaletteEntry>(
 export const DEFAULT_AURA_SETTINGS: AuraSettings = {
   colorKey: DEFAULT_AURA.key,
   size: DEFAULT_AURA_SIZE,
+  intensity: DEFAULT_AURA_INTENSITY,
 };

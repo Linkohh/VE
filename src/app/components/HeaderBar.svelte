@@ -6,9 +6,10 @@
   import type { QuoteViewModel } from '../stores/quote';
 
   export let quote: QuoteViewModel | null = null;
-  export let onOpenSettings: () => void = () => {};
+  export let onOpenSettings: (anchor?: HTMLElement | null) => void = () => {};
 
   let favoritesButton: HTMLButtonElement | null = null;
+  let settingsButton: HTMLButtonElement | null = null;
 
   function handleFavorites(): void {
     openFavorites(favoritesButton ?? undefined);
@@ -43,7 +44,8 @@
       type="button"
       class="rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
       aria-label="Open settings"
-      on:click={onOpenSettings}
+      bind:this={settingsButton}
+      on:click={() => onOpenSettings(settingsButton)}
     >
       <Fa icon={faGear} class="h-4 w-4" />
     </button>
