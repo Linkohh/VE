@@ -13,7 +13,7 @@ import { settings, setSpeechEnabled } from './stores/settings';
 
 const currentYear = new Date().getFullYear();
 
-  let quote: QuoteViewModel | null = null;
+let quote: QuoteViewModel | null = null;
 let settingsOpen = false;
 let autoAdvanceEnabled = false;
 let autoAdvanceInterval = 8;
@@ -22,12 +22,65 @@ let mounted = false;
 let speechSupported = false;
 let lastSpeechEnabled = false;
 let autoAdvanceTimer: ReturnType<typeof setTimeout> | null = null;
+let countdownInterval: ReturnType<typeof setInterval> | null = null;
+let countdownDurationMs = 0;
+let countdownStart = 0;
+let autoAdvanceActive = false;
+let secondsRemaining = 0;
+let autoAdvanceFraction = 0;
+
+function clearCountdown(): void {
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+    countdownInterval = null;
+  }
+
+  countdownDurationMs = 0;
+  countdownStart = 0;
+  autoAdvanceFraction = 0;
+  secondsRemaining = 0;
+}
+
+function updateCountdown(): void {
+  if (!autoAdvanceActive || countdownDurationMs <= 0) {
+    autoAdvanceFraction = 0;
+    secondsRemaining = 0;
+    return;
+  }
+
+  const now = Date.now();
+  const elapsed = now - countdownStart;
+  const remaining = Math.max(0, countdownDurationMs - elapsed);
+  const duration = countdownDurationMs || 1;
+
+  autoAdvanceFraction = Math.min(1, elapsed / duration);
+  secondsRemaining = Math.max(0, Math.ceil(remaining / 1000));
+
+  if (remaining <= 0) {
+    clearCountdown();
+  }
+}
+
+function startCountdown(delayMs: number): void {
+  clearCountdown();
+
+  countdownDurationMs = delayMs;
+  countdownStart = Date.now();
+  autoAdvanceFraction = 0;
+  secondsRemaining = Math.max(0, Math.ceil(delayMs / 1000));
+
+  countdownInterval = setInterval(updateCountdown, 250);
+  updateCountdown();
+}
 
 function clearAutoAdvanceTimer(): void {
   if (autoAdvanceTimer) {
     clearTimeout(autoAdvanceTimer);
     autoAdvanceTimer = null;
   }
+
+  autoAdvanceActive = false;
+  clearCountdown();
 }
 
 function cancelSpeech(): void {
@@ -63,6 +116,7 @@ function speakQuote(value: QuoteViewModel | null): void {
 
 function scheduleAutoAdvance(): void {
   if (!mounted || !autoAdvanceEnabled) {
+    clearAutoAdvanceTimer();
     return;
   }
 
@@ -74,52 +128,57 @@ function scheduleAutoAdvance(): void {
 
   const delay = Math.max(5, Math.min(60, autoAdvanceInterval)) * 1000;
 
+  autoAdvanceActive = true;
+  startCountdown(delay);
+
   autoAdvanceTimer = setTimeout(() => {
     autoAdvanceTimer = null;
+    autoAdvanceActive = false;
+    clearCountdown();
     requestNextQuote({ reason: 'auto-advance' });
   }, delay);
 }
 
 export let navigateTo: (route: 'home' | 'about') => void = () => {};
 
-  const unsubscribeQuote = currentQuote.subscribe((value) => {
-    quote = value;
+const unsubscribeQuote = currentQuote.subscribe((value) => {
+  quote = value;
 
-    if (!mounted) {
-      return;
-    }
+  if (!mounted) {
+    return;
+  }
 
-    scheduleAutoAdvance();
+  scheduleAutoAdvance();
 
-    if (speechEnabled) {
-      speakQuote(value);
-    }
-  });
+  if (speechEnabled) {
+    speakQuote(value);
+  }
+});
 
-  const unsubscribeSettings = settings.subscribe((value) => {
-    autoAdvanceEnabled = value.autoAdvanceEnabled;
-    autoAdvanceInterval = value.autoAdvanceInterval;
-    speechEnabled = value.speechEnabled;
+const unsubscribeSettings = settings.subscribe((value) => {
+  autoAdvanceEnabled = value.autoAdvanceEnabled;
+  autoAdvanceInterval = value.autoAdvanceInterval;
+  speechEnabled = value.speechEnabled;
 
-    if (!mounted) {
-      lastSpeechEnabled = speechEnabled;
-      return;
-    }
-
-    if (!speechEnabled && lastSpeechEnabled) {
-      cancelSpeech();
-    } else if (speechEnabled && !lastSpeechEnabled && quote) {
-      speakQuote(quote);
-    }
-
+  if (!mounted) {
     lastSpeechEnabled = speechEnabled;
+    return;
+  }
 
-    if (!autoAdvanceEnabled) {
-      clearAutoAdvanceTimer();
-    } else {
-      scheduleAutoAdvance();
-    }
-  });
+  if (!speechEnabled && lastSpeechEnabled) {
+    cancelSpeech();
+  } else if (speechEnabled && !lastSpeechEnabled && quote) {
+    speakQuote(quote);
+  }
+
+  lastSpeechEnabled = speechEnabled;
+
+  if (!autoAdvanceEnabled) {
+    clearAutoAdvanceTimer();
+  } else {
+    scheduleAutoAdvance();
+  }
+});
 
   onMount(() => {
     document.body.classList.add('has-svelte-app');
@@ -156,6 +215,18 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
   function closeSettings(): void {
     settingsOpen = false;
   }
+
+  function handleManualNext(): void {
+    clearAutoAdvanceTimer();
+
+    if (autoAdvanceEnabled) {
+      const delay = Math.max(5, Math.min(60, autoAdvanceInterval)) * 1000;
+      autoAdvanceActive = true;
+      startCountdown(delay);
+    }
+
+    requestNextQuote({ reason: 'controls' });
+  }
 </script>
 
 <div class="app-shell">
@@ -164,10 +235,21 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
 
   <main class="relative z-[100] flex flex-1 flex-col gap-8 py-14">
     <section class="app-surface">
-      <HeaderBar {quote} onOpenSettings={openSettings} />
+      <HeaderBar
+        {quote}
+        onOpenSettings={openSettings}
+        autoAdvanceFraction={autoAdvanceFraction}
+        secondsRemaining={secondsRemaining}
+        autoAdvanceActive={autoAdvanceActive}
+      />
       <QuoteSearch />
       <QuoteCard {quote} />
-      <ControlsBar {quote} />
+      <ControlsBar
+        {quote}
+        secondsRemaining={secondsRemaining}
+        autoAdvanceActive={autoAdvanceActive}
+        onGenerate={handleManualNext}
+      />
     </section>
 
     <div class="z-[100] mx-auto flex w-full max-w-3xl justify-center px-4">

@@ -7,12 +7,17 @@
 
   export let quote: QuoteViewModel | null = null;
   export let onOpenSettings: () => void = () => {};
+  export let autoAdvanceFraction = 0;
+  export let secondsRemaining = 0;
+  export let autoAdvanceActive = false;
 
   let favoritesButton: HTMLButtonElement | null = null;
 
   function handleFavorites(): void {
     openFavorites(favoritesButton ?? undefined);
   }
+
+  $: progressValue = Math.min(100, Math.max(0, Math.round(autoAdvanceFraction * 100)));
 </script>
 
 <header class="flex flex-wrap items-center justify-between gap-4 text-white">
@@ -24,6 +29,22 @@
     <p class="tagline">
       {quote ? 'Tune into your next vibe.' : 'Preparing your first vibe...'}
     </p>
+
+    {#if autoAdvanceActive}
+      <div class="timing" aria-live="polite">
+        <span class="timing-label">Next vibe in {secondsRemaining}s</span>
+        <div
+          class="progress-track"
+          role="progressbar"
+          aria-label="Time until next quote"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow={progressValue}
+        >
+          <div class="progress-fill" style={`width: ${progressValue}%`}></div>
+        </div>
+      </div>
+    {/if}
   </div>
 
   <div class="flex items-center gap-2">
@@ -78,5 +99,36 @@
     margin: 0;
     font-size: 0.875rem;
     color: rgba(255, 255, 255, 0.7);
+  }
+
+  .timing {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .timing-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .progress-track {
+    position: relative;
+    width: 12rem;
+    max-width: 100%;
+    height: 0.35rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 0, 255, 0.6), rgba(0, 255, 255, 0.6));
+    transform-origin: left;
+    transition: width 0.2s ease;
   }
 </style>
