@@ -1,14 +1,16 @@
-import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
+import React, { createContext, lazy, Suspense, useCallback, useContext, useMemo, useRef, useState } from 'react';
 import { useQuotes, UseQuotesResult } from '../../hooks/useQuotes';
 import { SettingsState, Theme } from '../../types';
 import QuoteDisplay from '../Quote/QuoteDisplay';
 import ActionButton from '../UI/ActionButton';
-import SettingsPanel from '../Settings/SettingsPanel';
-import MatrixRain from '../Effects/MatrixRain';
-import MouseGlow from '../Effects/MouseGlow';
 import FlipClock from '../Clock/FlipClock';
-import AboutPage from '../About/AboutPage';
 import styles from './App.module.css';
+
+// Lazy load heavier components for better initial load performance
+const SettingsPanel = lazy(() => import('../Settings/SettingsPanel'));
+const MatrixRain = lazy(() => import('../Effects/MatrixRain'));
+const MouseGlow = lazy(() => import('../Effects/MouseGlow'));
+const AboutPage = lazy(() => import('../About/AboutPage'));
 
 interface SettingsContextValue extends SettingsState {
   toggleTheme: () => void;
@@ -105,13 +107,37 @@ const App: React.FC = () => {
   }, [quotes, playBeep]);
 
   const settingsValue = useMemo<SettingsContextValue>(() => {
-    const setTheme = (theme: Theme) => setSettings((prev) => ({ ...prev, theme }));
+    const setTheme = (theme: Theme) => {
+      try {
+        setSettings((prev) => ({ ...prev, theme }));
+      } catch (error) {
+        console.error('Failed to update theme:', error);
+      }
+    };
     return {
       ...settings,
       toggleTheme: () => setTheme(settings.theme === 'dark' ? 'light' : 'dark'),
-      setMatrixEnabled: (value: boolean) => setSettings((prev) => ({ ...prev, matrixEnabled: value })),
-      setMouseGlowEnabled: (value: boolean) => setSettings((prev) => ({ ...prev, mouseGlowEnabled: value })),
-      setBeepEnabled: (value: boolean) => setSettings((prev) => ({ ...prev, beepEnabled: value })),
+      setMatrixEnabled: (value: boolean) => {
+        try {
+          setSettings((prev) => ({ ...prev, matrixEnabled: value }));
+        } catch (error) {
+          console.error('Failed to update matrix effect setting:', error);
+        }
+      },
+      setMouseGlowEnabled: (value: boolean) => {
+        try {
+          setSettings((prev) => ({ ...prev, mouseGlowEnabled: value }));
+        } catch (error) {
+          console.error('Failed to update mouse glow setting:', error);
+        }
+      },
+      setBeepEnabled: (value: boolean) => {
+        try {
+          setSettings((prev) => ({ ...prev, beepEnabled: value }));
+        } catch (error) {
+          console.error('Failed to update beep setting:', error);
+        }
+      },
     };
   }, [settings]);
 
@@ -130,8 +156,14 @@ const App: React.FC = () => {
     <SettingsContext.Provider value={settingsValue}>
       <QuotesContext.Provider value={quotes}>
         <div className={`${styles.app} ${themeClassName} ${globalThemeClass}`}>
-          <MatrixRain active={settings.matrixEnabled} />
-          {settings.mouseGlowEnabled && <MouseGlow />}
+          <Suspense fallback={null}>
+            <MatrixRain active={settings.matrixEnabled} />
+          </Suspense>
+          {settings.mouseGlowEnabled && (
+            <Suspense fallback={null}>
+              <MouseGlow />
+            </Suspense>
+          )}
           <div className={styles.overlay}>
             <header className={styles.header}>
               <div>
@@ -139,10 +171,20 @@ const App: React.FC = () => {
                 <p className={styles.subtitle}>Your daily stream of mindful motivation.</p>
               </div>
               <div className={styles.headerButtons}>
-                <button type="button" className={styles.linkButton} onClick={() => setShowAbout(true)}>
+                <button
+                  type="button"
+                  className={styles.linkButton}
+                  onClick={() => setShowAbout(true)}
+                  aria-label="Open about dialog"
+                >
                   About
                 </button>
-                <button type="button" className={styles.linkButton} onClick={() => setSettingsOpen(true)}>
+                <button
+                  type="button"
+                  className={styles.linkButton}
+                  onClick={() => setSettingsOpen(true)}
+                  aria-label="Open settings panel"
+                >
                   Settings
                 </button>
               </div>
@@ -166,8 +208,14 @@ const App: React.FC = () => {
               <span className={styles.attribution}>Crafted with positivity by VibeMe</span>
             </footer>
           </div>
-          <SettingsPanel isOpen={isSettingsOpen} onClose={() => setSettingsOpen(false)} />
-          {showAbout && <AboutPage onClose={() => setShowAbout(false)} />}
+          <Suspense fallback={<div className={styles.loadingFallback}>Loading settings...</div>}>
+            <SettingsPanel isOpen={isSettingsOpen} onClose={() => setSettingsOpen(false)} />
+          </Suspense>
+          {showAbout && (
+            <Suspense fallback={<div className={styles.loadingFallback}>Loading...</div>}>
+              <AboutPage onClose={() => setShowAbout(false)} />
+            </Suspense>
+          )}
         </div>
       </QuotesContext.Provider>
     </SettingsContext.Provider>

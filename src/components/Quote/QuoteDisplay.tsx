@@ -30,12 +30,16 @@ const QuoteDisplay: React.FC = () => {
   }
 
   return (
-    <section className={styles.container} aria-live="polite">
-      <p className={styles.category}>{currentQuote.category}</p>
-      <blockquote className={styles.quote}>
-        “{currentQuote.text}”
+    <section className={styles.container} aria-live="polite" aria-label="Current motivational quote">
+      <p className={styles.category} aria-label={`Category: ${currentQuote.category}`}>
+        {currentQuote.category}
+      </p>
+      <blockquote className={styles.quote} cite={currentQuote.author}>
+        "{currentQuote.text}"
       </blockquote>
-      <p className={styles.author}>— {currentQuote.author}</p>
+      <p className={styles.author} aria-label={`Author: ${currentQuote.author}`}>
+        — {currentQuote.author}
+      </p>
     </section>
   );
 };
