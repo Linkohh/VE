@@ -22,12 +22,51 @@ let mounted = false;
 let speechSupported = false;
 let lastSpeechEnabled = false;
 let autoAdvanceTimer: ReturnType<typeof setTimeout> | null = null;
+let autoAdvanceTicker: ReturnType<typeof setInterval> | null = null;
+let autoAdvanceStart = 0;
+let autoAdvanceDuration = 0;
+let autoAdvanceProgress = 0;
 
-function clearAutoAdvanceTimer(): void {
+function stopAutoAdvanceTicker(): void {
+  if (autoAdvanceTicker) {
+    clearInterval(autoAdvanceTicker);
+    autoAdvanceTicker = null;
+  }
+}
+
+function updateAutoAdvanceProgress(): void {
+  if (!autoAdvanceDuration) {
+    autoAdvanceProgress = 0;
+    return;
+  }
+
+  const elapsed = Date.now() - autoAdvanceStart;
+  const ratio = Math.min(1, Math.max(0, elapsed / autoAdvanceDuration));
+  autoAdvanceProgress = Number.isFinite(ratio) ? ratio : 0;
+}
+
+function clearAutoAdvanceTimer(options: { resetProgress?: boolean } = {}): void {
+  const { resetProgress = true } = options;
+
   if (autoAdvanceTimer) {
     clearTimeout(autoAdvanceTimer);
     autoAdvanceTimer = null;
   }
+
+  stopAutoAdvanceTicker();
+
+  if (resetProgress) {
+    autoAdvanceProgress = 0;
+    autoAdvanceStart = 0;
+    autoAdvanceDuration = 0;
+  }
+}
+
+function startAutoAdvanceTicker(): void {
+  stopAutoAdvanceTicker();
+  autoAdvanceTicker = setInterval(() => {
+    updateAutoAdvanceProgress();
+  }, 1000);
 }
 
 function cancelSpeech(): void {
@@ -63,6 +102,7 @@ function speakQuote(value: QuoteViewModel | null): void {
 
 function scheduleAutoAdvance(): void {
   if (!mounted || !autoAdvanceEnabled) {
+    clearAutoAdvanceTimer();
     return;
   }
 
@@ -74,8 +114,14 @@ function scheduleAutoAdvance(): void {
 
   const delay = Math.max(5, Math.min(60, autoAdvanceInterval)) * 1000;
 
+  autoAdvanceStart = Date.now();
+  autoAdvanceDuration = delay;
+  updateAutoAdvanceProgress();
+  startAutoAdvanceTicker();
+
   autoAdvanceTimer = setTimeout(() => {
-    autoAdvanceTimer = null;
+    clearAutoAdvanceTimer({ resetProgress: false });
+    autoAdvanceProgress = 1;
     requestNextQuote({ reason: 'auto-advance' });
   }, delay);
 }
@@ -156,6 +202,15 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
   function closeSettings(): void {
     settingsOpen = false;
   }
+
+  function handleOpenSearch(): void {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const input = document.querySelector<HTMLInputElement>('input[name="quote-search"]');
+    input?.focus();
+  }
 </script>
 
 <div class="app-shell">
@@ -164,7 +219,14 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
 
   <main class="relative z-[100] flex flex-1 flex-col gap-8 py-14">
     <section class="app-surface">
-      <HeaderBar {quote} onOpenSettings={openSettings} />
+      <HeaderBar
+        {quote}
+        quoteIndex={quote?.index ?? 0}
+        quoteTotal={quote?.total ?? 0}
+        autoAdvanceProgress={autoAdvanceProgress}
+        on:openSettings={openSettings}
+        on:openSearch={handleOpenSearch}
+      />
       <QuoteSearch />
       <QuoteCard {quote} />
       <ControlsBar {quote} />
