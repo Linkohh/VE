@@ -5,7 +5,7 @@ import MatrixLayer from './features/matrix/MatrixLayer.svelte';
 import ControlsBar from './components/ControlsBar.svelte';
 import HeaderBar from './components/HeaderBar.svelte';
 import QuoteCard from './components/QuoteCard.svelte';
-import QuoteSearch from './components/QuoteSearch.svelte';
+import QuoteSearchOverlay from './components/QuoteSearchOverlay.svelte';
 import FavoritesPanel from './panels/FavoritesPanel.svelte';
 import SettingsPanel from './panels/SettingsPanel.svelte';
 import { currentQuote, ensureInitialQuote, requestNextQuote, type QuoteViewModel } from './stores/quote';
@@ -15,6 +15,7 @@ const currentYear = new Date().getFullYear();
 
   let quote: QuoteViewModel | null = null;
 let settingsOpen = false;
+let settingsAnchor: HTMLElement | null = null;
 let autoAdvanceEnabled = false;
 let autoAdvanceInterval = 8;
 let speechEnabled = false;
@@ -22,31 +23,7 @@ let mounted = false;
 let speechSupported = false;
 let lastSpeechEnabled = false;
 let autoAdvanceTimer: ReturnType<typeof setTimeout> | null = null;
-let autoAdvanceTicker: ReturnType<typeof setInterval> | null = null;
-let autoAdvanceStart = 0;
-let autoAdvanceDuration = 0;
-let autoAdvanceProgress = 0;
-
-function stopAutoAdvanceTicker(): void {
-  if (autoAdvanceTicker) {
-    clearInterval(autoAdvanceTicker);
-    autoAdvanceTicker = null;
-  }
-}
-
-function updateAutoAdvanceProgress(): void {
-  if (!autoAdvanceDuration) {
-    autoAdvanceProgress = 0;
-    return;
-  }
-
-  const elapsed = Date.now() - autoAdvanceStart;
-  const ratio = Math.min(1, Math.max(0, elapsed / autoAdvanceDuration));
-  autoAdvanceProgress = Number.isFinite(ratio) ? ratio : 0;
-}
-
-function clearAutoAdvanceTimer(options: { resetProgress?: boolean } = {}): void {
-  const { resetProgress = true } = options;
+ 
 
   if (autoAdvanceTimer) {
     clearTimeout(autoAdvanceTimer);
@@ -143,9 +120,9 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
   });
 
   const unsubscribeSettings = settings.subscribe((value) => {
-    autoAdvanceEnabled = value.autoAdvanceEnabled;
-    autoAdvanceInterval = value.autoAdvanceInterval;
-    speechEnabled = value.speechEnabled;
+    autoAdvanceEnabled = value.content.autoAdvanceEnabled;
+    autoAdvanceInterval = value.content.autoAdvanceInterval;
+    speechEnabled = value.general.speechEnabled;
 
     if (!mounted) {
       lastSpeechEnabled = speechEnabled;
@@ -195,12 +172,22 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
     unsubscribeSettings();
   });
 
-  function openSettings(): void {
+  function openSettings(opener?: HTMLElement | null): void {
+    settingsAnchor = opener ?? null;
     settingsOpen = true;
   }
 
   function closeSettings(): void {
     settingsOpen = false;
+    settingsAnchor = null;
+  }
+
+  function openSearch(): void {
+    searchOpen = true;
+  }
+
+  function closeSearch(): void {
+    searchOpen = false;
   }
 
   function handleOpenSearch(): void {
@@ -219,15 +206,7 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
 
   <main class="relative z-[100] flex flex-1 flex-col gap-8 py-14">
     <section class="app-surface">
-      <HeaderBar
-        {quote}
-        quoteIndex={quote?.index ?? 0}
-        quoteTotal={quote?.total ?? 0}
-        autoAdvanceProgress={autoAdvanceProgress}
-        on:openSettings={openSettings}
-        on:openSearch={handleOpenSearch}
-      />
-      <QuoteSearch />
+ 
       <QuoteCard {quote} />
       <ControlsBar {quote} />
     </section>
@@ -248,8 +227,10 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
   </footer>
 </div>
 
+<QuoteSearchOverlay open={searchOpen} on:close={closeSearch} />
+
 <FavoritesPanel />
-<SettingsPanel open={settingsOpen} onClose={closeSettings} />
+<SettingsPanel open={settingsOpen} anchor={settingsAnchor} onClose={closeSettings} />
 
 <style>
   .app-shell {

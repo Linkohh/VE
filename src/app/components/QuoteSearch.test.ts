@@ -110,4 +110,38 @@ describe('QuoteSearch', () => {
     await Promise.resolve();
     expect(queryByText('Searching…')).toBeNull();
   });
+
+  it('emits a submit event after applying the search', async () => {
+    vi.useFakeTimers();
+    const handleSubmit = vi.fn();
+    const { getByPlaceholderText, getByRole } = render(QuoteSearch, {
+      events: { submit: handleSubmit },
+    });
+
+    const input = getByPlaceholderText('Search quotes or authors...') as HTMLInputElement;
+    await fireEvent.input(input, { target: { value: 'focus' } });
+
+    const form = getByRole('search');
+    await fireEvent.submit(form);
+
+    expect(handleSubmit).toHaveBeenCalledTimes(1);
+    expect(handleSubmit.mock.calls[0][0]?.detail).toEqual({ query: 'focus' });
+  });
+
+  it('emits a clear event after clearing the search', async () => {
+    vi.useFakeTimers();
+    const handleClear = vi.fn();
+    const { getByPlaceholderText, getByRole } = render(QuoteSearch, {
+      events: { clear: handleClear },
+    });
+
+    const input = getByPlaceholderText('Search quotes or authors...') as HTMLInputElement;
+    await fireEvent.input(input, { target: { value: 'zen' } });
+    await vi.runAllTimersAsync();
+
+    const clearButton = getByRole('button', { name: /clear search/i });
+    await fireEvent.click(clearButton);
+
+    expect(handleClear).toHaveBeenCalledTimes(1);
+  });
 });

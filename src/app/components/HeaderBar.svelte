@@ -1,32 +1,21 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import { FontAwesomeIcon as Fa } from '@fortawesome/svelte-fontawesome';
-  import { faGear, faMagnifyingGlass, faMoon } from '@fortawesome/free-solid-svg-icons';
-  import HeroDateStamp from './HeroDateStamp.svelte';
-  import HeroProgressBar from './HeroProgressBar.svelte';
-  import FlipClock from './FlipClock.svelte';
-  import { nextTheme } from '../../features/theme';
+ 
   import type { QuoteViewModel } from '../stores/quote';
 
   const dispatch = createEventDispatcher<{ openSearch: void; openSettings: void }>();
 
   export let quote: QuoteViewModel | null = null;
-  export let quoteIndex = 0;
-  export let quoteTotal = 0;
-  export let autoAdvanceProgress = 0;
-
-  $: message = quote ? 'Tune into your next vibe.' : 'Preparing your first vibe...';
-
-  function handleTheme(): void {
-    nextTheme();
-  }
-
-  function handleSearch(): void {
-    dispatch('openSearch');
-  }
+ 
 
   function handleSettings(): void {
     dispatch('openSettings');
+  }
+
+  function handleOpenSearch(event: MouseEvent): void {
+    const trigger = searchButton ?? (event.currentTarget instanceof HTMLElement ? event.currentTarget : null);
+    dispatch('openSearch', { trigger });
   }
 </script>
 
@@ -64,15 +53,7 @@
     </div>
   </div>
 
-  <div class="hero-core">
-    <div class="wordmark" aria-label="VibeMe">
-      <span class="wordmark-vibe">Vibe</span>
-      <span class="wordmark-me">Me</span>
-    </div>
-
-    <HeroProgressBar {quoteIndex} {quoteTotal} autoAdvanceProgress={autoAdvanceProgress} message={message} />
-
-    <FlipClock />
+ 
   </div>
 </header>
 
