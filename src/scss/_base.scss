@@ -1,0 +1,98 @@
+// Base resets and global typography rules
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow: hidden;
+
+  @supports (overflow: clip) {
+    &, body {
+      overflow: clip;
+    }
+  }
+}
+
+body {
+  font-family: var(--font-heading);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background var(--transition-theme);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden !important;
+  padding: 0 !important;
+
+  &.using-keyboard {
+    *:focus {
+      outline: 2px solid #4a90e2;
+      outline-offset: 2px;
+    }
+  }
+
+  &:not(.using-keyboard) {
+    *:focus {
+      outline: none;
+    }
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#app-title-bar,
+.quote-container-outer {
+  max-width: min(92vw, 1100px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.quote-container-inner {
+  max-height: calc(100dvh - 160px);
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.quote-text-font {
+  font-family: var(--font-quote);
+}
+
+.heading-font {
+  font-family: var(--font-heading);
+}
+
+.author-font {
+  font-family: var(--font-author);
+}
+
+.dynamic-text-main {
+  color: var(--text-color-main);
+  transition: color var(--transition-theme);
+}
+
+.dynamic-text-secondary {
+  color: var(--text-color-secondary);
+  transition: color var(--transition-theme);
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, var(--color1), var(--color2), var(--color3));
+  transition: background var(--transition-theme);
+}
