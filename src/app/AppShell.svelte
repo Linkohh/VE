@@ -5,7 +5,7 @@ import MatrixLayer from './features/matrix/MatrixLayer.svelte';
 import ControlsBar from './components/ControlsBar.svelte';
 import HeaderBar from './components/HeaderBar.svelte';
 import QuoteCard from './components/QuoteCard.svelte';
-import QuoteSearch from './components/QuoteSearch.svelte';
+import QuoteSearchOverlay from './components/QuoteSearchOverlay.svelte';
 import FavoritesPanel from './panels/FavoritesPanel.svelte';
 import SettingsPanel from './panels/SettingsPanel.svelte';
 import { currentQuote, ensureInitialQuote, requestNextQuote, type QuoteViewModel } from './stores/quote';
@@ -22,6 +22,7 @@ let mounted = false;
 let speechSupported = false;
 let lastSpeechEnabled = false;
 let autoAdvanceTimer: ReturnType<typeof setTimeout> | null = null;
+let searchOpen = false;
 
 function clearAutoAdvanceTimer(): void {
   if (autoAdvanceTimer) {
@@ -156,6 +157,14 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
   function closeSettings(): void {
     settingsOpen = false;
   }
+
+  function openSearch(): void {
+    searchOpen = true;
+  }
+
+  function closeSearch(): void {
+    searchOpen = false;
+  }
 </script>
 
 <div class="app-shell">
@@ -164,8 +173,7 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
 
   <main class="relative z-[100] flex flex-1 flex-col gap-8 py-14">
     <section class="app-surface">
-      <HeaderBar {quote} onOpenSettings={openSettings} />
-      <QuoteSearch />
+      <HeaderBar {quote} onOpenSettings={openSettings} on:openSearch={openSearch} />
       <QuoteCard {quote} />
       <ControlsBar {quote} />
     </section>
@@ -185,6 +193,8 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
     <p>&copy; {currentYear} Vibe Me. All Rights Reserved.</p>
   </footer>
 </div>
+
+<QuoteSearchOverlay open={searchOpen} on:close={closeSearch} />
 
 <FavoritesPanel />
 <SettingsPanel open={settingsOpen} onClose={closeSettings} />
