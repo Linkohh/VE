@@ -198,6 +198,15 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
     const input = document.querySelector<HTMLInputElement>('input[name="quote-search"]');
     input?.focus();
   }
+
+  function handleOpenSearch(): void {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const input = document.querySelector<HTMLInputElement>('input[name="quote-search"]');
+    input?.focus();
+  }
 </script>
 
 <div class="app-shell">

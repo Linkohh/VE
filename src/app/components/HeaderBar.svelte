@@ -8,14 +8,6 @@
 
   export let quote: QuoteViewModel | null = null;
  
-
-  function handleSettings(): void {
-    dispatch('openSettings');
-  }
-
-  function handleOpenSearch(event: MouseEvent): void {
-    const trigger = searchButton ?? (event.currentTarget instanceof HTMLElement ? event.currentTarget : null);
-    dispatch('openSearch', { trigger });
   }
 </script>
 
@@ -59,14 +51,7 @@
 
 <style>
   .hero-header {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    padding: 0.5rem 0 1.5rem;
-  }
-
-  .status-row {
-    display: flex;
+ 
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
