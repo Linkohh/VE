@@ -1,4 +1,5 @@
-window.quotesData = 
+/// <reference path="./types.d.ts" />
+const quotesData: QuotesData =
 {
   "categories": {
     "love": [
@@ -6342,4 +6343,7 @@ window.quotesData =
   }
 }
 
-;
+
+window.quotesData = quotesData;
+
+export {};

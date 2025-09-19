@@ -575,11 +575,11 @@
         var main = document.querySelector('script[data-main]');
         console.log('[injector] Main script found:', !!main, main ? main.getAttribute('src') : 'none');
         
-        var prefix = 'js/'; // default if we can't detect
+        var prefix = 'dist/'; // default if we can't detect
         if (main && main.getAttribute('src')) {
-          // "js/main.js" -> "js/"
-          // "../js/main.js?x" -> "../js/"
-          // "../../js/main.js" -> "../../js/"
+          // "dist/main.js" -> "dist/"
+          // "../dist/main.js?x" -> "../dist/"
+          // "../../dist/main.js" -> "../../dist/"
           prefix = main.getAttribute('src').replace(/main\.js(\?.*)?$/, '');
         }
         
@@ -650,7 +650,7 @@
       }
     </script>
     
-    <script data-main defer src="js/main.js"></script>
+    <script data-main defer src="dist/main.js"></script>
 
     <!-- Fallback for browsers without script support -->
     <noscript>
@@ -711,6 +711,6 @@
 <!-- Inline JSON fallback hook for manual paste -->
 <script id="quotes-inline" type="application/json" hidden></script>
 
-<!-- Quotes loaded from data/quotes.json with js/quotes.js fallback -->
+<!-- Quotes loaded from data/quotes.json with dist/quotes.js fallback -->
 </body>
 </html>
