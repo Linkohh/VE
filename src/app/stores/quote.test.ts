@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { get } from 'svelte/store';
+import type { QuoteFilter } from '../../features/quotes/engine';
 import {
   applyQuoteFilter,
   clearQuoteFilter,
@@ -75,9 +76,9 @@ describe('quote store', () => {
 
       expect(
         normalizeFilter({
-          category: null as unknown as string | undefined,
+ 
           search: undefined,
-        }),
+        } as unknown as QuoteFilter),
       ).toBeNull();
     });
   });

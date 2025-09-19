@@ -86,6 +86,7 @@
     persistRatings(ratings);
     ratingState.set(next);
   }
+ 
 </script>
 
 <div class="controls-wrapper">

@@ -4,8 +4,9 @@ import AuraGlow from './components/AuraGlow.svelte';
 import MatrixLayer from './features/matrix/MatrixLayer.svelte';
 import ControlsBar from './components/ControlsBar.svelte';
 import HeaderBar from './components/HeaderBar.svelte';
+import FloatingFavoritesButton from './components/FloatingFavoritesButton.svelte';
 import QuoteCard from './components/QuoteCard.svelte';
-import QuoteSearch from './components/QuoteSearch.svelte';
+import QuoteSearchOverlay from './components/QuoteSearchOverlay.svelte';
 import FavoritesPanel from './panels/FavoritesPanel.svelte';
 import SettingsPanel from './panels/SettingsPanel.svelte';
 import { currentQuote, ensureInitialQuote, requestNextQuote, type QuoteViewModel } from './stores/quote';
@@ -15,6 +16,7 @@ const currentYear = new Date().getFullYear();
 
 let quote: QuoteViewModel | null = null;
 let settingsOpen = false;
+let settingsAnchor: HTMLElement | null = null;
 let autoAdvanceEnabled = false;
 let autoAdvanceInterval = 8;
 let speechEnabled = false;
@@ -22,65 +24,14 @@ let mounted = false;
 let speechSupported = false;
 let lastSpeechEnabled = false;
 let autoAdvanceTimer: ReturnType<typeof setTimeout> | null = null;
-let countdownInterval: ReturnType<typeof setInterval> | null = null;
-let countdownDurationMs = 0;
-let countdownStart = 0;
-let autoAdvanceActive = false;
-let secondsRemaining = 0;
-let autoAdvanceFraction = 0;
+ 
 
-function clearCountdown(): void {
-  if (countdownInterval) {
-    clearInterval(countdownInterval);
-    countdownInterval = null;
-  }
-
-  countdownDurationMs = 0;
-  countdownStart = 0;
-  autoAdvanceFraction = 0;
-  secondsRemaining = 0;
-}
-
-function updateCountdown(): void {
-  if (!autoAdvanceActive || countdownDurationMs <= 0) {
-    autoAdvanceFraction = 0;
-    secondsRemaining = 0;
-    return;
-  }
-
-  const now = Date.now();
-  const elapsed = now - countdownStart;
-  const remaining = Math.max(0, countdownDurationMs - elapsed);
-  const duration = countdownDurationMs || 1;
-
-  autoAdvanceFraction = Math.min(1, elapsed / duration);
-  secondsRemaining = Math.max(0, Math.ceil(remaining / 1000));
-
-  if (remaining <= 0) {
-    clearCountdown();
-  }
-}
-
-function startCountdown(delayMs: number): void {
-  clearCountdown();
-
-  countdownDurationMs = delayMs;
-  countdownStart = Date.now();
-  autoAdvanceFraction = 0;
-  secondsRemaining = Math.max(0, Math.ceil(delayMs / 1000));
-
-  countdownInterval = setInterval(updateCountdown, 250);
-  updateCountdown();
-}
-
-function clearAutoAdvanceTimer(): void {
   if (autoAdvanceTimer) {
     clearTimeout(autoAdvanceTimer);
     autoAdvanceTimer = null;
   }
 
-  autoAdvanceActive = false;
-  clearCountdown();
+ 
 }
 
 function cancelSpeech(): void {
@@ -128,13 +79,7 @@ function scheduleAutoAdvance(): void {
 
   const delay = Math.max(5, Math.min(60, autoAdvanceInterval)) * 1000;
 
-  autoAdvanceActive = true;
-  startCountdown(delay);
-
-  autoAdvanceTimer = setTimeout(() => {
-    autoAdvanceTimer = null;
-    autoAdvanceActive = false;
-    clearCountdown();
+ 
     requestNextQuote({ reason: 'auto-advance' });
   }, delay);
 }
@@ -155,10 +100,7 @@ const unsubscribeQuote = currentQuote.subscribe((value) => {
   }
 });
 
-const unsubscribeSettings = settings.subscribe((value) => {
-  autoAdvanceEnabled = value.autoAdvanceEnabled;
-  autoAdvanceInterval = value.autoAdvanceInterval;
-  speechEnabled = value.speechEnabled;
+ 
 
   if (!mounted) {
     lastSpeechEnabled = speechEnabled;
@@ -208,12 +150,40 @@ const unsubscribeSettings = settings.subscribe((value) => {
     unsubscribeSettings();
   });
 
-  function openSettings(): void {
+  function openSettings(opener?: HTMLElement | null): void {
+    settingsAnchor = opener ?? null;
     settingsOpen = true;
   }
 
   function closeSettings(): void {
     settingsOpen = false;
+    settingsAnchor = null;
+  }
+
+  function openSearch(): void {
+    searchOpen = true;
+  }
+
+  function closeSearch(): void {
+    searchOpen = false;
+  }
+
+  function handleOpenSearch(): void {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const input = document.querySelector<HTMLInputElement>('input[name="quote-search"]');
+    input?.focus();
+  }
+
+  function handleOpenSearch(): void {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const input = document.querySelector<HTMLInputElement>('input[name="quote-search"]');
+    input?.focus();
   }
 
   function handleManualNext(): void {
@@ -235,14 +205,7 @@ const unsubscribeSettings = settings.subscribe((value) => {
 
   <main class="relative z-[100] flex flex-1 flex-col gap-8 py-14">
     <section class="app-surface">
-      <HeaderBar
-        {quote}
-        onOpenSettings={openSettings}
-        autoAdvanceFraction={autoAdvanceFraction}
-        secondsRemaining={secondsRemaining}
-        autoAdvanceActive={autoAdvanceActive}
-      />
-      <QuoteSearch />
+ 
       <QuoteCard {quote} />
       <ControlsBar
         {quote}
@@ -268,8 +231,9 @@ const unsubscribeSettings = settings.subscribe((value) => {
   </footer>
 </div>
 
+ 
 <FavoritesPanel />
-<SettingsPanel open={settingsOpen} onClose={closeSettings} />
+<SettingsPanel open={settingsOpen} anchor={settingsAnchor} onClose={closeSettings} />
 
 <style>
   .app-shell {

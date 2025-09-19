@@ -9,21 +9,41 @@
   let initialized = false;
   let mounted = false;
   let state: AppSettingsState = {
-    matrixEnabled: true,
-    beepEnabled: false,
-    speechEnabled: false,
-    autoAdvanceEnabled: false,
-    autoAdvanceInterval: 8,
+    general: { matrixEnabled: true, beepEnabled: false, speechEnabled: false },
+    content: { autoAdvanceEnabled: false, autoAdvanceInterval: 8, streamDensity: 1, inclusiveLanguage: true },
     matrix: DEFAULTS,
     aura: { ...DEFAULT_AURA_SETTINGS },
+    appearance: {
+      colorHarmonyPreset: DEFAULT_AURA_SETTINGS.colorKey,
+      themePreset: 'synthwave',
+      vibrancy: 65,
+      warmth: 50,
+      accessibilityMode: 'standard',
+      mouseGlowIntensity: DEFAULT_AURA_SETTINGS.intensity,
+    },
+    audio: { chimePreset: 'soft', chimeVolume: 65, voiceStyle: 'ambient', voiceWarmth: 55 },
   };
+
+  function applyDocumentStyles(): void {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    document.documentElement.style.setProperty(
+      '--matrix-opacity-token',
+      state.matrix.visibility.toFixed(2),
+    );
+    document.body.dataset.matrixBlendMode = state.matrix.blendMode;
+  }
 
   function applyState(): void {
     if (!mounted) {
       return;
     }
 
-    const wantsCanvas = state.matrixEnabled && state.matrix.renderMode === RenderMode.Canvas;
+    applyDocumentStyles();
+
+    const wantsCanvas = state.general.matrixEnabled && state.matrix.renderMode === RenderMode.Canvas;
 
     if (wantsCanvas) {
       if (!initialized) {
@@ -54,10 +74,13 @@
       teardownMatrix();
       initialized = false;
     }
+    if (typeof document !== 'undefined') {
+      document.body.dataset.matrixBlendMode = '';
+    }
     unsubscribe();
   });
 </script>
 
-{#if state.matrixEnabled && state.matrix.renderMode === RenderMode.Minimal}
+{#if state.general.matrixEnabled && state.matrix.renderMode === RenderMode.Minimal}
   <AuraGlow />
 {/if}
