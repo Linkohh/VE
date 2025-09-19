@@ -4,6 +4,7 @@ import AuraGlow from './components/AuraGlow.svelte';
 import MatrixLayer from './features/matrix/MatrixLayer.svelte';
 import ControlsBar from './components/ControlsBar.svelte';
 import HeaderBar from './components/HeaderBar.svelte';
+import FloatingFavoritesButton from './components/FloatingFavoritesButton.svelte';
 import QuoteCard from './components/QuoteCard.svelte';
 import QuoteSearch from './components/QuoteSearch.svelte';
 import FavoritesPanel from './panels/FavoritesPanel.svelte';
@@ -186,6 +187,7 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
   </footer>
 </div>
 
+<FloatingFavoritesButton />
 <FavoritesPanel />
 <SettingsPanel open={settingsOpen} onClose={closeSettings} />
 

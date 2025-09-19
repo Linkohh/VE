@@ -75,7 +75,7 @@ describe('quote store', () => {
 
       expect(
         normalizeFilter({
-          category: null,
+          category: undefined,
           search: undefined,
         }),
       ).toBeNull();
