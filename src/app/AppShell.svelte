@@ -6,7 +6,7 @@ import ControlsBar from './components/ControlsBar.svelte';
 import HeaderBar from './components/HeaderBar.svelte';
 import FloatingFavoritesButton from './components/FloatingFavoritesButton.svelte';
 import QuoteCard from './components/QuoteCard.svelte';
-import QuoteSearch from './components/QuoteSearch.svelte';
+import QuoteSearchOverlay from './components/QuoteSearchOverlay.svelte';
 import FavoritesPanel from './panels/FavoritesPanel.svelte';
 import SettingsPanel from './panels/SettingsPanel.svelte';
 import { currentQuote, ensureInitialQuote, requestNextQuote, type QuoteViewModel } from './stores/quote';
@@ -16,6 +16,7 @@ const currentYear = new Date().getFullYear();
 
   let quote: QuoteViewModel | null = null;
 let settingsOpen = false;
+let settingsAnchor: HTMLElement | null = null;
 let autoAdvanceEnabled = false;
 let autoAdvanceInterval = 8;
 let speechEnabled = false;
@@ -23,12 +24,27 @@ let mounted = false;
 let speechSupported = false;
 let lastSpeechEnabled = false;
 let autoAdvanceTimer: ReturnType<typeof setTimeout> | null = null;
+ 
 
-function clearAutoAdvanceTimer(): void {
   if (autoAdvanceTimer) {
     clearTimeout(autoAdvanceTimer);
     autoAdvanceTimer = null;
   }
+
+  stopAutoAdvanceTicker();
+
+  if (resetProgress) {
+    autoAdvanceProgress = 0;
+    autoAdvanceStart = 0;
+    autoAdvanceDuration = 0;
+  }
+}
+
+function startAutoAdvanceTicker(): void {
+  stopAutoAdvanceTicker();
+  autoAdvanceTicker = setInterval(() => {
+    updateAutoAdvanceProgress();
+  }, 1000);
 }
 
 function cancelSpeech(): void {
@@ -64,6 +80,7 @@ function speakQuote(value: QuoteViewModel | null): void {
 
 function scheduleAutoAdvance(): void {
   if (!mounted || !autoAdvanceEnabled) {
+    clearAutoAdvanceTimer();
     return;
   }
 
@@ -75,8 +92,14 @@ function scheduleAutoAdvance(): void {
 
   const delay = Math.max(5, Math.min(60, autoAdvanceInterval)) * 1000;
 
+  autoAdvanceStart = Date.now();
+  autoAdvanceDuration = delay;
+  updateAutoAdvanceProgress();
+  startAutoAdvanceTicker();
+
   autoAdvanceTimer = setTimeout(() => {
-    autoAdvanceTimer = null;
+    clearAutoAdvanceTimer({ resetProgress: false });
+    autoAdvanceProgress = 1;
     requestNextQuote({ reason: 'auto-advance' });
   }, delay);
 }
@@ -98,9 +121,9 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
   });
 
   const unsubscribeSettings = settings.subscribe((value) => {
-    autoAdvanceEnabled = value.autoAdvanceEnabled;
-    autoAdvanceInterval = value.autoAdvanceInterval;
-    speechEnabled = value.speechEnabled;
+    autoAdvanceEnabled = value.content.autoAdvanceEnabled;
+    autoAdvanceInterval = value.content.autoAdvanceInterval;
+    speechEnabled = value.general.speechEnabled;
 
     if (!mounted) {
       lastSpeechEnabled = speechEnabled;
@@ -150,12 +173,40 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
     unsubscribeSettings();
   });
 
-  function openSettings(): void {
+  function openSettings(opener?: HTMLElement | null): void {
+    settingsAnchor = opener ?? null;
     settingsOpen = true;
   }
 
   function closeSettings(): void {
     settingsOpen = false;
+    settingsAnchor = null;
+  }
+
+  function openSearch(): void {
+    searchOpen = true;
+  }
+
+  function closeSearch(): void {
+    searchOpen = false;
+  }
+
+  function handleOpenSearch(): void {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const input = document.querySelector<HTMLInputElement>('input[name="quote-search"]');
+    input?.focus();
+  }
+
+  function handleOpenSearch(): void {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const input = document.querySelector<HTMLInputElement>('input[name="quote-search"]');
+    input?.focus();
   }
 </script>
 
@@ -165,8 +216,7 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
 
   <main class="relative z-[100] flex flex-1 flex-col gap-8 py-14">
     <section class="app-surface">
-      <HeaderBar {quote} onOpenSettings={openSettings} />
-      <QuoteSearch />
+ 
       <QuoteCard {quote} />
       <ControlsBar {quote} />
     </section>
@@ -187,9 +237,9 @@ export let navigateTo: (route: 'home' | 'about') => void = () => {};
   </footer>
 </div>
 
-<FloatingFavoritesButton />
+ 
 <FavoritesPanel />
-<SettingsPanel open={settingsOpen} onClose={closeSettings} />
+<SettingsPanel open={settingsOpen} anchor={settingsAnchor} onClose={closeSettings} />
 
 <style>
   .app-shell {

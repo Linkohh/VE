@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { currentTheme, setThemeByKey, themes } from '../../features/theme';
+  import { currentTheme, themes } from '../../features/theme';
+  import { setThemePreset } from '../stores/settings';
 
   type ThemeToggleSize = 'md' | 'sm';
 
@@ -26,7 +27,7 @@
 
   function handleSelect(key: string): void {
     if ($currentTheme.key === key) return;
-    setThemeByKey(key);
+    setThemePreset(key);
   }
 
   $: containerClasses = [containerBase, size === 'sm' ? 'text-[0.7rem]' : 'text-xs', className]
