@@ -3,21 +3,17 @@
 const fs = require('fs');
 const path = require('path');
 
-const quotesJsonPath = path.join(__dirname, '..', 'data', 'quotes.json');
-const quotesJsPath = path.join(__dirname, '..', 'js', 'quotes.js');
+const quotesJsonPath = path.join(__dirname, '..', 'src', 'data', 'quotes.json');
+const publicQuotesPath = path.join(__dirname, '..', 'public', 'quotes.json');
 
 try {
     // Read the JSON file
     const quotesJsonContent = fs.readFileSync(quotesJsonPath, 'utf8');
 
-    // We don't need to parse and re-stringify if we're just wrapping it.
-    // This preserves the original formatting of the JSON data.
-    const quotesJsContent = `window.quotesData = \n${quotesJsonContent}\n;`;
+    fs.mkdirSync(path.dirname(publicQuotesPath), { recursive: true });
+    fs.writeFileSync(publicQuotesPath, quotesJsonContent, 'utf8');
 
-    // Write the new content to the .js file
-    fs.writeFileSync(quotesJsPath, quotesJsContent, 'utf8');
-
-    console.log('✅ Success: js/quotes.js has been updated from data/quotes.json');
+    console.log('✅ Success: public/quotes.json has been refreshed from src/data/quotes.json');
 
 } catch (error) {
     console.error('❌ Error synchronizing quote files:', error);
