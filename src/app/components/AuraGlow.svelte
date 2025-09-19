@@ -11,6 +11,10 @@
   let gradient: AuraPaletteEntry['gradient'] = DEFAULT_AURA.gradient;
   let size = DEFAULT_AURA_SETTINGS.size;
   let reducedMotion = false;
+  let auraIntensity = DEFAULT_AURA_SETTINGS.intensity;
+  let vibrancy = 65;
+  let warmth = 50;
+  let mouseGlowIntensity = DEFAULT_AURA_SETTINGS.intensity;
 
   let auraHalo: HTMLDivElement | null = null;
   let mounted = false;
@@ -24,6 +28,11 @@
     const palette = AURA_LOOKUP.get(value.aura.colorKey) ?? DEFAULT_AURA;
     gradient = palette.gradient;
     size = value.aura.size;
+    auraIntensity = value.aura.intensity;
+
+    vibrancy = value.appearance.vibrancy;
+    warmth = value.appearance.warmth;
+    mouseGlowIntensity = value.appearance.mouseGlowIntensity;
 
     const nextReducedMotion = value.matrix.reducedMotion;
     const motionChanged = nextReducedMotion !== reducedMotion;
@@ -152,13 +161,18 @@
   });
 
   $: auraSize = `${size}vmin`;
-  $: auraOpacity = reducedMotion ? 0.42 : 0.78;
+  $: auraSaturation = 0.6 + vibrancy / 100;
+  $: auraWarmth = (warmth - 50) * 1.4;
+  $: auraOpacity = Math.max(
+    0.2,
+    Math.min(1, (reducedMotion ? 0.42 : 0.78) * (mouseGlowIntensity / 100) * (auraIntensity / 100)),
+  );
 </script>
 
 <div
   class="aura-glow"
   aria-hidden="true"
-  style={`--aura-gradient: ${gradient}; --aura-size: ${auraSize}; --aura-opacity: ${auraOpacity};`}
+  style={`--aura-gradient: ${gradient}; --aura-size: ${auraSize}; --aura-opacity: ${auraOpacity}; --aura-saturation: ${auraSaturation}; --aura-warmth: ${auraWarmth}deg;`}
 >
   <div class="aura-glow__halo" bind:this={auraHalo}></div>
 </div>
@@ -180,7 +194,7 @@
     height: var(--aura-size, 110vmin);
     background: var(--aura-gradient);
     border-radius: 9999px;
-    filter: blur(120px);
+    filter: blur(120px) saturate(var(--aura-saturation, 1)) hue-rotate(var(--aura-warmth, 0deg));
     opacity: var(--aura-opacity, 0.78);
     transform: translate3d(
       calc(var(--pointer-x, 50vw) - 50%),

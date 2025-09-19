@@ -27,7 +27,7 @@ vi.mock('../stores/quote', () => {
     },
     __mockApplyQuoteFilter: mockApplyQuoteFilter,
   };
-}, { virtual: true });
+});
 
 const quoteStores = (await import('../stores/quote')) as unknown as {
   applyQuoteFilter: ReturnType<typeof vi.fn>;
