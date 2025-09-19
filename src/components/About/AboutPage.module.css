@@ -1,0 +1,51 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 15, 30, 0.65);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  z-index: 6;
+  padding: 2rem;
+}
+
+.card {
+  position: relative;
+  max-width: 560px;
+  width: 100%;
+  background: linear-gradient(160deg, rgba(15, 23, 42, 0.95), rgba(12, 74, 110, 0.9));
+  color: #f8fafc;
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  box-shadow: 0 32px 70px rgba(14, 116, 144, 0.55);
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 1.75rem;
+  cursor: pointer;
+}
+
+ul {
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.footer {
+  margin: 2rem 0 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+:global(.light) .card {
+  background: linear-gradient(160deg, rgba(226, 232, 240, 0.95), rgba(186, 230, 253, 0.9));
+  color: #0f172a;
+  box-shadow: 0 32px 60px rgba(100, 116, 139, 0.35);
+}

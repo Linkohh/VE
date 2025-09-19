@@ -1,0 +1,94 @@
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(420px, 90vw);
+  height: 100vh;
+  background: rgba(10, 20, 38, 0.95);
+  color: #f8fafc;
+  box-shadow: -24px 0 48px rgba(15, 23, 42, 0.45);
+  transform: translateX(100%);
+  transition: transform 0.35s ease;
+  z-index: 5;
+  padding: 2rem 2.25rem;
+  overflow-y: auto;
+  backdrop-filter: blur(14px);
+}
+
+.open {
+  transform: translateX(0);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.closeButton {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h3 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+}
+
+.toggle input {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.toggle span {
+  flex: 1;
+}
+
+.empty {
+  margin: 0;
+  opacity: 0.75;
+}
+
+.favoritesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.favoriteQuote {
+  margin: 0 0 0.35rem;
+  font-weight: 500;
+}
+
+.favoriteMeta {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+:global(.light) .panel {
+  background: rgba(255, 255, 255, 0.92);
+  color: #0f172a;
+  box-shadow: -24px 0 48px rgba(148, 163, 184, 0.35);
+}

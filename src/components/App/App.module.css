@@ -1,0 +1,111 @@
+.app {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.dark {
+  background: radial-gradient(circle at 20% 20%, rgba(20, 58, 76, 0.9), rgba(7, 12, 24, 1));
+  color: #f1f5f9;
+}
+
+.light {
+  background: linear-gradient(160deg, #e0f2f1 0%, #fefefe 55%, #e3f2fd 100%);
+  color: #0f172a;
+}
+
+.overlay {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 2.5rem clamp(1.5rem, 4vw, 4rem);
+  gap: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  opacity: 0.8;
+}
+
+.headerButtons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.linkButton {
+  border: none;
+  background: rgba(15, 118, 110, 0.12);
+  color: inherit;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.linkButton:hover {
+  background: rgba(45, 212, 191, 0.35);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.attribution {
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .overlay {
+    padding: 2rem 1.5rem 3rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .headerButtons {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

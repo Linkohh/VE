@@ -1,0 +1,46 @@
+.clock {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  background: rgba(15, 23, 42, 0.45);
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.4);
+  color: #e2e8f0;
+}
+
+.segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 4.5rem;
+}
+
+.value {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  opacity: 0.7;
+}
+
+:global(.light) .clock {
+  background: rgba(241, 245, 249, 0.8);
+  color: #0f172a;
+  box-shadow: 0 12px 32px rgba(148, 163, 184, 0.35);
+}
+
+@media (max-width: 640px) {
+  .clock {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .segment {
+    min-width: auto;
+  }
+}
