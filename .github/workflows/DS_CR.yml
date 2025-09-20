@@ -1,0 +1,3 @@
+- name: DeepSeek CR
+
+  uses: hustcer/deepseek-review@v1.19
