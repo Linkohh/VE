@@ -5,9 +5,11 @@
   "main": "dist/main.js",
   "scripts": {
     "sync-quotes": "node scripts/sync-quotes.js",
-    "build": "tsc && npm run build:styles",
     "build:styles": "sass --no-source-map src/scss/main.scss css/style.css",
-    "watch:styles": "sass --watch --no-source-map src/scss/main.scss css/style.css"
+    "watch:styles": "sass --watch --no-source-map src/scss/main.scss css/style.css",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [
     "quotes",
@@ -16,8 +18,14 @@
   ],
   "author": "VibeMe",
   "license": "ISC",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.2",
     "sass": "^1.93.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vite": "^5.4.1"
   }
 }
