@@ -1,0 +1,113 @@
+.clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: 20px;
+  background: rgba(6, 10, 18, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px) saturate(160%);
+  color: #f2f8ff;
+  width: fit-content;
+}
+
+.timeRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.separator {
+  font-size: 1.8rem;
+  opacity: 0.7;
+  margin: 0 0.3rem;
+}
+
+.date {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(242, 248, 255, 0.6);
+}
+
+.digit {
+  position: relative;
+  width: 54px;
+  height: 70px;
+  perspective: 120px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  font-size: 2rem;
+  color: #0b1220;
+  background: linear-gradient(155deg, #2af4ff, #24c1ff 50%, #0e7bff);
+  border-radius: 12px;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.45);
+  overflow: hidden;
+}
+
+.cardTop,
+.cardBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardTop {
+  top: 0;
+  height: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.cardBottom {
+  bottom: 0;
+  height: 50%;
+  background: rgba(0, 0, 0, 0.15);
+  color: rgba(11, 18, 32, 0.85);
+}
+
+.flip {
+  position: absolute;
+  inset: 0;
+  transform-origin: center top;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.flip[data-state='active'] {
+  transform: rotateX(-180deg);
+}
+
+.flipFront,
+.flipBack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  border-radius: 12px;
+}
+
+.flipFront {
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
+}
+
+.flipBack {
+  transform: rotateX(180deg);
+  background: linear-gradient(155deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.45));
+  color: rgba(11, 18, 32, 0.85);
+}
+
+@media (max-width: 640px) {
+  .digit {
+    width: 48px;
+    height: 64px;
+    font-size: 1.75rem;
+  }
+}
