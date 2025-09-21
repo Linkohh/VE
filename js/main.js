@@ -206,7 +206,8 @@ const VibeMe = {
         quoteRatings: JSON.parse(localStorage.getItem('vibeme-ratings') || '{}'),
         stats: JSON.parse(localStorage.getItem('vibeme-stats') || '{"quotesGenerated": 0, "quotesShared": 0, "dayStreak": 0, "lastVisit": null}'),
         beepEnabled: JSON.parse(localStorage.getItem('vibeme-beep-enabled') || 'true'),
-        collapseTimer: null
+        collapseTimer: null,
+        shareHoverDelayTimer: null
     },
 
     // Audio context for enhanced sound effects
@@ -858,17 +859,34 @@ const VibeMe = {
     },
 
     // ===== SOCIAL SHARE FAN-OUT =====
-    expandShareButtons: function() {
+    cancelShareCollapse: function() {
       if (this.state.collapseTimer) {
         clearTimeout(this.state.collapseTimer);
         this.state.collapseTimer = null;
       }
+    },
+
+    scheduleShareCollapse: function(delay = 5000) {
+      this.cancelShareCollapse();
+      this.state.collapseTimer = setTimeout(() => this.collapseShareButtons(), delay);
+    },
+
+    clearShareHoverDelay: function() {
+      if (this.state.shareHoverDelayTimer) {
+        clearTimeout(this.state.shareHoverDelayTimer);
+        this.state.shareHoverDelayTimer = null;
+      }
+    },
+
+    expandShareButtons: function() {
+      this.cancelShareCollapse();
 
       const shareHubBtn = document.getElementById('shareHubBtn');
       const buttonContainer = document.getElementById('shareFanContainer');
 
       if (!shareHubBtn || !buttonContainer) return;
 
+      shareHubBtn.setAttribute('aria-expanded', 'true');
       shareHubBtn.style.display = 'none';
       buttonContainer.innerHTML = '';
       buttonContainer.setAttribute('aria-hidden', 'false');
@@ -898,7 +916,7 @@ const VibeMe = {
       });
 
       setTimeout(() => buttonContainer.classList.remove('reveal'), 320);
-      this.state.collapseTimer = setTimeout(() => this.collapseShareButtons(), 5000);
+      this.scheduleShareCollapse(5000);
     },
 
     collapseShareButtons: function() {
@@ -927,10 +945,45 @@ const VibeMe = {
       if (!buttonContainer || !shareHubBtn) return;
 
       buttonContainer.setAttribute('aria-hidden', 'true');
+      this.clearShareHoverDelay();
+      this.cancelShareCollapse();
       shareHubBtn.style.display = 'inline-flex';
-      if (this.state.collapseTimer) clearTimeout(this.state.collapseTimer);
-      this.state.collapseTimer = null;
+      shareHubBtn.setAttribute('aria-expanded', 'false');
       shareHubBtn.focus();
+    },
+
+    handleShareHoverEnter: function(ev) {
+      if (ev && ev.pointerType && ev.pointerType !== 'mouse' && ev.pointerType !== 'pen') {
+        return;
+      }
+
+      this.clearShareHoverDelay();
+
+      if (ev?.currentTarget?.id === 'shareHubBtn') {
+        this.expandShareButtons();
+      } else {
+        this.cancelShareCollapse();
+      }
+    },
+
+    handleShareHoverLeave: function(ev) {
+      if (ev && ev.pointerType && ev.pointerType !== 'mouse' && ev.pointerType !== 'pen') {
+        return;
+      }
+
+      this.clearShareHoverDelay();
+
+      this.state.shareHoverDelayTimer = setTimeout(() => {
+        const shareHubBtn = document.getElementById('shareHubBtn');
+        const buttonContainer = document.getElementById('shareFanContainer');
+
+        const stillHovering = (shareHubBtn && shareHubBtn.matches(':hover')) ||
+                              (buttonContainer && buttonContainer.matches(':hover'));
+
+        if (!stillHovering) {
+          this.scheduleShareCollapse(400);
+        }
+      }, 100);
     },
 
     handleShare: function(action) {
@@ -2239,7 +2292,18 @@ const VibeMe = {
         document.getElementById('timer-toggle-btn').addEventListener('click', () => this.toggleTimer());
         document.getElementById('copy-quote-btn').addEventListener('click', () => this.copyQuote());
         document.getElementById('favorite-quote-btn').addEventListener('click', () => this.toggleFavorite());
-        document.getElementById('shareHubBtn').addEventListener('click', () => this.expandShareButtons());
+
+        const shareHubBtn = document.getElementById('shareHubBtn');
+        const shareFanContainer = document.getElementById('shareFanContainer');
+        if (shareHubBtn) {
+            shareHubBtn.addEventListener('click', () => this.expandShareButtons());
+            shareHubBtn.addEventListener('pointerenter', (ev) => this.handleShareHoverEnter(ev));
+            shareHubBtn.addEventListener('pointerleave', (ev) => this.handleShareHoverLeave(ev));
+        }
+        if (shareFanContainer) {
+            shareFanContainer.addEventListener('pointerenter', (ev) => this.handleShareHoverEnter(ev));
+            shareFanContainer.addEventListener('pointerleave', (ev) => this.handleShareHoverLeave(ev));
+        }
         document.getElementById('effects-toggle-checkbox').addEventListener('change', () => this.toggleEffects());
         document.getElementById('clear-favorites-btn').addEventListener('click', () => this.clearFavorites());
         document.getElementById('toggle-add-quote-form').addEventListener('click', () => this.toggleAddQuoteForm());
