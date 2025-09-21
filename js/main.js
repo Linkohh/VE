@@ -3917,13 +3917,18 @@ VibeMe.applyMatrixPreset = function(name){
     document.dispatchEvent(new CustomEvent('vibeme:matrix:applyPreset', { detail: { name, preset } }));
 };
 
-/* Auto wiring (selector + category changes) */
-document.addEventListener('DOMContentLoaded', () => {
-    // Create selector if it's not already in the DOM
+/* Auto wiring (selector + category changes) */document.addEventListener('DOMContentLoaded', () => {
+    // 1. Define the specific container where the dropdown should live.
+    const bucket = document.getElementById('color-controls');
+
+    // 2. IMPORTANT: If the container doesn't exist, stop right here.
+    if (!bucket) {
+        return;
+    }
+
+    // 3. The rest of the code now only runs if 'bucket' was found.
     let sel = document.getElementById('matrix-preset');
     if (!sel){
-        // Try to mount under #color-controls; else append to settings panel root
-        const bucket = document.getElementById('color-controls') || document.getElementById('settings-panel') || document.body;
         const wrap = document.createElement('div');
         wrap.id = 'matrix-preset-wrapper';
         wrap.className = 'space-y-2 mt-3';
@@ -4912,6 +4917,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let hideTimer;
   let pinned = false;
+  let isTouching = false;
   let size = 'expanded';
   try { pinned = localStorage.getItem(PIN_KEY) === 'true'; } catch (e) { console.warn('Failed to read rail state:', e); }
   try { size = localStorage.getItem(SIZE_KEY) || 'expanded'; } catch (e) { console.warn('Failed to read rail state:', e); }
@@ -4990,23 +4996,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handlePointerDown(ev){
     const { isTouchInteraction } = getInteractionType(ev);
-    if (!isTouchInteraction) return;
-    // Touch interactions rely on pointer events, so show immediately and clear any timers.
+    if (isTouchInteraction) {
+      isTouching = true;
+    }
     show(ev);
   }
   function handlePointerMove(ev){
     const { isTouchInteraction } = getInteractionType(ev);
-    if (!isTouchInteraction) return;
-    // A finger gliding on the rail should keep it visible and cancel pending hides.
-    cancelHide();
+    if (isTouchInteraction) {
+      cancelHide();
+    }
   }
   function handlePointerUp(ev){
     const { isTouchInteraction } = getInteractionType(ev);
-    if (!isTouchInteraction) return;
-    scheduleHide();
+    if (isTouchInteraction) {
+      isTouching = false;
+      setTimeout(() => {
+        if (!isTouching) {
+          scheduleHide();
+        }
+      }, 350);
+    } else {
+      scheduleHide();
+    }
   }
   function handlePointerLeave(){
-    scheduleHide();
+    if (!isTouching) {
+      scheduleHide();
+    }
   }
 
   // Rely solely on pointer events so touch and mouse interactions share the same code paths.
