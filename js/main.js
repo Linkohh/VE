@@ -4899,6 +4899,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const SIZE_KEY = 'vibeme.railSize';
   const rootStyles = getComputedStyle(root);
   const HIDE_DELAY = parseInt(rootStyles.getPropertyValue('--rail-hide-delay')) || 8000;
+  const DATA_STATE_VISIBLE = 'visible';
+  const DATA_STATE_HIDDEN = 'hidden';
+  const POINTER_TYPE_TOUCH = 'touch';
 
   const announcer = document.createElement('div');
   announcer.setAttribute('aria-live', 'polite');
@@ -4923,8 +4926,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (pinned) {
     rail.classList.add('show');
-    rail.dataset.state = 'visible';
+    rail.dataset.state = DATA_STATE_VISIBLE;
     pinBtn?.setAttribute('aria-pressed', 'true');
+  } else {
+    rail.dataset.state = DATA_STATE_HIDDEN;
   }
   collapseBtn?.setAttribute('aria-expanded', String(size === 'expanded'));
 
@@ -4933,24 +4938,34 @@ document.addEventListener('DOMContentLoaded', () => {
     target.addEventListener(type, listener, options);
     cleanupFns.push(() => target.removeEventListener(type, listener, options));
   }
+  function getInteractionType(ev) {
+    const type = ev?.type || '';
+    const pointerType = ev?.pointerType || (type.startsWith('touch') ? POINTER_TYPE_TOUCH : undefined);
+    return {
+      isMouseHover: type === 'pointerenter' && pointerType !== POINTER_TYPE_TOUCH,
+      isKeyboardFocus: type === 'focusin',
+      isTouchInteraction: pointerType === POINTER_TYPE_TOUCH
+    };
+  }
+  function cancelHide(){
+    if (hideTimer){
+      clearTimeout(hideTimer);
+      hideTimer = null;
+    }
+  }
   function show(ev){
     rail.classList.add('show');
-    rail.dataset.state = 'visible';
+    rail.dataset.state = DATA_STATE_VISIBLE;
 
-    if (pinned) return;
-
-    const type = ev?.type || '';
-    const pointerType = ev?.pointerType || (type.startsWith('touch') ? 'touch' : undefined);
-    const isMouseHover = type === 'pointerenter' && pointerType !== 'touch';
-    const isKeyboardFocus = type === 'focusin';
-
-    if (isMouseHover || isKeyboardFocus) {
-      clearTimeout(hideTimer);
+    if (pinned) {
+      cancelHide();
       return;
     }
 
-    if (pointerType === 'touch') {
-      clearTimeout(hideTimer);
+    const { isMouseHover, isKeyboardFocus, isTouchInteraction } = getInteractionType(ev);
+
+    if (isMouseHover || isKeyboardFocus || isTouchInteraction) {
+      cancelHide();
       return;
     }
 
@@ -4958,30 +4973,52 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function hide(){
     rail.classList.remove('show');
-    rail.dataset.state = 'hidden';
+    rail.dataset.state = DATA_STATE_HIDDEN;
+    cancelHide();
   }
   function scheduleHide(){
     if (pinned) return;
-    clearTimeout(hideTimer);
+    cancelHide();
     hideTimer = setTimeout(hide, HIDE_DELAY);
   }
   function destroy(){
-    clearTimeout(hideTimer);
+    cancelHide();
     cleanupFns.forEach(fn => fn());
   }
   window.addEventListener('beforeunload', destroy);
   window.vbRail = { destroy };
 
-  addEvent(hotzone, 'pointerenter', show);
-  addEvent(hotzone, 'touchstart', show);
-  addEvent(hotzone, 'touchend', scheduleHide);
-  addEvent(hotzone, 'pointercancel', scheduleHide);
-  addEvent(hotzone, 'pointerleave', scheduleHide);
-  addEvent(rail, 'pointerenter', show);
-  addEvent(rail, 'touchstart', show);
-  addEvent(rail, 'touchend', scheduleHide);
-  addEvent(rail, 'pointercancel', scheduleHide);
-  addEvent(rail, 'pointerleave', scheduleHide);
+  function handlePointerDown(ev){
+    const { isTouchInteraction } = getInteractionType(ev);
+    if (!isTouchInteraction) return;
+    // Touch interactions rely on pointer events, so show immediately and clear any timers.
+    show(ev);
+  }
+  function handlePointerMove(ev){
+    const { isTouchInteraction } = getInteractionType(ev);
+    if (!isTouchInteraction) return;
+    // A finger gliding on the rail should keep it visible and cancel pending hides.
+    cancelHide();
+  }
+  function handlePointerUp(ev){
+    const { isTouchInteraction } = getInteractionType(ev);
+    if (!isTouchInteraction) return;
+    scheduleHide();
+  }
+  function handlePointerLeave(){
+    scheduleHide();
+  }
+
+  // Rely solely on pointer events so touch and mouse interactions share the same code paths.
+  const pointerTargets = [hotzone, rail];
+  pointerTargets.forEach(target => {
+    addEvent(target, 'pointerenter', show);
+    addEvent(target, 'pointerdown', handlePointerDown);
+    addEvent(target, 'pointermove', handlePointerMove);
+    addEvent(target, 'pointerup', handlePointerUp);
+    addEvent(target, 'pointercancel', handlePointerLeave);
+    addEvent(target, 'pointerleave', handlePointerLeave);
+  });
   addEvent(rail, 'focusin', show);
   addEvent(rail, 'focusout', scheduleHide);
 
