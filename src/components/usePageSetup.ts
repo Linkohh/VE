@@ -1,6 +1,16 @@
 import { useEffect } from 'react';
 
-export function usePageSetup({ bodyClassName = '', htmlClassName = '', htmlDataTheme = 'light' } = {}) {
+interface PageSetupOptions {
+  bodyClassName?: string;
+  htmlClassName?: string;
+  htmlDataTheme?: string;
+}
+
+export function usePageSetup({
+  bodyClassName = '',
+  htmlClassName = '',
+  htmlDataTheme = 'light',
+}: PageSetupOptions = {}) {
   useEffect(() => {
     const htmlEl = document.documentElement;
     const previousHtmlClass = htmlEl.className;
