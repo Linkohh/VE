@@ -1,6 +1,16 @@
 import { useEffect } from 'react';
 
-export function usePageSetup({ bodyClassName = '', htmlClassName = '', htmlDataTheme = 'light' } = {}) {
+export type PageSetupOptions = {
+  bodyClassName?: string;
+  htmlClassName?: string;
+  htmlDataTheme?: string;
+};
+
+export const usePageSetup = ({
+  bodyClassName = '',
+  htmlClassName = '',
+  htmlDataTheme = 'light'
+}: PageSetupOptions = {}): void => {
   useEffect(() => {
     const htmlEl = document.documentElement;
     const previousHtmlClass = htmlEl.className;
@@ -31,4 +41,4 @@ export function usePageSetup({ bodyClassName = '', htmlClassName = '', htmlDataT
       document.body.className = previousBodyClass;
     };
   }, [bodyClassName, htmlClassName, htmlDataTheme]);
-}
+};
