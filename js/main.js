@@ -4929,13 +4929,32 @@ document.addEventListener('DOMContentLoaded', () => {
   collapseBtn?.setAttribute('aria-expanded', String(size === 'expanded'));
 
   const cleanupFns = [];
-  function addEvent(target, type, listener){
-    target.addEventListener(type, listener);
-    cleanupFns.push(() => target.removeEventListener(type, listener));
+  function addEvent(target, type, listener, options){
+    target.addEventListener(type, listener, options);
+    cleanupFns.push(() => target.removeEventListener(type, listener, options));
   }
-  function show(){
+  function show(ev){
     rail.classList.add('show');
     rail.dataset.state = 'visible';
+
+    if (pinned) return;
+
+    const type = ev?.type || '';
+    const pointerType = ev?.pointerType || (type.startsWith('touch') ? 'touch' : undefined);
+    const isMouseHover = type === 'pointerenter' && pointerType !== 'touch';
+    const isKeyboardFocus = type === 'focusin';
+
+    if (isMouseHover || isKeyboardFocus) {
+      clearTimeout(hideTimer);
+      return;
+    }
+
+    if (pointerType === 'touch') {
+      clearTimeout(hideTimer);
+      return;
+    }
+
+    scheduleHide();
   }
   function hide(){
     rail.classList.remove('show');
@@ -4954,8 +4973,14 @@ document.addEventListener('DOMContentLoaded', () => {
   window.vbRail = { destroy };
 
   addEvent(hotzone, 'pointerenter', show);
+  addEvent(hotzone, 'touchstart', show);
+  addEvent(hotzone, 'touchend', scheduleHide);
+  addEvent(hotzone, 'pointercancel', scheduleHide);
   addEvent(hotzone, 'pointerleave', scheduleHide);
   addEvent(rail, 'pointerenter', show);
+  addEvent(rail, 'touchstart', show);
+  addEvent(rail, 'touchend', scheduleHide);
+  addEvent(rail, 'pointercancel', scheduleHide);
   addEvent(rail, 'pointerleave', scheduleHide);
   addEvent(rail, 'focusin', show);
   addEvent(rail, 'focusout', scheduleHide);
@@ -4995,6 +5020,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const action = btn.dataset.action;
     if (navigator.vibrate) navigator.vibrate(10);
     document.dispatchEvent(new CustomEvent('rail:action', {detail:{action}}));
+    if (!pinned) scheduleHide();
   });
 
   addEvent(document, 'keydown', (e) => {
