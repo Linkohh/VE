@@ -1,7 +1,6 @@
-import React from 'react';
-import { usePageSetup } from './usePageSetup.js';
+import { usePageSetup } from '../hooks/usePageSetup';
 
-function HomePage() {
+const HomePage = (): JSX.Element => {
   usePageSetup({
     bodyClassName: 'min-h-screen flex items-center justify-center p-0 gradient-bg',
     htmlClassName: '',
@@ -251,6 +250,6 @@ function HomePage() {
       </footer>
     </>
   );
-}
+};
 
 export default HomePage;
