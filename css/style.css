@@ -933,6 +933,10 @@ button:disabled {
 }
 
 /* TTS Inline Controls Polish */
+#tts-inline-controls {
+    display: none !important;
+}
+
 #tts-inline-controls .action-button i {
     font-size: 0.95rem;
     line-height: 1;
@@ -1790,7 +1794,7 @@ button:disabled {
     }
 
     #quote-text {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
     }
 
     #quote-author {
