@@ -568,8 +568,13 @@ body:not(.using-keyboard) *:focus {
   isolation:isolate;
   background: linear-gradient(135deg, var(--color1), var(--color2));
   box-shadow: var(--shadow-md);
-  transition: transform .2s cubic-bezier(.175,.885,.32,1.275), filter .2s ease, box-shadow .2s ease;
+  transition: transform .2s cubic-bezier(.175,.885,.32,1.275), filter .2s ease, box-shadow .2s ease, opacity .2s ease;
   animation: float 6s ease-in-out infinite;
+}
+
+#shareHubBtn.is-open {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Animated gradient ring from generate-btn */

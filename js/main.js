@@ -887,7 +887,7 @@ const VibeMe = {
       if (!shareHubBtn || !buttonContainer) return;
 
       shareHubBtn.setAttribute('aria-expanded', 'true');
-      shareHubBtn.style.display = 'none';
+      shareHubBtn.classList.add('is-open');
       buttonContainer.innerHTML = '';
       buttonContainer.setAttribute('aria-hidden', 'false');
       buttonContainer.classList.add('reveal');
@@ -947,7 +947,7 @@ const VibeMe = {
       buttonContainer.setAttribute('aria-hidden', 'true');
       this.clearShareHoverDelay();
       this.cancelShareCollapse();
-      shareHubBtn.style.display = 'inline-flex';
+      shareHubBtn.classList.remove('is-open');
       shareHubBtn.setAttribute('aria-expanded', 'false');
       shareHubBtn.focus();
     },
@@ -973,12 +973,36 @@ const VibeMe = {
 
       this.clearShareHoverDelay();
 
-      this.state.shareHoverDelayTimer = setTimeout(() => {
-        const shareHubBtn = document.getElementById('shareHubBtn');
-        const buttonContainer = document.getElementById('shareFanContainer');
+      const shareHubBtn = document.getElementById('shareHubBtn');
+      const buttonContainer = document.getElementById('shareFanContainer');
 
-        const stillHovering = (shareHubBtn && shareHubBtn.matches(':hover')) ||
-                              (buttonContainer && buttonContainer.matches(':hover'));
+      if (!shareHubBtn || !buttonContainer) return;
+
+      if (!shareHubBtn.classList.contains('is-open')) {
+        return;
+      }
+
+      const related = ev?.relatedTarget || null;
+      const isWithinShareGroup = (node) => {
+        if (!node) return false;
+        if (node === shareHubBtn || node === buttonContainer) return true;
+        if (shareHubBtn.contains(node) || buttonContainer.contains(node)) return true;
+        if (typeof node.closest === 'function') {
+          return Boolean(node.closest('#shareHubBtn, #shareFanContainer'));
+        }
+        return false;
+      };
+
+      if (isWithinShareGroup(related)) {
+        return;
+      }
+
+      this.state.shareHoverDelayTimer = setTimeout(() => {
+        if (!shareHubBtn.classList.contains('is-open')) {
+          return;
+        }
+
+        const stillHovering = shareHubBtn.matches(':hover') || buttonContainer.matches(':hover');
 
         if (!stillHovering) {
           this.scheduleShareCollapse(400);
