@@ -179,6 +179,29 @@ body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding:
   overflow: hidden;
 }
 
+@media (max-height: 840px) {
+  .quote-container-inner {
+    max-height: calc(100dvh - 120px);
+  }
+}
+
+@media (max-height: 720px) {
+  .quote-container-inner {
+    max-height: calc(100dvh - 96px);
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+  }
+}
+
+@media (max-height: 640px) {
+  .quote-container-inner {
+    max-height: calc(100dvh - 80px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* ===== ACCESSIBILITY ===== */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -932,10 +955,7 @@ button:disabled {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* TTS Inline Controls Polish */
-#tts-inline-controls .action-button i {
-    font-size: 0.95rem;
-    line-height: 1;
+
 }
 
 /* Enhanced disabled state for stop button */
