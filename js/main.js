@@ -859,6 +859,9 @@ const VibeMe = {
     },
 
     // ===== SOCIAL SHARE FAN-OUT =====
+    SHARE_IDLE_COLLAPSE_DELAY: 8000,
+    SHARE_POINTER_LEAVE_GRACE_PERIOD: 900,
+
     cancelShareCollapse: function() {
       if (this.state.collapseTimer) {
         clearTimeout(this.state.collapseTimer);
@@ -866,9 +869,10 @@ const VibeMe = {
       }
     },
 
-    scheduleShareCollapse: function(delay = 5000) {
+    scheduleShareCollapse: function(delay) {
+      const timeoutDelay = typeof delay === 'number' ? delay : this.SHARE_IDLE_COLLAPSE_DELAY;
       this.cancelShareCollapse();
-      this.state.collapseTimer = setTimeout(() => this.collapseShareButtons(), delay);
+      this.state.collapseTimer = setTimeout(() => this.collapseShareButtons(), timeoutDelay);
     },
 
     clearShareHoverDelay: function() {
@@ -916,7 +920,7 @@ const VibeMe = {
       });
 
       setTimeout(() => buttonContainer.classList.remove('reveal'), 320);
-      this.scheduleShareCollapse(5000);
+      this.scheduleShareCollapse(this.SHARE_IDLE_COLLAPSE_DELAY);
     },
 
     collapseShareButtons: function() {
@@ -981,7 +985,7 @@ const VibeMe = {
                               (buttonContainer && buttonContainer.matches(':hover'));
 
         if (!stillHovering) {
-          this.scheduleShareCollapse(400);
+          this.scheduleShareCollapse(this.SHARE_POINTER_LEAVE_GRACE_PERIOD);
         }
       }, 100);
     },
