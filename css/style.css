@@ -955,9 +955,7 @@ button:disabled {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Product decision: inline TTS controls stay hidden while desktop UI is simplified */
-body[data-inline-tts="off"] #tts-inline-controls {
-    display: none;
+ 
 }
 
 /* Enhanced disabled state for stop button */
