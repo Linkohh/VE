@@ -68,7 +68,7 @@
     </script>
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-0 gradient-bg">
+<body class="min-h-screen flex items-center justify-center p-0 gradient-bg" data-inline-tts="off">
     <div id="edge-hotzone" aria-hidden="true"></div>
     <nav id="left-rail" role="navigation" aria-label="VibeMe quick actions" data-state="hidden" data-size="expanded">
       <!--
@@ -423,11 +423,10 @@
                     </header>
 
                     <!-- Quote display area -->
-                    <section class="quote-animation-container text-center mb-8 min-h-[120px] md:min-h-[150px]"
+                    <section class="quote-animation-container text-center mb-6 sm:mb-8 min-h-[120px] md:min-h-[150px]"
                              aria-live="polite" aria-atomic="true">
                         <blockquote>
-                            <p id="quote-text"
-                               class="quote-text-font text-2xl sm:text-3xl md:text-4xl mb-4 leading-relaxed dynamic-text-main quote-text-animate">
+                            <p id="quote-text" 
                                The only way to do great work is to love what you do.
                             </p>
                             <footer>
@@ -438,7 +437,7 @@
                             </footer>
                         </blockquote>
 
-                        <!-- Inline TTS controls (shown only when TTS is supported/enabled) -->
+                        <!-- Inline TTS controls (intentionally kept hidden in desktop layout; see css/style.css) -->
                         <div id="tts-inline-controls" class="flex items-center justify-center space-x-2 mt-4" hidden>
                             <!-- Primary: Speak / Stop toggle -->
                             <button id="tts-toggle-btn" type="button"
