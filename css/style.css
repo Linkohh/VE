@@ -955,7 +955,7 @@ button:disabled {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
- 
+
 }
 
 /* Enhanced disabled state for stop button */
@@ -1810,7 +1810,7 @@ button:disabled {
     }
 
     #quote-text {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
     }
 
     #quote-author {
