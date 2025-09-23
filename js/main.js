@@ -4678,6 +4678,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     apply(state);
 
+    // Expose a small helper so other UI entry points (rail, hamburger, etc.)
+    // can always toggle the panel through the canonical button click. This
+    // keeps aria/data-state attributes in sync with the favorites module.
+    window.VibeMeFavoritesPanel = {
+      get state() {
+        return state;
+      },
+      isOpen() {
+        return state === STATES.OPEN;
+      },
+      open() {
+        if (state !== STATES.OPEN) {
+          apply(STATES.OPEN);
+        }
+        return state === STATES.OPEN;
+      },
+      close() {
+        if (state !== STATES.CLOSED) {
+          apply(STATES.CLOSED);
+        }
+        return state === STATES.CLOSED;
+      },
+      toggle() {
+        if (!toggleBtn) return false;
+        toggleBtn.click();
+        return true;
+      }
+    };
+
     // Toggle open/close
     toggleBtn.addEventListener('click', (e) => { e.stopPropagation(); apply(state === 'open' ? 'closed' : 'open'); });
     btnClose.addEventListener('click', (e) => { e.stopPropagation(); apply('closed'); });
@@ -5195,7 +5224,9 @@ document.addEventListener('DOMContentLoaded', () => {
         VibeMe.updateQuote && VibeMe.updateQuote();
         break;
       case 'fav':
-        document.getElementById('favorites-toggle')?.click();
+        if (!window.VibeMeFavoritesPanel?.toggle?.()) {
+          document.getElementById('favorites-toggle')?.click();
+        }
         break;
       case 'bookmarks':
         console.log('Bookmarks action');
