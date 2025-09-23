@@ -2730,6 +2730,69 @@ button:disabled {
   z-index: var(--z-popover);
 }
 
+#mobile-rail-trigger {
+  position: fixed;
+  top: 1rem;
+  left: calc(var(--rail-edge-hotzone) + 0.75rem);
+  width: 2.75rem;
+  height: 2.75rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(17, 24, 39, 0.55);
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.35);
+  z-index: var(--z-tooltip);
+  padding: 0;
+  margin: 0;
+  gap: 0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform var(--transition-medium),
+              background var(--transition-medium),
+              box-shadow var(--transition-medium);
+  touch-action: manipulation;
+}
+
+#mobile-rail-trigger i {
+  font-size: 1.1rem;
+}
+
+#mobile-rail-trigger:hover {
+  transform: translateY(-1px);
+  background: rgba(17, 24, 39, 0.7);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.4);
+}
+
+#mobile-rail-trigger:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.85);
+  outline-offset: 2px;
+}
+
+#mobile-rail-trigger.is-active {
+  background: rgba(59, 130, 246, 0.85);
+  border-color: rgba(147, 197, 253, 0.5);
+  box-shadow: 0 18px 38px rgba(37, 99, 235, 0.4);
+}
+
+#mobile-rail-trigger.is-active:hover {
+  background: rgba(59, 130, 246, 0.95);
+}
+
+@media (max-width: 768px) {
+  #mobile-rail-trigger {
+    display: flex;
+  }
+}
+
+@media (hover: none) {
+  #mobile-rail-trigger:hover {
+    transform: none;
+  }
+}
+
 #left-rail {
   position: fixed;
   top: 50%;

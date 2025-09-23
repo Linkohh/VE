@@ -5013,6 +5013,7 @@ document.addEventListener('DOMContentLoaded', () => {
 (function(){
   const rail = document.getElementById('left-rail');
   const hotzone = document.getElementById('edge-hotzone');
+  const mobileTrigger = document.getElementById('mobile-rail-trigger');
   if (!rail || !hotzone) return;
 
   const root = document.documentElement;
@@ -5060,6 +5061,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   collapseBtn?.setAttribute('aria-expanded', String(size === 'expanded'));
 
+  const setTriggerState = (isOpen) => {
+    if (!mobileTrigger) return;
+    mobileTrigger.setAttribute('aria-expanded', String(isOpen));
+    mobileTrigger.setAttribute('aria-label', isOpen ? 'Close quick actions' : 'Open quick actions');
+    mobileTrigger.classList.toggle('is-active', isOpen);
+  };
+  setTriggerState(rail.dataset.state === DATA_STATE_VISIBLE);
+
   const cleanupFns = [];
   function addEvent(target, type, listener, options){
     target.addEventListener(type, listener, options);
@@ -5083,6 +5092,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function show(ev){
     rail.classList.add('show');
     rail.dataset.state = DATA_STATE_VISIBLE;
+    setTriggerState(true);
 
     if (pinned) {
       cancelHide();
@@ -5101,6 +5111,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function hide(){
     rail.classList.remove('show');
     rail.dataset.state = DATA_STATE_HIDDEN;
+    setTriggerState(false);
     cancelHide();
   }
   function scheduleHide(){
@@ -5160,6 +5171,23 @@ document.addEventListener('DOMContentLoaded', () => {
   addEvent(rail, 'focusin', show);
   addEvent(rail, 'focusout', scheduleHide);
 
+  if (mobileTrigger) {
+    addEvent(mobileTrigger, 'click', (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const isVisible = rail.dataset.state === DATA_STATE_VISIBLE;
+      if (isVisible) {
+        hide();
+      } else {
+        show(ev);
+        cancelHide();
+      }
+    });
+    addEvent(mobileTrigger, 'touchstart', (ev) => {
+      ev.stopPropagation();
+    }, { passive: true });
+  }
+
   if (pinBtn) addEvent(pinBtn, 'click', () => {
     pinned = !pinned;
     pinBtn.setAttribute('aria-pressed', String(pinned));
@@ -5206,6 +5234,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function handleClickOutside(e) {
     if (pinned) return; // Do nothing if the rail is pinned
     // Hide if the click is not on the rail itself, and not within the hover hotzone
+    if (mobileTrigger && mobileTrigger.contains(e.target)) return;
     if (!rail.contains(e.target) && !hotzone.contains(e.target)) {
       hide();
     }
