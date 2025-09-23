@@ -5048,6 +5048,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const pinBtn = rail.querySelector('.rail-pin');
   const collapseBtn = rail.querySelector('.rail-collapse');
   const defaultBtn = rail.querySelector('.rail-btn');
+  if (!pinBtn && pinned) {
+    pinned = false;
+    try { localStorage.removeItem(PIN_KEY); } catch (e) { console.warn('Failed to clear rail pin state:', e); }
+  }
   if (defaultBtn) {
     defaultBtn.classList.add('active');
     defaultBtn.setAttribute('aria-current', 'page');
