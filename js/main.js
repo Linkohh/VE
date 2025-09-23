@@ -882,9 +882,7 @@ const VibeMe = {
       }
     },
 
-    expandShareButtons: function(options = {}) {
-      const { scheduleIdle = true } = options;
-
+    expandShareButtons: function() {
       this.cancelShareCollapse();
 
       const shareHubBtn = document.getElementById('shareHubBtn');
@@ -922,10 +920,7 @@ const VibeMe = {
       });
 
       setTimeout(() => buttonContainer.classList.remove('reveal'), 320);
-
-      if (scheduleIdle) {
-        this.scheduleShareCollapse(this.SHARE_IDLE_COLLAPSE_DELAY);
-      }
+      this.scheduleShareCollapse(this.SHARE_IDLE_COLLAPSE_DELAY);
     },
 
     collapseShareButtons: function() {
@@ -969,7 +964,7 @@ const VibeMe = {
       this.clearShareHoverDelay();
 
       if (ev?.currentTarget?.id === 'shareHubBtn') {
-        this.expandShareButtons({ scheduleIdle: false });
+        this.expandShareButtons();
       } else {
         this.cancelShareCollapse();
       }
@@ -2329,10 +2324,7 @@ const VibeMe = {
         const shareHubBtn = document.getElementById('shareHubBtn');
         const shareFanContainer = document.getElementById('shareFanContainer');
         if (shareHubBtn) {
-            shareHubBtn.addEventListener('click', () => {
-                const keepOpenWhileHovered = shareHubBtn.matches(':hover');
-                this.expandShareButtons({ scheduleIdle: !keepOpenWhileHovered });
-            });
+            shareHubBtn.addEventListener('click', () => this.expandShareButtons());
             shareHubBtn.addEventListener('pointerenter', (ev) => this.handleShareHoverEnter(ev));
             shareHubBtn.addEventListener('pointerleave', (ev) => this.handleShareHoverLeave(ev));
         }
