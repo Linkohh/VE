@@ -1,16 +1,22 @@
 {
-  "name": "vibeme",
-  "version": "1.0.0",
-  "description": "A beautiful motivational quote generator with dynamic themes and inspiring messages",
-  "main": "js/main.js",
+  "name": "svelte-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "sync-quotes": "node scripts/sync-quotes.js"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "keywords": [
-    "quotes",
-    "motivation",
-    "inspiration"
-  ],
-  "author": "VibeMe",
-  "license": "ISC"
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^6.2.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "svelte": "^5.39.4",
+    "tailwindcss": "^4.1.13",
+    "vite": "^7.1.7"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.0.1"
+  }
 }
