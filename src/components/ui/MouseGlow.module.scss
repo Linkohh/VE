@@ -1,0 +1,18 @@
+.glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    circle var(--glow-size, 240px) at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(36, 193, 255, calc(var(--glow-intensity, 0.45))),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  mix-blend-mode: screen;
+}
+
+.glow[data-enabled='true'] {
+  opacity: 1;
+}

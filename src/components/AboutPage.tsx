@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import styles from './AboutPage.module.scss';
 import { usePageSetup } from './usePageSetup';
 
@@ -86,6 +86,7 @@ const AboutPage: React.FC = () => {
                   story to share, please reach out.
                 </p>
                 <div className={styles.sectionText}>
+ 
                   <p>
                     <strong>Email:</strong>
                   </p>
@@ -95,12 +96,14 @@ const AboutPage: React.FC = () => {
           </div>
         </div>
       </main>
+ 
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
           <p>Copyright © 2025 VibeMe By LHO. All rights reserved.</p>
         </div>
       </footer>
     </div>
+ 
   );
 };
 

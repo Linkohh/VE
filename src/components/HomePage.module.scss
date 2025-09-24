@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+ 
   background: radial-gradient(circle at top left, #1f1044 0%, #05010d 65%, #000 100%);
   color: #ffffff;
   font-family:
@@ -461,5 +462,7 @@
   .countdownWrapper {
     flex-direction: column;
     align-items: stretch;
+ 
+ 
   }
 }

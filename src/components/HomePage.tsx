@@ -1,14 +1,17 @@
 import React from 'react';
+ 
 import styles from './HomePage.module.scss';
 import { usePageSetup } from './usePageSetup';
 
 const HomePage: React.FC = () => {
   usePageSetup({
     bodyClassName: styles.body,
+ 
     htmlClassName: '',
     htmlDataTheme: 'light',
   });
 
+ 
   return (
     <div className={styles.page}>
       <div id="edge-hotzone" aria-hidden="true" />
@@ -167,5 +170,6 @@ const HomePage: React.FC = () => {
     </div>
   );
 };
+ 
 
 export default HomePage;
