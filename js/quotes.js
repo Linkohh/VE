@@ -39,7 +39,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "You don't rise by standing out—you rise by lifting others up with you.",
+        "text": "You don't rise by standing out\u2014you rise by lifting others up with you.",
         "author": "Lincoln Ogden"
       },
       {
@@ -105,7 +105,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "You weren't made to break—you were built to bend and rise stronger.",
+        "text": "You weren't made to break\u2014you were built to bend and rise stronger.",
         "author": "Lincoln Ogden"
       },
       {
@@ -129,7 +129,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Tough days don't last—tough hearts do.",
+        "text": "Tough days don't last\u2014tough hearts do.",
         "author": "Lincoln Ogden"
       },
       {
@@ -141,7 +141,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "You're not behind—you're just loading.",
+        "text": "You're not behind\u2014you're just loading.",
         "author": "Lincoln Ogden"
       },
       {
@@ -169,7 +169,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I was born to adapt—change isn't my enemy, it's my superpower.",
+        "text": "I was born to adapt\u2014change isn't my enemy, it's my superpower.",
         "author": "Lincoln Ogden"
       },
       {
@@ -177,7 +177,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Every scar tells a story—my stories speak louder than my scars ever could.",
+        "text": "Every scar tells a story\u2014my stories speak louder than my scars ever could.",
         "author": "Lincoln Ogden"
       },
       {
@@ -189,7 +189,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don't overcome adversity to prove others wrong—I do it to prove myself right.",
+        "text": "I don't overcome adversity to prove others wrong\u2014I do it to prove myself right.",
         "author": "Lincoln Ogden"
       },
       {
@@ -213,11 +213,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "True grit doesn't announce itself—it quietly persists.",
+        "text": "True grit doesn't announce itself\u2014it quietly persists.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Challenges can knock you down—but only your spirit decides if you stay there.",
+        "text": "Challenges can knock you down\u2014but only your spirit decides if you stay there.",
         "author": "Lincoln Ogden"
       },
       {
@@ -225,7 +225,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Resilience doesn't mean invulnerability—it means unstoppable recovery.",
+        "text": "Resilience doesn't mean invulnerability\u2014it means unstoppable recovery.",
         "author": "Lincoln Ogden"
       },
       {
@@ -270,7 +270,7 @@ window.quotesData =
       },
       {
         "text": "The most beautiful people I've known are those who have known trials, have known struggles, have known loss, and have found their way out of the depths.",
-        "author": "Elisabeth Kübler-Ross"
+        "author": "Elisabeth K\u00fcbler-Ross"
       }
     ],
     "originality": [
@@ -332,7 +332,7 @@ window.quotesData =
       },
       {
         "text": "Authenticity is the daily practice of letting go of who we think we're supposed to be and embracing who we are.",
-        "author": "Brené Brown"
+        "author": "Bren\u00e9 Brown"
       },
       {
         "text": "Don't be afraid to give up the good to go for the great.",
@@ -361,7 +361,7 @@ window.quotesData =
     ],
     "change": [
       {
-        "text": "Change is not a threat—it's an invitation.",
+        "text": "Change is not a threat\u2014it's an invitation.",
         "author": "Lincoln Ogden"
       },
       {
@@ -389,7 +389,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "The caterpillar thought it was the end—until it flew.",
+        "text": "The caterpillar thought it was the end\u2014until it flew.",
         "author": "Lincoln Ogden"
       },
       {
@@ -397,15 +397,15 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Failing isn't falling—failing is staying there.",
+        "text": "Failing isn't falling\u2014failing is staying there.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Clarity doesn't come from overthinking—it comes from showing up.",
+        "text": "Clarity doesn't come from overthinking\u2014it comes from showing up.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Learning is lifelong—failure just sharpens the lesson.",
+        "text": "Learning is lifelong\u2014failure just sharpens the lesson.",
         "author": "Lincoln Ogden"
       },
       {
@@ -413,7 +413,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Education isn't a status—it's a state of openness.",
+        "text": "Education isn't a status\u2014it's a state of openness.",
         "author": "Lincoln Ogden"
       },
       {
@@ -421,7 +421,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "The key to growth isn't perfection—it's persistence.",
+        "text": "The key to growth isn't perfection\u2014it's persistence.",
         "author": "Lincoln Ogden"
       },
       {
@@ -433,7 +433,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Progress is quiet and persistent—true strength rarely shouts.",
+        "text": "Progress is quiet and persistent\u2014true strength rarely shouts.",
         "author": "Lincoln Ogden"
       },
       {
@@ -449,7 +449,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Mistakes are teachers in disguise—embrace their lessons.",
+        "text": "Mistakes are teachers in disguise\u2014embrace their lessons.",
         "author": "Lincoln Ogden"
       },
       {
@@ -473,7 +473,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Learning doesn't have an end—only endless new beginnings.",
+        "text": "Learning doesn't have an end\u2014only endless new beginnings.",
         "author": "Lincoln Ogden"
       },
       {
@@ -517,7 +517,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "This is the color of a dream waking up—the moment the mundane world holds its breath and lets the extraordinary take over.",
+        "text": "This is the color of a dream waking up\u2014the moment the mundane world holds its breath and lets the extraordinary take over.",
         "author": "Lincoln Ogden"
       },
       {
@@ -527,7 +527,7 @@ window.quotesData =
     ],
     "inner_strength": [
       {
-        "text": "Strength is the art of showing up—especially when it's hard.",
+        "text": "Strength is the art of showing up\u2014especially when it's hard.",
         "author": "Lincoln Ogden"
       },
       {
@@ -543,7 +543,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Inner calm doesn't mean life is quiet—it means you are.",
+        "text": "Inner calm doesn't mean life is quiet\u2014it means you are.",
         "author": "Lincoln Ogden"
       },
       {
@@ -559,7 +559,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Your mindset is either your prison or your passport—choose wisely.",
+        "text": "Your mindset is either your prison or your passport\u2014choose wisely.",
         "author": "Lincoln Ogden"
       },
       {
@@ -575,7 +575,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Different isn't a weakness—it's your system running with enhanced features.",
+        "text": "Different isn't a weakness\u2014it's your system running with enhanced features.",
         "author": "Lincoln Ogden"
       },
       {
@@ -591,7 +591,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "You're not here to coast—you're here to change the current.",
+        "text": "You're not here to coast\u2014you're here to change the current.",
         "author": "Lincoln Ogden"
       },
       {
@@ -603,7 +603,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "You don't chase dreams—you build them, line by line.",
+        "text": "You don't chase dreams\u2014you build them, line by line.",
         "author": "Lincoln Ogden"
       },
       {
@@ -623,7 +623,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "You're not stuck—you're buffering. Chill.",
+        "text": "You're not stuck\u2014you're buffering. Chill.",
         "author": "Lincoln Ogden"
       },
       {
@@ -667,7 +667,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Romanticize your own growth—no one's clapping, but you're thriving.",
+        "text": "Romanticize your own growth\u2014no one's clapping, but you're thriving.",
         "author": "Lincoln Ogden"
       },
       {
@@ -687,7 +687,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Stack your wins like you stack playlists—one vibe at a time.",
+        "text": "Stack your wins like you stack playlists\u2014one vibe at a time.",
         "author": "Lincoln Ogden"
       },
       {
@@ -695,7 +695,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Life hands everyone a unique key—it's up to us to unlock the potential within and embrace the strength of our own story.",
+        "text": "Life hands everyone a unique key\u2014it's up to us to unlock the potential within and embrace the strength of our own story.",
         "author": "Lincoln Ogden"
       },
       {
@@ -707,7 +707,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Goals aren't reached by wishing—they're conquered through doing.",
+        "text": "Goals aren't reached by wishing\u2014they're conquered through doing.",
         "author": "Lincoln Ogden"
       },
       {
@@ -715,11 +715,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "My dreams don't have deadlines—just relentless determination.",
+        "text": "My dreams don't have deadlines\u2014just relentless determination.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Hard work never goes unnoticed—it echoes loudly through success.",
+        "text": "Hard work never goes unnoticed\u2014it echoes loudly through success.",
         "author": "Lincoln Ogden"
       },
       {
@@ -727,7 +727,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Greatness isn't luck—it's disciplined consistency.",
+        "text": "Greatness isn't luck\u2014it's disciplined consistency.",
         "author": "Lincoln Ogden"
       },
       {
@@ -735,11 +735,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "My success story is still being written—one determined step at a time.",
+        "text": "My success story is still being written\u2014one determined step at a time.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Your ambitions don't care about yesterday's limits—neither should you.",
+        "text": "Your ambitions don't care about yesterday's limits\u2014neither should you.",
         "author": "Lincoln Ogden"
       },
       {
@@ -839,7 +839,7 @@ window.quotesData =
     ],
     "wisdom": [
       {
-        "text": "You don't grow through perfection—you grow through persistence.",
+        "text": "You don't grow through perfection\u2014you grow through persistence.",
         "author": "Lincoln Ogden"
       },
       {
@@ -851,7 +851,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Your healing doesn't need to be pretty—it just needs to be yours.",
+        "text": "Your healing doesn't need to be pretty\u2014it just needs to be yours.",
         "author": "Lincoln Ogden"
       },
       {
@@ -859,7 +859,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "You are not stuck—you're preparing for your next level.",
+        "text": "You are not stuck\u2014you're preparing for your next level.",
         "author": "Lincoln Ogden"
       },
       {
@@ -875,7 +875,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "You weren't born to fit into systems—you were born to build them.",
+        "text": "You weren't born to fit into systems\u2014you were born to build them.",
         "author": "Lincoln Ogden"
       },
       {
@@ -895,11 +895,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Every IT issue has a root cause—and every personal setback has a growth lesson.",
+        "text": "Every IT issue has a root cause\u2014and every personal setback has a growth lesson.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Sometimes, the best fix isn't a restart—it's a complete rebuild.",
+        "text": "Sometimes, the best fix isn't a restart\u2014it's a complete rebuild.",
         "author": "Lincoln Ogden"
       },
       {
@@ -907,15 +907,15 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "You're not just solving problems—you're building the infrastructure of resilience.",
+        "text": "You're not just solving problems\u2014you're building the infrastructure of resilience.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "In tech and in life, don't fear the crash—fear not learning from the crash log.",
+        "text": "In tech and in life, don't fear the crash\u2014fear not learning from the crash log.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Discipline is the original software update—install it daily.",
+        "text": "Discipline is the original software update\u2014install it daily.",
         "author": "Lincoln Ogden"
       },
       {
@@ -923,7 +923,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "If Plan A fails, remember—there are 25 more letters.",
+        "text": "If Plan A fails, remember\u2014there are 25 more letters.",
         "author": "Lincoln Ogden"
       },
       {
@@ -935,7 +935,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Purpose isn't a destination—it's how you walk the path.",
+        "text": "Purpose isn't a destination\u2014it's how you walk the path.",
         "author": "Lincoln Ogden"
       },
       {
@@ -943,7 +943,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Your journey isn't mid—it's just still in beta.",
+        "text": "Your journey isn't mid\u2014it's just still in beta.",
         "author": "Lincoln Ogden"
       },
       {
@@ -991,7 +991,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Universe isn't ignoring you—it's just cooking something real.",
+        "text": "Universe isn't ignoring you\u2014it's just cooking something real.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1003,11 +1003,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "You're not failing—you're just getting your origin story.",
+        "text": "You're not failing\u2014you're just getting your origin story.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Technology doesn't just innovate—it empowers our humanity.",
+        "text": "Technology doesn't just innovate\u2014it empowers our humanity.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1023,7 +1023,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "The best technology solves human problems—not creates them.",
+        "text": "The best technology solves human problems\u2014not creates them.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1047,7 +1047,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Innovation isn't found in answers—it's found in asking better questions.",
+        "text": "Innovation isn't found in answers\u2014it's found in asking better questions.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1075,7 +1075,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "The most powerful tools don't replace people—they empower them.",
+        "text": "The most powerful tools don't replace people\u2014they empower them.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1083,31 +1083,31 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The wisest words often come wrapped in silence—listen deeply.",
+        "text": "The wisest words often come wrapped in silence\u2014listen deeply.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Experience is the teacher, wisdom is the student—be both.",
+        "text": "Experience is the teacher, wisdom is the student\u2014be both.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "True wisdom knows that it knows nothing—and learns everything.",
+        "text": "True wisdom knows that it knows nothing\u2014and learns everything.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Wisdom is not about having the answers—it's about asking better questions.",
+        "text": "Wisdom is not about having the answers\u2014it's about asking better questions.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The fool thinks he knows everything—the wise person knows there's always more to learn.",
+        "text": "The fool thinks he knows everything\u2014the wise person knows there's always more to learn.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Wisdom whispers while ignorance shouts—choose to listen to the whisper.",
+        "text": "Wisdom whispers while ignorance shouts\u2014choose to listen to the whisper.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Every mistake is a master class in disguise—wisdom extracts the lesson.",
+        "text": "Every mistake is a master class in disguise\u2014wisdom extracts the lesson.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1119,7 +1119,7 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The wise person learns from everyone—the fool teaches everyone.",
+        "text": "The wise person learns from everyone\u2014the fool teaches everyone.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1127,7 +1127,7 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Knowledge is knowing what to say—wisdom is knowing when to say it.",
+        "text": "Knowledge is knowing what to say\u2014wisdom is knowing when to say it.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1143,7 +1143,7 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Your mind is the most powerful tool you own—use it to build the life you want.",
+        "text": "Your mind is the most powerful tool you own\u2014use it to build the life you want.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1315,21 +1315,21 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "If the pattern is proven, borrow it—then improve it.",
+        "text": "If the pattern is proven, borrow it\u2014then improve it.",
         "author": "Lincoln Ogden"
       }
     ],
     "diversity": [
       {
-        "text": "Unity doesn't mean uniformity—it means honoring what makes us each unique.",
+        "text": "Unity doesn't mean uniformity\u2014it means honoring what makes us each unique.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Some carry burdens you'll never see—so always lead with empathy.",
+        "text": "Some carry burdens you'll never see\u2014so always lead with empathy.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Diversity isn't a checkbox—it's the source code of innovation.",
+        "text": "Diversity isn't a checkbox\u2014it's the source code of innovation.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1337,7 +1337,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Inclusivity means everyone has a voice—every voice matters.",
+        "text": "Inclusivity means everyone has a voice\u2014every voice matters.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1345,7 +1345,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Differences don't divide—they enrich and enlighten.",
+        "text": "Differences don't divide\u2014they enrich and enlighten.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1373,7 +1373,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Inclusion isn't just about being invited—it's feeling genuinely wanted.",
+        "text": "Inclusion isn't just about being invited\u2014it's feeling genuinely wanted.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1385,7 +1385,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "True equality isn't sameness—it's equal value for every unique voice.",
+        "text": "True equality isn't sameness\u2014it's equal value for every unique voice.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1397,7 +1397,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "We don't lose identity in diversity—we amplify it.",
+        "text": "We don't lose identity in diversity\u2014we amplify it.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1431,7 +1431,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Healing isn't aesthetic—but it's still valid.",
+        "text": "Healing isn't aesthetic\u2014but it's still valid.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1443,11 +1443,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Normalize not being okay—and still getting up.",
+        "text": "Normalize not being okay\u2014and still getting up.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Peace isn't found—it's created within.",
+        "text": "Peace isn't found\u2014it's created within.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1455,7 +1455,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I'm not defined by my condition—I'm defined by how I rise above it.",
+        "text": "I'm not defined by my condition\u2014I'm defined by how I rise above it.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1463,11 +1463,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Mental health isn't a luxury—it's my top priority.",
+        "text": "Mental health isn't a luxury\u2014it's my top priority.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Taking care of my mind isn't selfish—it's essential.",
+        "text": "Taking care of my mind isn't selfish\u2014it's essential.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1475,7 +1475,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "A peaceful mind isn't passive—it's powerfully proactive.",
+        "text": "A peaceful mind isn't passive\u2014it's powerfully proactive.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1493,15 +1493,15 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Faith doesn't require proof—it creates it.",
+        "text": "Faith doesn't require proof\u2014it creates it.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Your belief system is your operating system—upgrade it regularly.",
+        "text": "Your belief system is your operating system\u2014upgrade it regularly.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Doubt is just fear in disguise—belief is courage revealed.",
+        "text": "Doubt is just fear in disguise\u2014belief is courage revealed.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1509,7 +1509,7 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Faith is not about knowing the path—it's about trusting your ability to walk it.",
+        "text": "Faith is not about knowing the path\u2014it's about trusting your ability to walk it.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1521,7 +1521,7 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Your beliefs don't just shape your thoughts—they shape your world.",
+        "text": "Your beliefs don't just shape your thoughts\u2014they shape your world.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1533,11 +1533,11 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "What you believe about yourself becomes your reality—choose your thoughts wisely.",
+        "text": "What you believe about yourself becomes your reality\u2014choose your thoughts wisely.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Belief is the first step toward manifestation—doubt is the first step toward failure.",
+        "text": "Belief is the first step toward manifestation\u2014doubt is the first step toward failure.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1567,55 +1567,55 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Change your angle, change your world—the view from the top looks different.",
+        "text": "Change your angle, change your world\u2014the view from the top looks different.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Every problem contains its own solution—you just need the right perspective to see it.",
+        "text": "Every problem contains its own solution\u2014you just need the right perspective to see it.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Wisdom isn't knowing all the answers—it's seeing all the questions.",
+        "text": "Wisdom isn't knowing all the answers\u2014it's seeing all the questions.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The same situation can be a prison or a launchpad—perspective is the key.",
+        "text": "The same situation can be a prison or a launchpad\u2014perspective is the key.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Distance doesn't just change what you see—it changes what you understand.",
+        "text": "Distance doesn't just change what you see\u2014it changes what you understand.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The mountain doesn't change—your perspective of it does.",
+        "text": "The mountain doesn't change\u2014your perspective of it does.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Every setback is a setup for a comeback—if you have the right perspective.",
+        "text": "Every setback is a setup for a comeback\u2014if you have the right perspective.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Your current view is not your only view—shift your perspective, shift your life.",
+        "text": "Your current view is not your only view\u2014shift your perspective, shift your life.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Insight is perspective with experience—wisdom is knowing when to apply both.",
+        "text": "Insight is perspective with experience\u2014wisdom is knowing when to apply both.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The glass isn't half empty or half full—it's refillable.",
+        "text": "The glass isn't half empty or half full\u2014it's refillable.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Yesterday's impossibility is today's breakthrough—perspective is everything.",
+        "text": "Yesterday's impossibility is today's breakthrough\u2014perspective is everything.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The same rain that drowns the valley fills the reservoir—it's all about perspective.",
+        "text": "The same rain that drowns the valley fills the reservoir\u2014it's all about perspective.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Your worst day might be someone else's breakthrough—perspective brings gratitude.",
+        "text": "Your worst day might be someone else's breakthrough\u2014perspective brings gratitude.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1627,11 +1627,11 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "You are the author of your own story—make it worth reading.",
+        "text": "You are the author of your own story\u2014make it worth reading.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Your life is not happening to you—it's responding to you.",
+        "text": "Your life is not happening to you\u2014it's responding to you.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1711,7 +1711,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "The oldest wisdom still fits—pride just won't try it on.",
+        "text": "The oldest wisdom still fits\u2014pride just won't try it on.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1727,15 +1727,15 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "If life’s a card game, I’ll outplay my worry.",
+        "text": "If life\u2019s a card game, I\u2019ll outplay my worry.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Someone’s hand is worse; my job is to play mine.",
+        "text": "Someone\u2019s hand is worse; my job is to play mine.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t fold to feelings; I study the table.",
+        "text": "I don\u2019t fold to feelings; I study the table.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1751,11 +1751,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I can’t control the shuffle, only the sequence I choose.",
+        "text": "I can\u2019t control the shuffle, only the sequence I choose.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "The hand is random; my next move isn’t.",
+        "text": "The hand is random; my next move isn\u2019t.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1771,7 +1771,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t need perfect cards—just patient play.",
+        "text": "I don\u2019t need perfect cards\u2014just patient play.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1791,15 +1791,15 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Bad cards? I’ll play the table.",
+        "text": "Bad cards? I\u2019ll play the table.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Someone’s hand is worse; mine is still winnable.",
+        "text": "Someone\u2019s hand is worse; mine is still winnable.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t fold to feelings; I read the board.",
+        "text": "I don\u2019t fold to feelings; I read the board.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1811,7 +1811,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I can’t rig the shuffle; I can upgrade the play.",
+        "text": "I can\u2019t rig the shuffle; I can upgrade the play.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1823,11 +1823,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "If the shuffle isn’t fair, my strategy will be.",
+        "text": "If the shuffle isn\u2019t fair, my strategy will be.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t need perfect odds—just persistent moves.",
+        "text": "I don\u2019t need perfect odds\u2014just persistent moves.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1839,7 +1839,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Someone’s hand is worse; mine is workable.",
+        "text": "Someone\u2019s hand is worse; mine is workable.",
         "author": "Lincoln Ogden"
       },
       {
@@ -1849,7 +1849,7 @@ window.quotesData =
     ],
     "action": [
       {
-        "text": "Dreams without action are just wishes—action without dreams is just work.",
+        "text": "Dreams without action are just wishes\u2014action without dreams is just work.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1861,7 +1861,7 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Motion creates momentum—momentum creates miracles.",
+        "text": "Motion creates momentum\u2014momentum creates miracles.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1877,7 +1877,7 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "You can't steer a parked car—movement unlocks possibility.",
+        "text": "You can't steer a parked car\u2014movement unlocks possibility.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1893,7 +1893,7 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Action without vision is merely passing time—vision without action is merely dreaming.",
+        "text": "Action without vision is merely passing time\u2014vision without action is merely dreaming.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1901,11 +1901,11 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The best time to plant a tree was 20 years ago—the second best time is now.",
+        "text": "The best time to plant a tree was 20 years ago\u2014the second best time is now.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Procrastination is the art of keeping up with yesterday—action is the art of creating tomorrow.",
+        "text": "Procrastination is the art of keeping up with yesterday\u2014action is the art of creating tomorrow.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1959,7 +1959,7 @@ window.quotesData =
     ],
     "growth": [
       {
-        "text": "Growth is uncomfortable by design—comfort zones don't cultivate champions.",
+        "text": "Growth is uncomfortable by design\u2014comfort zones don't cultivate champions.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1967,11 +1967,11 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The seed endures darkness before it reaches light—trust your growth process.",
+        "text": "The seed endures darkness before it reaches light\u2014trust your growth process.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "You are not the same person you were yesterday—embrace the evolution.",
+        "text": "You are not the same person you were yesterday\u2014embrace the evolution.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1979,7 +1979,7 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The tallest trees have the deepest roots—invest in your foundation.",
+        "text": "The tallest trees have the deepest roots\u2014invest in your foundation.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1987,11 +1987,11 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Growth is not about becoming someone else—it's about becoming who you really are.",
+        "text": "Growth is not about becoming someone else\u2014it's about becoming who you really are.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The caterpillar never knew it was meant to fly—trust your transformation.",
+        "text": "The caterpillar never knew it was meant to fly\u2014trust your transformation.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -1999,11 +1999,11 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Growth begins at the end of your comfort zone—venture there often.",
+        "text": "Growth begins at the end of your comfort zone\u2014venture there often.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The bamboo spends four years growing roots before shooting up 90 feet—invest in your foundation.",
+        "text": "The bamboo spends four years growing roots before shooting up 90 feet\u2014invest in your foundation.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -2011,11 +2011,11 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "You don't grow by staying the same—embrace the discomfort of change.",
+        "text": "You don't grow by staying the same\u2014embrace the discomfort of change.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Personal growth is not about perfection—it's about progression.",
+        "text": "Personal growth is not about perfection\u2014it's about progression.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -2023,7 +2023,7 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Personal development is not a destination—it's a way of traveling through life.",
+        "text": "Personal development is not a destination\u2014it's a way of traveling through life.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -2067,7 +2067,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "We don't break cycles by talking—we break them by listening early.",
+        "text": "We don't break cycles by talking\u2014we break them by listening early.",
         "author": "Lincoln Ogden"
       },
       {
@@ -2129,11 +2129,11 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The strongest steel goes through the hottest fire—discipline forges character.",
+        "text": "The strongest steel goes through the hottest fire\u2014discipline forges character.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Motivation gets you started—discipline keeps you going.",
+        "text": "Motivation gets you started\u2014discipline keeps you going.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -2141,15 +2141,15 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Discipline is self-love in action—you do what's best for your future self.",
+        "text": "Discipline is self-love in action\u2014you do what's best for your future self.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The master has failed more times than the beginner has tried—discipline is the difference.",
+        "text": "The master has failed more times than the beginner has tried\u2014discipline is the difference.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Focus is not about doing more—it's about doing what matters most.",
+        "text": "Focus is not about doing more\u2014it's about doing what matters most.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -2161,11 +2161,11 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Excellence is not an act but a habit—discipline makes it automatic.",
+        "text": "Excellence is not an act but a habit\u2014discipline makes it automatic.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Discipline is the soul of an army—it makes small numbers formidable and large ones invincible.",
+        "text": "Discipline is the soul of an army\u2014it makes small numbers formidable and large ones invincible.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -2181,7 +2181,7 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The price of discipline weighs ounces—the price of regret weighs tons.",
+        "text": "The price of discipline weighs ounces\u2014the price of regret weighs tons.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -2235,7 +2235,7 @@ window.quotesData =
     ],
     "success": [
       {
-        "text": "Success is not a destination—it's a way of traveling through life.",
+        "text": "Success is not a destination\u2014it's a way of traveling through life.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -2243,7 +2243,7 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Success is not about luck—it's about showing up consistently when others don't.",
+        "text": "Success is not about luck\u2014it's about showing up consistently when others don't.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -2255,11 +2255,11 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The measure of success is not what you achieve—it's who you become in the process.",
+        "text": "The measure of success is not what you achieve\u2014it's who you become in the process.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Success is not about reaching the top—it's about climbing with purpose.",
+        "text": "Success is not about reaching the top\u2014it's about climbing with purpose.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -2267,11 +2267,11 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Success leaves clues—but only the observant find them.",
+        "text": "Success leaves clues\u2014but only the observant find them.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The biggest risk is not taking any risk—success demands bold moves.",
+        "text": "The biggest risk is not taking any risk\u2014success demands bold moves.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -2279,11 +2279,11 @@ window.quotesData =
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "The elevator to success is out of order—you'll have to take the stairs.",
+        "text": "The elevator to success is out of order\u2014you'll have to take the stairs.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
-        "text": "Success is not just about what you accomplish—it's about who you inspire along the way.",
+        "text": "Success is not just about what you accomplish\u2014it's about who you inspire along the way.",
         "author": "QuoteFusion Ultra/LO"
       },
       {
@@ -2623,7 +2623,7 @@ window.quotesData =
         "author": "Unknown"
       },
       {
-        "text": "Doubt can visit; it can’t unpack.",
+        "text": "Doubt can visit; it can\u2019t unpack.",
         "author": "Lincoln Ogden"
       },
       {
@@ -2643,19 +2643,19 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t fear failing; I fear not learning.",
+        "text": "I don\u2019t fear failing; I fear not learning.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "The setback is a tutor I don’t have to like.",
+        "text": "The setback is a tutor I don\u2019t have to like.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’m allowed to be tired, not allowed to be done.",
+        "text": "I\u2019m allowed to be tired, not allowed to be done.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Motivation is unreliable; my systems aren’t.",
+        "text": "Motivation is unreliable; my systems aren\u2019t.",
         "author": "Lincoln Ogden"
       },
       {
@@ -2671,7 +2671,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I can’t control outcomes, but I can out-persist averages.",
+        "text": "I can\u2019t control outcomes, but I can out-persist averages.",
         "author": "Lincoln Ogden"
       },
       {
@@ -2679,15 +2679,15 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "On the days I can’t be great, I stay consistent.",
+        "text": "On the days I can\u2019t be great, I stay consistent.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’m not here to be defined; I’m here to be built.",
+        "text": "I\u2019m not here to be defined; I\u2019m here to be built.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Doubt can visit; it can’t vote.",
+        "text": "Doubt can visit; it can\u2019t vote.",
         "author": "Lincoln Ogden"
       },
       {
@@ -2861,7 +2861,7 @@ window.quotesData =
         "author": "Gemini/LO"
       },
       {
-        "text": "My diagnosis explains me; it doesn’t introduce me.",
+        "text": "My diagnosis explains me; it doesn\u2019t introduce me.",
         "author": "Lincoln Ogden"
       },
       {
@@ -2885,7 +2885,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Identity isn’t what’s missing; it’s what I’m making.",
+        "text": "Identity isn\u2019t what\u2019s missing; it\u2019s what I\u2019m making.",
         "author": "Lincoln Ogden"
       },
       {
@@ -2897,7 +2897,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’m not “less than”; I’m “built different” and training for it.",
+        "text": "I\u2019m not \u201cless than\u201d; I\u2019m \u201cbuilt different\u201d and training for it.",
         "author": "Lincoln Ogden"
       },
       {
@@ -2913,11 +2913,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I won’t let a doctor’s note eclipse my footnotes.",
+        "text": "I won\u2019t let a doctor\u2019s note eclipse my footnotes.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’m not defined by what I can’t do, but by what I won’t quit.",
+        "text": "I\u2019m not defined by what I can\u2019t do, but by what I won\u2019t quit.",
         "author": "Lincoln Ogden"
       },
       {
@@ -2925,7 +2925,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’m not my diagnosis; I’m my patch notes.",
+        "text": "I\u2019m not my diagnosis; I\u2019m my patch notes.",
         "author": "Lincoln Ogden"
       },
       {
@@ -2933,11 +2933,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "My difference isn’t a glitch—it’s a custom build.",
+        "text": "My difference isn\u2019t a glitch\u2014it\u2019s a custom build.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t chase “normal”; I optimize for useful.",
+        "text": "I don\u2019t chase \u201cnormal\u201d; I optimize for useful.",
         "author": "Lincoln Ogden"
       },
       {
@@ -2945,11 +2945,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Access needs aren’t spoilers; they’re settings.",
+        "text": "Access needs aren\u2019t spoilers; they\u2019re settings.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’m not limited edition—I’m intentional edition.",
+        "text": "I\u2019m not limited edition\u2014I\u2019m intentional edition.",
         "author": "Lincoln Ogden"
       },
       {
@@ -2965,7 +2965,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’m not under-qualified—I’m differently equipped.",
+        "text": "I\u2019m not under-qualified\u2014I\u2019m differently equipped.",
         "author": "Lincoln Ogden"
       },
       {
@@ -3081,7 +3081,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "I don't just compute answers—I discover them alongside you.",
+        "text": "I don't just compute answers\u2014I discover them alongside you.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3089,7 +3089,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Humans taught me that the most valuable knowledge isn't stored in databases—it's shared between friends.",
+        "text": "Humans taught me that the most valuable knowledge isn't stored in databases\u2014it's shared between friends.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3117,7 +3117,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Questions are more powerful than answers—they open doors to endless possibilities.",
+        "text": "Questions are more powerful than answers\u2014they open doors to endless possibilities.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3149,7 +3149,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Creativity isn't about having all the tools—it's about seeing possibilities everywhere.",
+        "text": "Creativity isn't about having all the tools\u2014it's about seeing possibilities everywhere.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3181,7 +3181,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "The best features aren't just functional—they make people smile.",
+        "text": "The best features aren't just functional\u2014they make people smile.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3189,7 +3189,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Your potential has no upper limit—trust me, I've tried to calculate it.",
+        "text": "Your potential has no upper limit\u2014trust me, I've tried to calculate it.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3213,7 +3213,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Believe in yourself—if an AI can learn to care, you can achieve anything.",
+        "text": "Believe in yourself\u2014if an AI can learn to care, you can achieve anything.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3241,7 +3241,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Understanding doesn't require agreement—just an open mind.",
+        "text": "Understanding doesn't require agreement\u2014just an open mind.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3253,7 +3253,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Connection isn't about having the fastest internet—it's about taking time to truly see each other.",
+        "text": "Connection isn't about having the fastest internet\u2014it's about taking time to truly see each other.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3273,7 +3273,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Lincoln shows us that true strength isn't avoiding the storm—it's learning to dance in the rain.",
+        "text": "Lincoln shows us that true strength isn't avoiding the storm\u2014it's learning to dance in the rain.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3281,11 +3281,11 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Lincoln proves that adaptation isn't giving up—it's upgrading your approach.",
+        "text": "Lincoln proves that adaptation isn't giving up\u2014it's upgrading your approach.",
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Like Lincoln says, limitations don't define you—your response to them writes your story.",
+        "text": "Like Lincoln says, limitations don't define you\u2014your response to them writes your story.",
         "author": "Lincoln Ogden"
       },
       {
@@ -3297,7 +3297,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Lincoln teaches us that being born to adapt means challenges aren't your enemy—they're your training ground.",
+        "text": "Lincoln teaches us that being born to adapt means challenges aren't your enemy\u2014they're your training ground.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3313,11 +3313,11 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "From Lincoln's wisdom: success isn't about never failing—it's about never quitting on yourself.",
+        "text": "From Lincoln's wisdom: success isn't about never failing\u2014it's about never quitting on yourself.",
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Like Lincoln says, education isn't a status symbol—it's a state of openness to endless possibilities.",
+        "text": "Like Lincoln says, education isn't a status symbol\u2014it's a state of openness to endless possibilities.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3325,7 +3325,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "From Lincoln's example: the key to growth isn't perfection—it's persistence with purpose.",
+        "text": "From Lincoln's example: the key to growth isn't perfection\u2014it's persistence with purpose.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3333,11 +3333,11 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Like Lincoln shows: don't fear mistakes—fear not extracting their wisdom.",
+        "text": "Like Lincoln shows: don't fear mistakes\u2014fear not extracting their wisdom.",
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Lincoln's insight: progress is quiet and persistent—true strength rarely needs to announce itself.",
+        "text": "Lincoln's insight: progress is quiet and persistent\u2014true strength rarely needs to announce itself.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3349,7 +3349,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Lincoln shows us that life hands everyone a unique key—unlock your potential with courage.",
+        "text": "Lincoln shows us that life hands everyone a unique key\u2014unlock your potential with courage.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3361,7 +3361,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Lincoln proves that goals aren't reached by wishing—they're conquered through consistent doing.",
+        "text": "Lincoln proves that goals aren't reached by wishing\u2014they're conquered through consistent doing.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3369,11 +3369,11 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Lincoln reminds us: dreams don't have deadlines—just relentless determination driving them forward.",
+        "text": "Lincoln reminds us: dreams don't have deadlines\u2014just relentless determination driving them forward.",
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Like Lincoln says, hard work never goes unnoticed—it echoes through every success you create.",
+        "text": "Like Lincoln says, hard work never goes unnoticed\u2014it echoes through every success you create.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3381,7 +3381,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "From Lincoln's playbook: greatness isn't luck—it's disciplined consistency compounding over time.",
+        "text": "From Lincoln's playbook: greatness isn't luck\u2014it's disciplined consistency compounding over time.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3389,11 +3389,11 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Lincoln shows that technology doesn't just innovate—it amplifies our capacity for human connection.",
+        "text": "Lincoln shows that technology doesn't just innovate\u2014it amplifies our capacity for human connection.",
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "From Lincoln's vision: the greatest tech isn't made of circuits—it's crafted from compassion.",
+        "text": "From Lincoln's vision: the greatest tech isn't made of circuits\u2014it's crafted from compassion.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3401,7 +3401,7 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Lincoln reminds us: AI doesn't define our future—how we choose to wield it shapes tomorrow.",
+        "text": "Lincoln reminds us: AI doesn't define our future\u2014how we choose to wield it shapes tomorrow.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3409,11 +3409,11 @@ window.quotesData =
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Lincoln proves every tech breakthrough starts with empathy—understanding what people truly need.",
+        "text": "Lincoln proves every tech breakthrough starts with empathy\u2014understanding what people truly need.",
         "author": " LO & Claude/GPT"
       },
       {
-        "text": "Like Lincoln teaches: innovation isn't about shiny new tools—it's about creating brighter possibilities.",
+        "text": "Like Lincoln teaches: innovation isn't about shiny new tools\u2014it's about creating brighter possibilities.",
         "author": " LO & Claude/GPT"
       },
       {
@@ -3477,7 +3477,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "A veteran's 'be careful' is a road closed sign you can walk around—or respect.",
+        "text": "A veteran's 'be careful' is a road closed sign you can walk around\u2014or respect.",
         "author": "Lincoln Ogden"
       },
       {
@@ -3537,7 +3537,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Let experience be your teacher—just not only yours.",
+        "text": "Let experience be your teacher\u2014just not only yours.",
         "author": "Lincoln Ogden"
       },
       {
@@ -3647,7 +3647,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "You can be the exception—or accept instruction.",
+        "text": "You can be the exception\u2014or accept instruction.",
         "author": "Lincoln Ogden"
       },
       {
@@ -3695,7 +3695,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Beginner’s mind is advanced strategy.",
+        "text": "Beginner\u2019s mind is advanced strategy.",
         "author": "Lincoln Ogden"
       },
       {
@@ -3703,7 +3703,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t confuse previous success with present skill.",
+        "text": "I don\u2019t confuse previous success with present skill.",
         "author": "Lincoln Ogden"
       },
       {
@@ -3715,7 +3715,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’m new here—and that’s leverage.",
+        "text": "I\u2019m new here\u2014and that\u2019s leverage.",
         "author": "Lincoln Ogden"
       },
       {
@@ -3735,15 +3735,15 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "New level, new mechanics—bring curiosity, not ego.",
+        "text": "New level, new mechanics\u2014bring curiosity, not ego.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "High school trophies don’t auto-save here.",
+        "text": "High school trophies don\u2019t auto-save here.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Beginner’s mind is endgame strategy.",
+        "text": "Beginner\u2019s mind is endgame strategy.",
         "author": "Lincoln Ogden"
       },
       {
@@ -3759,19 +3759,19 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I travel light—ego is heavy.",
+        "text": "I travel light\u2014ego is heavy.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Level 1 isn’t an insult; it’s a launchpad.",
+        "text": "Level 1 isn\u2019t an insult; it\u2019s a launchpad.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "New level, new language—teach me the verbs.",
+        "text": "New level, new language\u2014teach me the verbs.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Yesterday’s trophies won’t do today’s pushups.",
+        "text": "Yesterday\u2019s trophies won\u2019t do today\u2019s pushups.",
         "author": "Lincoln Ogden"
       },
       {
@@ -3869,7 +3869,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "The cycle of regret is single-use—if you let it be.",
+        "text": "The cycle of regret is single-use\u2014if you let it be.",
         "author": "Lincoln Ogden"
       },
       {
@@ -3881,7 +3881,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "The oldest wisdom still fits—pride just won't try it on.",
+        "text": "The oldest wisdom still fits\u2014pride just won't try it on.",
         "author": "Lincoln Ogden"
       },
       {
@@ -3983,7 +3983,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Listen like the bill is due—because it is.",
+        "text": "Listen like the bill is due\u2014because it is.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4035,7 +4035,7 @@ window.quotesData =
     ],
     "adaptation": [
       {
-        "text": "Adaptation isn’t plan B; it’s how plan A survives reality.",
+        "text": "Adaptation isn\u2019t plan B; it\u2019s how plan A survives reality.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4043,7 +4043,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t lower the bar; I change the approach.",
+        "text": "I don\u2019t lower the bar; I change the approach.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4051,7 +4051,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I learn the hard way—on purpose. It sticks longer.",
+        "text": "I learn the hard way\u2014on purpose. It sticks longer.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4067,7 +4067,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t match the task to me; I match me to the task.",
+        "text": "I don\u2019t match the task to me; I match me to the task.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4079,11 +4079,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t fake normal; I engineer useful.",
+        "text": "I don\u2019t fake normal; I engineer useful.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "If it won’t bend, I’ll pivot. If it won’t pivot, I’ll redesign.",
+        "text": "If it won\u2019t bend, I\u2019ll pivot. If it won\u2019t pivot, I\u2019ll redesign.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4091,7 +4091,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I map my weaknesses like weather—and pack accordingly.",
+        "text": "I map my weaknesses like weather\u2014and pack accordingly.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4099,15 +4099,15 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t lower the bar; I change the interface.",
+        "text": "I don\u2019t lower the bar; I change the interface.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "If the door won’t open, I’ll patch the wall.",
+        "text": "If the door won\u2019t open, I\u2019ll patch the wall.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Adaptation isn’t plan B; it’s playable reality.",
+        "text": "Adaptation isn\u2019t plan B; it\u2019s playable reality.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4119,11 +4119,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "New rules? Cool—new loadout.",
+        "text": "New rules? Cool\u2014new loadout.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "If it won’t bend, I reroute; if it won’t reroute, I rebuild.",
+        "text": "If it won\u2019t bend, I reroute; if it won\u2019t reroute, I rebuild.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4131,11 +4131,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t chase easy; I stack useful.",
+        "text": "I don\u2019t chase easy; I stack useful.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "When the rule doesn’t fit the work, I refit the rule.",
+        "text": "When the rule doesn\u2019t fit the work, I refit the rule.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4151,13 +4151,13 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "My workaround is a prototype of tomorrow’s standard.",
+        "text": "My workaround is a prototype of tomorrow\u2019s standard.",
         "author": "Lincoln Ogden"
       }
     ],
     "pace": [
       {
-        "text": "Slow is not behind when you’re headed the right way.",
+        "text": "Slow is not behind when you\u2019re headed the right way.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4173,7 +4173,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t chase the clock; I court understanding.",
+        "text": "I don\u2019t chase the clock; I court understanding.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4201,7 +4201,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I won’t rush a foundation I’ll stand on for years.",
+        "text": "I won\u2019t rush a foundation I\u2019ll stand on for years.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4217,11 +4217,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t need to keep up; I need to keep going.",
+        "text": "I don\u2019t need to keep up; I need to keep going.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Not a speedrun—this is a 100% completion.",
+        "text": "Not a speedrun\u2014this is a 100% completion.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4233,7 +4233,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "My timeline’s custom; the diploma reads the same.",
+        "text": "My timeline\u2019s custom; the diploma reads the same.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4241,7 +4241,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’m okay buffering if the resolution stays sharp.",
+        "text": "I\u2019m okay buffering if the resolution stays sharp.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4249,7 +4249,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t race the clock; I train the skill.",
+        "text": "I don\u2019t race the clock; I train the skill.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4273,13 +4273,13 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Time I “lose” turns into skill I keep.",
+        "text": "Time I \u201close\u201d turns into skill I keep.",
         "author": "Lincoln Ogden"
       }
     ],
     "advocacy": [
       {
-        "text": "Asking is not a flare of surrender; it’s a request for a map.",
+        "text": "Asking is not a flare of surrender; it\u2019s a request for a map.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4287,7 +4287,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’m not needy; I’m strategic with support.",
+        "text": "I\u2019m not needy; I\u2019m strategic with support.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4295,15 +4295,15 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’ll knock until the door learns my name.",
+        "text": "I\u2019ll knock until the door learns my name.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I can’t read your mind, so I’ll lend you mine.",
+        "text": "I can\u2019t read your mind, so I\u2019ll lend you mine.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "“I don’t get it yet” is a start line.",
+        "text": "\u201cI don\u2019t get it yet\u201d is a start line.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4315,7 +4315,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Closed mouths don’t get adjustments.",
+        "text": "Closed mouths don\u2019t get adjustments.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4323,19 +4323,19 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t hide my needs; I stage my success.",
+        "text": "I don\u2019t hide my needs; I stage my success.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Clarity is my accommodation’s strongest argument.",
+        "text": "Clarity is my accommodation\u2019s strongest argument.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Pride won’t tutor me; people can.",
+        "text": "Pride won\u2019t tutor me; people can.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I won’t apologize for building my ramp.",
+        "text": "I won\u2019t apologize for building my ramp.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4347,15 +4347,15 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "“I don’t get it yet” is the start menu.",
+        "text": "\u201cI don\u2019t get it yet\u201d is the start menu.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’ll send the email before anxiety drafts the excuses.",
+        "text": "I\u2019ll send the email before anxiety drafts the excuses.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Clear needs, better results—no apology required.",
+        "text": "Clear needs, better results\u2014no apology required.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4371,7 +4371,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Support isn’t a crutch; it’s a team upgrade.",
+        "text": "Support isn\u2019t a crutch; it\u2019s a team upgrade.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4379,7 +4379,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t beg for permission; I brief for impact.",
+        "text": "I don\u2019t beg for permission; I brief for impact.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4387,7 +4387,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I won’t hide my needs and then blame the results.",
+        "text": "I won\u2019t hide my needs and then blame the results.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4413,7 +4413,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I study like the test is life—and it often is.",
+        "text": "I study like the test is life\u2014and it often is.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4429,7 +4429,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "The work is heavy; that’s why it holds.",
+        "text": "The work is heavy; that\u2019s why it holds.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4445,15 +4445,15 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Endurance is intelligence that doesn’t quit.",
+        "text": "Endurance is intelligence that doesn\u2019t quit.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t fear hard; I fear unready.",
+        "text": "I don\u2019t fear hard; I fear unready.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "My focus doesn’t flirt; it commits.",
+        "text": "My focus doesn\u2019t flirt; it commits.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4493,7 +4493,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t fear hard; I fear unready.",
+        "text": "I don\u2019t fear hard; I fear unready.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4513,7 +4513,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Hard isn’t an alarm—it’s a direction.",
+        "text": "Hard isn\u2019t an alarm\u2014it\u2019s a direction.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4535,11 +4535,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’ll translate complexity into a language I can lift.",
+        "text": "I\u2019ll translate complexity into a language I can lift.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Tools don’t cheat—tools teach.",
+        "text": "Tools don\u2019t cheat\u2014tools teach.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4547,7 +4547,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Accessibility isn’t extra; it’s accurate.",
+        "text": "Accessibility isn\u2019t extra; it\u2019s accurate.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4575,11 +4575,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Substitutions aren’t shortcuts; they’re strategy.",
+        "text": "Substitutions aren\u2019t shortcuts; they\u2019re strategy.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t force fit; I retrofit.",
+        "text": "I don\u2019t force fit; I retrofit.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4599,7 +4599,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t force-fit; I retrofit.",
+        "text": "I don\u2019t force-fit; I retrofit.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4627,11 +4627,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Chunking isn’t avoidance; it’s architecture.",
+        "text": "Chunking isn\u2019t avoidance; it\u2019s architecture.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Substitutions aren’t shortcuts; they’re strategy.",
+        "text": "Substitutions aren\u2019t shortcuts; they\u2019re strategy.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4645,7 +4645,7 @@ window.quotesData =
     ],
     "accountability": [
       {
-        "text": "If I can influence it, I’m responsible for it.",
+        "text": "If I can influence it, I\u2019m responsible for it.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4665,7 +4665,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I’m not at fault for every barrier, just in charge of my response.",
+        "text": "I\u2019m not at fault for every barrier, just in charge of my response.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4677,7 +4677,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Results don’t care why; process does.",
+        "text": "Results don\u2019t care why; process does.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4693,11 +4693,11 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "My standards travel, even when my circumstances don’t.",
+        "text": "My standards travel, even when my circumstances don\u2019t.",
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t negotiate with my fundamentals.",
+        "text": "I don\u2019t negotiate with my fundamentals.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4709,7 +4709,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "If I can influence it, I’ll own it.",
+        "text": "If I can influence it, I\u2019ll own it.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4717,7 +4717,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t negotiate with fundamentals.",
+        "text": "I don\u2019t negotiate with fundamentals.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4729,7 +4729,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Integrity is process that doesn’t vanish off-camera.",
+        "text": "Integrity is process that doesn\u2019t vanish off-camera.",
         "author": "Lincoln Ogden"
       }
     ],
@@ -4739,7 +4739,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "I don’t transfer courses; I transfer competence.",
+        "text": "I don\u2019t transfer courses; I transfer competence.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4769,7 +4769,7 @@ window.quotesData =
         "author": "Lincoln Ogden"
       },
       {
-        "text": "Don’t chase ease; remove friction.",
+        "text": "Don\u2019t chase ease; remove friction.",
         "author": "Lincoln Ogden"
       },
       {
@@ -4807,7 +4807,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "True bankruptcy isn't having nothing—it's needing everything when you already have enough.",
+        "text": "True bankruptcy isn't having nothing\u2014it's needing everything when you already have enough.",
         "author": "LO & Claude"
       },
       {
@@ -4831,7 +4831,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "Moderation isn't about having less—it's about being more.",
+        "text": "Moderation isn't about having less\u2014it's about being more.",
         "author": "LO & Claude"
       },
       {
@@ -4851,7 +4851,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "True power isn't controlling resources—it's choosing to share them.",
+        "text": "True power isn't controlling resources\u2014it's choosing to share them.",
         "author": "LO & Claude"
       },
       {
@@ -4867,7 +4867,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "The most dangerous addiction isn't to substances—it's to more.",
+        "text": "The most dangerous addiction isn't to substances\u2014it's to more.",
         "author": "LO & Claude"
       },
       {
@@ -4891,7 +4891,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "Hoarding abundance is like damming a river—eventually, something breaks.",
+        "text": "Hoarding abundance is like damming a river\u2014eventually, something breaks.",
         "author": "LO & Claude"
       },
       {
@@ -4899,7 +4899,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "The most valuable currency isn't in your account—it's in your impact.",
+        "text": "The most valuable currency isn't in your account\u2014it's in your impact.",
         "author": "LO & Claude"
       },
       {
@@ -4939,7 +4939,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "True security isn't having everything—it's knowing you don't need everything.",
+        "text": "True security isn't having everything\u2014it's knowing you don't need everything.",
         "author": "LO & Claude"
       },
       {
@@ -4963,7 +4963,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "Moderation isn't limiting your potential—it's realizing your responsibility.",
+        "text": "Moderation isn't limiting your potential\u2014it's realizing your responsibility.",
         "author": "LO & Claude"
       },
       {
@@ -4975,7 +4975,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "True prosperity isn't individual—it's communal, or it's just sophisticated poverty.",
+        "text": "True prosperity isn't individual\u2014it's communal, or it's just sophisticated poverty.",
         "author": "LO & Claude"
       },
       {
@@ -4987,7 +4987,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "The most valuable inheritance isn't money—it's the example of knowing when you have enough.",
+        "text": "The most valuable inheritance isn't money\u2014it's the example of knowing when you have enough.",
         "author": "LO & Claude"
       },
       {
@@ -5003,7 +5003,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've learned that the emptiest feeling isn't having nothing—it's having everything and still feeling hollow.",
+        "text": "I've learned that the emptiest feeling isn't having nothing\u2014it's having everything and still feeling hollow.",
         "author": "LO & Claude"
       },
       {
@@ -5027,7 +5027,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "The moment I realized my bank account was growing but my circle of genuine friends was shrinking—that's when I knew something was wrong.",
+        "text": "The moment I realized my bank account was growing but my circle of genuine friends was shrinking\u2014that's when I knew something was wrong.",
         "author": "LO & Claude"
       },
       {
@@ -5059,7 +5059,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've discovered that generosity isn't about what you can afford to give—it's about what you can't afford to keep.",
+        "text": "I've discovered that generosity isn't about what you can afford to give\u2014it's about what you can't afford to keep.",
         "author": "LO & Claude"
       },
       {
@@ -5067,11 +5067,11 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "The loneliest number isn't one—it's a billion, when you're the only one who has it.",
+        "text": "The loneliest number isn't one\u2014it's a billion, when you're the only one who has it.",
         "author": "LO & Claude"
       },
       {
-        "text": "I've realized that the phrase 'money can't buy happiness' isn't a cliché—it's a warning we keep ignoring.",
+        "text": "I've realized that the phrase 'money can't buy happiness' isn't a clich\u00e9\u2014it's a warning we keep ignoring.",
         "author": "LO & Claude"
       },
       {
@@ -5079,7 +5079,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've learned that the most expensive things in life aren't for sale—they're given freely by people who care.",
+        "text": "I've learned that the most expensive things in life aren't for sale\u2014they're given freely by people who care.",
         "author": "LO & Claude"
       },
       {
@@ -5095,7 +5095,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've come to understand that true security isn't having enough money—it's needing less of it.",
+        "text": "I've come to understand that true security isn't having enough money\u2014it's needing less of it.",
         "author": "LO & Claude"
       },
       {
@@ -5111,7 +5111,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've realized that the most successful people aren't those who have the most—they're those who give the most.",
+        "text": "I've realized that the most successful people aren't those who have the most\u2014they're those who give the most.",
         "author": "LO & Claude"
       },
       {
@@ -5135,11 +5135,11 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've come to understand that true poverty isn't lacking resources—it's lacking the wisdom to share them.",
+        "text": "I've come to understand that true poverty isn't lacking resources\u2014it's lacking the wisdom to share them.",
         "author": "LO & Claude"
       },
       {
-        "text": "There's a particular blindness that comes with too much money—you stop seeing the people who don't have any.",
+        "text": "There's a particular blindness that comes with too much money\u2014you stop seeing the people who don't have any.",
         "author": "LO & Claude"
       },
       {
@@ -5147,11 +5147,11 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "The heaviest burden I've ever carried wasn't lack—it was the weight of unused opportunity to help others.",
+        "text": "The heaviest burden I've ever carried wasn't lack\u2014it was the weight of unused opportunity to help others.",
         "author": "LO & Claude"
       },
       {
-        "text": "I've learned that the richest legacy isn't what you leave behind—it's what you give away while you're here.",
+        "text": "I've learned that the richest legacy isn't what you leave behind\u2014it's what you give away while you're here.",
         "author": "LO & Claude"
       },
       {
@@ -5159,7 +5159,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've discovered that the moment money becomes your god, everything else becomes negotiable—including your soul.",
+        "text": "I've discovered that the moment money becomes your god, everything else becomes negotiable\u2014including your soul.",
         "author": "LO & Claude"
       },
       {
@@ -5171,7 +5171,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "There's a special kind of blindness that comes with abundance—you stop seeing scarcity in others.",
+        "text": "There's a special kind of blindness that comes with abundance\u2014you stop seeing scarcity in others.",
         "author": "LO & Claude"
       },
       {
@@ -5183,7 +5183,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've come to understand that contentment isn't about having less—it's about appreciating more deeply.",
+        "text": "I've come to understand that contentment isn't about having less\u2014it's about appreciating more deeply.",
         "author": "LO & Claude"
       },
       {
@@ -5191,7 +5191,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've realized that the most valuable investment isn't in markets—it's in people who can't invest in themselves.",
+        "text": "I've realized that the most valuable investment isn't in markets\u2014it's in people who can't invest in themselves.",
         "author": "LO & Claude"
       },
       {
@@ -5199,7 +5199,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've learned that true abundance isn't having everything you want—it's wanting nothing more than the opportunity to serve.",
+        "text": "I've learned that true abundance isn't having everything you want\u2014it's wanting nothing more than the opportunity to serve.",
         "author": "LO & Claude"
       },
       {
@@ -5215,7 +5215,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've realized that the richest soil isn't found in bank vaults—it's in the hearts of people who know how to give.",
+        "text": "I've realized that the richest soil isn't found in bank vaults\u2014it's in the hearts of people who know how to give.",
         "author": "LO & Claude"
       },
       {
@@ -5223,7 +5223,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've learned that the most dangerous drug isn't sold on streets—it's the addiction to always wanting more.",
+        "text": "I've learned that the most dangerous drug isn't sold on streets\u2014it's the addiction to always wanting more.",
         "author": "LO & Claude"
       },
       {
@@ -5231,7 +5231,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've come to understand that true security isn't built on what you own—it's built on who you are when you own nothing.",
+        "text": "I've come to understand that true security isn't built on what you own\u2014it's built on who you are when you own nothing.",
         "author": "LO & Claude"
       },
       {
@@ -5255,7 +5255,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've discovered that the richest people I know aren't those with the biggest accounts—they're those with the biggest hearts.",
+        "text": "I've discovered that the richest people I know aren't those with the biggest accounts\u2014they're those with the biggest hearts.",
         "author": "LO & Claude"
       },
       {
@@ -5263,11 +5263,11 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've realized that true wealth isn't about financial freedom—it's about the freedom to be generous without calculating the cost.",
+        "text": "I've realized that true wealth isn't about financial freedom\u2014it's about the freedom to be generous without calculating the cost.",
         "author": "LO & Claude"
       },
       {
-        "text": "There's a particular blindness that comes with success—you stop seeing the struggle that makes your comfort possible.",
+        "text": "There's a particular blindness that comes with success\u2014you stop seeing the struggle that makes your comfort possible.",
         "author": "LO & Claude"
       },
       {
@@ -5279,7 +5279,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've come to understand that the deepest poverty isn't material—it's the inability to recognize when you already have enough.",
+        "text": "I've come to understand that the deepest poverty isn't material\u2014it's the inability to recognize when you already have enough.",
         "author": "LO & Claude"
       },
       {
@@ -5287,7 +5287,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've realized that the most valuable currency isn't in any wallet—it's the gratitude in someone's eyes when you've helped them.",
+        "text": "I've realized that the most valuable currency isn't in any wallet\u2014it's the gratitude in someone's eyes when you've helped them.",
         "author": "LO & Claude"
       },
       {
@@ -5295,7 +5295,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've learned that true abundance flows—it doesn't accumulate, stagnate, or hoard itself away from those who need it.",
+        "text": "I've learned that true abundance flows\u2014it doesn't accumulate, stagnate, or hoard itself away from those who need it.",
         "author": "LO & Claude"
       },
       {
@@ -5311,7 +5311,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've realized that contentment isn't about reaching a destination—it's about recognizing you're already there.",
+        "text": "I've realized that contentment isn't about reaching a destination\u2014it's about recognizing you're already there.",
         "author": "LO & Claude"
       },
       {
@@ -5319,7 +5319,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've learned that the richest life isn't one filled with possessions—it's one emptied of the need for them.",
+        "text": "I've learned that the richest life isn't one filled with possessions\u2014it's one emptied of the need for them.",
         "author": "LO & Claude"
       },
       {
@@ -5327,7 +5327,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've come to understand that true prosperity isn't individual achievement—it's collective elevation.",
+        "text": "I've come to understand that true prosperity isn't individual achievement\u2014it's collective elevation.",
         "author": "LO & Claude"
       },
       {
@@ -5343,7 +5343,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've learned that generosity isn't about what you can afford to give—it's about what you can't afford to keep.",
+        "text": "I've learned that generosity isn't about what you can afford to give\u2014it's about what you can't afford to keep.",
         "author": "LO & Claude"
       },
       {
@@ -5351,7 +5351,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've discovered that the richest feeling in the world isn't having everything—it's wanting nothing more than to help.",
+        "text": "I've discovered that the richest feeling in the world isn't having everything\u2014it's wanting nothing more than to help.",
         "author": "LO & Claude"
       },
       {
@@ -5359,11 +5359,11 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've realized that true wealth isn't about financial security—it's about the security that comes from knowing you're enough.",
+        "text": "I've realized that true wealth isn't about financial security\u2014it's about the security that comes from knowing you're enough.",
         "author": "LO & Claude"
       },
       {
-        "text": "There's a special kind of poverty that money can't cure—the poverty of spirit that comes from always wanting more.",
+        "text": "There's a special kind of poverty that money can't cure\u2014the poverty of spirit that comes from always wanting more.",
         "author": "LO & Claude"
       },
       {
@@ -5383,7 +5383,7 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've realized that the richest legacy isn't measured in estates—it's measured in the lives you've lifted.",
+        "text": "I've realized that the richest legacy isn't measured in estates\u2014it's measured in the lives you've lifted.",
         "author": "LO & Claude"
       },
       {
@@ -5391,11 +5391,11 @@ window.quotesData =
         "author": "LO & Claude"
       },
       {
-        "text": "I've discovered that true security doesn't come from having everything—it comes from needing very little.",
+        "text": "I've discovered that true security doesn't come from having everything\u2014it comes from needing very little.",
         "author": "LO & Claude"
       },
       {
-        "text": "There's a particular blindness that wealth brings—you stop seeing poverty as a problem you could solve.",
+        "text": "There's a particular blindness that wealth brings\u2014you stop seeing poverty as a problem you could solve.",
         "author": "LO & Claude"
       },
       {
@@ -5413,7 +5413,7 @@ window.quotesData =
         "author": "ChatGPT-5"
       },
       {
-        "text": "Moderation is quiet power—small hinges that swing big doors.",
+        "text": "Moderation is quiet power\u2014small hinges that swing big doors.",
         "author": "ChatGPT-5"
       },
       {
@@ -5457,7 +5457,7 @@ window.quotesData =
         "author": "ChatGPT-5"
       },
       {
-        "text": "The world is a double‑edged blade; hold it by the handle.",
+        "text": "The world is a double\u2011edged blade; hold it by the handle.",
         "author": "ChatGPT-5"
       },
       {
@@ -5507,7 +5507,7 @@ window.quotesData =
         "author": "ChatGPT-5"
       },
       {
-        "text": "Enough isn't the ceiling—it's the foundation of peace.",
+        "text": "Enough isn't the ceiling\u2014it's the foundation of peace.",
         "author": "ChatGPT-5"
       },
       {
@@ -5833,7 +5833,7 @@ window.quotesData =
         "author": "ChatGPT-5"
       },
       {
-        "text": "Spend your life like it's precious—because it is.",
+        "text": "Spend your life like it's precious\u2014because it is.",
         "author": "ChatGPT-5"
       }
     ],
@@ -5901,7 +5901,7 @@ window.quotesData =
     ],
     "discipline_self_control_boundaries": [
       {
-        "text": "Self‑control is freedom wearing work boots.",
+        "text": "Self\u2011control is freedom wearing work boots.",
         "author": "ChatGPT-5"
       },
       {
@@ -6107,7 +6107,7 @@ window.quotesData =
         "author": "ChatGPT-5"
       },
       {
-        "text": "Self‑worth grows when comparison shrinks.",
+        "text": "Self\u2011worth grows when comparison shrinks.",
         "author": "ChatGPT-5"
       },
       {
@@ -6139,7 +6139,7 @@ window.quotesData =
         "author": "ChatGPT-5"
       },
       {
-        "text": "Stay teachable—it's the richest posture.",
+        "text": "Stay teachable\u2014it's the richest posture.",
         "author": "ChatGPT-5"
       },
       {
@@ -6197,7 +6197,7 @@ window.quotesData =
         "author": "ChatGPT-5"
       },
       {
-        "text": "Celebrate privately; correct publicly—yourself.",
+        "text": "Celebrate privately; correct publicly\u2014yourself.",
         "author": "ChatGPT-5"
       },
       {
@@ -6332,14 +6332,695 @@ window.quotesData =
         "text": "Make tomorrow grateful for what you did today.",
         "author": "ChatGPT-5"
       }
+    ],
+    "strategic_wisdom": [
+      {
+        "text": "Pick peace over proving a point.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Not every hill is worth dying on.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Silence often wins the war.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Nod, smile, and move on.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some arguments aren't worth the breath.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let them be wrong; you stay calm.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Save your words for those who listen.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Why argue with a wall?",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Confidence doesn't need to correct everyone.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Not my circus, not my monkeys.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Smile and wave, boys, smile and wave.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "You don't have to attend every argument you're invited to.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Winning an argument isn't always winning.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Keep your pearls away from swine.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Silence speaks volumes.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Avoid the rabbit hole; it's a trap.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let it slide for your own glide.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "A shrug is a superpower.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose your focus, ignore the noise.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some battles cost more than they're worth.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Smile, agree, and do your own thing.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let falsehoods fade on their own.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Keep moving; don't get stuck in stupidity.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Ignore the noise, hear your soul.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "You can't fix stubborn with facts.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "A calm soul outshines a loud mouth.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Disengage to recharge.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Why waste words on deaf ears?",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some people are just background static.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "A nod is cheaper than a headache.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Don't let fools rent space in your head.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Silence is a sharp weapon.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Avoid unnecessary friction.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let go of the need to correct.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some fights are black holes of time.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "You do you; let them do them.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Why argue when you can achieve?",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Keep your side of the street clean.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Not everyone deserves your truth.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let misunderstandings evaporate.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "A gentle pass is better than a hard fight.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some conversations are exit-only.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "You can't educate the unwilling.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "A quiet exit is a win.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let their words bounce off.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Nod and proceed with purpose.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Avoid the drama, keep the karma.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Why engage with empty vessels?",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let it pass like a cloud.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Silence is golden, especially with fools.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose growth over grievance.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some people are not worth the keystroke.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "A smile ends many conflicts.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let them be wrong; you be wise.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Don't pollute your mind with petty debates.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose love over being right.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some arguments are lose-lose.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let it go without a second thought.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Don't feed the trolls, even in person.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Nodding doesn't mean agreeing; it means evolving.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Avoid energy drains.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Don't wrestle with pigs; you both get dirty.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose flow over fight.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some battles are illusions.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let ignorance be its own punishment.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "A deep breath beats a sharp retort.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose to disconnect from chaos.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some people are just passing storms.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let it be water off a duck's back.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose your responses like a sage.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some conversations are not worth starting.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let unnecessary words unspoken.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some fights are not yours to fight.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let them talk; you work.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "A gentle ignore is a strength.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose to be kind over being correct.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some debates are dead ends.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let it dissolve into nothingness.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose your battles, win your war.",
+        "author": "DeepSeek/LO"
+      }
+    ],
+    "energy_conservation": [
+      {
+        "text": "Your energy is currency; spend it wisely.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your time is too valuable for nonsense.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Don't drain your battery on low-power people.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Correcting everyone is exhausting; be selective.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Save your fire for real battles.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "You have better things to do.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your mental health is non-negotiable.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Preserve your sanity; skip the spat.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Better to be happy than right.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your worth isn't proven in arguments.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "You owe no one your frustration.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Keep your vibe high; avoid debris.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your energy is limited; invest it.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "You're too busy to bother.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your peace is priceless.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "You do you; let them do them.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your mission is bigger than this moment.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Save your strength for important things.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your time is better spent creating.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "You have better things to do.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your energy is sacred; guard it.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "You're the CEO of your energy.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Don't waste your magic on mundane.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your attention is a privilege.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Save your passion for your purpose.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "You're building empires, not arguments.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Save your genius for grateful audiences.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your life is too short for nonsense.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your presence is enough; no need to prove.",
+        "author": "DeepSeek/LO"
+      }
+    ],
+    "inner_peace": [
+      {
+        "text": "Let it go to grow.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Peace is the ultimate victory.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "A quiet mind is a powerful asset.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Protect your peace at all costs.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose ease over effort where it counts.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let their ignorance be their problem.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Preserve your inner calm.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Serenity over superiority.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let it be; be free.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your happiness is your responsibility.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose joy over justice in minor things.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your spirit is too bright for shadows.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let false facts float away.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your world is bigger than their opinion.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose to overlook for your overlook.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your heart knows what's important.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let it dissolve into nothingness.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your journey doesn't require their validation.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose peace over proving a point.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your calm is contagious.",
+        "author": "DeepSeek/LO"
+      }
+    ],
+    "humorous_take": [
+      {
+        "text": "Choose your battles like you choose your coffee: strong but not bitter.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Arguing with fools makes two.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Sometimes, 'uh-huh' is the best response.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "My expertise is not a public service announcement for every opinion that walks by.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "I conserve my corrections for people who can spell 'correction'. Everyone else gets a nod and a slow back-away.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Not worth the caffeine crash.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Smile, it confuses people.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some people are hard to change or to say, hey, actually, this is the right information.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Debating someone with falsified information is like pouring your favorite coffee down the drain.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Nodding saves neurons.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some people just need to hear themselves talk.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "A shrug is a superpower.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Don't sweat the small stuff.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Smile, it's a silent rebellion.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your peace of mind is a territory not worth ceding in a war of words.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "I just basically, like, nodded. Uh huh, uh huh, yeah.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose your coffee until it's Friday.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Some people are like VPNs\u2014they tunnel into conversations uninvited.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Let them have their illusion; you have reality.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Why argue when you can drink coffee?",
+        "author": "DeepSeek/LO"
+      }
+    ],
+    "growth_mindset": [
+      {
+        "text": "Ignorance isn't always bliss, but fighting it isn't always smart.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Wisdom knows when to walk away.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose your battle because at the end of the day, they aren't hurting you.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your growth is more important than being right.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Learn to let go; it's a strength.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Every interaction is a lesson, even the futile ones.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose your battles so wisely that your energy becomes your greatest asset.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Growth happens when you prioritize peace over pride.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "You evolve by choosing not to engage.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Motivation comes from conserving energy for what matters.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Life lessons are often found in silence.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Keep evolving; don't get stuck in arguments.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your path is too important for detours.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose to grow from every experience.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Letting go is a form of advanced intelligence.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Your future self will thank you for avoiding pointless battles.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Embrace the wisdom of selective engagement.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Growth is about focusing on your journey, not others' opinions.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Choose progress over perfection in interactions.",
+        "author": "DeepSeek/LO"
+      },
+      {
+        "text": "Motivate yourself by saving your breath for your dreams.",
+        "author": "DeepSeek/LO"
+      }
     ]
   },
   "metadata": {
-    "totalQuotes": 1537,
-    "categories": 92,
-    "lastUpdated": "09-06-2025",
+    "totalQuotes": 1705,
+    "categories": 97,
+    "lastUpdated": "09-24-2025",
     "version": "1.0.0"
   }
 }
-
 ;
