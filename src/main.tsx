@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './components/App';
 import '../css/style.css';
 
+
 declare global {
   interface Window {
     __APP_ROOT__?: HTMLElement;
@@ -18,3 +19,4 @@ if (container) {
     </React.StrictMode>,
   );
 }
+ 

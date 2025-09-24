@@ -10,12 +10,15 @@
     "esModuleInterop": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+ 
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
     "types": ["vite/client"]
   },
+
   "include": ["src"],
   "references": []
+ 
 }

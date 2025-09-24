@@ -1,7 +1,6 @@
-import React from 'react';
-import { usePageSetup } from './usePageSetup.js';
+import { usePageSetup } from '../hooks/usePageSetup';
 
-function AboutPage() {
+const AboutPage = (): JSX.Element => {
   usePageSetup({
     bodyClassName: 'min-h-screen flex items-center justify-center p-4 gradient-bg about-page',
     htmlClassName: 'about-page',
@@ -85,6 +84,6 @@ function AboutPage() {
       </footer>
     </>
   );
-}
+};
 
 export default AboutPage;
