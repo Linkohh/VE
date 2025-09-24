@@ -3,14 +3,20 @@ import ReactDOM from 'react-dom/client';
 import App from './components/App';
 import '../css/style.css';
 
-const rootElement = document.getElementById('root');
 
-if (!rootElement) {
-  throw new Error('Root element with id "root" not found');
+declare global {
+  interface Window {
+    __APP_ROOT__?: HTMLElement;
+  }
 }
 
-ReactDOM.createRoot(rootElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const container = document.getElementById('root');
+if (container) {
+  window.__APP_ROOT__ = container;
+  ReactDOM.createRoot(container).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  );
+}
+ 

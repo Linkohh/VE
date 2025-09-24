@@ -1,14 +1,13 @@
+import React from 'react';
 import HomePage from './HomePage';
-import AboutPage from './AboutPage';
+import AboutPage from './AboutPage.jsx';
 
-const App = (): JSX.Element => {
+function App(): JSX.Element {
   const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
-
   if (pathname.toLowerCase().includes('about')) {
     return <AboutPage />;
   }
-
   return <HomePage />;
-};
+}
 
 export default App;

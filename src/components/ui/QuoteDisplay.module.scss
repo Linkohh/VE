@@ -1,0 +1,217 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 2rem 2rem;
+  background: linear-gradient(160deg, rgba(23, 32, 52, 0.92), rgba(11, 17, 29, 0.86));
+  border-radius: 32px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  color: #f8fbff;
+  max-width: 720px;
+  margin: 0 auto;
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.wrapper:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 32px 70px rgba(0, 0, 0, 0.45);
+}
+
+.blockquote {
+  text-align: center;
+  margin: 0;
+  width: 100%;
+}
+
+.blockquote[data-phase='fade-in'] .text,
+.blockquote[data-phase='fade-in'] .author {
+  animation: quoteFadeIn 0.32s ease forwards;
+}
+
+.blockquote[data-phase='fade-out'] .text,
+.blockquote[data-phase='fade-out'] .author {
+  animation: quoteFadeOut 0.32s ease forwards;
+}
+
+.text {
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-size: clamp(1.8rem, 2.4vw, 2.8rem);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  margin-bottom: 1.5rem;
+  color: inherit;
+  transition: text-shadow 0.3s ease;
+}
+
+.footer {
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(248, 251, 255, 0.7);
+}
+
+.author {
+  font-style: normal;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.category {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.metaLabel {
+  color: rgba(248, 251, 255, 0.6);
+}
+
+.metaValue {
+  font-weight: 600;
+  color: #ffda6a;
+}
+
+.generateButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.6rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #2ad1ff, #24c1ff 45%, #0e7bff);
+  color: #0b1220;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(36, 193, 255, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.generateButton:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 16px 34px rgba(36, 193, 255, 0.45);
+}
+
+.generateButton:active {
+  transform: translateY(2px) scale(0.98);
+  filter: brightness(0.95);
+}
+
+.statusRow {
+  margin-top: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1rem;
+}
+
+.statusMessage {
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  color: rgba(248, 251, 255, 0.76);
+}
+
+.favoriteBadge {
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, rgba(255, 215, 91, 0.92), rgba(235, 138, 41, 0.9));
+  color: #2c1e00;
+  opacity: 0;
+  transform: scale(0.75);
+  transition: transform 0.38s ease, opacity 0.3s ease;
+}
+
+.favoriteBadge[data-active='true'] {
+  opacity: 1;
+  transform: scale(1);
+  animation: favoritePulse 1.4s ease forwards;
+}
+
+.visuallyHidden {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+@keyframes quoteFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.99);
+  }
+}
+
+@keyframes quoteFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes favoritePulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .wrapper {
+    padding: 2rem 1.5rem 1.6rem;
+    border-radius: 24px;
+  }
+
+  .meta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .statusRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
