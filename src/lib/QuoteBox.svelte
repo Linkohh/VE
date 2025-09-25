@@ -366,29 +366,207 @@
 </main>
 
 <style>
+  .quote-container-outer {
+    position: relative;
+    padding: 4px;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, var(--color1), var(--color2), var(--color3));
+    box-shadow: var(--shadow-lg);
+    border: 3px solid;
+    animation: rgb-border-spin 8s linear infinite;
+    z-index: var(--z-base);
+    overflow: clip;
+    contain: layout paint;
+  }
+
+  .quote-container-outer::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 22px;
+    border: 2px solid;
+    z-index: var(--z-negative);
+    animation: rgb-border-spin 8s linear infinite reverse;
+    filter: blur(8px);
+    opacity: 0.7;
+  }
+
+  .quote-container-inner {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(var(--container-blur)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--container-blur)) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow-lg);
+    border-radius: var(--card-radius);
+    padding: var(--spacing-lg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+    mix-blend-mode: multiply;
+    border-radius: var(--radius-lg);
+    transition: background-image var(--transition-medium);
+  }
+
+  .quote-animation-container {
+    perspective: 1000px;
+  }
+
   .quote-text-animate {
     transform-style: preserve-3d;
     backface-visibility: hidden;
     will-change: transform, opacity;
     transition: transform 0.5s, opacity 0.5s;
   }
+
   .exit-active {
     transform: translateY(50px) rotateX(90deg);
     opacity: 0;
   }
+
   .enter-active {
     transform: translateY(0) rotateX(0deg);
     opacity: 1;
   }
+
   .author-animate {
     transition: transform 0.5s, opacity 0.5s;
   }
+
   .author-exit {
     transform: translateX(50px);
     opacity: 0;
   }
+
   .author-enter {
     transform: translateX(0);
     opacity: 1;
+  }
+
+  .generate-btn {
+    width: 110px;
+    height: 110px;
+    padding: 5px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--color1), var(--color2));
+    color: white;
+    border: none;
+    position: relative;
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+    animation: float 6s ease-in-out infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: none;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: var(--z-elevated);
+  }
+
+  .generate-btn::before {
+    content: '';
+    position: absolute;
+    z-index: var(--z-negative);
+    inset: -3px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(60deg, var(--color1), var(--color2), var(--color3), var(--color1));
+    background-size: 300% 300%;
+    animation: gradient-border-flow 4s linear infinite;
+    filter: blur(2px);
+  }
+
+  .generate-btn i {
+    font-size: 1.4rem;
+    margin-bottom: 0.2rem;
+    margin-right: 0;
+  }
+
+  .generate-btn span {
+    font-size: 0.7rem;
+    line-height: 1.1;
+    display: block;
+    font-weight: 600;
+  }
+
+  .generate-btn:hover {
+    transform: translatey(0px);
+  }
+
+  .generate-btn:hover::before {
+    filter: blur(4px);
+  }
+
+  .generate-btn:active {
+    transform: translateY(2px);
+  }
+
+  .social-bubble {
+    position: relative;
+    z-index: var(--z-elevated);
+    transition: all var(--transition-medium);
+    border-radius: var(--radius-full);
+    background-color: var(--social-icon-bg);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+  }
+
+  .social-bubble::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.2);
+    z-index: var(--z-negative);
+    opacity: 0;
+    transition: all var(--transition-medium);
+  }
+
+  .social-bubble:hover {
+    transform: translateY(-2px) scale(1.08);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  .social-bubble:hover::before {
+    opacity: 1;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+  }
+
+  .social-bubble i {
+    color: white;
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .action-button {
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-medium);
+  }
+
+  .action-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 </style>

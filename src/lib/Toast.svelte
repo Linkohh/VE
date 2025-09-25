@@ -79,9 +79,30 @@
     opacity: 0;
     animation: toast-in .18s ease-out forwards;
   }
-  .toast.toast-success { background: rgba(24, 160, 88, .92); }
-  .toast.toast-error {   background: rgba(200, 60, 60, .92); }
-  .toast.toast-info {    background: rgba(40, 120, 220, .92); }
 
-  @keyframes toast-in { to { transform: translateY(0); opacity:1; } }
+  .toast.toast-success {
+    background: rgba(24, 160, 88, .92);
+  }
+
+  .toast.toast-error {
+    background: rgba(200, 60, 60, .92);
+  }
+
+  .toast.toast-info {
+    background: rgba(40, 120, 220, .92);
+  }
+
+  @keyframes toast-in {
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes toast-out {
+    to {
+      transform: translateY(8px);
+      opacity: 0;
+    }
+  }
 </style>

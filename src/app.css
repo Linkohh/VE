@@ -26,7 +26,6 @@
     --transition-theme: 1.5s ease;
     --bounce-timing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     --elastic-timing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    --typewriter-speed: 0.05s;
 
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -61,7 +60,6 @@
 
     /* Settings-driven tokens */
     --glow-size: 150px;
-    --glow-intensity: 0.8;
     --matrix-opacity-token: 0.8;
     --container-blur: 20px;
     --card-radius: var(--radius-lg);
@@ -74,6 +72,8 @@
 
 html {
     scroll-behavior: smooth;
+    overflow: hidden;
+    height: 100%;
 }
 
 body {
@@ -81,21 +81,14 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    overflow-x: hidden;
+    height: 100dvh;
+    overflow: hidden !important;
+    padding: 0 !important;
     transition: background var(--transition-theme);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior: none;
 }
-
-html { overflow: hidden; }
-@supports (overflow: clip) {
-  html, body { overflow: clip; }
-}
-
-html, body { overscroll-behavior: none; }
-
-html, body { height: 100%; }
-body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding: 0 !important; }
 
 /* ===== ACCESSIBILITY ===== */
 @media (prefers-reduced-motion: reduce) {
