@@ -1,5 +1,5 @@
 <script>
-  import { themePreset } from '../store.js';
+  import { themePreset } from './store.js';
   import * as themes from '../themes.js';
 </script>
 

@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
-  import { effectsEnabled, themeColors } from '../store.js';
+  import { effectsEnabled, themeColors } from './store.js';
   import { get } from 'svelte/store';
 
   // Element bindings

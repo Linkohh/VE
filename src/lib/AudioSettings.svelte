@@ -5,7 +5,7 @@
     ttsRate,
     ttsVoiceURI,
     beepEnabled
-  } from '../store.js';
+  } from './store.js';
 
   let availableVoices = [];
 

@@ -5,8 +5,9 @@
     beepEnabled,
     favorites,
     categoryFilter,
-    isSettingsOpen
-  } from '../store.js';
+    isSettingsOpen,
+    quotes
+  } from './store.js';
   import { get } from 'svelte/store';
   import ColorSettings from './ColorSettings.svelte';
   import MatrixSettings from './MatrixSettings.svelte';

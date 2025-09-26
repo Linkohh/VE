@@ -15,7 +15,7 @@
     applyTheme,
     categoryFilter,
     themePreset
-  } from '../store.js';
+  } from './store.js';
   import * as themes from '../themes.js';
 
   // Element bindings

@@ -1,5 +1,5 @@
 <script>
-  import { customQuotes } from '../store.js';
+  import { customQuotes } from './store.js';
 
   let newQuoteText = '';
   let newQuoteAuthor = '';

@@ -1,5 +1,5 @@
 <script>
-  import { isDarkMode } from '../store.js';
+  import { isDarkMode, isSettingsOpen } from './store.js';
 
   function toggleDarkMode() {
     isDarkMode.update(value => !value);
@@ -14,8 +14,6 @@
       }
     }
   }
-
-  import { isSettingsOpen } from '../store.js';
 
   function toggleSettings() {
     isSettingsOpen.update(value => !value);

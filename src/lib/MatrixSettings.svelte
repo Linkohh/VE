@@ -1,5 +1,5 @@
 <script>
-  import { matrixPreset } from '../store.js';
+  import { matrixPreset } from './store.js';
   import * as themes from '../themes.js';
 </script>
 
