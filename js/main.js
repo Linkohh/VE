@@ -4334,6 +4334,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.FcClock) return; // Guard against re-declaration
   'use strict';
 
+  // Individual flip tile with animation debouncing and reduced-motion awareness.
+  // The tile keeps track of whether a flip animation is currently running so that
+  // rapid updates (seconds ticking, visibility wake-ups, etc.) never stack or
+  // skip frames. It also respects prefers-reduced-motion and uses a fallback
+  // timer to finish gracefully if the browser suppresses animation events.
   function FcPiece(label, value){
     var el = document.createElement('span');
     el.className = 'fc-piece';
@@ -4351,23 +4356,109 @@ document.addEventListener('DOMContentLoaded', () => {
         back = el.querySelector('.fc-back'),
         backBottom = el.querySelector('.fc-back .fc-bottom');
 
-    this.update = function(val){
-      val = ('0' + val).slice(-2);
-      if (val !== this.currentValue) {
-        if (this.currentValue >= 0) {
-          back.setAttribute('data-value', this.currentValue);
-          bottom.setAttribute('data-value', this.currentValue);
-        }
-        this.currentValue = val;
-        top.textContent = this.currentValue;
-        backBottom.setAttribute('data-value', this.currentValue);
-        bottom.setAttribute('data-value', this.currentValue);
+    var prefersReducedMotionQuery = null;
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      try {
+        prefersReducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      } catch (_) {
+        prefersReducedMotionQuery = null;
+      }
+    }
 
-        this.el.classList.remove('fc-flip'); void this.el.offsetWidth;
-        this.el.classList.add('fc-flip');
+    var prefersReducedMotion = function(){
+      return Boolean(prefersReducedMotionQuery && prefersReducedMotionQuery.matches);
+    };
+
+    var isAnimating = false;
+    var pendingValue = null;
+    var flipFallbackTimer = null;
+    var FLIP_DURATION_MS = 680; // css fcFlipBottomV2 is 600ms; extra buffer avoids premature finalisation
+    var hasRenderedOnce = false;
+
+    var finishFlip = () => {
+      if (flipFallbackTimer) {
+        clearTimeout(flipFallbackTimer);
+        flipFallbackTimer = null;
+      }
+      isAnimating = false;
+      this.el.classList.remove('fc-flip');
+      if (pendingValue !== null) {
+        var queued = pendingValue;
+        pendingValue = null;
+        processValue(queued);
       }
     };
+
+    var handleAnimationEnd = (ev) => {
+      if (ev && ev.animationName && ev.animationName !== 'fcFlipBottomV2') return;
+      finishFlip();
+    };
+
+    if (backBottom) {
+      backBottom.addEventListener('animationend', handleAnimationEnd);
+      backBottom.addEventListener('animationcancel', handleAnimationEnd);
+    }
+
+    var applyValueToDom = (val) => {
+      if (typeof this.currentValue === 'string') {
+        if (back) back.setAttribute('data-value', this.currentValue);
+        if (bottom) bottom.setAttribute('data-value', this.currentValue);
+      }
+      this.currentValue = val;
+      top.textContent = this.currentValue;
+      if (backBottom) backBottom.setAttribute('data-value', this.currentValue);
+      if (bottom) bottom.setAttribute('data-value', this.currentValue);
+    };
+
+    var triggerFlip = () => {
+      if (prefersReducedMotion()) {
+        finishFlip();
+        return;
+      }
+      isAnimating = true;
+      this.el.classList.remove('fc-flip');
+      void this.el.offsetWidth;
+      var raf = (typeof requestAnimationFrame === 'function') ? requestAnimationFrame : function(cb){ return setTimeout(cb, 16); };
+      raf(() => {
+        if (!isAnimating) return;
+        this.el.classList.add('fc-flip');
+      });
+      if (flipFallbackTimer) clearTimeout(flipFallbackTimer);
+      flipFallbackTimer = setTimeout(finishFlip, FLIP_DURATION_MS);
+    };
+
+    var processValue = (val) => {
+      applyValueToDom(val);
+      if (!hasRenderedOnce) {
+        hasRenderedOnce = true;
+        finishFlip();
+        return;
+      }
+      triggerFlip();
+    };
+
+    this.update = function(val){
+      val = ('0' + val).slice(-2);
+      if (val === this.currentValue || val === pendingValue) return;
+      if (isAnimating) {
+        pendingValue = val;
+        return;
+      }
+      pendingValue = null;
+      processValue(val);
+    };
     this.update(value);
+
+    if (prefersReducedMotionQuery) {
+      var onMotionChange = () => {
+        if (prefersReducedMotion()) finishFlip();
+      };
+      if (typeof prefersReducedMotionQuery.addEventListener === 'function') {
+        prefersReducedMotionQuery.addEventListener('change', onMotionChange);
+      } else if (typeof prefersReducedMotionQuery.addListener === 'function') {
+        prefersReducedMotionQuery.addListener(onMotionChange);
+      }
+    }
   }
 
   function getLocal12h(){
@@ -4383,6 +4474,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+  // Flip clock orchestrator that keeps the display aligned to real-world seconds.
+  // It aligns the timer to the next second boundary and reschedules after visibility
+  // changes so that even throttled background tabs snap back to the correct time.
   function FcClock(updateFn){
     var state = updateFn();
     var map = {};
@@ -4414,13 +4508,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let lastAMPM = state.Meridiem;
 
-    function tick(){
+    const clock = this;
+
+    const applyTick = () => {
       const t = updateFn();
 
-      // update flip tiles
       Object.keys(map).forEach(k => map[k].update(t[k]));
 
-      // update AM/PM when it actually changes (no reflow spam)
       if (t.Meridiem !== lastAMPM) {
         lastAMPM = t.Meridiem;
         if (meridiemBadge) {
@@ -4429,14 +4523,46 @@ document.addEventListener('DOMContentLoaded', () => {
           meridiemBadge.setAttribute('aria-label', t.Meridiem);
         }
       }
+    };
 
-      const ms = 1000 - (Date.now() % 1000) + 5;
-      this.timer = setTimeout(tick, ms);
+    const computeDelay = () => {
+      const now = Date.now();
+      const remainder = now % 1000;
+      const delay = 1000 - remainder;
+      return delay + 6; // guard against timer drift
+    };
+
+    const scheduleNext = () => {
+      const delay = computeDelay();
+      clock.timer = setTimeout(() => {
+        applyTick();
+        scheduleNext();
+      }, delay);
+    };
+
+    const restart = () => {
+      if (clock.timer) clearTimeout(clock.timer);
+      applyTick();
+      scheduleNext();
+    };
+
+    const onVisibilityChange = () => {
+      if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
+        restart();
+      }
+    };
+
+    if (typeof document !== 'undefined') {
+      document.addEventListener('visibilitychange', onVisibilityChange);
     }
-    tick.call(this); // Use call to set `this` context correctly for the first tick
+
+    restart();
 
     this.stop = function(){
-      if (this.timer) clearTimeout(this.timer);
+      if (clock.timer) clearTimeout(clock.timer);
+      if (typeof document !== 'undefined') {
+        document.removeEventListener('visibilitychange', onVisibilityChange);
+      }
     };
 
     return wrap;
