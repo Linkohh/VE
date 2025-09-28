@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { writable }s from 'svelte/store';
+  import { writable } from 'svelte/store';
 
   // State
   const favorites = writable([]);
