@@ -646,6 +646,11 @@ const VibeMe = {
         this.updateStats && this.updateStats();
 
         console.log('✅ VibeMe Enhanced loaded successfully!');
+        try {
+            document.dispatchEvent(new CustomEvent('vibeme:ready', { detail: { vibeMe: this } }));
+        } catch (err) {
+            console.warn('[ambient] unable to dispatch ready event', err);
+        }
     },
 
     // ===== CORE FUNCTIONALITY =====
@@ -2441,6 +2446,12 @@ const VibeMe = {
             case 't':
             case 'T':
                 this.toggleTimer();
+                break;
+            case 's':
+            case 'S':
+                if (window.AmbientSessions && typeof window.AmbientSessions.toggleQuickStart === 'function') {
+                    window.AmbientSessions.toggleQuickStart();
+                }
                 break;
         }
     },
