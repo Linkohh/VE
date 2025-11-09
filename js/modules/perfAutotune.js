@@ -3,6 +3,32 @@ const OVERRIDE_KEY = 'vibeme.perfOverride';
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 const APPLY_GUARD = '__vibemePerfApplying';
 
+/**
+ * @typedef {Object} PerfProfile
+ * @property {'dom'|'canvas'|'hybrid'} engine
+ * @property {number} fpsCap
+ * @property {number} matrixDensity
+ * @property {number} streamDensity
+ * @property {number} animSpeed
+ * @property {{avgFPS:number, stdevMs:number, samples?:number}} measured
+ * @property {number} lastRun
+ * @property {string} deviceHint
+ * @property {'balanced'|'battery'|'max'} [variant]
+ */
+
+// Frame time thresholds derived from UX tuning experiments.
+const JANK_THRESHOLD_MS = 7; // Above ~7ms stdev indicates noticeable judder.
+const HYBRID_MIN_FPS = 30; // Below 30fps the DOM renderer is more stable.
+const CANVAS_MIN_FPS = 50; // Canvas mode is viable only when sustained fps > 50.
+
+const DEFAULT_BENCHMARK_WARMUP_MS = 250;
+const MINIMUM_BENCHMARK_SAMPLES = { avgFPS: 60, stdevMs: 0, samples: 1 };
+
+/**
+ * Run the performance benchmark and apply the resulting profile.
+ * @param {{durationMs?: number, force?: boolean}} [options]
+ * @returns {Promise<PerfProfile>}
+ */
 export async function runPerfAutotune({ durationMs = 3000, force = false } = {}) {
   const reducedMotion = supportsReducedMotion();
   const persisted = getPersistedPerfProfile();
@@ -63,6 +89,10 @@ export async function runPerfAutotune({ durationMs = 3000, force = false } = {})
   }
 }
 
+/**
+ * Apply a persisted or computed profile to the application and UI controls.
+ * @param {PerfProfile | null | undefined} profile
+ */
 export function applyPerfProfile(profile) {
   if (!profile) return;
   try {
@@ -89,6 +119,10 @@ export function applyPerfProfile(profile) {
   }
 }
 
+/**
+ * Load the persisted performance profile from localStorage.
+ * @returns {PerfProfile | null}
+ */
 export function getPersistedPerfProfile() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -100,8 +134,15 @@ export function getPersistedPerfProfile() {
   }
 }
 
+/**
+ * Alias maintained for backwards compatibility.
+ * @returns {PerfProfile | null}
+ */
 export const loadPerfProfile = getPersistedPerfProfile;
 
+/**
+ * Remove the persisted performance profile from storage.
+ */
 export function clearPerfProfile() {
   try {
     localStorage.removeItem(STORAGE_KEY);
@@ -148,17 +189,17 @@ async function microBenchmark(durationMs) {
     throw new Error('hidden-tab');
   }
 
-  const ctxInfo = createBenchmarkContext();
-  if (!ctxInfo) {
-    return { avgFPS: 60, stdevMs: 0, samples: 1 };
+  const benchmarkContext = createBenchmarkContext();
+  if (!benchmarkContext) {
+    return { ...MINIMUM_BENCHMARK_SAMPLES };
   }
 
-  const { ctx } = ctxInfo;
+  const { context2d } = benchmarkContext;
 
   // Warmup ~250ms
-  const warmupEnd = performance.now() + 250;
+  const warmupEnd = performance.now() + DEFAULT_BENCHMARK_WARMUP_MS;
   while (performance.now() < warmupEnd) {
-    renderTestFrame(ctx);
+    renderBenchmarkFrame(context2d);
   }
 
   const times = [];
@@ -177,8 +218,12 @@ async function microBenchmark(durationMs) {
 
     function cleanup() {
       document.removeEventListener('visibilitychange', handleVisibility);
-      if (ctxInfo.cleanup) {
-        try { ctxInfo.cleanup(); } catch (err) { console.warn('[perfAutotune] cleanup failed', err); }
+      if (benchmarkContext.cleanup) {
+        try {
+          benchmarkContext.cleanup();
+        } catch (err) {
+          console.warn('[perfAutotune] cleanup failed', err);
+        }
       }
     }
 
@@ -197,7 +242,7 @@ async function microBenchmark(durationMs) {
         start = timestamp;
         last = timestamp;
       }
-      renderTestFrame(ctx);
+      renderBenchmarkFrame(context2d);
       frames += 1;
       const delta = timestamp - last;
       if (frames > 1) {
@@ -224,7 +269,7 @@ function createBenchmarkContext() {
       const canvas = new OffscreenCanvas(320, 160);
       const ctx = canvas.getContext('2d', { alpha: false });
       if (!ctx) return null;
-      return { ctx, cleanup() {} };
+      return { context2d: ctx, cleanup() {} };
     }
   } catch (err) {
     console.warn('[perfAutotune] OffscreenCanvas failed', err);
@@ -236,31 +281,42 @@ function createBenchmarkContext() {
     canvas.height = 160;
     const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
     if (!ctx) return null;
-    return { ctx, cleanup() { canvas.width = 0; canvas.height = 0; } };
+    return {
+      context2d: ctx,
+      cleanup() {
+        if (typeof canvas.remove === 'function') {
+          canvas.remove();
+        } else if (canvas.parentNode) {
+          canvas.parentNode.removeChild(canvas);
+        }
+        ctx.canvas.width = 0;
+        ctx.canvas.height = 0;
+      }
+    };
   } catch (err) {
     console.warn('[perfAutotune] Canvas creation failed', err);
     return null;
   }
 }
 
-function renderTestFrame(ctx) {
-  if (!ctx) return;
-  const { width, height } = ctx.canvas || { width: 320, height: 160 };
-  ctx.clearRect(0, 0, width, height);
+function renderBenchmarkFrame(context) {
+  if (!context) return;
+  const { width, height } = context.canvas || { width: 320, height: 160 };
+  context.clearRect(0, 0, width, height);
   for (let i = 0; i < 5; i += 1) {
-    ctx.globalAlpha = 0.12;
-    ctx.beginPath();
+    context.globalAlpha = 0.12;
+    context.beginPath();
     const radius = 30 + Math.random() * 80;
-    ctx.arc(Math.random() * width, Math.random() * height, radius, 0, Math.PI * 2);
-    ctx.fillStyle = `hsl(${Math.random() * 360}, 80%, 60%)`;
-    ctx.fill();
+    context.arc(Math.random() * width, Math.random() * height, radius, 0, Math.PI * 2);
+    context.fillStyle = `hsl(${Math.random() * 360}, 80%, 60%)`;
+    context.fill();
   }
-  ctx.globalAlpha = 1;
-  ctx.font = '16px "Roboto Mono", monospace';
+  context.globalAlpha = 1;
+  context.font = '16px "Roboto Mono", monospace';
   for (let i = 0; i < 140; i += 1) {
     const charCode = 0x30A0 + Math.floor(Math.random() * 96);
-    ctx.fillStyle = i % 2 === 0 ? '#b3f5ff' : '#00d0ff';
-    ctx.fillText(String.fromCharCode(charCode), Math.random() * width, Math.random() * height);
+    context.fillStyle = i % 2 === 0 ? '#b3f5ff' : '#00d0ff';
+    context.fillText(String.fromCharCode(charCode), Math.random() * width, Math.random() * height);
   }
 }
 
@@ -277,16 +333,25 @@ function computeStats(times) {
 }
 
 function chooseProfile({ avgFPS, stdevMs }) {
-  const janky = stdevMs >= 7;
-  if (avgFPS < 30 || janky) {
+  const janky = stdevMs >= JANK_THRESHOLD_MS;
+  if (avgFPS < HYBRID_MIN_FPS || janky) {
     return makeProfile('dom', 45, 0.6, 1.0, 0.9, { avgFPS, stdevMs });
   }
-  if (avgFPS <= 50) {
+  if (avgFPS <= CANVAS_MIN_FPS) {
     return makeProfile('hybrid', 60, 0.85, 1.2, 1.0, { avgFPS, stdevMs });
   }
   return makeProfile('canvas', 90, 1.0, 1.5, 1.1, { avgFPS, stdevMs });
 }
 
+/**
+ * @param {'dom'|'canvas'|'hybrid'} engine
+ * @param {number} fpsCap
+ * @param {number} matrixDensity
+ * @param {number} streamDensity
+ * @param {number} animSpeed
+ * @param {{avgFPS:number, stdevMs:number, samples?:number}} measured
+ * @returns {PerfProfile}
+ */
 function makeProfile(engine, fpsCap, matrixDensity, streamDensity, animSpeed, measured) {
   return {
     engine,
@@ -308,7 +373,11 @@ function supportsReducedMotion() {
   }
 }
 
-function deviceHint() {
+/**
+ * Generate a descriptive device hint used for debugging persisted profiles.
+ * @returns {string}
+ */
+export function deviceHint() {
   const parts = [];
   try {
     parts.push(navigator.platform || 'unknown-platform');

@@ -2,7 +2,8 @@ import {
   runPerfAutotune,
   applyPerfProfile,
   getPersistedPerfProfile,
-  clearPerfProfile
+  clearPerfProfile,
+  deviceHint as getDeviceHint
 } from './modules/perfAutotune.js';
 
 const STORAGE_KEY = 'vibeme.perf';
@@ -14,6 +15,9 @@ const OVERRIDE_NOTICE_ID = 'perf-manual-override';
 const VARIANT_BUTTON_SELECTOR = '[data-perf-variant]';
 const RERUN_BUTTON_ID = 'perf-autotune-rerun';
 
+const HIGH_JANK_THRESHOLD_MS = 7;
+const MEDIUM_JANK_THRESHOLD_MS = 4;
+
 const state = {
   baselineProfile: null,
   appliedProfile: null,
@@ -21,26 +25,19 @@ const state = {
   running: false
 };
 
-function fallbackDeviceHint() {
-  const parts = [];
-  try {
-    parts.push(navigator.platform || 'unknown-platform');
-  } catch (err) {
-    parts.push('platform-unknown');
+let listenersController = new AbortController();
+
+function getListenerSignal() {
+  if (listenersController.signal.aborted) {
+    listenersController = new AbortController();
   }
-  try {
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    if (gl) {
-      const debug = gl.getExtension('WEBGL_debug_renderer_info');
-      if (debug) {
-        parts.push(gl.getParameter(debug.UNMASKED_RENDERER_WEBGL));
-      }
-    }
-  } catch (err) {
-    parts.push('gl-unknown');
+  return listenersController.signal;
+}
+
+function removeAllListeners() {
+  if (!listenersController.signal.aborted) {
+    listenersController.abort();
   }
-  return parts.filter(Boolean).join(' | ');
 }
 
 function loadVariant() {
@@ -67,17 +64,21 @@ function persistProfile(profile) {
   }
 }
 
+/**
+ * Resolve once the global VibeMe object is available.
+ * Prefers an explicit readiness event to avoid polling.
+ * @returns {Promise<void>}
+ */
 function waitForVibeMe() {
   if (window.VibeMe) return Promise.resolve();
   return new Promise((resolve) => {
-    const check = () => {
+    const handleReady = () => {
       if (window.VibeMe) {
+        window.removeEventListener('vibeme:ready', handleReady);
         resolve();
-      } else {
-        setTimeout(check, 50);
       }
     };
-    check();
+    window.addEventListener('vibeme:ready', handleReady, { signal: getListenerSignal() });
   });
 }
 
@@ -96,6 +97,10 @@ function setSheetStatus(text) {
   if (label) label.textContent = text;
 }
 
+/**
+ * Update the persisted summary element if values changed.
+ * @param {import('./modules/perfAutotune.js').PerfProfile | null} profile
+ */
 function updateSummary(profile) {
   const summaryEl = document.getElementById(SUMMARY_ID);
   if (!summaryEl || !profile) return;
@@ -106,11 +111,18 @@ function updateSummary(profile) {
   const measured = profile.measured || {};
   const avg = measured.avgFPS ? measured.avgFPS.toFixed(0) : '—';
   const stdev = measured.stdevMs || 0;
-  const jankLabel = stdev >= 7 ? 'high jank' : stdev >= 4 ? 'moderate jank' : 'low jank';
+  const jankLabel = stdev >= HIGH_JANK_THRESHOLD_MS
+    ? 'high jank'
+    : stdev >= MEDIUM_JANK_THRESHOLD_MS
+      ? 'moderate jank'
+      : 'low jank';
   const variant = profile.variant || state.variant || 'balanced';
   const variantLabel = variant === 'battery' ? 'Battery Saver' : variant === 'max' ? 'Max Glow' : 'Balanced';
 
-  summaryEl.textContent = `Tuned (${variantLabel}): ${engineName} · ${fps} FPS · ${densityLabel} (avg ${avg} FPS, ${jankLabel}).`;
+  const nextSummary = `Tuned (${variantLabel}): ${engineName} · ${fps} FPS · ${densityLabel} (avg ${avg} FPS, ${jankLabel}).`;
+  if (summaryEl.textContent !== nextSummary) {
+    summaryEl.textContent = nextSummary;
+  }
 }
 
 function updateVariantButtons() {
@@ -136,6 +148,11 @@ function updateManualOverrideNotice() {
   notice.classList.toggle('hidden', !isActive);
 }
 
+/**
+ * Build a derived profile for the selected intensity preset.
+ * @param {'balanced'|'battery'|'max'} variant
+ * @returns {import('./modules/perfAutotune.js').PerfProfile | null}
+ */
 function deriveVariantProfile(variant) {
   const base = state.baselineProfile;
   if (!base) return null;
@@ -162,6 +179,10 @@ function deriveVariantProfile(variant) {
   return profile;
 }
 
+/**
+ * Apply one of the preset variants derived from the baseline profile.
+ * @param {'balanced'|'battery'|'max'} variant
+ */
 function applyVariant(variant) {
   if (!state.baselineProfile) return;
   state.variant = variant;
@@ -173,6 +194,10 @@ function applyVariant(variant) {
   updateVariantButtons();
 }
 
+/**
+ * Run the autotune workflow and synchronise UI state.
+ * @param {{force?: boolean}} [options]
+ */
 async function runAndApplyAutotune({ force = false } = {}) {
   if (state.running) return;
   state.running = true;
@@ -211,6 +236,9 @@ function setRunning(isRunning) {
   setSheetStatus(isRunning ? 'Running device benchmark…' : 'Optimizing performance for your device…');
 }
 
+/**
+ * Load persisted profile or schedule the first autotune execution.
+ */
 function scheduleInitialRun() {
   const persisted = getPersistedPerfProfile();
   if (persisted) {
@@ -242,17 +270,20 @@ function scheduleInitialRun() {
   }
 }
 
+/**
+ * Attach UI event handlers and initialise control states.
+ */
 function setupUi() {
   const rerun = document.getElementById(RERUN_BUTTON_ID);
   if (rerun) {
-    rerun.addEventListener('click', () => runAndApplyAutotune({ force: true }));
+    rerun.addEventListener('click', () => runAndApplyAutotune({ force: true }), { signal: getListenerSignal() });
   }
 
   document.querySelectorAll(VARIANT_BUTTON_SELECTOR).forEach((btn) => {
     btn.addEventListener('click', () => {
       const variant = btn.getAttribute('data-perf-variant');
       applyVariant(variant || 'balanced');
-    });
+    }, { signal: getListenerSignal() });
   });
 
   const skipBtn = document.querySelector('#perf-autotune-sheet [data-skip]');
@@ -266,7 +297,7 @@ function setupUi() {
         animSpeed: 0.9,
         measured: { avgFPS: 0, stdevMs: 0, samples: 0 },
         lastRun: Date.now(),
-        deviceHint: fallbackDeviceHint(),
+        deviceHint: getDeviceHint(),
         variant: 'balanced'
       };
       persistProfile(fallback);
@@ -279,7 +310,7 @@ function setupUi() {
       updateVariantButtons();
       updateManualOverrideNotice();
       hideSheet();
-    });
+    }, { signal: getListenerSignal() });
   }
 
   updateVariantButtons();
@@ -294,34 +325,52 @@ function handleManualOverride() {
   }
 }
 
-window.addEventListener('vibeme:perfProfileApplied', (event) => {
-  const profile = event.detail?.profile;
-  if (!profile) return;
-  if (!profile.variant) {
-    state.baselineProfile = profile;
-  }
-  state.appliedProfile = profile;
-  updateSummary(profile);
-  updateVariantButtons();
-  updateManualOverrideNotice();
-});
+function bindGlobalListeners() {
+  const signal = getListenerSignal();
 
-window.addEventListener('vibeme:perf:manualOverride', handleManualOverride);
-window.addEventListener('storage', (ev) => {
-  if (ev.key === OVERRIDE_KEY) {
+  window.addEventListener('vibeme:perfProfileApplied', (event) => {
+    const profile = event.detail?.profile;
+    if (!profile) return;
+    if (!profile.variant) {
+      state.baselineProfile = profile;
+    }
+    state.appliedProfile = profile;
+    updateSummary(profile);
+    updateVariantButtons();
     updateManualOverrideNotice();
-  }
-});
+  }, { signal });
 
-document.addEventListener('DOMContentLoaded', () => {
+  window.addEventListener('vibeme:perf:manualOverride', handleManualOverride, { signal });
+  window.addEventListener('storage', (ev) => {
+    if (ev.key === OVERRIDE_KEY) {
+      updateManualOverrideNotice();
+    }
+  }, { signal });
+}
+
+/**
+ * Initialise the autotune entrypoint, binding listeners and scheduling runs.
+ */
+function initializePerfAutotuneEntry() {
+  bindGlobalListeners();
   setupUi();
   scheduleInitialRun();
-});
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initializePerfAutotuneEntry();
+}, { once: true, signal: getListenerSignal() });
+
+window.addEventListener('pagehide', () => {
+  removeAllListeners();
+}, { once: true });
 
 export {
   runAndApplyAutotune,
   applyVariant,
   updateSummary,
   scheduleInitialRun,
-  clearPerfProfile
+  clearPerfProfile,
+  initializePerfAutotuneEntry,
+  removeAllListeners as disposePerfAutotuneEntry
 };

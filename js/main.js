@@ -3425,6 +3425,10 @@ const VibeMe = {
 
 // ---- VibeMe core extensions (non-destructive) ----
 window.VibeMe = window.VibeMe || VibeMe || {}; // use existing const if present
+if (!window.__vibemeReadyDispatched) {
+  window.__vibemeReadyDispatched = true;
+  window.dispatchEvent(new Event('vibeme:ready'));
+}
 VibeMe.kit = VibeMe.kit || {
   $: (s) => document.querySelector(s),
   $$: (s) => Array.from(document.querySelectorAll(s)),
