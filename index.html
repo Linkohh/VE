@@ -339,7 +339,7 @@
                                     <span>Matrix Visibility</span>
                                     <span id="matrix-opacity-value">80%</span>
                                 </label>
-                                <input type="range" id="matrix-opacity" min="0" max="100" value="80" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                                <input type="range" id="matrix-opacity" min="0" max="100" value="80" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cyan-500" data-setting="matrix-visibility">
                             </div>
                              <div class="space-y-2">
                                 <label for="matrix-intensity" class="flex items-center justify-between text-xs">
@@ -353,7 +353,7 @@
                                     <span>Animation Speed</span>
                                     <span id="matrix-speed-value">1.0x</span>
                                 </label>
-                                <input type="range" id="matrix-speed" min="0.5" max="2.0" step="0.1" value="1.0" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-green-500">
+                                <input type="range" id="matrix-speed" min="0.5" max="2.0" step="0.1" value="1.0" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-green-500" data-setting="anim-speed">
                             </div>
                              <div class="space-y-2">
                                 <label for="matrix-high-contrast" class="flex items-center cursor-pointer text-xs">
@@ -375,11 +375,24 @@
                                     <span>Stream Density</span>
                                     <span id="matrix-density-value">1.5x</span>
                                 </label>
-                                <input type="range" id="matrix-density" min="0.5" max="3.0" step="0.1" value="1.5" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                                <input type="range" id="matrix-density" min="0.5" max="3.0" step="0.1" value="1.5" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500" data-setting="stream-density">
+                            </div>
+                            <div class="space-y-3 border border-emerald-500/30 rounded-lg p-3 bg-black/30">
+                                <div class="flex items-center justify-between text-xs font-semibold text-emerald-200">
+                                    <span>Performance Autotune</span>
+                                    <button id="perf-autotune-rerun" type="button" class="px-2 py-1 rounded bg-emerald-500/40 hover:bg-emerald-500/60 transition text-[11px]">Re-run Autotune</button>
+                                </div>
+                                <div class="flex gap-2 text-[11px]" role="group" aria-label="Autotune mode">
+                                    <button type="button" data-perf-variant="battery" class="flex-1 px-2 py-1 rounded border border-emerald-500/40 bg-black/40" aria-pressed="false">Battery Saver</button>
+                                    <button type="button" data-perf-variant="balanced" class="flex-1 px-2 py-1 rounded border border-emerald-500/40 bg-black/40" aria-pressed="false">Balanced</button>
+                                    <button type="button" data-perf-variant="max" class="flex-1 px-2 py-1 rounded border border-emerald-500/40 bg-black/40" aria-pressed="false">Max Glow</button>
+                                </div>
+                                <p id="perf-autotune-summary" class="text-[11px] text-gray-300">Autotune pending…</p>
+                                <p id="perf-manual-override" class="hidden text-[11px] text-amber-300">Manual override active. Autotune won’t auto-apply until you re-run it.</p>
                             </div>
                             <div class="space-y-2 border-t border-gray-700 pt-3">
                                 <label for="matrix-render-mode" class="text-xs text-gray-300">🎮 Rendering Engine</label>
-                                <select id="matrix-render-mode" class="w-full text-black p-1 rounded text-xs">
+                                <select id="matrix-render-mode" class="w-full text-black p-1 rounded text-xs" data-setting="rendering-engine">
                                     <option value="dom">🏠 DOM (Classic)</option>
                                     <option value="canvas">🎨 Canvas (Performance)</option>
                                     <option value="hybrid">⚡ Hybrid (Best of Both)</option>
@@ -392,7 +405,7 @@
                                         <span>Max FPS</span>
                                         <span id="canvas-max-fps-value">60</span>
                                     </label>
-                                    <input type="range" id="canvas-max-fps" min="30" max="120" step="15" value="60" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                                    <input type="range" id="canvas-max-fps" min="30" max="120" step="15" value="60" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cyan-500" data-setting="max-fps">
                                 </div>
                             </div>
                             <div id="matrix-preset-wrapper" class="space-y-2 mt-3">
@@ -640,26 +653,44 @@
         </div>
     </div>
 
-    <div id="ambient-breathe-overlay" class="ambient-breathe-overlay hidden" aria-hidden="true">
-        <div class="ambient-breathe-ring">
-            <span id="ambient-breathe-label">Inhale</span>
-        </div>
+<!-- Performance Autotune Overlay -->
+<div id="perf-autotune-sheet" class="hidden fixed inset-0 z-[10003] flex items-end sm:items-center justify-center bg-black/60">
+  <div class="m-4 sm:m-0 w-full max-w-md rounded-2xl bg-gray-900/90 border border-emerald-500/40 p-5 text-white shadow-xl">
+    <div class="flex items-center gap-3">
+      <span class="h-3 w-3 animate-pulse rounded-full bg-emerald-400" aria-hidden="true"></span>
+      <h3 class="text-sm font-semibold">Optimizing performance…</h3>
     </div>
+    <p class="mt-2 text-sm text-emerald-100" data-status>Optimizing performance for your device…</p>
+    <div class="mt-4 flex justify-end">
+      <button type="button" data-skip class="px-3 py-2 text-xs font-medium rounded bg-emerald-500/40 hover:bg-emerald-500/70 transition">Skip</button>
+    </div>
+  </div>
+</div>
 
-    <div id="preset-import-drawer" class="preset-import-drawer hidden" role="dialog" aria-modal="true" aria-labelledby="preset-import-title">
-        <div class="preset-import-card">
-            <div class="preset-import-header">
-                <h2 id="preset-import-title">Apply shared preset?</h2>
-                <button type="button" id="preset-import-close" class="preset-import-close" aria-label="Dismiss preset preview">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="preset-import-preview" id="preset-import-preview" aria-live="polite"></div>
-            <div class="preset-import-actions">
-                <button type="button" id="preset-import-apply" class="ambient-session-primary-btn flex-1">Apply</button>
-                <button type="button" id="preset-import-ignore" class="ambient-session-secondary-btn flex-1">Ignore</button>
-            </div>
-        </div>
+<!-- Ambient Breathing Overlay -->
+<div id="ambient-breathe-overlay" class="ambient-breathe-overlay hidden" aria-hidden="true">
+  <div class="ambient-breathe-ring">
+    <span id="ambient-breathe-label">Inhale</span>
+  </div>
+</div>
+
+<!-- Preset Import Drawer -->
+<div id="preset-import-drawer" class="preset-import-drawer hidden" role="dialog" aria-modal="true" aria-labelledby="preset-import-title">
+  <div class="preset-import-card">
+    <div class="preset-import-header">
+      <h2 id="preset-import-title">Apply shared preset?</h2>
+      <button type="button" id="preset-import-close" class="preset-import-close" aria-label="Dismiss preset preview">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="preset-import-preview" id="preset-import-preview" aria-live="polite"></div>
+    <div class="preset-import-actions">
+      <button type="button" id="preset-import-apply" class="ambient-session-primary-btn flex-1">Apply</button>
+      <button type="button" id="preset-import-ignore" class="ambient-session-secondary-btn flex-1">Ignore</button>
+    </div>
+  </div>
+</div>
+
     </div>
 
     <!-- Enhanced JavaScript - Non-Module System for CORS Compatibility -->
@@ -718,19 +749,19 @@
           console.log('Protocol:', location.protocol);
           console.log('Window quotesData available:', typeof window.quotesData);
           console.log('Window QUOTES_SOURCE:', window.__QUOTES_SOURCE || '(not set)');
-          
+
           if (window.quotesData) {
             console.log('QuotesData categories:', Object.keys(window.quotesData.categories || {}).length);
             console.log('Total quotes:', Object.values(window.quotesData.categories || {}).flat().length);
           }
-          
+
           if (window.VIBE_QUOTES_PROMISE) {
             window.VIBE_QUOTES_PROMISE.then(function(data) {
               console.log('\nPromise resolved with:');
               console.log('- Categories:', Object.keys(data.categories || {}).length);
               console.log('- Flat count:', Object.values(data.categories || {}).flat().length);
               console.log('- Source tracking:', window.__QUOTES_SOURCE);
-              
+
               console.table({
                 protocol: location.protocol.replace(':',''),
                 source: window.__QUOTES_SOURCE || '(unknown)',
@@ -744,14 +775,107 @@
           } else {
             console.warn('VIBE_QUOTES_PROMISE not available');
           }
-          
+
           console.log('=== END DIAGNOSTICS ===\n');
         }, 2000); // Wait 2 seconds for everything to load
       }
     </script>
-    
-    <script defer src="js/modules/ambientSessions.js"></script>
-    <script defer src="js/modules/presetLinks.js"></script>
+<!-- 🌿 Performance Autotune Overlay -->
+<div id="perf-autotune-sheet"
+     class="hidden fixed inset-0 z-[10003] flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-md"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="perf-autotune-title">
+  <div class="m-4 sm:m-0 w-full max-w-md rounded-2xl bg-gray-900/90 border border-emerald-500/40 p-5 text-white shadow-xl">
+    <div class="flex items-center gap-3">
+      <span class="h-3 w-3 animate-pulse rounded-full bg-emerald-400" aria-hidden="true"></span>
+      <h3 id="perf-autotune-title" class="text-sm font-semibold">Optimizing performance…</h3>
+    </div>
+    <p class="mt-2 text-sm text-emerald-100" data-status>Optimizing performance for your device…</p>
+    <div class="mt-4 flex justify-end">
+      <button type="button"
+              data-skip
+              class="px-3 py-2 text-xs font-medium rounded bg-emerald-500/40 hover:bg-emerald-500/70 transition-colors">
+        Skip
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 🌬️ Ambient Breathing Overlay -->
+<div id="ambient-breathe-overlay"
+     class="ambient-breathe-overlay hidden fixed inset-0 z-[10004] flex items-center justify-center bg-black/70 backdrop-blur-xl"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="ambient-breathe-title">
+  <div class="ambient-breathe-card relative w-full max-w-md mx-4 rounded-3xl bg-white/10 border border-white/20 p-6 text-center text-white shadow-2xl">
+    <button type="button"
+            id="ambient-breathe-close"
+            class="absolute top-4 right-4 text-white/70 hover:text-white"
+            aria-label="Close breathing session">
+      <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+    <div class="ambient-breathe-visual mb-6" aria-hidden="true">
+      <div class="ambient-breathe-pulse mx-auto h-32 w-32 rounded-full border border-white/30 bg-white/10 shadow-inner"></div>
+    </div>
+    <h2 id="ambient-breathe-title" class="text-xl font-semibold mb-2">Ambient Breathing</h2>
+    <p class="text-sm text-white/80">Follow the glow as it expands and contracts to find a calmer rhythm.</p>
+    <p id="ambient-breathe-prompt" class="mt-4 text-lg font-semibold tracking-wide text-white"></p>
+    <div class="mt-6 flex items-center justify-center gap-3 text-sm">
+      <button type="button" id="ambient-breathe-start"
+              class="px-4 py-2 rounded-full bg-emerald-500/80 hover:bg-emerald-500 transition-colors">
+        Start
+      </button>
+      <button type="button" id="ambient-breathe-pause"
+              class="px-4 py-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+        Pause
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 🎛️ Preset Import Drawer -->
+<aside id="preset-import-drawer"
+       class="preset-import-drawer hidden fixed right-0 top-0 h-full max-w-md w-full z-[10005] bg-black/85 backdrop-blur-xl text-white shadow-2xl"
+       role="complementary"
+       aria-labelledby="preset-import-title"
+       aria-hidden="true">
+  <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+    <div>
+      <p class="text-xs uppercase tracking-widest text-white/60">Presets</p>
+      <h2 id="preset-import-title" class="text-lg font-semibold">Import Visual Preset</h2>
+    </div>
+    <button type="button" id="preset-import-close"
+            class="text-white/70 hover:text-white"
+            aria-label="Close preset drawer">
+      <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="px-5 py-4 space-y-4 text-sm">
+    <p class="text-white/70">Paste a preset link or drag a preset file to load custom themes instantly.</p>
+    <label class="block text-xs uppercase tracking-wide text-white/50" for="preset-import-input">Preset link</label>
+    <div class="flex gap-2">
+      <input id="preset-import-input"
+             type="url"
+             class="flex-1 rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-400"
+             placeholder="https://example.com/vibeme-preset.json">
+      <button type="button" id="preset-import-apply"
+              class="px-4 py-2 rounded-lg bg-purple-500/80 hover:bg-purple-500 transition-colors">
+        Apply
+      </button>
+    </div>
+    <div class="preset-import-drop text-center border border-dashed border-white/30 rounded-xl p-6 text-white/60">
+      <p class="text-xs uppercase tracking-wide mb-2">Drop file here</p>
+      <p class="text-sm">Supports .json preset bundles exported from VibeMe.</p>
+    </div>
+  </div>
+
+  <div class="mt-auto px-5 py-4 border-t border-white/10 text-xs text-white/50">
+    Imported presets will immediately update the matrix, stream density, and glow configuration.
+  </div>
+</aside>
+
     <script data-main defer src="js/main.js"></script>
 
     <!-- Fallback for browsers without script support -->

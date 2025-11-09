@@ -29,3 +29,7 @@ npm run sync-quotes
 ```
 
 This command will automatically read your changes from `data/quotes.json` and update `js/quotes.js` to match. This ensures that your application will show the complete and correct set of quotes, whether you are viewing it online or offline.
+
+## Performance Autotune & Privacy
+
+The performance autotune feature benchmarks rendering performance to select the most appropriate visual profile. During this process the app captures a coarse "device hint" that includes the platform string and, when available, the WebGL renderer name (`WEBGL_debug_renderer_info`). This metadata is stored locally in `localStorage['vibeme.perf']` to help troubleshoot rendering issues. No data is transmitted off-device, but because the renderer string can contribute to browser fingerprinting, the collection is documented here for transparency. You can clear the stored information from the Settings panel or by calling `localStorage.removeItem('vibeme.perf')` in the browser console.
