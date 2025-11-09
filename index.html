@@ -642,19 +642,19 @@
           console.log('Protocol:', location.protocol);
           console.log('Window quotesData available:', typeof window.quotesData);
           console.log('Window QUOTES_SOURCE:', window.__QUOTES_SOURCE || '(not set)');
-          
+
           if (window.quotesData) {
             console.log('QuotesData categories:', Object.keys(window.quotesData.categories || {}).length);
             console.log('Total quotes:', Object.values(window.quotesData.categories || {}).flat().length);
           }
-          
+
           if (window.VIBE_QUOTES_PROMISE) {
             window.VIBE_QUOTES_PROMISE.then(function(data) {
               console.log('\nPromise resolved with:');
               console.log('- Categories:', Object.keys(data.categories || {}).length);
               console.log('- Flat count:', Object.values(data.categories || {}).flat().length);
               console.log('- Source tracking:', window.__QUOTES_SOURCE);
-              
+
               console.table({
                 protocol: location.protocol.replace(':',''),
                 source: window.__QUOTES_SOURCE || '(unknown)',
@@ -668,13 +668,75 @@
           } else {
             console.warn('VIBE_QUOTES_PROMISE not available');
           }
-          
+
           console.log('=== END DIAGNOSTICS ===\n');
         }, 2000); // Wait 2 seconds for everything to load
       }
     </script>
-    
+
+    <!-- Ambient breathing overlay -->
+    <div id="ambient-breathe-overlay"
+         class="ambient-breathe-overlay hidden fixed inset-0 z-[10004] flex items-center justify-center bg-black/70 backdrop-blur-xl"
+         role="dialog" aria-modal="true" aria-labelledby="ambient-breathe-title">
+      <div class="ambient-breathe-card relative w-full max-w-md mx-4 rounded-3xl bg-white/10 border border-white/20 p-6 text-center text-white shadow-2xl">
+        <button type="button"
+                id="ambient-breathe-close"
+                class="absolute top-4 right-4 text-white/70 hover:text-white"
+                aria-label="Close breathing session">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+        <div class="ambient-breathe-visual mb-6" aria-hidden="true">
+          <div class="ambient-breathe-pulse mx-auto h-32 w-32 rounded-full border border-white/30 bg-white/10 shadow-inner"></div>
+        </div>
+        <h2 id="ambient-breathe-title" class="text-xl font-semibold mb-2">Ambient Breathing</h2>
+        <p class="text-sm text-white/80">Follow the glow as it expands and contracts to find a calmer rhythm.</p>
+        <p id="ambient-breathe-prompt" class="mt-4 text-lg font-semibold tracking-wide text-white"></p>
+        <div class="mt-6 flex items-center justify-center gap-3 text-sm">
+          <button type="button" id="ambient-breathe-start" class="px-4 py-2 rounded-full bg-emerald-500/80 hover:bg-emerald-500 transition-colors">
+            Start
+          </button>
+          <button type="button" id="ambient-breathe-pause" class="px-4 py-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+            Pause
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preset import drawer -->
+    <aside id="preset-import-drawer"
+           class="preset-import-drawer hidden fixed right-0 top-0 h-full max-w-md w-full z-[10005] bg-black/85 backdrop-blur-xl text-white shadow-2xl"
+           role="complementary" aria-labelledby="preset-import-title" aria-hidden="true">
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+        <div>
+          <p class="text-xs uppercase tracking-widest text-white/60">Presets</p>
+          <h2 id="preset-import-title" class="text-lg font-semibold">Import Visual Preset</h2>
+        </div>
+        <button type="button" id="preset-import-close" class="text-white/70 hover:text-white" aria-label="Close preset drawer">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="px-5 py-4 space-y-4 text-sm">
+        <p class="text-white/70">Paste a preset link or drag a preset file to load custom themes instantly.</p>
+        <label class="block text-xs uppercase tracking-wide text-white/50" for="preset-import-input">Preset link</label>
+        <div class="flex gap-2">
+          <input id="preset-import-input" type="url" class="flex-1 rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-400" placeholder="https://example.com/vibeme-preset.json">
+          <button type="button" id="preset-import-apply" class="px-4 py-2 rounded-lg bg-purple-500/80 hover:bg-purple-500 transition-colors">
+            Apply
+          </button>
+        </div>
+        <div class="preset-import-drop text-center border border-dashed border-white/30 rounded-xl p-6 text-white/60">
+          <p class="text-xs uppercase tracking-wide mb-2">Drop file here</p>
+          <p class="text-sm">Supports .json preset bundles exported from VibeMe.</p>
+        </div>
+      </div>
+      <div class="mt-auto px-5 py-4 border-t border-white/10 text-xs text-white/50">
+        Imported presets will immediately update the matrix, stream density, and glow configuration.
+      </div>
+    </aside>
+
     <script type="module" src="js/modules/rafScheduler.js"></script>
+    <script type="module" src="js/modules/ambientSessions.js"></script>
+    <script type="module" src="js/modules/presetLinks.js"></script>
     <script type="module" src="js/perfAutotuneEntry.js"></script>
     <script data-main defer src="js/main.js"></script>
 

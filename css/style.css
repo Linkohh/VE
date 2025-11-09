@@ -2963,3 +2963,21 @@ button:disabled {
 #left-rail[data-size="collapsed"] .rail-btn {
   justify-content: center;
 }
+
+/* Ambient breathing overlay */
+.ambient-breathe-overlay[data-state='running'] .ambient-breathe-pulse {
+  box-shadow: 0 0 40px rgba(74, 222, 128, 0.35);
+}
+
+.ambient-breathe-overlay[data-phase='inhale'] #ambient-breathe-prompt,
+.ambient-breathe-overlay[data-phase='exhale'] #ambient-breathe-prompt,
+.ambient-breathe-overlay[data-phase='hold'] #ambient-breathe-prompt,
+.ambient-breathe-overlay[data-phase='reset'] #ambient-breathe-prompt {
+  letter-spacing: 0.08em;
+}
+
+.preset-import-drop.is-active {
+  border-color: rgba(168, 85, 247, 0.75);
+  background-color: rgba(168, 85, 247, 0.1);
+  color: rgba(255, 255, 255, 0.85);
+}
