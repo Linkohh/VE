@@ -2357,8 +2357,9 @@ const VibeMe = {
         if (renderModeSelector) {
             renderModeSelector.addEventListener('change', (e) => {
                 this.updateMatrixRenderMode(e.target.value);
+                this.handlePerfManualOverride('render-mode');
             });
-            
+
             // Initialize canvas performance settings visibility
             this.toggleCanvasPerformanceSettings(
                 renderModeSelector.value === 'canvas' || renderModeSelector.value === 'hybrid'
@@ -2391,8 +2392,14 @@ const VibeMe = {
         document.getElementById('matrix-high-contrast').addEventListener('change', (e) => this.updateMatrixSetting('highContrast', e.target.checked));
         document.getElementById('matrix-blend-mode').addEventListener('change', (e) => this.updateMatrixSetting('blendMode', e.target.value));
         document.getElementById('matrix-density').addEventListener('input', (e) => this.updateMatrixSetting('density', e.target.value));
-        document.getElementById('matrix-render-mode').addEventListener('change', (e) => this.updateMatrixRenderMode(e.target.value)); // Existing function is fine
-        document.getElementById('canvas-max-fps').addEventListener('input', (e) => this.updateMatrixSetting('maxFps', e.target.value));
+        document.getElementById('matrix-render-mode').addEventListener('change', (e) => {
+            this.updateMatrixRenderMode(e.target.value);
+            this.handlePerfManualOverride('render-mode');
+        }); // Existing function is fine
+        document.getElementById('canvas-max-fps').addEventListener('input', (e) => {
+            this.updateMatrixSetting('maxFps', e.target.value);
+            this.handlePerfManualOverride('fps-cap');
+        });
     },
 
     setupSettingsAccordion: function() {
@@ -2812,6 +2819,20 @@ const VibeMe = {
     },
 
     startCanvasAnimation: function() {
+        const scheduler = window.VibeMeRafScheduler;
+        if (scheduler) {
+            scheduler.setFpsCap(this.matrixConfig.canvasConfig.maxFPS || 60);
+            scheduler.startRafLoop((timestamp) => {
+                if (!this.state.effectsEnabled) return;
+                try {
+                    this.drawCanvasMatrix();
+                } catch (err) {
+                    console.error('Canvas draw error:', err);
+                }
+            });
+            return;
+        }
+
         this.matrixState.lastFrameTime = 0;
 
         const animate = (timestamp) => {
@@ -3102,6 +3123,9 @@ const VibeMe = {
         console.log('🛑 Stopping Canvas Matrix Rain...');
 
         try {
+            if (window.VibeMeRafScheduler) {
+                window.VibeMeRafScheduler.stopRafLoop();
+            }
             // Stop animation loop
             if (this.matrixState.canvasAnimationId) {
                 cancelAnimationFrame(this.matrixState.canvasAnimationId);
@@ -3238,6 +3262,73 @@ const VibeMe = {
             } else {
                 settings.classList.add('hidden');
             }
+        }
+    },
+
+    setRenderingEngine: function(engine) {
+        if (!engine || this.matrixConfig.renderMode === engine) return;
+        this.updateMatrixRenderMode(engine);
+        const selector = document.getElementById('matrix-render-mode');
+        if (selector && selector.value !== engine) {
+            selector.value = engine;
+        }
+    },
+
+    setFpsCap: function(fps) {
+        const safeFps = Math.max(30, Math.min(144, Math.round(Number(fps) || 60)));
+        this.matrixConfig.canvasConfig.maxFPS = safeFps;
+        this.updateMatrixSetting('maxFps', safeFps);
+        const slider = document.getElementById('canvas-max-fps');
+        if (slider && Number(slider.value) !== safeFps) {
+            slider.value = String(safeFps);
+            const label = document.getElementById('canvas-max-fps-value');
+            if (label) label.textContent = safeFps;
+        }
+        if (window.VibeMeRafScheduler) {
+            window.VibeMeRafScheduler.setFpsCap(safeFps);
+        }
+    },
+
+    setMatrixDensity: function(multiplier) {
+        const value = Math.max(0.3, Math.min(1.0, Number(multiplier) || 0.8));
+        const percent = Math.round(value * 100);
+        this.updateMatrixSetting('opacity', percent);
+        const slider = document.getElementById('matrix-opacity');
+        if (slider && Number(slider.value) !== percent) {
+            slider.value = String(percent);
+        }
+    },
+
+    setStreamDensity: function(multiplier) {
+        const value = Math.max(0.5, Math.min(3.0, Number(multiplier) || 1.0));
+        this.updateMatrixSetting('density', value);
+        const slider = document.getElementById('matrix-density');
+        if (slider && Number(slider.value) !== value) {
+            slider.value = String(value);
+        }
+    },
+
+    setAnimationSpeed: function(multiplier) {
+        const value = Math.max(0.5, Math.min(2.0, Number(multiplier) || 1.0));
+        this.updateMatrixSetting('speed', value);
+        const slider = document.getElementById('matrix-speed');
+        if (slider && Number(slider.value) !== value) {
+            slider.value = String(value);
+        }
+    },
+
+    handlePerfManualOverride: function(reason = '') {
+        if (window.__vibemePerfApplying) return;
+        try {
+            localStorage.setItem('vibeme.perfOverride', '1');
+        } catch (err) {
+            console.warn('Unable to persist perf override', err);
+        }
+        window.dispatchEvent(new CustomEvent('vibeme:perf:manualOverride', { detail: { reason } }));
+        try {
+            showToast('Manual override active. Re-run Autotune to retune based on your device.', 'info', 2600);
+        } catch (err) {
+            console.warn('Toast failed', err);
         }
     },
 
