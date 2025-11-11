@@ -667,30 +667,6 @@
   </div>
 </div>
 
-<!-- Ambient Breathing Overlay -->
-<div id="ambient-breathe-overlay" class="ambient-breathe-overlay hidden" aria-hidden="true">
-  <div class="ambient-breathe-ring">
-    <span id="ambient-breathe-label">Inhale</span>
-  </div>
-</div>
-
-<!-- Preset Import Drawer -->
-<div id="preset-import-drawer" class="preset-import-drawer hidden" role="dialog" aria-modal="true" aria-labelledby="preset-import-title">
-  <div class="preset-import-card">
-    <div class="preset-import-header">
-      <h2 id="preset-import-title">Apply shared preset?</h2>
-      <button type="button" id="preset-import-close" class="preset-import-close" aria-label="Dismiss preset preview">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <div class="preset-import-preview" id="preset-import-preview" aria-live="polite"></div>
-    <div class="preset-import-actions">
-      <button type="button" id="preset-import-apply" class="ambient-session-primary-btn flex-1">Apply</button>
-      <button type="button" id="preset-import-ignore" class="ambient-session-secondary-btn flex-1">Ignore</button>
-    </div>
-  </div>
-</div>
-
     </div>
 
     <!-- Enhanced JavaScript - Non-Module System for CORS Compatibility -->
@@ -876,6 +852,8 @@
   </div>
 </aside>
 
+    <script defer src="js/modules/ambientSessions.js"></script>
+    <script defer src="js/modules/presetLinks.js"></script>
     <script data-main defer src="js/main.js"></script>
 
     <!-- Fallback for browsers without script support -->
