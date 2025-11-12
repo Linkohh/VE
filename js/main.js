@@ -722,7 +722,10 @@ const VibeMe = {
             const palette = pickPaletteFromPreset(mapped) || pickPaletteFromPreset('retro_neon');
             if (palette) {
                 // Apply palette after a brief delay to allow theme transition
-                setTimeout(() => applyPalette(palette), 200);
+                setTimeout(() => {
+                    applyPalette(palette);
+                    updateFluidColors(THEME_BLOB_PRESETS[mapped] || [palette.color1, palette.color2, palette.color3]);
+                }, 200);
             }
         }
         
@@ -1261,7 +1264,9 @@ const VibeMe = {
         root.style.setProperty('--color1', theme.color1);
         root.style.setProperty('--color2', theme.color2);
         root.style.setProperty('--color3', theme.color3);
-        
+
+        updateFluidColors([theme.color1, theme.color2, theme.color3]);
+
         // Calculate optimal text colors using WCAG standards
         const backgroundColor = theme.color1; // Primary background color
         
@@ -3775,6 +3780,8 @@ function applyPalette({ color1, color2, color3, accent }){
   // Mouse glow (if present)
   const glow = document.getElementById('mouse-glow');
   if (glow) glow.style.setProperty('--glow-color', color1);
+
+  updateFluidColors([color1, color2, color3]);
 }
 
 function pickPaletteFromPreset(name){
@@ -3794,6 +3801,216 @@ const CATEGORY_TO_PRESET = {
   default: 'retro_neon'
 };
 
+const THEME_BLOB_PRESETS = {
+  lavender_glow: ['#B189FF', '#93E0E6', '#E693DA'],
+  desert_dusk: ['#FFB58A', '#FFD27F', '#F7A6A1'],
+  cosmic_ocean: ['#6FB1FC', '#3C73B8', '#A47DFF']
+};
+
+const DEFAULT_BLOB_COLORS = [
+  'rgba(150, 110, 225, 0.6)',
+  'rgba(130, 190, 255, 0.6)',
+  'rgba(230, 147, 218, 0.5)'
+];
+
+let fluidAuraPerfDisabled = false;
+let fluidAuraRaf = null;
+const fluidAuraMotionQuery = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+
+function hexToRgba(hex, alpha = 0.6) {
+  if (!hex || typeof hex !== 'string') return null;
+  const clean = hex.replace('#', '').trim();
+  if (clean.length !== 3 && clean.length !== 6) return hex;
+  const normalized = clean.length === 3
+    ? clean.split('').map(ch => ch + ch).join('')
+    : clean;
+  const bigint = parseInt(normalized, 16);
+  if (Number.isNaN(bigint)) return hex;
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+function getFluidAuraPalette(palette) {
+  if (Array.isArray(palette) && palette.length) {
+    return palette;
+  }
+  return DEFAULT_BLOB_COLORS;
+}
+
+function updateFluidColors(palette) {
+  const blobs = document.querySelectorAll('.quote-background .blob');
+  if (!blobs.length) return;
+  const paletteToUse = getFluidAuraPalette(palette).map(color => {
+    if (typeof color !== 'string') return color;
+    if (/^rgba?/i.test(color.trim())) return color;
+    return hexToRgba(color, 0.6);
+  });
+  blobs.forEach((blob, index) => {
+    const nextColor = paletteToUse[index % paletteToUse.length] || DEFAULT_BLOB_COLORS[index % DEFAULT_BLOB_COLORS.length];
+    blob.style.background = nextColor;
+  });
+}
+
+function shouldAnimateFluidAura() {
+  const body = document.body;
+  if (!body) return false;
+  const reducedMotion = fluidAuraMotionQuery?.matches;
+  return body.classList.contains('fluid-aura-active') && !fluidAuraPerfDisabled && !reducedMotion;
+}
+
+function resetFluidAuraTransforms() {
+  const blobs = document.querySelectorAll('.quote-background .blob');
+  blobs.forEach(blob => {
+    blob.style.removeProperty('transform');
+  });
+}
+
+function initFluidAura() {
+  const box = document.querySelector('.quote-box');
+  if (!box) return;
+  const blobs = box.querySelectorAll('.blob');
+  if (!blobs.length) return;
+
+  blobs.forEach(blob => {
+    const declared = blob.getAttribute('data-base-transform');
+    if (declared !== null) {
+      blob.dataset.baseTransform = declared.trim();
+    } else if (!blob.dataset.baseTransform) {
+      const computed = window.getComputedStyle(blob).transform;
+      blob.dataset.baseTransform = computed && computed !== 'none' ? computed : '';
+    }
+  });
+
+  let rectCache = null;
+  const ensureRect = () => {
+    if (!rectCache) rectCache = box.getBoundingClientRect();
+    return rectCache;
+  };
+
+  const scheduleMove = (event) => {
+    if (!shouldAnimateFluidAura()) return;
+    const rect = ensureRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    if (fluidAuraRaf) cancelAnimationFrame(fluidAuraRaf);
+    fluidAuraRaf = requestAnimationFrame(() => {
+      blobs.forEach((blob, index) => {
+        const base = blob.dataset.baseTransform || '';
+        const moveX = (x - rect.width / 2) / (25 * (index + 1));
+        const moveY = (y - rect.height / 2) / (25 * (index + 1));
+        const scale = 1 + 0.2 / (index + 1);
+        blob.style.transform = `${base} translate(${moveX}px, ${moveY}px) scale(${scale})`;
+      });
+    });
+  };
+
+  const handleMouseMove = (event) => {
+    rectCache = null;
+    scheduleMove(event);
+  };
+
+  const handleMouseLeave = () => {
+    rectCache = null;
+    resetFluidAuraTransforms();
+    if (fluidAuraRaf) {
+      cancelAnimationFrame(fluidAuraRaf);
+      fluidAuraRaf = null;
+    }
+  };
+
+  box.addEventListener('mousemove', handleMouseMove);
+  box.addEventListener('mouseleave', handleMouseLeave);
+
+  if (fluidAuraMotionQuery) {
+    fluidAuraMotionQuery.addEventListener('change', () => {
+      if (!fluidAuraMotionQuery.matches) return;
+      resetFluidAuraTransforms();
+      if (fluidAuraRaf) {
+        cancelAnimationFrame(fluidAuraRaf);
+        fluidAuraRaf = null;
+      }
+    });
+  }
+}
+
+function hydrateFluidAuraToggle() {
+  const toggle = document.getElementById('toggleFluidAura');
+  const body = document.body;
+  if (!body) return;
+  const saved = (() => {
+    try {
+      return localStorage.getItem('vibeme-fluid-aura-enabled');
+    } catch (err) {
+      return null;
+    }
+  })();
+  const enabled = saved === null ? body.classList.contains('fluid-aura-active') : saved === '1';
+  body.classList.toggle('fluid-aura-active', enabled);
+  if (toggle) {
+    toggle.checked = enabled;
+    toggle.addEventListener('change', (event) => {
+      const next = event.target.checked;
+      body.classList.toggle('fluid-aura-active', next);
+      try {
+        localStorage.setItem('vibeme-fluid-aura-enabled', next ? '1' : '0');
+      } catch (err) {
+        /* ignore */
+      }
+      if (!next) {
+        resetFluidAuraTransforms();
+        if (fluidAuraRaf) {
+          cancelAnimationFrame(fluidAuraRaf);
+          fluidAuraRaf = null;
+        }
+      }
+    });
+  }
+}
+
+function bindFluidAuraPerfListener() {
+  try {
+    const persistedVariant = localStorage.getItem('vibeme.perfVariant');
+    if (persistedVariant === 'battery') {
+      fluidAuraPerfDisabled = true;
+      document.body.classList.add('fluid-aura-perf-off');
+      resetFluidAuraTransforms();
+    } else {
+      const storedProfile = localStorage.getItem('vibeme.perf');
+      if (storedProfile) {
+        const profileData = JSON.parse(storedProfile);
+        const hint = profileData?.deviceHint || '';
+        const variant = profileData?.variant;
+        if (variant === 'battery' || /battery-saver/i.test(hint)) {
+          fluidAuraPerfDisabled = true;
+          document.body.classList.add('fluid-aura-perf-off');
+          resetFluidAuraTransforms();
+        }
+      }
+    }
+  } catch (err) {
+    /* ignore */
+  }
+
+  window.addEventListener('vibeme:perfProfileApplied', (event) => {
+    const profile = event?.detail?.profile;
+    const variant = profile?.variant;
+    const hint = profile?.deviceHint || '';
+    const shouldDisable = variant === 'battery' || /battery-saver/i.test(hint || '');
+    if (shouldDisable === fluidAuraPerfDisabled) return;
+    fluidAuraPerfDisabled = shouldDisable;
+    document.body.classList.toggle('fluid-aura-perf-off', shouldDisable);
+    if (shouldDisable) {
+      resetFluidAuraTransforms();
+      if (fluidAuraRaf) {
+        cancelAnimationFrame(fluidAuraRaf);
+        fluidAuraRaf = null;
+      }
+    }
+  }, { passive: true });
+}
+
 
 // Wait for the DOM to be fully loaded before initializing the application
 document.addEventListener('DOMContentLoaded', () => {
@@ -3812,16 +4029,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cat = VibeMe?.quotes?.[idx]?.category || 'default';
                 const mapped = CATEGORY_TO_PRESET[cat] || 'retro_neon';
                 const p = pickPaletteFromPreset(mapped) || pickPaletteFromPreset('retro_neon');
-                if (p) applyPalette(p);
+                if (p) {
+                    applyPalette(p);
+                    updateFluidColors(THEME_BLOB_PRESETS[mapped] || [p.color1, p.color2, p.color3]);
+                }
             } else {
                 const p = pickPaletteFromPreset(name);
-                if (p) applyPalette(p);
+                if (p) {
+                    applyPalette(p);
+                    updateFluidColors(THEME_BLOB_PRESETS[name] || [p.color1, p.color2, p.color3]);
+                }
             }
         }
 
         presetSelect.addEventListener('change', e => activatePreset(e.target.value));
         activatePreset(saved);
     }
+
+    hydrateFluidAuraToggle();
+    initFluidAura();
+    bindFluidAuraPerfListener();
 
     // ===== Logo Fallback =====
     // Ensure vb-logo class is applied to VibeMe heading (fallback for HTML structure changes)

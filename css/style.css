@@ -182,6 +182,57 @@ body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding:
   overflow: hidden;
 }
 
+.quote-box {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.quote-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: float 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.color-purple { background: rgba(150, 110, 225, 0.6); width: 300px; height: 300px; top: -100px; left: -100px; }
+.color-blue   { background: rgba(130, 190, 255, 0.6); width: 250px; height: 250px; bottom: -80px; right: -80px; }
+.color-pink   { background: rgba(230, 147, 218, 0.5); width: 220px; height: 220px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+@keyframes float {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(80px, 60px) scale(1.3); }
+}
+
+.quote-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: var(--text-color-main, #fff);
+}
+
+body:not(.fluid-aura-active) .quote-background,
+body.fluid-aura-perf-off .quote-background {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob { animation: none !important; }
+}
+
 .focus-chrome {
   transition: opacity 0.35s ease, visibility 0.35s ease;
 }
