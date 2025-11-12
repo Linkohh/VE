@@ -3808,9 +3808,9 @@ const THEME_BLOB_PRESETS = {
 };
 
 const DEFAULT_BLOB_COLORS = [
-  'rgba(150, 110, 225, 0.6)',
-  'rgba(130, 190, 255, 0.6)',
-  'rgba(230, 147, 218, 0.5)'
+  'rgba(150, 120, 255, 0.6)',
+  'rgba(90, 180, 255, 0.6)',
+  'rgba(255, 100, 200, 0.6)'
 ];
 
 let fluidAuraPerfDisabled = false;
@@ -3840,7 +3840,7 @@ function getFluidAuraPalette(palette) {
 }
 
 function getFluidAuraBlobs() {
-  return document.querySelectorAll('.quote-fluid-background .blob, .quote-background .blob');
+  return document.querySelectorAll('.inner-fluid-layer .blob, .quote-background .blob');
 }
 
 function updateQuoteAuraColors(palette) {
@@ -3874,7 +3874,7 @@ function resetFluidAuraTransforms() {
 function initFluidAura() {
   const quoteInner = document.querySelector('.quote-container-inner');
   if (!quoteInner) return;
-  const blobs = quoteInner.querySelectorAll('.quote-fluid-background .blob, .quote-background .blob');
+  const blobs = quoteInner.querySelectorAll('.inner-fluid-layer .blob, .quote-background .blob');
   if (!blobs.length) return;
 
   blobs.forEach(blob => {
