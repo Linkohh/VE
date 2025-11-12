@@ -724,7 +724,7 @@ const VibeMe = {
                 // Apply palette after a brief delay to allow theme transition
                 setTimeout(() => {
                     applyPalette(palette);
-                    updateFluidColors(THEME_BLOB_PRESETS[mapped] || [palette.color1, palette.color2, palette.color3]);
+                    updateQuoteAuraColors(THEME_BLOB_PRESETS[mapped] || [palette.color1, palette.color2, palette.color3]);
                 }, 200);
             }
         }
@@ -1265,7 +1265,7 @@ const VibeMe = {
         root.style.setProperty('--color2', theme.color2);
         root.style.setProperty('--color3', theme.color3);
 
-        updateFluidColors([theme.color1, theme.color2, theme.color3]);
+        updateQuoteAuraColors([theme.color1, theme.color2, theme.color3]);
 
         // Calculate optimal text colors using WCAG standards
         const backgroundColor = theme.color1; // Primary background color
@@ -3781,7 +3781,7 @@ function applyPalette({ color1, color2, color3, accent }){
   const glow = document.getElementById('mouse-glow');
   if (glow) glow.style.setProperty('--glow-color', color1);
 
-  updateFluidColors([color1, color2, color3]);
+  updateQuoteAuraColors([color1, color2, color3]);
 }
 
 function pickPaletteFromPreset(name){
@@ -3839,8 +3839,12 @@ function getFluidAuraPalette(palette) {
   return DEFAULT_BLOB_COLORS;
 }
 
-function updateFluidColors(palette) {
-  const blobs = document.querySelectorAll('.quote-background .blob');
+function getFluidAuraBlobs() {
+  return document.querySelectorAll('.quote-fluid-background .blob, .quote-background .blob');
+}
+
+function updateQuoteAuraColors(palette) {
+  const blobs = getFluidAuraBlobs();
   if (!blobs.length) return;
   const paletteToUse = getFluidAuraPalette(palette).map(color => {
     if (typeof color !== 'string') return color;
@@ -3861,16 +3865,16 @@ function shouldAnimateFluidAura() {
 }
 
 function resetFluidAuraTransforms() {
-  const blobs = document.querySelectorAll('.quote-background .blob');
+  const blobs = getFluidAuraBlobs();
   blobs.forEach(blob => {
     blob.style.removeProperty('transform');
   });
 }
 
 function initFluidAura() {
-  const box = document.querySelector('.quote-box');
-  if (!box) return;
-  const blobs = box.querySelectorAll('.blob');
+  const quoteInner = document.querySelector('.quote-container-inner');
+  if (!quoteInner) return;
+  const blobs = quoteInner.querySelectorAll('.quote-fluid-background .blob, .quote-background .blob');
   if (!blobs.length) return;
 
   blobs.forEach(blob => {
@@ -3885,7 +3889,7 @@ function initFluidAura() {
 
   let rectCache = null;
   const ensureRect = () => {
-    if (!rectCache) rectCache = box.getBoundingClientRect();
+    if (!rectCache) rectCache = quoteInner.getBoundingClientRect();
     return rectCache;
   };
 
@@ -3898,10 +3902,9 @@ function initFluidAura() {
     fluidAuraRaf = requestAnimationFrame(() => {
       blobs.forEach((blob, index) => {
         const base = blob.dataset.baseTransform || '';
-        const moveX = (x - rect.width / 2) / (25 * (index + 1));
-        const moveY = (y - rect.height / 2) / (25 * (index + 1));
-        const scale = 1 + 0.2 / (index + 1);
-        blob.style.transform = `${base} translate(${moveX}px, ${moveY}px) scale(${scale})`;
+        const moveX = (x - rect.width / 2) / (40 * (index + 1));
+        const moveY = (y - rect.height / 2) / (40 * (index + 1));
+        blob.style.transform = `${base} translate(${moveX}px, ${moveY}px) scale(1.3)`;
       });
     });
   };
@@ -3920,8 +3923,8 @@ function initFluidAura() {
     }
   };
 
-  box.addEventListener('mousemove', handleMouseMove);
-  box.addEventListener('mouseleave', handleMouseLeave);
+  quoteInner.addEventListener('mousemove', handleMouseMove);
+  quoteInner.addEventListener('mouseleave', handleMouseLeave);
 
   if (fluidAuraMotionQuery) {
     fluidAuraMotionQuery.addEventListener('change', () => {
@@ -4031,13 +4034,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const p = pickPaletteFromPreset(mapped) || pickPaletteFromPreset('retro_neon');
                 if (p) {
                     applyPalette(p);
-                    updateFluidColors(THEME_BLOB_PRESETS[mapped] || [p.color1, p.color2, p.color3]);
+                    updateQuoteAuraColors(THEME_BLOB_PRESETS[mapped] || [p.color1, p.color2, p.color3]);
                 }
             } else {
                 const p = pickPaletteFromPreset(name);
                 if (p) {
                     applyPalette(p);
-                    updateFluidColors(THEME_BLOB_PRESETS[name] || [p.color1, p.color2, p.color3]);
+                    updateQuoteAuraColors(THEME_BLOB_PRESETS[name] || [p.color1, p.color2, p.color3]);
                 }
             }
         }
