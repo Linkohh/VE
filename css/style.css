@@ -133,6 +133,14 @@ html:not([data-theme="dark"]) .fc-date { background: rgba(0,0,0,0.45); }
 
     /* CTA controls */
     --generate-btn-size: 110px;
+
+    /* Quote container layering */
+    --quote-layer-radius: 24px;
+    --quote-layer-inner-radius: 20px;
+    --quote-layer-bg: rgba(255, 255, 255, 0.06);
+    --quote-layer-border: rgba(255, 255, 255, 0.18);
+    --quote-layer-shadow: 0 32px 90px -48px rgba(15, 23, 42, 0.7);
+    --quote-layer-blur: 18px;
 }
 
 /* ===== RESET & BASE STYLES ===== */
@@ -180,19 +188,20 @@ body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding:
 .quote-container-inner {
   position: relative;
   overflow: hidden;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: var(--quote-layer-radius, 24px);
+  padding: var(--spacing-lg);
+  background: var(--quote-layer-bg);
+  border: 1px solid var(--quote-layer-border);
+  box-shadow: var(--quote-layer-shadow);
+  backdrop-filter: blur(var(--quote-layer-blur)) saturate(185%);
+  -webkit-backdrop-filter: blur(var(--quote-layer-blur)) saturate(185%);
   max-height: calc(100dvh - 160px); /* room for title, clock, buttons */
 }
 
+.quote-background,
 .inner-fluid-layer {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   overflow: hidden;
   z-index: 0;
   filter: blur(80px);
@@ -200,6 +209,7 @@ body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding:
   pointer-events: none;
 }
 
+.quote-background .blob,
 .inner-fluid-layer .blob {
   position: absolute;
   border-radius: 50%;
@@ -208,6 +218,7 @@ body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding:
   animation: move 20s infinite alternate ease-in-out;
 }
 
+.quote-background .color-purple,
 .inner-fluid-layer .color-purple {
   background: rgba(150, 120, 255, 0.6);
   width: 400px;
@@ -216,6 +227,7 @@ body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding:
   left: -100px;
 }
 
+.quote-background .color-blue,
 .inner-fluid-layer .color-blue {
   background: rgba(90, 180, 255, 0.6);
   width: 350px;
@@ -224,6 +236,7 @@ body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding:
   right: -100px;
 }
 
+.quote-background .color-pink,
 .inner-fluid-layer .color-pink {
   background: rgba(255, 100, 200, 0.6);
   width: 300px;
@@ -238,7 +251,7 @@ body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding:
   100% { transform: translate(150px, -150px) scale(1.3); }
 }
 
-.quote-container-inner > *:not(.inner-fluid-layer) {
+.quote-container-inner > *:not(.inner-fluid-layer):not(.quote-background) {
   position: relative;
   z-index: 1;
 }
@@ -246,10 +259,10 @@ body { min-height: 100dvh; height: 100dvh; overflow: hidden !important; padding:
 .quote-box {
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--quote-layer-inner-radius, 20px);
+  backdrop-filter: blur(var(--quote-layer-blur)) saturate(185%);
+  -webkit-backdrop-filter: blur(var(--quote-layer-blur)) saturate(185%);
+  background: var(--quote-layer-bg);
 }
 
 .quote-content {
@@ -694,11 +707,13 @@ body:not(.using-keyboard) *:focus {
 }
 
 .quote-container-inner {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: var(--shadow-lg);
-    border-radius: 24px;
+    background: var(--quote-layer-bg);
+    border: 1px solid var(--quote-layer-border);
+    box-shadow: var(--quote-layer-shadow);
+    border-radius: var(--quote-layer-radius, 24px);
     padding: var(--spacing-lg);
+    backdrop-filter: blur(var(--quote-layer-blur)) saturate(185%);
+    -webkit-backdrop-filter: blur(var(--quote-layer-blur)) saturate(185%);
 }
 
 /* Quote pattern background */
@@ -707,7 +722,7 @@ body:not(.using-keyboard) *:focus {
     inset: 0;
     opacity: 0.1;
     mix-blend-mode: multiply;
-    border-radius: var(--radius-lg);
+    border-radius: var(--quote-layer-radius, var(--radius-lg));
     transition: background-image var(--transition-medium);
 }
 
@@ -1625,7 +1640,8 @@ button:disabled {
     }
     
     .quote-container-outer,
-    .quote-container-inner {
+    .quote-container-inner,
+    .quote-box {
         background: white !important;
         box-shadow: none !important;
         border: 1px solid #ccc !important;
@@ -1644,7 +1660,8 @@ button:disabled {
         --text-color-secondary: #333333;
     }
     
-    .quote-container-inner {
+    .quote-container-inner,
+    .quote-box {
         background: rgba(255, 255, 255, 0.95);
         border: 2px solid #000000;
     }
@@ -1669,6 +1686,10 @@ button:disabled {
     --container-bg-color: rgba(31, 41, 55, 0.95);
     --inner-box-color: rgba(55, 65, 81, 0.85);
     --social-icon-bg: #4b5563;
+
+    --quote-layer-bg: rgba(31, 41, 55, 0.68);
+    --quote-layer-border: rgba(148, 163, 184, 0.28);
+    --quote-layer-shadow: 0 38px 95px -50px rgba(2, 6, 23, 0.85);
 }
 
 :root[data-theme="dark"] .gradient-bg {
@@ -1676,8 +1697,8 @@ button:disabled {
 }
 
 :root[data-theme="dark"] .quote-container-inner {
-    background: rgba(31, 41, 55, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--quote-layer-bg);
+    border: 1px solid var(--quote-layer-border);
 }
 
 :root[data-theme="dark"] #settings-panel {
