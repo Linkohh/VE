@@ -3808,9 +3808,9 @@ const THEME_BLOB_PRESETS = {
 };
 
 const DEFAULT_BLOB_COLORS = [
-  'rgba(150, 120, 255, 0.6)',
-  'rgba(90, 180, 255, 0.6)',
-  'rgba(255, 100, 200, 0.6)'
+  'rgba(111, 155, 209, 0.6)',
+  'rgba(34, 65, 147, 0.6)',
+  'rgba(223, 60, 95, 0.6)'
 ];
 
 let fluidAuraPerfDisabled = false;
@@ -3840,7 +3840,7 @@ function getFluidAuraPalette(palette) {
 }
 
 function getFluidAuraBlobs() {
-  return document.querySelectorAll('.inner-fluid-layer .blob, .quote-background .blob');
+  return document.querySelectorAll('.fluid-blob-layer .blob');
 }
 
 function updateQuoteAuraColors(palette) {
@@ -3874,18 +3874,8 @@ function resetFluidAuraTransforms() {
 function initFluidAura() {
   const quoteInner = document.querySelector('.quote-container-inner');
   if (!quoteInner) return;
-  const blobs = quoteInner.querySelectorAll('.inner-fluid-layer .blob, .quote-background .blob');
+  const blobs = quoteInner.querySelectorAll('.fluid-blob-layer .blob');
   if (!blobs.length) return;
-
-  blobs.forEach(blob => {
-    const declared = blob.getAttribute('data-base-transform');
-    if (declared !== null) {
-      blob.dataset.baseTransform = declared.trim();
-    } else if (!blob.dataset.baseTransform) {
-      const computed = window.getComputedStyle(blob).transform;
-      blob.dataset.baseTransform = computed && computed !== 'none' ? computed : '';
-    }
-  });
 
   let rectCache = null;
   const ensureRect = () => {
@@ -3901,10 +3891,9 @@ function initFluidAura() {
     if (fluidAuraRaf) cancelAnimationFrame(fluidAuraRaf);
     fluidAuraRaf = requestAnimationFrame(() => {
       blobs.forEach((blob, index) => {
-        const base = blob.dataset.baseTransform || '';
         const moveX = (x - rect.width / 2) / (40 * (index + 1));
         const moveY = (y - rect.height / 2) / (40 * (index + 1));
-        blob.style.transform = `${base} translate(${moveX}px, ${moveY}px) scale(1.3)`;
+        blob.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.3)`;
       });
     });
   };
